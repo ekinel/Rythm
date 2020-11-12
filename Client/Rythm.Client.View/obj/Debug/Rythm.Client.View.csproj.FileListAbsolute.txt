@@ -1,0 +1,15 @@
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\Rythm.Client.View.exe.config
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\Rythm.Client.View.exe
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\Rythm.Client.View.pdb
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.csprojAssemblyReference.cache
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\MainWindow.g.cs
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\App.g.cs
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View_MarkupCompile.cache
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View_MarkupCompile.lref
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\MainWindow.baml
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.g.resources
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.Properties.Resources.resources
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.csproj.GenerateResource.cache
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.csproj.CoreCompileInputs.cache
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.exe
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.pdb
