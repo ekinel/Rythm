@@ -7,6 +7,43 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="0" Grid.RowSpan="3" Background="Azure"/>
+        <Border Grid.Column="1" Grid.RowSpan="3" Background="Beige"/>
+        <Border Grid.Column="2" Grid.ColumnSpan="2" Background="Bisque"/>
+        <Border Grid.Column="2" Grid.Row="1" Background="Tan"/>
+        <Border Grid.Column="3" Grid.Row="1" Background="Wheat"/>
+        <Border Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Background="Honeydew"/>
+
+        <StackPanel Grid.Column="0"  Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Foreground="Black" FontSize="10" Text="Настройки"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1"  Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Foreground="Black" FontSize="10" Text="Клиенты/группы"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Foreground="Black" FontSize="10" Text="Выбранные клиент/группа"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Foreground="Black" FontSize="10" Text="Чат"/>
+        </StackPanel>
+        <StackPanel Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Foreground="Black" FontSize="10" Text="Клиенты в группе"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Foreground="Black" FontSize="10" Text="Сообщение"/>
+        </StackPanel>
+
     </Grid>
 </Window>
