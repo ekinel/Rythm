@@ -1,0 +1,11 @@
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Rythm.Common.Network\bin\Debug\Rythm.Common.Network.dll
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Rythm.Common.Network\bin\Debug\Rythm.Common.Network.pdb
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Rythm.Common.Network\bin\Debug\Newtonsoft.Json.dll
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Rythm.Common.Network\bin\Debug\websocket-sharp.dll
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Rythm.Common.Network\bin\Debug\Newtonsoft.Json.xml
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Rythm.Common.Network\bin\Debug\websocket-sharp.xml
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Rythm.Common.Network\obj\Debug\Rythm.Common.Network.csprojAssemblyReference.cache
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Rythm.Common.Network\obj\Debug\Rythm.Common.Network.csproj.CoreCompileInputs.cache
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Rythm.Common.Network\obj\Debug\Rythm.Common.Network.csproj.CopyComplete
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Rythm.Common.Network\obj\Debug\Rythm.Common.Network.dll
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Rythm.Common.Network\obj\Debug\Rythm.Common.Network.pdb

@@ -5,17 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Rythm.Client.View"
         mc:Ignorable="d"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="true"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="7*"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="6*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
@@ -24,7 +26,9 @@
         <Border Grid.Column="2" Grid.ColumnSpan="2" Background="Bisque"/>
         <Border Grid.Column="2" Grid.Row="1" Background="Tan"/>
         <Border Grid.Column="3" Grid.Row="1" Background="Wheat"/>
-        <Border Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Background="Honeydew"/>
+        <Border Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Background="Honeydew">
+            <Button Content="Send" Margin="541,11,19,10" Click="Button_Click"/>
+        </Border>
 
         <StackPanel Grid.Column="0"  Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Foreground="Black" FontSize="10" Text="Настройки"/>
@@ -44,6 +48,6 @@
         <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Foreground="Black" FontSize="10" Text="Сообщение"/>
         </StackPanel>
-
+        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Введите сообщение" VerticalAlignment="Top" Width="239" Grid.Column="2" Margin="23,16,0,0" Grid.Row="2"/>
     </Grid>
 </Window>
