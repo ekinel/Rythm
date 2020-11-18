@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{E4F84B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{0B6ED9FB-0876-468A-8689-E2B30DC242BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rythm.Common.Network", "Rythm.Common.Network\Rythm.Common.Network.csproj", "{8FFBBA56-13DB-45E2-9D4D-8A6189294B5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rythm.Common.Network", "Common\Rythm.Common.Network\Rythm.Common.Network.csproj", "{8FFBBA56-13DB-45E2-9D4D-8A6189294B5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

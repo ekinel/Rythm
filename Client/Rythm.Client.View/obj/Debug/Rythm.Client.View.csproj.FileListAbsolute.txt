@@ -34,3 +34,10 @@ C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.Vi
 C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\Unity.Abstractions.pdb
 C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\Unity.Container.pdb
 C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.csproj.CopyComplete
+D:\pet\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.csprojAssemblyReference.cache
+D:\pet\Client\Rythm.Client.View\obj\Debug\MainWindow.g.cs
+D:\pet\Client\Rythm.Client.View\obj\Debug\App.g.cs
+D:\pet\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View_MarkupCompile.cache
+D:\pet\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View_MarkupCompile.lref
+D:\pet\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.exe
+D:\pet\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.pdb
