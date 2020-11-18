@@ -76,3 +76,9 @@ D:\pet\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.csproj.CoreCompileIn
 D:\pet\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.csproj.CopyComplete
 D:\pet\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.exe
 D:\pet\Client\Rythm.Client.View\obj\Debug\Rythm.Client.View.pdb
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\Rythm.Client.ViewModel.dll
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\Rythm.Common.Network.dll
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\websocket-sharp.dll
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\Newtonsoft.Json.dll
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\Rythm.Common.Network.pdb
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\Rythm.Client.ViewModel.pdb
