@@ -1,19 +1,27 @@
-﻿
+﻿using System;
+using System.Collections.Concurrent;
+using System.Linq;
+using System.Net;
+using Newtonsoft.Json.Linq;
+using Rythm.Common.Network.Enums;
+using Rythm.Common.Network.Events;
+using Rythm.Common.Network.Messages;
+using WebSocketSharp.Server;
+
 namespace Rythm.Common.Network
 {
-    using System;
-    using System.Collections.Concurrent;
-    using System.Linq;
-    using System.Net;
-
-    using Messages;
-    using Events;
-
-    using Newtonsoft.Json.Linq;
-
-    using WebSocketSharp.Server;
     public class WsServer
     {
+        #region Constructors
+
+        public WsServer(IPEndPoint listenAddress)
+        {
+            _listenAddress = listenAddress;
+            _connections = new ConcurrentDictionary<Guid, WsConnection>();
+        }
+
+        #endregion Constructors
+
         #region Fields
 
         private readonly IPEndPoint _listenAddress;
@@ -30,16 +38,6 @@ namespace Rythm.Common.Network
 
         #endregion Events
 
-        #region Constructors
-
-        public WsServer(IPEndPoint listenAddress)
-        {
-            _listenAddress = listenAddress;
-            _connections = new ConcurrentDictionary<Guid, WsConnection>();
-        }
-
-        #endregion Constructors
-
         #region Methods
 
         public void Start()
@@ -47,10 +45,7 @@ namespace Rythm.Common.Network
             _server = new WebSocketServer(_listenAddress.Address, _listenAddress.Port, false);
             //_server.AddWebSocketService("/", () => new WsConnection(this));
             _server.AddWebSocketService<WsConnection>("/",
-                client =>
-                {
-                    client.AddServer(this);
-                });
+                client => { client.AddServer(this); });
             _server.Start();
         }
 
@@ -60,10 +55,7 @@ namespace Rythm.Common.Network
             _server = null;
 
             var connections = _connections.Select(item => item.Value).ToArray();
-            foreach (var connection in connections)
-            {
-                connection.Close();
-            }
+            foreach (var connection in connections) connection.Close();
 
             _connections.Clear();
         }
@@ -72,22 +64,20 @@ namespace Rythm.Common.Network
         {
             var messageBroadcast = new MessageBroadcast(message).GetContainer();
 
-            foreach (var connection in _connections)
-            {
-                connection.Value.Send(messageBroadcast);
-            }
+            foreach (var connection in _connections) connection.Value.Send(messageBroadcast);
         }
 
         internal void HandleMessage(Guid clientId, MessageContainer container)
         {
-            if (!_connections.TryGetValue(clientId, out WsConnection connection))
+            if (!_connections.TryGetValue(clientId, out var connection))
                 return;
 
             switch (container.Identifier)
             {
                 case nameof(ConnectionRequest):
-                    var connectionRequest = ((JObject)container.Payload).ToObject(typeof(ConnectionRequest)) as ConnectionRequest;
-                    var connectionResponse = new ConnectionResponse { Result = ResultCodes.Ok };
+                    var connectionRequest =
+                        ((JObject) container.Payload).ToObject(typeof(ConnectionRequest)) as ConnectionRequest;
+                    var connectionResponse = new ConnectionResponse {Result = ResultCodes.Ok};
                     if (_connections.Values.Any(item => item.Login == connectionRequest.Login))
                     {
                         connectionResponse.Result = ResultCodes.Failure;
@@ -98,12 +88,16 @@ namespace Rythm.Common.Network
                     {
                         connection.Login = connectionRequest.Login;
                         connection.Send(connectionResponse.GetContainer());
-                        ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(connection.Login, true));
+                        ConnectionStateChanged?.Invoke(this,
+                            new ConnectionStateChangedEventArgs(connection.Login, true));
                     }
+
                     break;
                 case nameof(MessageRequest):
-                    var messageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
-                    MessageReceived?.Invoke(this, new MessageReceivedEventArgs(connection.Login, messageRequest.Message));
+                    var messageRequest =
+                        ((JObject) container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
+                    MessageReceived?.Invoke(this,
+                        new MessageReceivedEventArgs(connection.Login, messageRequest.Message));
                     break;
             }
         }
@@ -115,7 +109,7 @@ namespace Rythm.Common.Network
 
         internal void FreeConnection(Guid connectionId)
         {
-            if (_connections.TryRemove(connectionId, out WsConnection connection) && !string.IsNullOrEmpty(connection.Login))
+            if (_connections.TryRemove(connectionId, out var connection) && !string.IsNullOrEmpty(connection.Login))
                 ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(connection.Login, false));
         }
 

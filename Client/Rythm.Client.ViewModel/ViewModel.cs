@@ -1,15 +1,8 @@
-﻿namespace Rythm.Client
+﻿using Prism.Mvvm;
+
+namespace Rythm.Client.ViewModel
 {
-    using System;
-    using System.Security.Cryptography.X509Certificates;
-
-    using BusinessLogic;
-
-    using Prism.Commands;
-    using Prism.Mvvm;
-
     public class ViewModel : BindableBase
     {
     }
-
 }

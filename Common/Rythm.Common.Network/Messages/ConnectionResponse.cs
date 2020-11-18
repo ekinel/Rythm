@@ -1,4 +1,6 @@
-﻿namespace Rythm.Common.Network.Messages
+﻿using Rythm.Common.Network.Enums;
+
+namespace Rythm.Common.Network.Messages
 {
     public class ConnectionResponse
     {

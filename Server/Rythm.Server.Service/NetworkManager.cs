@@ -1,11 +1,17 @@
-﻿namespace Rythm.Server.Service
+﻿
+
+
+
+
+using Rythm.Common.Network;
+using Rythm.Common.Network.Events;
+
+namespace Rythm.Server.Service
 {
     using System;
     using System.Net;
 
-    using Common.Network.Events;
 
-    using Rythm.Common.Network;
     public class NetworkManager
     {
         #region Constants

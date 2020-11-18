@@ -1,4 +1,6 @@
 ﻿
+using Rythm.Common.Network.Enums;
+
 namespace Rythm.Common.Network
 {
     using System;

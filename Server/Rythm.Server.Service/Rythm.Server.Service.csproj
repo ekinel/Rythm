@@ -55,7 +55,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Rythm.Common.Network\Rythm.Common.Network.csproj">
+    <ProjectReference Include="..\..\Common\Rythm.Common.Network\Rythm.Common.Network.csproj">
       <Project>{8ffbba56-13db-45e2-9d4d-8a6189294b5c}</Project>
       <Name>Rythm.Common.Network</Name>
     </ProjectReference>
