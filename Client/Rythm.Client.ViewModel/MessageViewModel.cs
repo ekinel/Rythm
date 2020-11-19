@@ -28,28 +28,24 @@ namespace Rythm.Client.ViewModel
         public MessageViewModel()
         {
             SendCommand = new DelegateCommand(ExecuteCommand);
-
-
             _currentTransport = TransportFactory.Create((TransportType.WebSocket));
             _currentTransport.ConnectionStateChanged += HandleConnectionStateChanged;
             _currentTransport.MessageReceived += HandleMessageReceived;
             _currentTransport.Connect("127.0.0.1", "65000");
-            _currentTransport?.Login("User");
+            
         }
         private void ExecuteCommand()
         {
-            //ChatMessages += ("\n" + CurrentMessage);
             _currentTransport?.Send("\n" + CurrentMessage);
-
             CurrentMessage = "";
         }
 
-        private void HandleMessageReceived(MessageReceivedEventArgs e)
+        private void MessageReceived(MessageReceivedEventArgs e)
         {
             ChatMessages += ("\n" + e.Message);
         }
 
-        private void HandleConnectionStateChanged(ConnectionStateChangedEventArgs e)
+        private void ConnectionStateChanged(ConnectionStateChangedEventArgs e)
         {
             if (e.Connected)
             {
@@ -57,6 +53,7 @@ namespace Rythm.Client.ViewModel
                 {
                     ChatMessages += ("\n" + ("Клиент подключен к серверу."));
                     ChatMessages += ("\n" + "Авторизуйтеся, чтобы отправлять сообщения.");
+                    _currentTransport?.Login("User");
                 }
                 else
                 {
@@ -71,13 +68,12 @@ namespace Rythm.Client.ViewModel
 
         private void HandleMessageReceived(object sender, MessageReceivedEventArgs e)
         {
-                HandleMessageReceived(e);
+           MessageReceived(e);
         }
 
         private void HandleConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e)
         {
-                HandleConnectionStateChanged(e);
-
+           ConnectionStateChanged(e);
         }
     }
 }
