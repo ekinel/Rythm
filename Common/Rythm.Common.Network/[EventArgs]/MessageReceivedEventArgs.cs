@@ -1,4 +1,4 @@
-﻿namespace Rythm.Common.Network.Events
+﻿namespace Rythm.Common.Network
 {
     public class MessageReceivedEventArgs
     {

@@ -8,14 +8,13 @@ namespace Rythm.Common.Network
     using System.Threading;
 
     using Messages;
-    using Events;
 
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     using WebSocketSharp;
-    public class WsClient
+    public class WsClient : ITransport
     {
         #region Fields
 

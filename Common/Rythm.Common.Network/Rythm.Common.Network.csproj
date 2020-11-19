@@ -48,8 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\ResultCodes.cs" />
-    <Compile Include="Events\ConnectionStateChangedEventArgs.cs" />
-    <Compile Include="Events\MessageReceivedEventArgs.cs" />
+    <Compile Include="Enums\TransportType.cs" />
+    <Compile Include="TransportFactory.cs" />
+    <Compile Include="[EventArgs]\ConnectionStateChangedEventArgs.cs" />
+    <Compile Include="[EventArgs]\MessageReceivedEventArgs.cs" />
+    <Compile Include="ITransport.cs" />
     <Compile Include="Messages\ConnectionRequest.cs" />
     <Compile Include="Messages\ConnectionResponse.cs" />
     <Compile Include="Messages\MessageBroadcast.cs" />

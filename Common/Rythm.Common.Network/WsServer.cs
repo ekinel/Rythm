@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using Rythm.Common.Network.Enums;
-using Rythm.Common.Network.Events;
+//using Rythm.Common.Network.Events;
 using Rythm.Common.Network.Messages;
 using WebSocketSharp.Server;
 

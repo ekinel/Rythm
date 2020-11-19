@@ -77,6 +77,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Rythm.Common.Network\Rythm.Common.Network.csproj">
+      <Project>{8ffbba56-13db-45e2-9d4d-8a6189294b5c}</Project>
+      <Name>Rythm.Common.Network</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rythm.Client.BusinessLogic\Rythm.Client.BusinessLogic.csproj">
       <Project>{6d66aaca-9202-41bb-a513-79f7b735eafe}</Project>
       <Name>Rythm.Client.BusinessLogic</Name>
