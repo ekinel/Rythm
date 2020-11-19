@@ -82,3 +82,6 @@ C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.Vi
 C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\Newtonsoft.Json.dll
 C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\Rythm.Common.Network.pdb
 C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\bin\Debug\Rythm.Client.ViewModel.pdb
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\View\TextMessageView.g.cs
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\View\TextMessageView.baml
+C:\Users\KiselevaEB\Documents\Kiseleva\Rerositories\Rythm\Client\Rythm.Client.View\obj\Debug\GeneratedInternalTypeHelper.g.cs
