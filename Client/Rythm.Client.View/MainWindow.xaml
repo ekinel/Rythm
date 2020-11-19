@@ -6,6 +6,6 @@
         xmlns:view="clr-namespace:Rythm.Client.View"
         mc:Ignorable="d">
     <Grid>
-        <view:TextMessageView Loaded="TextMessageView_Loaded"></view:TextMessageView>
+        <view:TextMessageView></view:TextMessageView>
     </Grid>
 </Window>

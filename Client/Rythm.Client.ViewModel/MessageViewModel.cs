@@ -28,7 +28,7 @@ namespace Rythm.Client.ViewModel
         private void ExecuteCommand()
         {
             ChatMessages = CurrentMessage;
-            ChatMessages = "";
+            CurrentMessage = "";
         }
     }
 }
