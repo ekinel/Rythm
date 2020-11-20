@@ -41,8 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLogic.cs" />
+    <Compile Include="SettingConnectionController.cs" />
+    <Compile Include="ISettingConnectionController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Rythm.Common.Network\Rythm.Common.Network.csproj">
+      <Project>{8ffbba56-13db-45e2-9d4d-8a6189294b5c}</Project>
+      <Name>Rythm.Common.Network</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

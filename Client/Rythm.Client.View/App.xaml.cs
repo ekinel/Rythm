@@ -6,17 +6,16 @@
     using Prism.Unity;
     using Prism.Mvvm;
 
-
-
     using Unity;
 
     using Rythm.Client.ViewModel;
+    using Rythm.Client.BusinessLogic;
 
     public partial class App : PrismApplication
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //containerRegistry.RegisterSingleton<ITextMessagesController, TextMessagesController>();
+            containerRegistry.RegisterSingleton<ISettingConnectionController, SettingConnectionController>();
             containerRegistry.Register<MessageViewModel>();
         }
 

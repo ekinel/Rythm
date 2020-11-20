@@ -133,6 +133,10 @@
       <Project>{8ffbba56-13db-45e2-9d4d-8a6189294b5c}</Project>
       <Name>Rythm.Common.Network</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Rythm.Client.BusinessLogic\Rythm.Client.BusinessLogic.csproj">
+      <Project>{6d66aaca-9202-41bb-a513-79f7b735eafe}</Project>
+      <Name>Rythm.Client.BusinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rythm.Client.ViewModel\Rythm.Client.ViewModel.csproj">
       <Project>{344f78f4-90ee-439f-b563-a45628720b5a}</Project>
       <Name>Rythm.Client.ViewModel</Name>

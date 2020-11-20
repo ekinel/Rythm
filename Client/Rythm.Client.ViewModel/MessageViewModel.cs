@@ -4,12 +4,13 @@ using Prism.Mvvm;
 using Prism.Commands;
 
 using Rythm.Common.Network;
+using Rythm.Client.BusinessLogic;
 
 namespace Rythm.Client.ViewModel
 {
     public class MessageViewModel : BindableBase
     {
-        private ITransport _currentTransport;
+        public ISettingConnectionController _settingConnectionController;
 
         private string _currentMessage;
         private string _chatMessages;
@@ -25,55 +26,26 @@ namespace Rythm.Client.ViewModel
             get => _chatMessages;
             set => SetProperty(ref _chatMessages, value);
         }
-        public MessageViewModel()
+        public void NewMessageRecieved(string Message)
+        {
+            ChatMessages = Message;
+        }
+        public MessageViewModel(ISettingConnectionController settingConnectionController)
         {
             SendCommand = new DelegateCommand(ExecuteCommand);
-            _currentTransport = TransportFactory.Create((TransportType.WebSocket));
-            _currentTransport.ConnectionStateChanged += HandleConnectionStateChanged;
-            _currentTransport.MessageReceived += HandleMessageReceived;
-            _currentTransport.Connect("127.0.0.1", "65000");
-            
+            _settingConnectionController = settingConnectionController;
+            _settingConnectionController.MessageRecievedEvent += NewMessageRecieved;
         }
         private void ExecuteCommand()
         {
-            _currentTransport?.Send("\n" + CurrentMessage);
+            //_currentTransport?.Send("\n" + CurrentMessage);
+            _settingConnectionController.MessageSend("\n" + CurrentMessage);
             CurrentMessage = "";
         }
 
-        private void MessageReceived(MessageReceivedEventArgs e)
+        public void MessageReceived(MessageReceivedEventArgs e)
         {
             ChatMessages += ("\n" + e.Message);
-        }
-
-        private void ConnectionStateChanged(ConnectionStateChangedEventArgs e)
-        {
-            if (e.Connected)
-            {
-                if (string.IsNullOrEmpty(e.ClientName))
-                {
-                    ChatMessages += ("\n" + ("Клиент подключен к серверу."));
-                    ChatMessages += ("\n" + "Авторизуйтеся, чтобы отправлять сообщения.");
-                    _currentTransport?.Login("User");
-                }
-                else
-                {
-                    ChatMessages += ("\n" + ("Авторизация выполнена успешно."));
-                }
-            }
-            else
-            {
-                ChatMessages += ("\n" + ("Клиент отключен от сервера."));
-            }
-        }
-
-        private void HandleMessageReceived(object sender, MessageReceivedEventArgs e)
-        {
-           MessageReceived(e);
-        }
-
-        private void HandleConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e)
-        {
-           ConnectionStateChanged(e);
         }
     }
 }
