@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
-
+//лишние юзинги
 namespace Rythm.Client.BusinessLogic
 {
     using Rythm.Common.Network;
 
     public class SettingConnectionController : ISettingConnectionController
     {
-        private ITransport _currentTransport;
-        public event Action<string> MessageRecievedEvent;
+        private ITransport _currentTransport;// readonly
+        public event Action<string> MessageRecievedEvent;//опечатка
 
         public SettingConnectionController()
         {
@@ -27,14 +27,15 @@ namespace Rythm.Client.BusinessLogic
             _currentTransport?.Send("\n" + CurrentMessage);
         }
 
-        public void MessageReceived(MessageReceivedEventArgs e)
-        {
-            MessageRecievedEvent.Invoke(e.Message);
-           // ChatMessages += ("\n" + e.Message);
-        }
+        //private void MessageReceived(MessageReceivedEventArgs e)//метод не нужен
+        //{
+        //    MessageRecievedEvent.Invoke(e.Message);
+        //   // ChatMessages += ("\n" + e.Message);
+        //}
 
-        private void ConnectionStateChanged(ConnectionStateChangedEventArgs e)
+        private void ConnectionStateChanged(ConnectionStateChangedEventArgs e)//параметр должен быть говорящий, одна буква не пойдёт
         {
+            //удаляем все что не используется 
             if (e.Connected)
             {
                 if (string.IsNullOrEmpty(e.ClientName))
@@ -56,7 +57,7 @@ namespace Rythm.Client.BusinessLogic
         }
         private void HandleMessageReceived(object sender, MessageReceivedEventArgs e)
         {
-            MessageReceived(e);
+            MessageRecievedEvent.Invoke(e.Message);
         }
 
         private void HandleConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e)
