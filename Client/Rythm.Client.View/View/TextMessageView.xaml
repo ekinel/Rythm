@@ -27,7 +27,20 @@
         <Border Grid.Column="1" Grid.RowSpan="3" Background="Beige"/>
         <Border Grid.Column="2" Grid.ColumnSpan="2" Background="Bisque"/>
         <Border Grid.Column="2" Grid.Row="1" Background="Tan">
-            <TextBox TextWrapping="Wrap" IsReadOnly="True" Text="{Binding ChatMessages}"/>
+            <ListBox ItemsSource="{Binding MessagesList}" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text="{Binding Text}" Grid.Column="1"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Border>
         <Border Grid.Column="3" Grid.Row="1" Background="Wheat"/>
         <Border Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Background="Honeydew">

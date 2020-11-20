@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-//лишние юзинги
-namespace Rythm.Client.BusinessLogic
+﻿namespace Rythm.Client.BusinessLogic
 {
+    using System;
     using Rythm.Common.Network;
 
     public class SettingConnectionController : ISettingConnectionController
     {
-        private ITransport _currentTransport;// readonly
-        public event Action<string> MessageRecievedEvent;//опечатка
+        private readonly ITransport _currentTransport;
+        public event Action<string> MessageReceivedEvent;
 
         public SettingConnectionController()
         {
@@ -26,12 +20,6 @@ namespace Rythm.Client.BusinessLogic
         {
             _currentTransport?.Send("\n" + CurrentMessage);
         }
-
-        //private void MessageReceived(MessageReceivedEventArgs e)//метод не нужен
-        //{
-        //    MessageRecievedEvent.Invoke(e.Message);
-        //   // ChatMessages += ("\n" + e.Message);
-        //}
 
         private void ConnectionStateChanged(ConnectionStateChangedEventArgs e)//параметр должен быть говорящий, одна буква не пойдёт
         {
@@ -57,7 +45,7 @@ namespace Rythm.Client.BusinessLogic
         }
         private void HandleMessageReceived(object sender, MessageReceivedEventArgs e)
         {
-            MessageRecievedEvent.Invoke(e.Message);
+            MessageReceivedEvent.Invoke(e.Message);
         }
 
         private void HandleConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e)
