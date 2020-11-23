@@ -6,6 +6,45 @@
         xmlns:view="clr-namespace:Rythm.Client.View"
         mc:Ignorable="d">
     <Grid>
-        <view:TextMessageView></view:TextMessageView>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="6*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="0" Grid.RowSpan="3" Background="Azure"/>
+        <Border Grid.Column="1" Grid.RowSpan="3" Background="Beige"/>
+        <Border Grid.Column="2" Grid.ColumnSpan="2" Background="Bisque"/>
+        <Border Grid.Column="2" Grid.Row="1" Background="Tan">
+            <view:TextMessageView ></view:TextMessageView>
+        </Border>
+        <Border Grid.Column="3" Grid.Row="1" Background="Wheat">
+            <view:ConnectionParametersView ></view:ConnectionParametersView>
+        </Border>
+        
+
+        <StackPanel Grid.Column="0"  Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Foreground="Black" FontSize="10" Text="Настройки"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1"  Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Foreground="Black" FontSize="10" Text="Клиенты/группы"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Foreground="Black" FontSize="10" Text="Выбранные клиент/группа"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Foreground="Black" FontSize="10"/>
+        </StackPanel>
+        <StackPanel Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Foreground="Black" FontSize="10"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Foreground="Black" FontSize="10"/>
+        </StackPanel>
     </Grid>
 </Window>

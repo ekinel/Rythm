@@ -1,4 +1,7 @@
-﻿namespace Rythm.Client.ViewModel
+﻿using System.Windows;
+using System.Windows.Threading;
+
+namespace Rythm.Client.ViewModel
 {
     using System;
     using System.Windows.Input;
@@ -12,17 +15,18 @@
     using Rythm.Client.BusinessLogic;
     public class MessageViewModel : BindableBase
     {
-        private readonly ISettingConnectionController _settingConnectionController;
+        private readonly IMessagingServiceController _settingConnectionController;
 
-        private string _currentMessage;
+        private string _outgoingMessage;
         private string _chatMessages;
         public ICommand SendCommand { get; }
 
-        public ObservableCollection<Message> MessagesList = new ObservableCollection<Message>();
-        public string CurrentMessage
+        public ObservableCollection<SendMessage> ReceivedMessagesList { get; set; } = new ObservableCollection<SendMessage>();
+
+        public string OutgoingMessage
         {
-            get => _currentMessage;
-            set => SetProperty(ref _currentMessage, value);
+            get => _outgoingMessage;
+            set => SetProperty(ref _outgoingMessage, value);
         }
         public string ChatMessages
         {
@@ -32,43 +36,24 @@
 
         public void HandleNewMessageRecieved(string message)
         {
-            MessagesList.Add(new Message { Name = "User1", Text = message });
-
+            Application.Current.Dispatcher.BeginInvoke(
+                DispatcherPriority.Background,
+                new Action(() => {
+                    ReceivedMessagesList.Add(new SendMessage("User1", message ));
+                }));
         }
-        public MessageViewModel(ISettingConnectionController settingConnectionController)
+
+        public MessageViewModel(IMessagingServiceController settingConnectionController)
         {
-            SendCommand = new DelegateCommand(ExecuteCommand);
+            SendCommand = new DelegateCommand(SendMessageCommand);
             _settingConnectionController = settingConnectionController ?? throw new ArgumentNullException(nameof(settingConnectionController));
             _settingConnectionController.MessageReceivedEvent += HandleNewMessageRecieved;
+
         }
-        private void ExecuteCommand()//лишнее удаляем
+        private void SendMessageCommand()
         {
-            //_currentTransport?.Send("\n" + CurrentMessage);
-            _settingConnectionController.MessageSend("\n" + CurrentMessage);
-            CurrentMessage = string.Empty;
-        }
-
-        public void MessageReceived(MessageReceivedEventArgs e)//говорящий аргумент
-        {
-            //ChatMessages += ("\n" + e.Message); - my -  выводило текст на экран
+            _settingConnectionController.MessageSend(OutgoingMessage);
+            OutgoingMessage = string.Empty;
         }
     }
-
-    public class Message : BindableBase
-    {
-        private string _name;
-        private string _text;
-
-    public string Name
-    {
-        get => _name;
-        set => SetProperty(ref _name, value);
-    }
-    public string Text
-    {
-        get => _text;
-        set => SetProperty(ref _text, value);
-    }
-
-}
 }

@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Rythm.Client.View.ConnectionParametersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Rythm.Client.View"
+             xmlns:viewModel="clr-namespace:Rythm.Client.ViewModel;assembly=Rythm.Client.ViewModel"
+             mc:Ignorable="d" 
+             xmlns:interactivity="http://prismlibrary.com/"
+             interactivity:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance viewModel:ConnectionParametersViewModel}" Height="366.985" Width="244.706">
+    
+    <Grid Background="White" Margin="0,0,24,10">
+        <TextBlock HorizontalAlignment="Left" Height="23" Margin="24,22,0,0" Text="Адрес" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="24,50,0,0" Text="{Binding Address}" VerticalAlignment="Top" Width="120" IsEnabled="{Binding FieldsVisibility}"/>
+        <TextBlock HorizontalAlignment="Left" Height="23" Margin="24,89,0,0" Text="Порт" VerticalAlignment="Top" Width="120"  IsEnabled="False" />
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="24,117,0,0" Text="{Binding Port}" VerticalAlignment="Top" Width="120" IsEnabled="{Binding FieldsVisibility}"/>
+        <TextBlock HorizontalAlignment="Left" Height="23" Margin="24,195,0,0" Text="Логин" VerticalAlignment="Top" Width="120"  IsEnabled="False" />
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="24,223,0,0" Text="{Binding Login}" VerticalAlignment="Top" Width="120" IsEnabled="{Binding FieldsVisibility}"/>
+        <Button Content="Подключение" HorizontalAlignment="Left" Margin="98,281,0,0" Command="{Binding LoginCommand}"  Width="86" Height="29" />
+    </Grid>
+</UserControl>

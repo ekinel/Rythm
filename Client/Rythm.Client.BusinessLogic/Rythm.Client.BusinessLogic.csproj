@@ -41,8 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SettingConnectionController.cs" />
-    <Compile Include="ISettingConnectionController.cs" />
+    <Compile Include="ApplicationDispatcherHelper.cs" />
+    <Compile Include="IConnectionServiceController.cs" />
+    <Compile Include="ConnectionServiceController.cs" />
+    <Compile Include="MessagingServiceController.cs" />
+    <Compile Include="IMessagingServiceController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

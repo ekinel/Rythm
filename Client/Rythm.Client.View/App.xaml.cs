@@ -15,8 +15,11 @@
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<ISettingConnectionController, SettingConnectionController>();
+            containerRegistry.RegisterSingleton<IMessagingServiceController, MessagingServiceController>();
             containerRegistry.Register<MessageViewModel>();
+
+            containerRegistry.RegisterSingleton<IConnectionServiceController, ConnectionServiceController>();
+            containerRegistry.Register<ConnectionParametersViewModel>();
         }
 
         protected override void ConfigureViewModelLocator()
@@ -24,6 +27,8 @@
             base.ConfigureViewModelLocator();
 
             ViewModelLocationProvider.Register(typeof(TextMessageView).ToString(), () => Container.Resolve<MessageViewModel>());
+            ViewModelLocationProvider.Register(typeof(ConnectionParametersView).ToString(), () => Container.Resolve<ConnectionParametersViewModel>());
+
         }
 
         protected override Window CreateShell()
