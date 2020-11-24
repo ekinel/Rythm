@@ -8,33 +8,34 @@
              mc:Ignorable="d" 
              xmlns:interactivity="http://prismlibrary.com/"
              interactivity:ViewModelLocator.AutoWireViewModel="True"
-             d:DataContext="{d:DesignInstance viewModel:ConnectionParametersViewModel}" Height="366.985" Width="244.706">
+             d:DataContext="{d:DesignInstance viewModel:ConnectionParametersViewModel}" >
 
-    <Grid Background="White" Margin="0,10,0,0">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0,40"></ColumnDefinition>
+            <ColumnDefinition Width="20"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="0,70"></ColumnDefinition>
+            <ColumnDefinition Width="20"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
         <TextBlock Text="Адрес" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" IsEnabled="False"/>
         <TextBox Text="{Binding Address}" Grid.Column="1" Grid.Row="2" IsEnabled="{Binding FieldsEnabled}"/>
         <TextBlock Text="Порт" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" IsEnabled="False"/>
         <TextBox Text="{Binding Port}" Grid.Column="1" Grid.Row="4" IsEnabled="{Binding FieldsEnabled}"/>
-        <TextBlock Text="Логин" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" Width="120" IsEnabled="False"/>
+        <TextBlock Text="Логин" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" IsEnabled="False"/>
         <TextBox Text="{Binding Login}" Grid.Column="1" Grid.Row="7" IsEnabled="{Binding FieldsEnabled}"/>
-        <Button Content="Подключение" Grid.Column="1" Grid.Row="9" Command="{Binding LoginCommand}" />
+        <Button Content="Подключение" Grid.Column="1" Grid.Row="9" Width="100" HorizontalAlignment="Right" Command="{Binding LoginCommand}" />
+
     </Grid>
 </UserControl>

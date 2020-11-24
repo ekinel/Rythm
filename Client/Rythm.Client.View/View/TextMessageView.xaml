@@ -7,13 +7,13 @@
              xmlns:viewModel="clr-namespace:Rythm.Client.ViewModel;assembly=Rythm.Client.ViewModel"
              mc:Ignorable="d"
              xmlns:interactivity="http://prismlibrary.com/"
-            interactivity:ViewModelLocator.AutoWireViewModel="True" Height="455.321" Width="731.205"
+            interactivity:ViewModelLocator.AutoWireViewModel="True" 
             d:DataContext="{d:DesignInstance viewModel:MessageViewModel}">
 
-    <Grid Background="White">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" ></RowDefinition>
-            <RowDefinition Height="0.15*" ></RowDefinition>
+            <RowDefinition Height="Auto" ></RowDefinition>
         </Grid.RowDefinitions>
 
         <ListBox Grid.Row="0" ItemsSource="{Binding ReceivedMessagesList}" >
@@ -26,9 +26,13 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" >
-            <TextBox Text="{Binding OutgoingMessage}" Width="670" />
-            <Button Content="Отправить"  Command="{Binding SendCommand}"/>
-        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Text="{Binding OutgoingMessage}" Margin="0,5,5,5" TextWrapping="Wrap" MaxHeight="100"/>
+            <Button Grid.Column="1" Content="Отправить" Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom"  MaxHeight="30" Command="{Binding SendCommand}"/>
+        </Grid>
     </Grid>
 </UserControl>

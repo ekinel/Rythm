@@ -20,11 +20,12 @@
         <Border Grid.Column="0" Grid.RowSpan="3" Background="Azure"/>
         <Border Grid.Column="1" Grid.RowSpan="3" Background="Beige"/>
         <Border Grid.Column="2" Grid.ColumnSpan="2" Background="Bisque"/>
-        <Border Grid.Column="2" Grid.Row="1" Background="Tan">
-            <view:TextMessageView ></view:TextMessageView>
+
+        <Border Grid.Column="2" Grid.Row="1" Margin="1">
+            <view:TextMessageView />
         </Border>
-        <Border Grid.Column="3" Grid.Row="1" Background="Wheat">
-            <view:ConnectionParametersView ></view:ConnectionParametersView>
+        <Border Grid.Column="3" Grid.Row="1" BorderThickness="1" BorderBrush="LightGray" Margin="1">
+            <view:ConnectionParametersView />
         </Border>
         
 
