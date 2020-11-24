@@ -1,13 +1,11 @@
-﻿namespace Rythm.Client.BusinessLogic
-{
-    using System;
-    using System.Windows;
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
 
+namespace Rythm.Client.BusinessLogic
+{
     public static class ApplicationDispatcherHelper
     {
-
-        #region Methods
-
         //public static void BeginInvoke(Action handler)
         //{
         //    if (Application.Current?.Dispatcher == null)
@@ -31,7 +29,5 @@
         //        Application.Current.Dispatcher.Invoke(handler.Invoke);
         //    }
         //}
-
-        #endregion
     }
 }

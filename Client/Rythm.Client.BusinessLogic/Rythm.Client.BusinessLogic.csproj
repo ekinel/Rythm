@@ -42,10 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDispatcherHelper.cs" />
-    <Compile Include="IConnectionServiceController.cs" />
-    <Compile Include="ConnectionServiceController.cs" />
-    <Compile Include="MessagingServiceController.cs" />
-    <Compile Include="IMessagingServiceController.cs" />
+    <Compile Include="IConnectionController.cs" />
+    <Compile Include="ConnectionController.cs" />
+    <Compile Include="MessagingController.cs" />
+    <Compile Include="IMessagingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

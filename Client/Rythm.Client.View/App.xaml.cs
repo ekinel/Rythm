@@ -15,10 +15,10 @@
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<IMessagingServiceController, MessagingServiceController>();
+            containerRegistry.RegisterSingleton<IMessagingController, MessagingController>();
             containerRegistry.Register<MessageViewModel>();
 
-            containerRegistry.RegisterSingleton<IConnectionServiceController, ConnectionServiceController>();
+            containerRegistry.RegisterSingleton<IConnectionController, ConnectionController>();
             containerRegistry.Register<ConnectionParametersViewModel>();
         }
 

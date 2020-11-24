@@ -10,26 +10,25 @@
             interactivity:ViewModelLocator.AutoWireViewModel="True" Height="455.321" Width="731.205"
             d:DataContext="{d:DesignInstance viewModel:MessageViewModel}">
 
-    <Grid Margin="0,0,155,0">
-        <ListBox ItemsSource="{Binding ReceivedMessagesList}" Margin="0,0,39,0" >
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" ></RowDefinition>
+            <RowDefinition Height="0.15*" ></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ListBox Grid.Row="0" ItemsSource="{Binding ReceivedMessagesList}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="50" />
-                        </Grid.RowDefinitions>
+                    <StackPanel>
                         <TextBlock Text="{Binding Name}" FontSize="9"/>
-                        <TextBlock Text="{Binding Text}" Grid.Row="1" FontSize="11"/>
-                    </Grid>
+                        <TextBlock Text="{Binding Text}" FontSize="11"/>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
-        <StackPanel Orientation="Horizontal">
-            <TextBox Height="29" TextWrapping="Wrap" Margin="10,370,25,50" Width="333" Text="{Binding OutgoingMessage}" />
-            <Button Content="Button" Width="63" Margin="0,370,0,50"  Command="{Binding SendCommand}"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" >
+            <TextBox Text="{Binding OutgoingMessage}" Width="670" />
+            <Button Content="Отправить"  Command="{Binding SendCommand}"/>
         </StackPanel>
-
     </Grid>
 </UserControl>

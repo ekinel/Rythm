@@ -9,14 +9,32 @@
              xmlns:interactivity="http://prismlibrary.com/"
              interactivity:ViewModelLocator.AutoWireViewModel="True"
              d:DataContext="{d:DesignInstance viewModel:ConnectionParametersViewModel}" Height="366.985" Width="244.706">
-    
-    <Grid Background="White" Margin="0,0,24,10">
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="24,22,0,0" Text="Адрес" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="24,50,0,0" Text="{Binding Address}" VerticalAlignment="Top" Width="120" IsEnabled="{Binding FieldsVisibility}"/>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="24,89,0,0" Text="Порт" VerticalAlignment="Top" Width="120"  IsEnabled="False" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="24,117,0,0" Text="{Binding Port}" VerticalAlignment="Top" Width="120" IsEnabled="{Binding FieldsVisibility}"/>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="24,195,0,0" Text="Логин" VerticalAlignment="Top" Width="120"  IsEnabled="False" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="24,223,0,0" Text="{Binding Login}" VerticalAlignment="Top" Width="120" IsEnabled="{Binding FieldsVisibility}"/>
-        <Button Content="Подключение" HorizontalAlignment="Left" Margin="98,281,0,0" Command="{Binding LoginCommand}"  Width="86" Height="29" />
+
+    <Grid Background="White" Margin="0,10,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0,40"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0,70"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Адрес" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" IsEnabled="False"/>
+        <TextBox Text="{Binding Address}" Grid.Column="1" Grid.Row="2" IsEnabled="{Binding FieldsEnabled}"/>
+        <TextBlock Text="Порт" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" IsEnabled="False"/>
+        <TextBox Text="{Binding Port}" Grid.Column="1" Grid.Row="4" IsEnabled="{Binding FieldsEnabled}"/>
+        <TextBlock Text="Логин" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" Width="120" IsEnabled="False"/>
+        <TextBox Text="{Binding Login}" Grid.Column="1" Grid.Row="7" IsEnabled="{Binding FieldsEnabled}"/>
+        <Button Content="Подключение" Grid.Column="1" Grid.Row="9" Command="{Binding LoginCommand}" />
     </Grid>
 </UserControl>

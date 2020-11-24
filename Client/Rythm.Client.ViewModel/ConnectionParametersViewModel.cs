@@ -1,22 +1,33 @@
-﻿namespace Rythm.Client.ViewModel
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+namespace Rythm.Client.ViewModel
 {
     using System;
     using System.Windows.Input;
 
-    using Prism.Mvvm;
-    using Prism.Commands;
+    using BusinessLogic;
 
-    using Rythm.Client.BusinessLogic;
+    using Prism.Commands;
+    using Prism.Mvvm;
 
     public class ConnectionParametersViewModel : BindableBase
     {
-        private readonly IConnectionServiceController _connectionServiceController;
+        #region Fields
 
-        private string _address;
-        private string _port;
+        private readonly IConnectionController _connectionServiceController;
+
+        private string _address = "127.0.0.1";
+
+        private bool _fieldsEnabled = true;
         private string _login;
+        private string _port = "65000";
 
-        private bool _fieldsVisibility = true;
+        #endregion
+
+        #region Properties
+
         public ICommand LoginCommand { get; }
 
         public string Address
@@ -24,32 +35,45 @@
             get => _address;
             set => SetProperty(ref _address, value);
         }
+
         public string Port
         {
             get => _port;
             set => SetProperty(ref _port, value);
         }
+
         public string Login
         {
             get => _login;
             set => SetProperty(ref _login, value);
         }
 
-        public bool FieldsVisibility
+        public bool FieldsEnabled
         {
-            get => _fieldsVisibility;
-            set => SetProperty(ref _fieldsVisibility, value);
+            get => _fieldsEnabled;
+            set => SetProperty(ref _fieldsEnabled, value);
         }
 
-        public ConnectionParametersViewModel(IConnectionServiceController connectionService)
+        #endregion
+
+        #region Constructors
+
+        public ConnectionParametersViewModel(IConnectionController connectionService)
         {
             _connectionServiceController = connectionService ?? throw new ArgumentNullException(nameof(connectionService));
             LoginCommand = new DelegateCommand(LoginUserCommand);
         }
+
+        #endregion
+
+        #region Methods
+
         private void LoginUserCommand()
         {
-            FieldsVisibility = false;
+            FieldsEnabled = false;
             _connectionServiceController.DataSending(Address, Port, Login);
         }
+
+        #endregion
     }
 }

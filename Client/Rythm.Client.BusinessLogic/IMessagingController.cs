@@ -2,31 +2,22 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Client.ViewModel
+namespace Rythm.Client.BusinessLogic
 {
-    using Prism.Mvvm;
+    using System;
 
-    public class SendMessage : BindableBase
+    public interface IMessagingController
     {
-        #region Fields
+        #region Events
+
+        event Action<string> MessageReceivedEvent;
+        event Action<string> UserLoginEvent;
 
         #endregion
 
-        #region Properties
+        #region Methods
 
-        public string Name { get; }
-
-        public string Text { get; }
-
-        #endregion
-
-        #region Constructors
-
-        public SendMessage(string name, string text)
-        {
-            Name = name;
-            Text = text;
-        }
+        void MessageSend(string currentMessage);
 
         #endregion
     }
