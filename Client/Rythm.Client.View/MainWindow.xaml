@@ -18,8 +18,12 @@
         </Grid.RowDefinitions>
 
         <Border Grid.Column="0" Grid.RowSpan="3" Background="Azure"/>
-        <Border Grid.Column="1" Grid.RowSpan="3" Background="Beige"/>
-        <Border Grid.Column="2" Grid.ColumnSpan="2" Background="Bisque"/>
+        <Border Grid.Column="1" Grid.RowSpan="3" Background="Beige">
+            <view:UserListView />
+        </Border>
+        <Border Grid.Column="2" Grid.ColumnSpan="2" Background="Bisque">
+            <view:UserLoginDisplayView />
+        </Border>
 
         <Border Grid.Column="2" Grid.Row="1" Margin="1">
             <view:TextMessageView />

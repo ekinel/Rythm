@@ -87,6 +87,12 @@
     <Compile Include="View\TextMessageView.xaml.cs">
       <DependentUpon>TextMessageView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserLoginDisplayView.xaml.cs">
+      <DependentUpon>UserLoginDisplayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserListView.xaml.cs">
+      <DependentUpon>UserListView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -104,6 +110,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TextMessageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserLoginDisplayView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\UserListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

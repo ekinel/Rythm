@@ -74,6 +74,8 @@
     <Compile Include="MessageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendMessage.cs" />
+    <Compile Include="UserListViewModel.cs" />
+    <Compile Include="UserLoginDisplayViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
