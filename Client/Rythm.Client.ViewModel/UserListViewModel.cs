@@ -5,11 +5,9 @@
 namespace Rythm.Client.ViewModel
 {
     using System.Collections.ObjectModel;
-    using System.Windows.Input;
 
     using BusinessLogic;
 
-    using Prism.Commands;
     using Prism.Mvvm;
 
     public class UserListViewModel : BindableBase
@@ -22,12 +20,7 @@ namespace Rythm.Client.ViewModel
 
         #region Properties
 
-        public ObservableCollection<UsersLogins> UserList { get; set; } = new ObservableCollection<UsersLogins>
-        {
-            new UsersLogins(_userListController, "Никита"),
-            new UsersLogins(_userListController, "Катя"),
-            new UsersLogins(_userListController, "Паша")
-        };
+        public ObservableCollection<UsersLoginsViewModel> UserList { get; set; }
 
         #endregion
 
@@ -36,42 +29,12 @@ namespace Rythm.Client.ViewModel
         public UserListViewModel(IUserListController userListController)
         {
             _userListController = userListController;
-        }
-
-        #endregion
-    }
-
-    public class UsersLogins
-    {
-        #region Fields
-
-        private readonly IUserListController _userListController;
-
-        #endregion
-
-        #region Properties
-
-        public string Login { get; }
-        public ICommand ChooseLoginCommand { get; }
-
-        #endregion
-
-        #region Constructors
-
-        public UsersLogins(IUserListController userListController, string login)
-        {
-            _userListController = userListController;
-            ChooseLoginCommand = new DelegateCommand(ChosenLogin);
-            Login = login;
-        }
-
-        #endregion
-
-        #region Methods
-
-        private void ChosenLogin()
-        {
-            _userListController.SendUserLogin(Login);
+            UserList = new ObservableCollection<UsersLoginsViewModel>
+            {
+                new UsersLoginsViewModel(_userListController, "Никита"),
+                new UsersLoginsViewModel(_userListController, "Катя"),
+                new UsersLoginsViewModel(_userListController, "Паша")
+            };
         }
 
         #endregion

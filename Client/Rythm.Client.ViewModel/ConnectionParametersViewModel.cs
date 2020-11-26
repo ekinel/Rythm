@@ -16,13 +16,15 @@ namespace Rythm.Client.ViewModel
     {
         #region Fields
 
-        private readonly IConnectionController _connectionServiceController;
+        private readonly IConnectionController _connectionController;
 
         private string _address = "127.0.0.1";
 
         private bool _fieldsEnabled = true;
         private string _login;
         private string _port = "65000";
+
+        private string _viewVisibility = "hidden";
 
         #endregion
 
@@ -54,13 +56,20 @@ namespace Rythm.Client.ViewModel
             set => SetProperty(ref _fieldsEnabled, value);
         }
 
+        public string ViewVisibility
+        {
+            get => _viewVisibility;
+            set => SetProperty(ref _viewVisibility, value);
+        }
+
         #endregion
 
         #region Constructors
 
-        public ConnectionParametersViewModel(IConnectionController connectionService)
+        public ConnectionParametersViewModel(IConnectionController connectionController)
         {
-            _connectionServiceController = connectionService ?? throw new ArgumentNullException(nameof(connectionService));
+            _connectionController = connectionController ?? throw new ArgumentNullException(nameof(connectionController));
+            _connectionController.SendNewStateParametersViewVisibility += HandleConnectionParametersViewVisibility;
             LoginCommand = new DelegateCommand(LoginUserCommand);
         }
 
@@ -71,7 +80,12 @@ namespace Rythm.Client.ViewModel
         private void LoginUserCommand()
         {
             FieldsEnabled = false;
-            _connectionServiceController.DataSending(Address, Port, Login);
+            _connectionController.DataSending(Address, Port, Login);
+        }
+
+        private void HandleConnectionParametersViewVisibility(string visibility)
+        {
+            ViewVisibility = visibility;
         }
 
         #endregion

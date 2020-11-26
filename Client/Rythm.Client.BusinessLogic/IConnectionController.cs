@@ -4,6 +4,8 @@
 
 namespace Rythm.Client.BusinessLogic
 {
+    using System;
+
     using Common.Network;
 
     public interface IConnectionController
@@ -11,8 +13,16 @@ namespace Rythm.Client.BusinessLogic
         #region Properties
 
         ITransport CurrentTransport { get; }
+        IUserLoginDisplayController UserLoginDisplayController { get; set; }
 
         string Login { get; set; }
+        string ConnectionParametersViewVisibility { get; set; }
+
+        #endregion
+
+        #region Events
+
+        event Action<string> SendNewStateParametersViewVisibility;
 
         #endregion
 

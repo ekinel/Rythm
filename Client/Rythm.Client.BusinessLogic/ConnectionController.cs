@@ -4,24 +4,51 @@
 
 namespace Rythm.Client.BusinessLogic
 {
+    using System;
+
     using Common.Network;
 
     public class ConnectionController : IConnectionController
     {
+        #region Fields
+
+        private string _connectionParametersViewSettingsVisibility;
+
+        #endregion
+
         #region Properties
 
         public ITransport CurrentTransport { get; }
+        public IUserLoginDisplayController UserLoginDisplayController { get; set; }
 
         public string Login { get; set; }
+
+        public string ConnectionParametersViewVisibility
+        {
+            get => _connectionParametersViewSettingsVisibility;
+            set
+            {
+                _connectionParametersViewSettingsVisibility = value ?? throw new ArgumentNullException(nameof(value));
+                SendNewStateParametersViewVisibility(_connectionParametersViewSettingsVisibility);
+            }
+        }
+
+        #endregion
+
+        #region Events
+
+        public event Action<string> SendNewStateParametersViewVisibility;
 
         #endregion
 
         #region Constructors
 
-        public ConnectionController()
+        public ConnectionController(IUserLoginDisplayController _UserLoginDisplayController)
         {
             CurrentTransport = TransportFactory.Create(TransportType.WebSocket);
             CurrentTransport.ConnectionStateChanged += HandleConnectionStateChanged;
+            UserLoginDisplayController = _UserLoginDisplayController;
+            UserLoginDisplayController.NewParametersViewVisibilityEvent += HandleConnectionParametersViewVisibility;
         }
 
         #endregion
@@ -47,6 +74,14 @@ namespace Rythm.Client.BusinessLogic
                 {
                     CurrentTransport?.Login(Login);
                 }
+            }
+        }
+
+        private void HandleConnectionParametersViewVisibility(bool visibility)
+        {
+            if (visibility == false)
+            {
+                ConnectionParametersViewVisibility = "visibility";
             }
         }
 

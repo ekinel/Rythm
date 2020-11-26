@@ -1,15 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace Rythm.Client.BusinessLogic
 {
+    using System;
+
     public interface IUserLoginDisplayController
     {
+        #region Properties
+
         string Login { get; set; }
+        bool ConnectionParametersViewSettingsVisibility { get; set; }
+
+
+        #endregion
+
+        #region Events
 
         event Action<string> NewUserLoginEvent;
+        event Action<bool> NewParametersViewVisibilityEvent;
+
+        #endregion
     }
 }

@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace Rythm.Client.BusinessLogic
 {
     public interface IUserListController
     {
+        #region Methods
+
         void SendUserLogin(string login);
+
+        #endregion
     }
 }

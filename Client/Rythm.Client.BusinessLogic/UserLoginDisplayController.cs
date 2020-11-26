@@ -8,23 +8,41 @@ namespace Rythm.Client.BusinessLogic
 
     public class UserLoginDisplayController : IUserLoginDisplayController
     {
+        #region Fields
+
+        private string _login;
+        private bool _connectionParametersViewSettingsVisibility;
+
+        #endregion
+
         #region Properties
 
         public string Login
         {
-            get => Login;
+            get => _login;
             set
             {
-                Login = value ?? throw new ArgumentNullException(nameof(value));
-                NewUserLoginEvent(Login);
+                _login = value ?? throw new ArgumentNullException(nameof(value));
+                NewUserLoginEvent(_login);
             }
-        } 
+        }
+
+        public bool ConnectionParametersViewSettingsVisibility
+        {
+            get => _connectionParametersViewSettingsVisibility;
+            set
+            {
+                _connectionParametersViewSettingsVisibility = value;
+                NewParametersViewVisibilityEvent(_connectionParametersViewSettingsVisibility);
+            }
+        }
 
         #endregion
 
         #region Events
 
         public event Action<string> NewUserLoginEvent;
+        public event Action<bool> NewParametersViewVisibilityEvent;
 
         #endregion
     }

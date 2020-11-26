@@ -6,7 +6,7 @@ namespace Rythm.Client.ViewModel
 {
     using Prism.Mvvm;
 
-    public class SendMessage : BindableBase
+    public class SendMessageViewModel : BindableBase
     {
         #region Fields
 
@@ -22,7 +22,7 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public SendMessage(string name, string text)
+        public SendMessageViewModel(string name, string text)
         {
             Name = name;
             Text = text;

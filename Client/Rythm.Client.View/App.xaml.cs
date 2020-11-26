@@ -27,6 +27,8 @@
             containerRegistry.RegisterSingleton<IUserLoginDisplayController, UserLoginDisplayController>();
             containerRegistry.Register<UserLoginDisplayViewModel>();
 
+            containerRegistry.Register<CommunicationParametersViewModel>();
+
         }
 
         protected override void ConfigureViewModelLocator()
@@ -37,6 +39,7 @@
             ViewModelLocationProvider.Register(typeof(ConnectionParametersView).ToString(), () => Container.Resolve<ConnectionParametersViewModel>());
             ViewModelLocationProvider.Register(typeof(UserListView).ToString(), () => Container.Resolve<UserListViewModel>());
             ViewModelLocationProvider.Register(typeof(UserLoginDisplayView).ToString(), () => Container.Resolve<UserLoginDisplayViewModel>());
+            ViewModelLocationProvider.Register(typeof(CommunicationParametersView).ToString(), () => Container.Resolve<UserLoginDisplayViewModel>());
         }
 
         protected override Window CreateShell()

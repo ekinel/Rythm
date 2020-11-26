@@ -31,7 +31,7 @@ namespace Rythm.Client.ViewModel
 
         public ICommand SendCommand { get; }
 
-        public ObservableCollection<SendMessage> ReceivedMessagesList { get; set; } = new ObservableCollection<SendMessage>();
+        public ObservableCollection<SendMessageViewModel> ReceivedMessagesList { get; set; } = new ObservableCollection<SendMessageViewModel>();
 
         public string OutgoingMessage
         {
@@ -68,7 +68,7 @@ namespace Rythm.Client.ViewModel
                 new Action(
                     () =>
                     {
-                        ReceivedMessagesList.Add(new SendMessage(_login, message));
+                        ReceivedMessagesList.Add(new SendMessageViewModel(_login, message));
                     }));
         }
 

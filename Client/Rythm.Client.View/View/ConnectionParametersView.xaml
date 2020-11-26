@@ -10,7 +10,7 @@
              interactivity:ViewModelLocator.AutoWireViewModel="True"
              d:DataContext="{d:DesignInstance viewModel:ConnectionParametersViewModel}" >
 
-    <Grid>
+    <Grid Visibility="{Binding ViewVisibility}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
