@@ -1,9 +1,13 @@
-﻿namespace Rythm.Server.Service
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+namespace Rythm.Server.Service
 {
     using System;
     using System.Net;
 
-    using Rythm.Common.Network;
+    using Common.Network;
 
     public class NetworkManager
     {
@@ -11,13 +15,13 @@
 
         private const int WS_PORT = 65000;
 
-        #endregion Constants
+        #endregion
 
         #region Fields
 
         private readonly WsServer _wsServer;
 
-        #endregion Fields
+        #endregion
 
         #region Constructors
 
@@ -28,7 +32,7 @@
             _wsServer.MessageReceived += HandleMessageReceived;
         }
 
-        #endregion Constructors
+        #endregion
 
         #region Methods
 
@@ -45,11 +49,8 @@
 
         private void HandleMessageReceived(object sender, MessageReceivedEventArgs e)
         {
-            string message = $"Клиент '{e.ClientName}' отправил сообщение '{e.Message}'.";
-
-            Console.WriteLine(message);
-
-            _wsServer.Send(message);
+            var msgContainer = new TextMsgContainer(e.FromClientName, e.ToClientName, e.Message);
+            _wsServer.Send(msgContainer);
         }
 
         private void HandleConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e)
@@ -62,6 +63,6 @@
             _wsServer.Send(message);
         }
 
-        #endregion Methods
+        #endregion
     }
 }

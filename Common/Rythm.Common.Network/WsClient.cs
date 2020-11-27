@@ -1,5 +1,6 @@
-﻿
-using Rythm.Common.Network.Enums;
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace Rythm.Common.Network
 {
@@ -7,13 +8,15 @@ namespace Rythm.Common.Network
     using System.Collections.Concurrent;
     using System.Threading;
 
-    using Messages;
+    using Enums;
 
+    using Messages;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     using WebSocketSharp;
+
     public class WsClient : ITransport
     {
         #region Fields
@@ -25,20 +28,20 @@ namespace Rythm.Common.Network
         private int _sending;
         private string _login;
 
-        #endregion Fields
+        #endregion
 
         #region Properties
 
         public bool IsConnected => _socket?.ReadyState == WebSocketState.Open;
 
-        #endregion Properties
+        #endregion
 
         #region Events
 
         public event EventHandler<ConnectionStateChangedEventArgs> ConnectionStateChanged;
         public event EventHandler<MessageReceivedEventArgs> MessageReceived;
 
-        #endregion Events
+        #endregion
 
         #region Constructors
 
@@ -48,14 +51,16 @@ namespace Rythm.Common.Network
             _sending = 0;
         }
 
-        #endregion Constructors
+        #endregion
 
         #region Methods
 
         public void Connect(string address, string port)
         {
             if (IsConnected)
+            {
                 Disconnect();
+            }
 
             _socket = new WebSocket($"ws://{address}:{port}");
             _socket.OnOpen += OnOpen;
@@ -67,10 +72,14 @@ namespace Rythm.Common.Network
         public void Disconnect()
         {
             if (_socket == null)
+            {
                 return;
+            }
 
             if (IsConnected)
+            {
                 _socket.CloseAsync();
+            }
 
             _socket.OnOpen -= OnOpen;
             _socket.OnClose -= OnClose;
@@ -86,17 +95,20 @@ namespace Rythm.Common.Network
             _sendQueue.Enqueue(new ConnectionRequest(_login).GetContainer());
 
             if (Interlocked.CompareExchange(ref _sending, 1, 0) == 0)
+            {
                 SendImpl();
+            }
         }
 
-        public void Send(string message)
+        public void Send(TextMsgContainer msgContainer)
         {
-            _sendQueue.Enqueue(new MessageRequest(message).GetContainer());
+            _sendQueue.Enqueue(new MessageRequest(msgContainer).GetContainer());
 
             if (Interlocked.CompareExchange(ref _sending, 1, 0) == 0)
+            {
                 SendImpl();
+            }
         }
-
 
         private void SendCompleted(bool completed)
         {
@@ -114,12 +126,19 @@ namespace Rythm.Common.Network
         private void SendImpl()
         {
             if (!IsConnected)
+            {
                 return;
+            }
 
-            if (!_sendQueue.TryDequeue(out var message) && Interlocked.CompareExchange(ref _sending, 0, 1) == 1)
+            if (!_sendQueue.TryDequeue(out MessageContainer message) && Interlocked.CompareExchange(ref _sending, 0, 1) == 1)
+            {
                 return;
+            }
 
-            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
             string serializedMessages = JsonConvert.SerializeObject(message, settings);
             _socket.SendAsync(serializedMessages, SendCompleted);
         }
@@ -127,7 +146,9 @@ namespace Rythm.Common.Network
         private void OnMessage(object sender, MessageEventArgs e)
         {
             if (!e.IsText)
+            {
                 return;
+            }
 
             var container = JsonConvert.DeserializeObject<MessageContainer>(e.Data);
 
@@ -138,13 +159,14 @@ namespace Rythm.Common.Network
                     if (connectionResponse.Result == ResultCodes.Failure)
                     {
                         _login = string.Empty;
-                        MessageReceived?.Invoke(this, new MessageReceivedEventArgs(_login, connectionResponse.Reason));
+                        MessageReceived?.Invoke(this, new MessageReceivedEventArgs(new TextMsgContainer(_login, "User", connectionResponse.Reason)));
                     }
+
                     ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(_login, true));
                     break;
                 case nameof(MessageBroadcast):
                     var messageBroadcast = ((JObject)container.Payload).ToObject(typeof(MessageBroadcast)) as MessageBroadcast;
-                    MessageReceived?.Invoke(this, new MessageReceivedEventArgs(_login, messageBroadcast.Message));
+                    MessageReceived?.Invoke(this, new MessageReceivedEventArgs(new TextMsgContainer(_login, "User", messageBroadcast.Message)));
                     break;
             }
         }
@@ -154,11 +176,11 @@ namespace Rythm.Common.Network
             ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(_login, false));
         }
 
-        private void OnOpen(object sender, System.EventArgs e)
+        private void OnOpen(object sender, EventArgs e)
         {
             ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(_login, true));
         }
 
-        #endregion Methods
+        #endregion
     }
 }

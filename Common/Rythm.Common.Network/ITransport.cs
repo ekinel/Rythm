@@ -1,6 +1,11 @@
-﻿namespace Rythm.Common.Network
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+namespace Rythm.Common.Network
 {
     using System;
+
     public interface ITransport
     {
         #region Events
@@ -8,7 +13,7 @@
         event EventHandler<ConnectionStateChangedEventArgs> ConnectionStateChanged;
         event EventHandler<MessageReceivedEventArgs> MessageReceived;
 
-        #endregion Events
+        #endregion
 
         #region Methods
 
@@ -18,8 +23,8 @@
 
         void Login(string login);
 
-        void Send(string message);
+        void Send(TextMsgContainer msgContainer);
 
-        #endregion Methods
+        #endregion
     }
 }

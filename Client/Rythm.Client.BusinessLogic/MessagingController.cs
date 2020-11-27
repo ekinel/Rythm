@@ -17,6 +17,12 @@ namespace Rythm.Client.BusinessLogic
 
         #endregion
 
+        #region Properties
+
+        private string Login { get; set; }
+
+        #endregion
+
         #region Events
 
         public event Action<string> MessageReceivedEvent;
@@ -40,7 +46,8 @@ namespace Rythm.Client.BusinessLogic
 
         public void MessageSend(string currentMessage)
         {
-            _currentTransport?.Send(currentMessage);
+            var _msgContainer = new TextMsgContainer(Login, "User", currentMessage);
+            _currentTransport?.Send(_msgContainer);
         }
 
         private void HandleMessageReceived(object sender, MessageReceivedEventArgs state)
@@ -50,7 +57,8 @@ namespace Rythm.Client.BusinessLogic
 
         private void HandleUserLogin(object sender, MessageReceivedEventArgs state)
         {
-            UserLoginEvent?.Invoke(state.ClientName);
+            UserLoginEvent?.Invoke(state.ToClientName);
+            Login = state.ToClientName;
         }
 
         #endregion

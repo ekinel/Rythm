@@ -4,17 +4,22 @@
     {
         #region Properties
 
-        public string Message { get; set; }
+        public TextMsgContainer MsgContainer { get; set; }
 
+        public string Message { get; set; }
         #endregion Properties
 
         #region Constructors
 
-        public MessageRequest(string message)
+        public MessageRequest(TextMsgContainer msgContainer)
         {
-            Message = message;
+            MsgContainer = msgContainer;
         }
 
+        //public MessageRequest(string message)
+        //{
+        //    Message = message;
+        //}
         #endregion Constructors
 
         #region Methods

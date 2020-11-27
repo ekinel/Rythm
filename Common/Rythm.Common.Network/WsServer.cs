@@ -64,6 +64,21 @@ namespace Rythm.Common.Network
             var messageBroadcast = new MessageBroadcast(message).GetContainer();
 
             foreach (var connection in _connections) connection.Value.Send(messageBroadcast);
+
+        }
+
+        public void Send(TextMsgContainer MsgContainer)
+        {
+            var messageBroadcast = new MessageBroadcast(MsgContainer.Message).GetContainer();
+
+            foreach (var connection in _connections)
+            {
+                if (connection.Value.Login == MsgContainer.To || connection.Value.Login == MsgContainer.From)
+                {
+                    connection.Value.Send(messageBroadcast);
+                }
+            }
+
         }
 
         internal void HandleMessage(Guid clientId, MessageContainer container)
@@ -93,10 +108,8 @@ namespace Rythm.Common.Network
 
                     break;
                 case nameof(MessageRequest):
-                    var messageRequest =
-                        ((JObject) container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
-                    MessageReceived?.Invoke(this,
-                        new MessageReceivedEventArgs(connection.Login, messageRequest.Message));
+                    var messageRequest = ((JObject) container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
+                    MessageReceived?.Invoke(this, new MessageReceivedEventArgs(messageRequest.MsgContainer));
                     break;
             }
         }
