@@ -13,6 +13,7 @@ namespace Rythm.Client.BusinessLogic
         #region Fields
 
         private readonly IConnectionController _connectionServiceController;
+        private readonly IUserLoginDisplayController _userLoginDisplayController;
         private readonly ITransport _currentTransport;
 
         #endregion
@@ -20,6 +21,7 @@ namespace Rythm.Client.BusinessLogic
         #region Properties
 
         private string Login { get; set; }
+        private string LoginTo { get; set; }
 
         #endregion
 
@@ -32,12 +34,15 @@ namespace Rythm.Client.BusinessLogic
 
         #region Constructors
 
-        public MessagingController(IConnectionController connectionServiceController)
+        public MessagingController(IConnectionController connectionServiceController, IUserLoginDisplayController userLoginDisplayController)
         {
             _currentTransport = connectionServiceController.CurrentTransport ?? throw new ArgumentNullException(nameof(connectionServiceController));
             _connectionServiceController = connectionServiceController;
             _currentTransport.MessageReceived += HandleMessageReceived;
             _currentTransport.MessageReceived += HandleUserLogin;
+
+            _userLoginDisplayController = userLoginDisplayController;
+            _userLoginDisplayController.NewUserLoginEvent += HandleNewLoginTo;
         }
 
         #endregion
@@ -46,7 +51,7 @@ namespace Rythm.Client.BusinessLogic
 
         public void MessageSend(string currentMessage)
         {
-            var _msgContainer = new TextMsgContainer(Login, "User", currentMessage);
+            var _msgContainer = new TextMsgContainer(Login, LoginTo, currentMessage);
             _currentTransport?.Send(_msgContainer);
         }
 
@@ -58,7 +63,12 @@ namespace Rythm.Client.BusinessLogic
         private void HandleUserLogin(object sender, MessageReceivedEventArgs state)
         {
             UserLoginEvent?.Invoke(state.ToClientName);
-            Login = state.ToClientName;
+            Login = state.FromClientName;
+        }
+
+        private void HandleNewLoginTo(string loginTo)
+        {
+            LoginTo = loginTo;
         }
 
         #endregion
