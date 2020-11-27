@@ -26,9 +26,7 @@ namespace Rythm.Common.Network
 
         #region Properties
 
-        public Guid Id { get; }
-
-        public string Login { get; set; }
+        public string Login { get; set; } = "";
 
         public bool IsConnected => Context.WebSocket?.ReadyState == WebSocketState.Open;
 
@@ -40,8 +38,6 @@ namespace Rythm.Common.Network
         {
             _sendQueue = new ConcurrentQueue<MessageContainer>();
             _sending = 0;
-
-            Id = Guid.NewGuid();
         }
 
         #endregion Constructors
@@ -75,7 +71,7 @@ namespace Rythm.Common.Network
 
         protected override void OnClose(CloseEventArgs e)
         {
-            _server.FreeConnection(Id);
+            _server.FreeConnection(Login);
         }
 
         protected override void OnMessage(MessageEventArgs e)
@@ -83,7 +79,7 @@ namespace Rythm.Common.Network
             if (e.IsText)
             {
                 var message = JsonConvert.DeserializeObject<MessageContainer>(e.Data);
-                _server.HandleMessage(Id, message);
+                _server.HandleMessage(Login, message);
             }
         }
 
@@ -92,7 +88,7 @@ namespace Rythm.Common.Network
             // При отправке произошла ошибка.
             if (!completed)
             {
-                _server.FreeConnection(Id);
+                _server.FreeConnection(Login);
                 Context.WebSocket.CloseAsync();
                 return;
             }

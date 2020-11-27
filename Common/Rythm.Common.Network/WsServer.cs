@@ -16,7 +16,7 @@ namespace Rythm.Common.Network
         public WsServer(IPEndPoint listenAddress)
         {
             _listenAddress = listenAddress;
-            _connections = new ConcurrentDictionary<Guid, WsConnection>();
+            _connections = new ConcurrentDictionary<string, WsConnection>();
         }
 
         #endregion Constructors
@@ -24,7 +24,7 @@ namespace Rythm.Common.Network
         #region Fields
 
         private readonly IPEndPoint _listenAddress;
-        private readonly ConcurrentDictionary<Guid, WsConnection> _connections;
+        private readonly ConcurrentDictionary<string, WsConnection> _connections;
 
         private WebSocketServer _server;
 
@@ -81,9 +81,9 @@ namespace Rythm.Common.Network
 
         }
 
-        internal void HandleMessage(Guid clientId, MessageContainer container)
+        internal void HandleMessage(string login, MessageContainer container)
         {
-            if (!_connections.TryGetValue(clientId, out var connection))
+            if (!_connections.TryGetValue(login, out var connection))
                 return;
 
             switch (container.Identifier)
@@ -116,12 +116,12 @@ namespace Rythm.Common.Network
 
         internal void AddConnection(WsConnection connection)
         {
-            _connections.TryAdd(connection.Id, connection);
+            _connections.TryAdd(connection.Login, connection);
         }
 
-        internal void FreeConnection(Guid connectionId)
+        internal void FreeConnection(string login)
         {
-            if (_connections.TryRemove(connectionId, out var connection) && !string.IsNullOrEmpty(connection.Login))
+            if (_connections.TryRemove(login, out var connection) && !string.IsNullOrEmpty(connection.Login))
                 ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(connection.Login, false));
         }
 

@@ -6,6 +6,8 @@ namespace Rythm.Common.Network
 {
     using System;
 
+    using Enums;
+
     public class TextMsgContainer
     {
         #region Fields
@@ -14,16 +16,17 @@ namespace Rythm.Common.Network
         private string _to;
         private string _message;
         private string _date;
-        private MsgType messageType { get; set; } = MsgType.Personal;
 
         #endregion
 
         #region Properties
+
         public MsgType MessageType
         {
             get => messageType;
             set => messageType = value;
         }
+
         public string From
         {
             get => _from;
@@ -48,11 +51,7 @@ namespace Rythm.Common.Network
             set => _date = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public enum MsgType
-        {
-            Group,
-            Personal
-        }
+        private MsgType messageType { get; set; } = MsgType.Personal;
 
         #endregion
 
