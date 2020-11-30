@@ -55,12 +55,6 @@ namespace Rythm.Server.Service
 
         private void HandleConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e)
         {
-            string clientState = e.Connected ? "подключен" : "отключен";
-            string message = $"Клиент '{e.ClientName}' {clientState}.";
-
-            Console.WriteLine(message);
-
-            _wsServer.Send(message);
         }
 
         #endregion

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace Rythm.Common.Network.Enums
 {
@@ -10,6 +8,6 @@ namespace Rythm.Common.Network.Enums
     {
         Group,
         Personal,
-        OK
+        Ok
     }
 }

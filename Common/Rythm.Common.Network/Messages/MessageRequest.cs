@@ -1,4 +1,8 @@
-﻿namespace Rythm.Common.Network.Messages
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+namespace Rythm.Common.Network.Messages
 {
     public class MessageRequest
     {
@@ -6,8 +10,7 @@
 
         public TextMsgContainer MsgContainer { get; set; }
 
-        public string Message { get; set; }
-        #endregion Properties
+        #endregion
 
         #region Constructors
 
@@ -16,11 +19,7 @@
             MsgContainer = msgContainer;
         }
 
-        //public MessageRequest(string message)
-        //{
-        //    Message = message;
-        //}
-        #endregion Constructors
+        #endregion
 
         #region Methods
 
@@ -35,6 +34,6 @@
             return container;
         }
 
-        #endregion Methods
+        #endregion
     }
 }
