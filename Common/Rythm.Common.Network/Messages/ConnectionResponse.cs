@@ -1,8 +1,12 @@
-﻿using Rythm.Common.Network.Enums;
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace Rythm.Common.Network.Messages
 {
-    public class ConnectionResponse
+    using Enums;
+
+    public class ConnectionResponse : BaseContainer
     {
         #region Properties
 
@@ -10,21 +14,15 @@ namespace Rythm.Common.Network.Messages
 
         public string Reason { get; set; }
 
-        #endregion Properties
+        #endregion
 
-        #region Methods
+        #region Constructors
 
-        public MessageContainer GetContainer()
+        public ConnectionResponse()
         {
-            var container = new MessageContainer
-            {
-                Identifier = nameof(ConnectionResponse),
-                Payload = this
-            };
-
-            return container;
+            MessageType = MsgType.ClientRegistration;
         }
 
-        #endregion Methods
+        #endregion
     }
 }

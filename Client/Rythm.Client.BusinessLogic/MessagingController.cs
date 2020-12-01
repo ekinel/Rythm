@@ -7,6 +7,8 @@ namespace Rythm.Client.BusinessLogic
     using System;
 
     using Common.Network;
+    using Common.Network.Enums;
+    using Common.Network.Messages;
 
     public class MessagingController : IMessagingController
     {
@@ -20,7 +22,6 @@ namespace Rythm.Client.BusinessLogic
 
         #region Properties
 
-        private string Login { get; set; }
         private string LoginTo { get; set; }
 
         #endregion
@@ -39,7 +40,6 @@ namespace Rythm.Client.BusinessLogic
             _currentTransport = connectionServiceController.CurrentTransport ?? throw new ArgumentNullException(nameof(connectionServiceController));
             _connectionServiceController = connectionServiceController;
             _currentTransport.MessageReceived += HandleMessageReceived;
-            _currentTransport.MessageReceived += HandleUserLogin;
 
             _userLoginDisplayController = userLoginDisplayController;
             _userLoginDisplayController.NewUserLoginEvent += HandleNewLoginTo;
@@ -51,19 +51,14 @@ namespace Rythm.Client.BusinessLogic
 
         public void MessageSend(string currentMessage)
         {
-            var _msgContainer = new TextMsgContainer(Login, LoginTo, currentMessage);
-            _currentTransport?.Send(_msgContainer);
+            var msgContainer = new TextMsgContainer(_connectionServiceController.Login, LoginTo, currentMessage);
+            var mr = new MessageRequest(msgContainer, MsgType.PersonalMessage);
+            _currentTransport?.Send(mr);
         }
 
         private void HandleMessageReceived(object sender, MessageReceivedEventArgs state)
         {
             MessageReceivedEvent?.Invoke(state.Message);
-        }
-
-        private void HandleUserLogin(object sender, MessageReceivedEventArgs state)
-        {
-            UserLoginEvent?.Invoke(state.ToClientName);
-            Login = state.FromClientName;
         }
 
         private void HandleNewLoginTo(string loginTo)

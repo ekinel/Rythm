@@ -21,12 +21,6 @@ namespace Rythm.Common.Network
 
         #region Properties
 
-        public MsgType MessageType
-        {
-            get => messageType;
-            set => messageType = value;
-        }
-
         public string From
         {
             get => _from;
@@ -51,8 +45,6 @@ namespace Rythm.Common.Network
             set => _date = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private MsgType messageType { get; set; } = MsgType.Personal;
-
         #endregion
 
         #region Constructors
@@ -63,7 +55,6 @@ namespace Rythm.Common.Network
             To = to;
             Message = message;
             Date = DateTime.Now.ToString();
-            MessageType = MsgType.Personal;
         }
 
         #endregion

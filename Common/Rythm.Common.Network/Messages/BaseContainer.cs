@@ -6,22 +6,28 @@ namespace Rythm.Common.Network.Messages
 {
     using Enums;
 
-    public class MessageRequest : BaseContainer
+    public class BaseContainer
     {
         #region Properties
 
-        public object MsgContainer { get; }
+        protected MsgType MessageType { set; get; }
 
         #endregion
 
-        #region Constructors
+        #region Methods
 
-        public MessageRequest(object msgContainer, MsgType msgType)
+        public MessageContainer GetContainer()
         {
-            MsgContainer = msgContainer;
-            MessageType = msgType;
+            var container = new MessageContainer
+            {
+                Identifier = MessageType,
+                Payload = this
+            };
+
+            return container;
         }
 
         #endregion
     }
 }
+

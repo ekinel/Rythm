@@ -13,22 +13,22 @@ namespace Rythm.Client.BusinessLogic
         #region Properties
 
         ITransport CurrentTransport { get; }
-        IUserLoginDisplayController UserLoginDisplayController { get; set; }
 
         string Login { get; set; }
-        string ConnectionParametersViewVisibility { get; set; }
 
         #endregion
 
         #region Events
 
-        event Action<string> SendNewStateParametersViewVisibility;
+        event Action<bool> ConnectionStateChanged;
 
         #endregion
 
         #region Methods
 
-        void DataSending(string address, string port, string login);
+        void DoConnect(string address, string port, string login);
+
+        void DoDisconnect();
 
         #endregion
     }

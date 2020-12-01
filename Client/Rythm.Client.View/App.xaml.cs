@@ -35,6 +35,7 @@
         {
             base.ConfigureViewModelLocator();
 
+            ViewModelLocationProvider.Register(typeof(MainWindow).ToString(), () => Container.Resolve<MainWindowViewModel>());
             ViewModelLocationProvider.Register(typeof(TextMessageView).ToString(), () => Container.Resolve<MessageViewModel>());
             ViewModelLocationProvider.Register(typeof(ConnectionParametersView).ToString(), () => Container.Resolve<ConnectionParametersViewModel>());
             ViewModelLocationProvider.Register(typeof(UserListView).ToString(), () => Container.Resolve<UserListViewModel>());

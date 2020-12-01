@@ -10,10 +10,46 @@
              interactivity:ViewModelLocator.AutoWireViewModel="True" 
              d:DataContext="{d:DesignInstance viewModel:CommunicationParametersViewModel}">
     <Grid>
-          <StackPanel Orientation="Vertical">
-            <Button Content="Клиенты" Margin="5"></Button>
-            <Button Content="Группы" Margin="5"></Button>
-            <Button Content="Добавить группу" Margin="5"></Button>
-          </StackPanel>  
+        <StackPanel Orientation="Vertical">
+            <Button Width="32" Margin="5">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Grid >
+                            <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17" >
+                                <Label VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Content="Клиенты" Foreground="DimGray"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Width="32" Margin="5">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Grid >
+                            <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
+                                <Label VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Content="Группы" Foreground="DimGray"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Width="32"  Margin="5">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Grid >
+                            <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
+                                <Label VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Content="Добавить группу" Foreground="DimGray"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

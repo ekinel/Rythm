@@ -28,8 +28,8 @@ namespace Rythm.Server.Service
         public NetworkManager()
         {
             _wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT));
-            _wsServer.ConnectionStateChanged += HandleConnectionStateChanged;
-            _wsServer.MessageReceived += HandleMessageReceived;
+            //_wsServer.ConnectionStateChanged += HandleConnectionStateChanged;
+            //_wsServer.MessageReceived += HandleMessageReceived;
         }
 
         #endregion
@@ -47,15 +47,21 @@ namespace Rythm.Server.Service
             _wsServer.Stop();
         }
 
-        private void HandleMessageReceived(object sender, MessageReceivedEventArgs e)
-        {
-            var msgContainer = new TextMsgContainer(e.FromClientName, e.ToClientName, e.Message);
-            _wsServer.Send(msgContainer);
-        }
+        //private void HandleMessageReceived(object sender, MessageReceivedEventArgs e)
+        //{
+        //    var msgContainer = new TextMsgContainer(e.FromClientName, e.ToClientName, e.Message);
+        //    _wsServer.Send(msgContainer);
+        //}
 
-        private void HandleConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e)
-        {
-        }
+        //private void HandleConnectionStateChanged(object sender, ConnectionStateChangedEventArgs e)
+        //{
+        //    string clientState = e.Connected ? "подключен" : "отключен";
+        //    string message = $"Клиент '{e.ClientName}' {clientState}.";
+
+        //    Console.WriteLine(message);
+
+        //    _wsServer.Send(message);
+        //}
 
         #endregion
     }

@@ -23,7 +23,7 @@ namespace Rythm.Client.BusinessLogic
             set
             {
                 _login = value ?? throw new ArgumentNullException(nameof(value));
-                NewUserLoginEvent(_login);
+                NewUserLoginEvent?.Invoke(_login);
             }
         }
 
@@ -33,7 +33,7 @@ namespace Rythm.Client.BusinessLogic
             set
             {
                 _connectionParametersViewSettingsVisibility = value;
-                NewParametersViewVisibilityEvent(_connectionParametersViewSettingsVisibility);
+                NewParametersViewVisibilityEvent?.Invoke(_connectionParametersViewSettingsVisibility);
             }
         }
 

@@ -4,11 +4,13 @@
 
 namespace Rythm.Client.ViewModel
 {
+    using System;
     using System.Windows.Input;
 
     using BusinessLogic;
 
     using Prism.Commands;
+    using Prism.Events;
     using Prism.Mvvm;
 
     public class UserLoginDisplayViewModel : BindableBase
@@ -17,12 +19,14 @@ namespace Rythm.Client.ViewModel
 
         private string _login;
         private readonly IUserLoginDisplayController _userLoginDisplayController;
+        private readonly IEventAggregator _eventAggregator;
+
 
         #endregion
 
         #region Properties
 
-        public ICommand ConnectionSettingsCommand { get; }
+        public ICommand ChangeSettingsVisibilityCommand { get; }
 
         public string Login
         {
@@ -34,11 +38,12 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public UserLoginDisplayViewModel(IUserLoginDisplayController userLoginDisplayController)
+        public UserLoginDisplayViewModel(IUserLoginDisplayController userLoginDisplayController, IEventAggregator eventAggregator)
         {
-            _userLoginDisplayController = userLoginDisplayController;
+            _userLoginDisplayController = userLoginDisplayController ?? throw new ArgumentNullException(nameof(userLoginDisplayController));
+            _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             _userLoginDisplayController.NewUserLoginEvent += HandleNewLoginSelected;
-            ConnectionSettingsCommand = new DelegateCommand(SettingsCommand);
+            ChangeSettingsVisibilityCommand = new DelegateCommand(ExecuteChangeSettingsVisibilityCommand);
         }
 
         #endregion
@@ -50,10 +55,9 @@ namespace Rythm.Client.ViewModel
             Login = login;
         }
 
-        private void SettingsCommand()
+        private void ExecuteChangeSettingsVisibilityCommand()
         {
-            //Here visibility changing
-            _userLoginDisplayController.ConnectionParametersViewSettingsVisibility = false;
+            _eventAggregator.GetEvent<ConnectionPanelVisibilityChangedEvent>().Publish();
         }
 
         #endregion

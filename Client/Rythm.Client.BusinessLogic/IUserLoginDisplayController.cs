@@ -13,7 +13,6 @@ namespace Rythm.Client.BusinessLogic
         string Login { get; set; }
         bool ConnectionParametersViewSettingsVisibility { get; set; }
 
-
         #endregion
 
         #region Events

@@ -10,6 +10,7 @@ namespace Rythm.Client.ViewModel
     using BusinessLogic;
 
     using Prism.Commands;
+    using Prism.Events;
     using Prism.Mvvm;
 
     public class ConnectionParametersViewModel : BindableBase
@@ -20,17 +21,25 @@ namespace Rythm.Client.ViewModel
 
         private string _address = "127.0.0.1";
 
-        private bool _fieldsEnabled = true;
+        private bool _isConnected;
         private string _login;
         private string _port = "65000";
 
-        private string _viewVisibility = "hidden";
+        private string _label;
+        private bool _fieldsEnabled = true;
+        private readonly IEventAggregator _eventAggregator;
 
         #endregion
 
         #region Properties
 
-        public ICommand LoginCommand { get; }
+        public ICommand ConnectCommand { get; }
+
+        public string ConnectButtonLabel
+        {
+            get => _label;
+            set => SetProperty(ref _label, value);
+        }
 
         public string Address
         {
@@ -56,36 +65,41 @@ namespace Rythm.Client.ViewModel
             set => SetProperty(ref _fieldsEnabled, value);
         }
 
-        public string ViewVisibility
-        {
-            get => _viewVisibility;
-            set => SetProperty(ref _viewVisibility, value);
-        }
-
         #endregion
 
         #region Constructors
 
-        public ConnectionParametersViewModel(IConnectionController connectionController)
+        public ConnectionParametersViewModel(IConnectionController connectionController, IEventAggregator eventAggregator)
         {
             _connectionController = connectionController ?? throw new ArgumentNullException(nameof(connectionController));
-            _connectionController.SendNewStateParametersViewVisibility += HandleConnectionParametersViewVisibility;
-            LoginCommand = new DelegateCommand(LoginUserCommand);
+            _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+            ConnectCommand = new DelegateCommand(ExecuteConnectCommand);
+            _connectionController.ConnectionStateChanged += HandleConnectionStateChanged;
+            ConnectButtonLabel = "Connect";
         }
 
         #endregion
 
         #region Methods
 
-        private void LoginUserCommand()
+        private void HandleConnectionStateChanged(bool isConnected)
         {
-            FieldsEnabled = false;
-            _connectionController.DataSending(Address, Port, Login);
+            _isConnected = isConnected;
+            FieldsEnabled = !_isConnected;
+            ConnectButtonLabel = _isConnected ? "Disconnect" : "Connect";
+            _eventAggregator.GetEvent<ConnectionIndicatorColorChangedEvent>().Publish(_isConnected);
         }
 
-        private void HandleConnectionParametersViewVisibility(string visibility)
+        private void ExecuteConnectCommand()
         {
-            ViewVisibility = visibility;
+            if (_isConnected)
+            {
+                _connectionController.DoDisconnect();
+            }
+            else
+            {
+                _connectionController.DoConnect(Address, Port, Login);
+            }
         }
 
         #endregion

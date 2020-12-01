@@ -4,7 +4,6 @@
 
 namespace Rythm.Common.Network
 {
-    using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
@@ -29,13 +28,6 @@ namespace Rythm.Common.Network
 
         #endregion
 
-        #region Events
-
-        public event EventHandler<ConnectionStateChangedEventArgs> ConnectionStateChanged;
-        public event EventHandler<MessageReceivedEventArgs> MessageReceived;
-
-        #endregion
-
         #region Constructors
 
         public WsServer(IPEndPoint listenAddress)
@@ -51,7 +43,6 @@ namespace Rythm.Common.Network
         public void Start()
         {
             _server = new WebSocketServer(_listenAddress.Address, _listenAddress.Port, false);
-            //_server.AddWebSocketService("/", () => new WsConnection(this));
             _server.AddWebSocketService<WsConnection>(
                 "/",
                 client =>
@@ -75,58 +66,45 @@ namespace Rythm.Common.Network
             _connections.Clear();
         }
 
-        public void Send(string message)
-        {
-            MessageContainer messageBroadcast = new MessageBroadcast(message).GetContainer();
-
-            foreach (KeyValuePair<string, WsConnection> connection in _connections)
-            {
-                connection.Value.Send(messageBroadcast);
-            }
-        }
-
-        public void Send(TextMsgContainer MsgContainer)
-        {
-            MessageContainer messageBroadcast = new MessageBroadcast(MsgContainer.Message).GetContainer();
-
-            foreach (KeyValuePair<string, WsConnection> connection in _connections)
-            {
-                if (connection.Value.Login == MsgContainer.To || connection.Value.Login == MsgContainer.From)
-                {
-                    connection.Value.Send(messageBroadcast);
-                }
-            }
-        }
-
         internal void HandleMessage(WsConnection connection, MessageContainer container)
         {
             switch (container.Identifier)
             {
-                case nameof(ConnectionRequest):
+                case MsgType.ClientRegistration:
                     var connectionRequest = ((JObject)container.Payload).ToObject(typeof(ConnectionRequest)) as ConnectionRequest;
                     var connectionResponse = new ConnectionResponse
                     {
                         Result = ResultCodes.Ok
                     };
-                    if (_connections.Values.Any(item => item.Login == connectionRequest.Login))
-                    {
-                        connectionResponse.Result = ResultCodes.Failure;
-                        connectionResponse.Reason = $"Клиент с именем '{connectionRequest.Login}' уже подключен.";
-                        connection.Send(connectionResponse.GetContainer());
-                    }
-                    else
-                    {
-                        connection.Login = connectionRequest.Login;
-                        _connections.TryAdd(connection.Login, connection);
 
-                        connection.Send(connectionResponse.GetContainer());
-                        ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(connection.Login, true));
+                    if (connectionRequest != null)
+                    {
+                        if (_connections.Values.Any(item => item.Login == connectionRequest.Login))
+                        {
+                            connectionResponse.Result = ResultCodes.Failure;
+                            connectionResponse.Reason = $"Клиент с именем '{connectionRequest.Login}' уже подключен.";
+                            connection.Send(connectionResponse.GetContainer());
+                        }
+                        else
+                        {
+                            connection.Login = connectionRequest.Login;
+                            _connections.TryAdd(connection.Login, connection);
+                            connection.Send(connectionResponse.GetContainer());
+                            //
+                        }
                     }
 
                     break;
-                case nameof(MessageRequest):
+
+                case MsgType.PersonalMessage:
                     var messageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
-                    MessageReceived?.Invoke(this, new MessageReceivedEventArgs(messageRequest.MsgContainer));
+                    var textMsgContainer = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgContainer)) as TextMsgContainer;
+
+                    if (textMsgContainer != null)
+                    {
+                        Send(container, textMsgContainer.To);
+                    }
+
                     break;
             }
         }
@@ -135,7 +113,18 @@ namespace Rythm.Common.Network
         {
             if (_connections.TryRemove(login, out WsConnection connection) && !string.IsNullOrEmpty(connection.Login))
             {
-                ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(connection.Login, false));
+                //
+            }
+        }
+
+        private void Send(MessageContainer msgContainer, string targetId)
+        {
+            foreach (KeyValuePair<string, WsConnection> connection in _connections)
+            {
+                if (connection.Value.Login == targetId)
+                {
+                    connection.Value.Send(msgContainer);
+                }
             }
         }
 

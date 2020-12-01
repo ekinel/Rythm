@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto" ></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Row="0" ItemsSource="{Binding ReceivedMessagesList}" >
+        <ListBox Grid.Row="0" ItemsSource="{Binding ReceivedMessagesList}" BorderThickness="0" Background="WhiteSmoke">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -32,7 +32,19 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox Grid.Column="0" Text="{Binding OutgoingMessage}" Margin="0,5,5,5" TextWrapping="Wrap" MaxHeight="100"/>
-            <Button Grid.Column="1" Content="Отправить" Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom"  MaxHeight="30" Command="{Binding SendCommand}"/>
+            <Button Grid.Column="1"  Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom"  MaxHeight="30" Command="{Binding SendCommand}">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Grid >
+                            <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
+                                <Label VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Content="Отправить" Foreground="DimGray"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

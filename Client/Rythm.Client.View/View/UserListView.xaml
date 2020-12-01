@@ -3,17 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Rythm.Client.View"
              xmlns:viewModel="clr-namespace:Rythm.Client.ViewModel;assembly=Rythm.Client.ViewModel"
              mc:Ignorable="d" 
              xmlns:interactivity="http://prismlibrary.com/"
              interactivity:ViewModelLocator.AutoWireViewModel="True" 
              d:DataContext="{d:DesignInstance viewModel:UserListViewModel}">
+
     <Grid>
-        <ListBox ItemsSource="{Binding UserList}">
+        <ListBox ItemsSource="{Binding UserList}" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" >
+            <ListBox.ItemContainerStyle>
+                <Style>
+                    <Setter Property="ListBoxItem.Margin" Value="3"/>
+                    <Setter Property="ListBoxItem.Padding" Value="0"/>
+                    <Setter Property="ListBoxItem.BorderThickness" Value="0"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Button Content="{Binding Login}" Command="{Binding ChooseLoginCommand}"/>
+                    <Border Height="30" CornerRadius="5"   HorizontalAlignment="Stretch" Padding="0" Margin="0">
+                        <Button BorderThickness="1" BorderBrush="LightGray"  Foreground="DimGray"  Background="Transparent"  Content="{Binding Login}" Command="{Binding ChooseLoginCommand}" />
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

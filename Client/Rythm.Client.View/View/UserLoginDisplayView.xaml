@@ -9,11 +9,43 @@
              xmlns:interactivity="http://prismlibrary.com/"
              interactivity:ViewModelLocator.AutoWireViewModel="True" 
              d:DataContext="{d:DesignInstance viewModel:UserLoginDisplayViewModel}">
-    <Grid Background="White">
-        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
-            <Button Content="Тема" Width="100" Margin="0,5,5,5"/>
-            <Button Content="Настройки" Width="100" Margin="0,5,5,5" Command="{Binding ConnectionSettingsCommand}"/>
-            <TextBlock Text="{Binding Login}" Width="100" TextAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft" Margin="1,1,5,1" HorizontalAlignment="Left">
+            <Button  Width="32"  Height="30" Margin="0,5,5,5">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Grid >
+                            <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
+                                <Label VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Content="Тема" Foreground="DimGray"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button  Width="32"  Height="30" Margin="0,5,5,5" Command="{Binding ChangeSettingsVisibilityCommand}">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Grid >
+                            <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
+                                <Label VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Content="Настройки" Foreground="DimGray"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
         </StackPanel>
+        <TextBlock Grid.Column="0" Text="{Binding Login}" Foreground="DimGray" Width="Auto" FontSize="18" Margin="30,0,0,0"  VerticalAlignment="Center" ></TextBlock>
+
     </Grid>
+
 </UserControl>

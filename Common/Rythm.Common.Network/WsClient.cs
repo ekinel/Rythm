@@ -26,7 +26,6 @@ namespace Rythm.Common.Network
         private WebSocket _socket;
 
         private int _sending;
-        private string _login;
 
         #endregion
 
@@ -86,23 +85,11 @@ namespace Rythm.Common.Network
             _socket.OnMessage -= OnMessage;
 
             _socket = null;
-            _login = string.Empty;
         }
 
-        public void Login(string login)
+        public void Send(BaseContainer request)
         {
-            _login = login;
-            _sendQueue.Enqueue(new ConnectionRequest(_login).GetContainer());
-
-            if (Interlocked.CompareExchange(ref _sending, 1, 0) == 0)
-            {
-                SendImpl();
-            }
-        }
-
-        public void Send(TextMsgContainer msgContainer)
-        {
-            _sendQueue.Enqueue(new MessageRequest(msgContainer).GetContainer());
+            _sendQueue.Enqueue(request.GetContainer());
 
             if (Interlocked.CompareExchange(ref _sending, 1, 0) == 0)
             {
@@ -116,7 +103,7 @@ namespace Rythm.Common.Network
             if (!completed)
             {
                 Disconnect();
-                ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(_login, false));
+                ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(false));
                 return;
             }
 
@@ -154,31 +141,35 @@ namespace Rythm.Common.Network
 
             switch (container.Identifier)
             {
-                case nameof(ConnectionResponse):
+                case MsgType.ClientRegistration:
                     var connectionResponse = ((JObject)container.Payload).ToObject(typeof(ConnectionResponse)) as ConnectionResponse;
                     if (connectionResponse.Result == ResultCodes.Failure)
                     {
-                        _login = string.Empty;
-                        MessageReceived?.Invoke(this, new MessageReceivedEventArgs(new TextMsgContainer(_login, "User", connectionResponse.Reason)));
+                        return;
                     }
 
-                    ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(_login, true));
+                    ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(true));
+
                     break;
-                case nameof(MessageBroadcast):
-                    var messageBroadcast = ((JObject)container.Payload).ToObject(typeof(MessageBroadcast)) as MessageBroadcast;
-                    MessageReceived?.Invoke(this, new MessageReceivedEventArgs(new TextMsgContainer(_login, "User", messageBroadcast.Message)));
+
+                case MsgType.PersonalMessage:
+                    var messageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
+
+                    var textMsgContainer = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgContainer)) as TextMsgContainer;
+
+                    MessageReceived?.Invoke(this, new MessageReceivedEventArgs(textMsgContainer));
                     break;
             }
         }
 
         private void OnClose(object sender, CloseEventArgs e)
         {
-            ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(_login, false));
+            ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(false));
         }
 
         private void OnOpen(object sender, EventArgs e)
         {
-            ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(_login, true));
+            ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(true));
         }
 
         #endregion

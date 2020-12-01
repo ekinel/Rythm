@@ -6,6 +6,10 @@ namespace Rythm.Common.Network
 {
     using System;
 
+    using Enums;
+
+    using Messages;
+
     public interface ITransport
     {
         #region Events
@@ -21,9 +25,7 @@ namespace Rythm.Common.Network
 
         void Disconnect();
 
-        void Login(string login);
-
-        void Send(TextMsgContainer msgContainer);
+        void Send(BaseContainer request);
 
         #endregion
     }

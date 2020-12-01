@@ -1,35 +1,27 @@
-﻿namespace Rythm.Common.Network.Messages
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+namespace Rythm.Common.Network.Messages
 {
-    public class ConnectionRequest
+    using Enums;
+
+    public class ConnectionRequest : BaseContainer
     {
         #region Properties
 
-        public string Login { get; set; }
+        public string Login { get; }
 
-        #endregion Properties
+        #endregion
 
         #region Constructors
 
         public ConnectionRequest(string login)
         {
             Login = login;
+            MessageType = MsgType.ClientRegistration;
         }
 
-        #endregion Constructors
-
-        #region Methods
-
-        public MessageContainer GetContainer()
-        {
-            var container = new MessageContainer
-            {
-                Identifier = nameof(ConnectionRequest),
-                Payload = this
-            };
-
-            return container;
-        }
-
-        #endregion Methods
+        #endregion
     }
 }

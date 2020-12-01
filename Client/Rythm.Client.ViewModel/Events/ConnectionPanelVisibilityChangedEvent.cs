@@ -2,15 +2,11 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Common.Network.Enums
+namespace Rythm.Client.ViewModel
 {
-    public enum MsgType
+    using Prism.Events;
+
+    public class ConnectionPanelVisibilityChangedEvent : PubSubEvent
     {
-        ClientRegistration,
-        GroupRegistration,
-        PersonalMessage,
-        GroupMessage,
-        ServerOk,
-        ClientOk
     }
 }

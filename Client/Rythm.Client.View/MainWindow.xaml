@@ -4,23 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:Rythm.Client.View"
-        mc:Ignorable="d">
+        mc:Ignorable="d" MinHeight="400" MinWidth="1060" Title="Rythm">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0,70"/>
-            <ColumnDefinition Width="0,90"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="0.2*" MinWidth="150"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0,200"/>
+            <ColumnDefinition Width="{Binding SettingsVisibility}"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0,80"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <view:CommunicationParametersView Grid.Column="0" Grid.RowSpan="3"/>
-        <view:UserListView Grid.Column="1" Grid.RowSpan="3"/>
-        <view:UserLoginDisplayView Grid.Column="2" Grid.ColumnSpan="2"/>
-        <view:TextMessageView Grid.Column="2" Grid.Row="1" Margin="1"/>
-        <view:ConnectionParametersView Grid.Column="3" Grid.Row="1" BorderThickness="1" BorderBrush="LightGray" Margin="1"/>
+        <GridSplitter IsEnabled="False"  Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"  Width="1" Margin="0,15,0,15"  VerticalAlignment="Stretch" HorizontalAlignment="Right"  Background="LightGray"/>
+        <GridSplitter IsEnabled="False" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"  Width="1" Margin="0,15,-1,15"  VerticalAlignment="Stretch" HorizontalAlignment="Right"  Background="LightGray"/>
+        <GridSplitter IsEnabled="False" Visibility="{Binding SplitterVisibility}" Grid.Row="1" Grid.Column="3"  Width="1" Margin="0,5,0,15"  VerticalAlignment="Stretch" HorizontalAlignment="Left"  Background="LightGray"/>
+        <GridSplitter IsEnabled="False" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Height="2" Margin="5,0,15,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Background="{Binding ConnectIndicatorColor}"/>
+
+        <view:CommunicationParametersView Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="0,30,0,0"/>
+        <view:UserListView Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,5,0,0"/>
+        <view:UserLoginDisplayView Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,10,0"/>
+        <view:TextMessageView Grid.Column="2" Grid.Row="1" Margin="5"/>
+        <view:ConnectionParametersView  Grid.Column="3" Grid.Row="1" Margin="1"/>
+
     </Grid>
 </Window>

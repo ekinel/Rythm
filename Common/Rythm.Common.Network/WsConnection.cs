@@ -1,9 +1,7 @@
-﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
-// Copyright ElcomPlus LLC. All rights reserved.
-// ---------------------------------------------------------------------------------------------------------------------------------------------------
-
+﻿
 namespace Rythm.Common.Network
 {
+    using System;
     using System.Collections.Concurrent;
     using System.Threading;
 
@@ -24,7 +22,7 @@ namespace Rythm.Common.Network
 
         private int _sending;
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -32,7 +30,7 @@ namespace Rythm.Common.Network
 
         public bool IsConnected => Context.WebSocket?.ReadyState == WebSocketState.Open;
 
-        #endregion
+        #endregion Properties
 
         #region Constructors
 
@@ -42,7 +40,7 @@ namespace Rythm.Common.Network
             _sending = 0;
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Methods
 
@@ -54,25 +52,16 @@ namespace Rythm.Common.Network
         public void Send(MessageContainer container)
         {
             if (!IsConnected)
-            {
                 return;
-            }
 
             _sendQueue.Enqueue(container);
             if (Interlocked.CompareExchange(ref _sending, 1, 0) == 0)
-            {
                 SendImpl();
-            }
         }
 
         public void Close()
         {
             Context.WebSocket.Close();
-        }
-
-        protected override void OnOpen()
-        {
-            //_server.AddConnection(this);
         }
 
         protected override void OnClose(CloseEventArgs e)
@@ -105,23 +94,16 @@ namespace Rythm.Common.Network
         private void SendImpl()
         {
             if (!IsConnected)
-            {
                 return;
-            }
 
-            if (!_sendQueue.TryDequeue(out MessageContainer message) && Interlocked.CompareExchange(ref _sending, 0, 1) == 1)
-            {
+            if (!_sendQueue.TryDequeue(out var message) && Interlocked.CompareExchange(ref _sending, 0, 1) == 1)
                 return;
-            }
 
-            var settings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            };
+            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             string serializedMessages = JsonConvert.SerializeObject(message, settings);
             SendAsync(serializedMessages, SendCompleted);
         }
 
-        #endregion
+        #endregion Methods
     }
 }
