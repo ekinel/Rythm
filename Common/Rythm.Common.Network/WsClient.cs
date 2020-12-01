@@ -39,6 +39,7 @@ namespace Rythm.Common.Network
 
         public event EventHandler<ConnectionStateChangedEventArgs> ConnectionStateChanged;
         public event EventHandler<MessageReceivedEventArgs> MessageReceived;
+        public event EventHandler<EventArgs> ConnectionOpened;
 
         #endregion
 
@@ -100,7 +101,6 @@ namespace Rythm.Common.Network
 
         private void SendCompleted(bool completed)
         {
-            // При отправке произошла ошибка.
             if (!completed)
             {
                 Disconnect();
@@ -170,7 +170,7 @@ namespace Rythm.Common.Network
 
         private void OnOpen(object sender, EventArgs e)
         {
-            ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(true));
+            ConnectionOpened?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion

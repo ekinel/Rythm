@@ -14,6 +14,7 @@ namespace Rythm.Client.BusinessLogic
         #region Properties
 
         public ITransport CurrentTransport { get; }
+
         public string Login { get; set; }
 
         #endregion
@@ -30,6 +31,7 @@ namespace Rythm.Client.BusinessLogic
         {
             CurrentTransport = TransportFactory.Create(TransportType.WebSocket);
             CurrentTransport.ConnectionStateChanged += HandleConnectionStateChanged;
+            CurrentTransport.ConnectionOpened += HandleConnectionOpened;
         }
 
         #endregion
@@ -49,19 +51,15 @@ namespace Rythm.Client.BusinessLogic
 
         private void HandleConnectionStateChanged(object sender, ConnectionStateChangedEventArgs state)
         {
-            ConnectionStateChange(state);
+            ConnectionStateChanged?.Invoke(state.Connected);
         }
 
-        private void ConnectionStateChange(ConnectionStateChangedEventArgs state)
+        private void HandleConnectionOpened(object sender, EventArgs e)
         {
-            ConnectionStateChanged?.Invoke(state.Connected);
-            if (state.Connected)
+            if (!string.IsNullOrEmpty(Login))
             {
-                if (!string.IsNullOrEmpty(Login))
-                {
-                    var msgContainer = new ConnectionRequest(Login);
-                    CurrentTransport?.Send(msgContainer);
-                }
+                var msgContainer = new ConnectionRequest(Login);
+                CurrentTransport?.Send(msgContainer);
             }
         }
 

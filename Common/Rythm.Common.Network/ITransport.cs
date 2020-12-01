@@ -14,6 +14,7 @@ namespace Rythm.Common.Network
 
         event EventHandler<ConnectionStateChangedEventArgs> ConnectionStateChanged;
         event EventHandler<MessageReceivedEventArgs> MessageReceived;
+        event EventHandler<EventArgs> ConnectionOpened;
 
         #endregion
 
