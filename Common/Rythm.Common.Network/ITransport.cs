@@ -6,8 +6,6 @@ namespace Rythm.Common.Network
 {
     using System;
 
-    using Enums;
-
     using Messages;
 
     public interface ITransport

@@ -78,6 +78,7 @@ namespace Rythm.Common.Network
             if (IsConnected)
             {
                 _socket.CloseAsync();
+                ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(false));
             }
 
             _socket.OnOpen -= OnOpen;
