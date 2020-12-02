@@ -112,13 +112,11 @@ namespace Rythm.Common.Network
                     break;
 
                 case MsgType.ClientOk:
-                    var clientOkMessageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
-                    var clientOkMsgContainer =
-                        ((JObject)clientOkMessageRequest.MsgContainer).ToObject(typeof(ClientOkMsgResponse)) as ClientOkMsgResponse;
+                    var clientOkMsgContainer = ((JObject)container.Payload).ToObject(typeof(ClientOkMsgResponse)) as ClientOkMsgResponse;
 
                     MessageContainer ClientOkContainer = clientOkMsgContainer.GetContainer();
 
-                    if (clientOkMessageRequest != null)
+                    if (clientOkMsgContainer != null)
                     {
                         Send(ClientOkContainer, clientOkMsgContainer.From);
                     }
