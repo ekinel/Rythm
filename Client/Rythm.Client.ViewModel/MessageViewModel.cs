@@ -79,8 +79,12 @@ namespace Rythm.Client.ViewModel
 
         private void SendMessageCommand()
         {
-            _settingConnectionController.MessageSend(OutgoingMessage);
-            OutgoingMessage = string.Empty;
+            if (OutgoingMessage.Length != 0)
+            {
+                _settingConnectionController.MessageSend(OutgoingMessage);
+                HandleNewMessageRecieved(OutgoingMessage);
+                OutgoingMessage = string.Empty;
+            }
         }
 
         #endregion
