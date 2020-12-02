@@ -30,4 +30,3 @@ namespace Rythm.Common.Network.Messages
         #endregion
     }
 }
-

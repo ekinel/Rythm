@@ -42,12 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDispatcherHelper.cs" />
-    <Compile Include="IConnectionController.cs" />
+    <Compile Include="Interfaces\IConnectionController.cs" />
     <Compile Include="ConnectionController.cs" />
-    <Compile Include="IUserListController.cs" />
-    <Compile Include="IUserLoginDisplayController.cs" />
+    <Compile Include="Interfaces\IUserListController.cs" />
+    <Compile Include="Interfaces\IUserLoginDisplayController.cs" />
     <Compile Include="MessagingController.cs" />
-    <Compile Include="IMessagingController.cs" />
+    <Compile Include="Interfaces\IMessagingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserListController.cs" />
     <Compile Include="UserLoginDisplayController.cs" />
@@ -58,5 +58,6 @@
       <Name>Rythm.Common.Network</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

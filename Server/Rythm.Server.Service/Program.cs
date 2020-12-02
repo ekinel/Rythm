@@ -1,9 +1,16 @@
-﻿namespace Rythm.Server.Service
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+namespace Rythm.Server.Service
 {
     using System;
-    class Program
+
+    internal class Program
     {
-        static void Main(string[] args)
+        #region Methods
+
+        private static void Main(string[] args)
         {
             try
             {
@@ -20,5 +27,7 @@
                 Console.ReadLine();
             }
         }
+
+        #endregion
     }
 }

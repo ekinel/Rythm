@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace Rythm.Client.ViewModel
 {
@@ -10,6 +8,5 @@ namespace Rythm.Client.ViewModel
 
     public class CommunicationParametersViewModel : BindableBase
     {
-
     }
 }

@@ -155,10 +155,19 @@ namespace Rythm.Common.Network
 
                 case MsgType.PersonalMessage:
                     var messageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
+                    var textMsgRequest = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
 
-                    var textMsgContainer = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgContainer)) as TextMsgContainer;
+                    MessageReceived?.Invoke(this, new MessageReceivedEventArgs(textMsgRequest));
 
-                    MessageReceived?.Invoke(this, new MessageReceivedEventArgs(textMsgContainer));
+                    var msgContainer = new ClientOkMsgResponse(textMsgRequest.From, textMsgRequest.To, textMsgRequest.Date);
+                    Send(msgContainer);
+
+                    break;
+
+                case MsgType.ClientOk:
+                    break;
+
+                case MsgType.ServerOk:
                     break;
             }
         }

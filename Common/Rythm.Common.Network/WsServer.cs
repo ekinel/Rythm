@@ -98,11 +98,29 @@ namespace Rythm.Common.Network
 
                 case MsgType.PersonalMessage:
                     var messageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
-                    var textMsgContainer = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgContainer)) as TextMsgContainer;
+                    var textMsgContainer = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
+
+                    var serverOkPayload = new ServerOkMsgResponse(textMsgContainer.From, textMsgContainer.To, textMsgContainer.Date);
+                    MessageContainer serverOkContainer = serverOkPayload.GetContainer();
 
                     if (textMsgContainer != null)
                     {
                         Send(container, textMsgContainer.To);
+                        Send(serverOkContainer, textMsgContainer.From);
+                    }
+
+                    break;
+
+                case MsgType.ClientOk:
+                    var clientOkMessageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
+                    var clientOkMsgContainer =
+                        ((JObject)clientOkMessageRequest.MsgContainer).ToObject(typeof(ClientOkMsgResponse)) as ClientOkMsgResponse;
+
+                    MessageContainer ClientOkContainer = clientOkMsgContainer.GetContainer();
+
+                    if (clientOkMessageRequest != null)
+                    {
+                        Send(ClientOkContainer, clientOkMsgContainer.From);
                     }
 
                     break;

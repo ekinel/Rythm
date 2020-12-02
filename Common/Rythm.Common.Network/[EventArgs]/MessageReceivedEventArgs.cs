@@ -20,12 +20,12 @@ namespace Rythm.Common.Network
 
         #region Constructors
 
-        public MessageReceivedEventArgs(TextMsgContainer msgContainer)
+        public MessageReceivedEventArgs(TextMsgRequest msgRequest)
         {
-            ToClientName = msgContainer.To;
-            Message = msgContainer.Message;
-            FromClientName = msgContainer.From;
-            Date = msgContainer.Date;
+            ToClientName = msgRequest.To;
+            Message = msgRequest.Message;
+            FromClientName = msgRequest.From;
+            Date = msgRequest.Date;
         }
 
         #endregion

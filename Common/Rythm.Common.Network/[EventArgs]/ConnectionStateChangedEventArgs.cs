@@ -1,4 +1,8 @@
-﻿namespace Rythm.Common.Network
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+namespace Rythm.Common.Network
 {
     public class ConnectionStateChangedEventArgs
     {
@@ -6,7 +10,7 @@
 
         public bool Connected { get; }
 
-        #endregion Properties
+        #endregion
 
         #region Constructors
 
@@ -15,6 +19,6 @@
             Connected = connected;
         }
 
-        #endregion Constructors
+        #endregion
     }
 }

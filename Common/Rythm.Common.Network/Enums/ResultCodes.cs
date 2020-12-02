@@ -1,5 +1,10 @@
-﻿namespace Rythm.Common.Network.Enums
-{    public enum ResultCodes : byte
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+namespace Rythm.Common.Network.Enums
+{
+    public enum ResultCodes : byte
     {
         Ok,
         Failure,

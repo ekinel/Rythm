@@ -6,9 +6,7 @@ namespace Rythm.Common.Network
 {
     using System;
 
-    using Enums;
-
-    public class TextMsgContainer
+    public class TextMsgRequest
     {
         #region Fields
 
@@ -49,7 +47,7 @@ namespace Rythm.Common.Network
 
         #region Constructors
 
-        public TextMsgContainer(string from, string to, string message)
+        public TextMsgRequest(string from, string to, string message)
         {
             From = from;
             To = to;

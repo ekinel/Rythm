@@ -51,7 +51,7 @@ namespace Rythm.Client.BusinessLogic
 
         public void MessageSend(string currentMessage)
         {
-            var msgContainer = new TextMsgContainer(_connectionServiceController.Login, LoginTo, currentMessage);
+            var msgContainer = new TextMsgRequest(_connectionServiceController.Login, LoginTo, currentMessage);
             var mr = new MessageRequest(msgContainer, MsgType.PersonalMessage);
             _currentTransport?.Send(mr);
         }

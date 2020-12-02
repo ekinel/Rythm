@@ -15,15 +15,22 @@ namespace Rythm.Client.ViewModel
 
     public class ConnectionParametersViewModel : BindableBase
     {
+        #region Constants
+
+        private const string ADDRESS = "127.0.0.1";
+        private const string PORT = "65000";
+
+        #endregion
+
         #region Fields
 
         private readonly IConnectionController _connectionController;
 
-        private string _address = "127.0.0.1";
+        private string _address = ADDRESS;
 
         private bool _isConnected;
         private string _login;
-        private string _port = "65000";
+        private string _port = PORT;
 
         private string _label;
         private bool _fieldsEnabled = true;
