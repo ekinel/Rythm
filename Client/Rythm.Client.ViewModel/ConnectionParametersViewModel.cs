@@ -35,12 +35,15 @@ namespace Rythm.Client.ViewModel
         private string _label;
         private bool _fieldsEnabled = true;
         private readonly IEventAggregator _eventAggregator;
+        
+        //private bool _canExecute { get; set; } = false;
+
 
         #endregion
 
         #region Properties
 
-        public ICommand ConnectCommand { get; }
+        public DelegateCommand ConnectCommand { get; }
 
         public string ConnectButtonLabel
         {
@@ -51,19 +54,31 @@ namespace Rythm.Client.ViewModel
         public string Address
         {
             get => _address;
-            set => SetProperty(ref _address, value);
+            set
+            {
+                SetProperty(ref _address, value);
+                ConnectCommand.RaiseCanExecuteChanged();
+            }
         }
 
         public string Port
         {
             get => _port;
-            set => SetProperty(ref _port, value);
+            set
+            {
+                SetProperty(ref _port, value);
+                ConnectCommand.RaiseCanExecuteChanged();
+            }
         }
 
         public string Login
         {
             get => _login;
-            set => SetProperty(ref _login, value);
+            set
+            {
+                SetProperty(ref _login, value);
+                ConnectCommand.RaiseCanExecuteChanged();
+            }
         }
 
         public bool FieldsEnabled
@@ -80,7 +95,7 @@ namespace Rythm.Client.ViewModel
         {
             _connectionController = connectionController ?? throw new ArgumentNullException(nameof(connectionController));
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
-            ConnectCommand = new DelegateCommand(ExecuteConnectCommand);
+            ConnectCommand = new DelegateCommand(ExecuteConnectCommand, (() => !string.IsNullOrEmpty(Address) && !string.IsNullOrEmpty(Port) && !string.IsNullOrEmpty(Login)));
             _connectionController.ConnectionStateChanged += HandleConnectionStateChanged;
             ConnectButtonLabel = "Connect";
         }

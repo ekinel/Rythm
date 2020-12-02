@@ -30,11 +30,11 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="Адрес" Foreground="DimGray" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" IsEnabled="False"/>
-        <TextBox Text="{Binding Address}" Grid.Column="1" Grid.Row="2" IsEnabled="{Binding FieldsEnabled}"/>
+        <TextBox Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2" IsEnabled="{Binding FieldsEnabled}"/>
         <TextBlock Text="Порт" Foreground="DimGray" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" IsEnabled="False"/>
-        <TextBox Text="{Binding Port}" Grid.Column="1" Grid.Row="4" IsEnabled="{Binding FieldsEnabled}"/>
+        <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" IsEnabled="{Binding FieldsEnabled}"/>
         <TextBlock Text="Логин" Foreground="DimGray" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" IsEnabled="False"/>
-        <TextBox Text="{Binding Login}" Grid.Column="1" Grid.Row="7" IsEnabled="{Binding FieldsEnabled}"/>
+        <TextBox Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" IsEnabled="{Binding FieldsEnabled}"/>
         <Button Grid.Column="1" Grid.Row="9" Width="100" HorizontalAlignment="Right" Command="{Binding ConnectCommand}">
             <Button.Template>
                 <ControlTemplate>

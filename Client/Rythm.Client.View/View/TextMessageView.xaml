@@ -31,7 +31,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Text="{Binding OutgoingMessage}" Margin="0,5,5,5" TextWrapping="Wrap" MaxHeight="100"/>
+            <TextBox Grid.Column="0" Text="{Binding OutgoingMessage, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,5,5" TextWrapping="Wrap" MaxHeight="100"/>
             <Button Grid.Column="1"  Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom"  MaxHeight="30" Command="{Binding SendCommand}">
                 <Button.Template>
                     <ControlTemplate>

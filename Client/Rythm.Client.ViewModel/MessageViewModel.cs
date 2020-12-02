@@ -29,14 +29,19 @@ namespace Rythm.Client.ViewModel
 
         #region Properties
 
-        public ICommand SendCommand { get; }
+        public DelegateCommand SendCommand { get;}
 
         public ObservableCollection<SendMessageViewModel> ReceivedMessagesList { get; set; } = new ObservableCollection<SendMessageViewModel>();
 
         public string OutgoingMessage
         {
             get => _outgoingMessage;
-            set => SetProperty(ref _outgoingMessage, value);
+            set
+            {
+                SetProperty(ref _outgoingMessage, value);
+                SendCommand.RaiseCanExecuteChanged();
+            }
+            
         }
 
         public string ChatMessages
@@ -51,7 +56,7 @@ namespace Rythm.Client.ViewModel
 
         public MessageViewModel(IMessagingController settingConnectionController)
         {
-            SendCommand = new DelegateCommand(SendMessageCommand);
+            SendCommand = new DelegateCommand(SendMessageCommand, (() => (!string.IsNullOrEmpty(OutgoingMessage))));
             _settingConnectionController = settingConnectionController ?? throw new ArgumentNullException(nameof(settingConnectionController));
             _settingConnectionController.MessageReceivedEvent += HandleNewMessageRecieved;
             _settingConnectionController.UserLoginEvent += HandleUserLogin;
@@ -60,7 +65,6 @@ namespace Rythm.Client.ViewModel
         #endregion
 
         #region Methods
-
         public void HandleNewMessageRecieved(string message)
         {
             Application.Current.Dispatcher.BeginInvoke(
