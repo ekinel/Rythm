@@ -6,18 +6,11 @@ namespace Rythm.Client.ViewModel
 {
     using System.Collections.ObjectModel;
 
-    using BusinessLogic;
-
+    using Prism.Events;
     using Prism.Mvvm;
 
     public class UserListViewModel : BindableBase
     {
-        #region Fields
-
-        private static IUserListController _userListController;
-
-        #endregion
-
         #region Properties
 
         public ObservableCollection<UsersLoginsViewModel> UserList { get; set; }
@@ -26,14 +19,13 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public UserListViewModel(IUserListController userListController)
+        public UserListViewModel(IEventAggregator eventAggregator)
         {
-            _userListController = userListController;
             UserList = new ObservableCollection<UsersLoginsViewModel>
             {
-                new UsersLoginsViewModel(_userListController, "Никита"),
-                new UsersLoginsViewModel(_userListController, "Катя"),
-                new UsersLoginsViewModel(_userListController, "Паша")
+                new UsersLoginsViewModel(eventAggregator, "Никита"),
+                new UsersLoginsViewModel(eventAggregator, "Катя"),
+                new UsersLoginsViewModel(eventAggregator, "Паша")
             };
         }
 

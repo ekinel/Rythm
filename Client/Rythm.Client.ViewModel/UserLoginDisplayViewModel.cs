@@ -7,7 +7,7 @@ namespace Rythm.Client.ViewModel
     using System;
     using System.Windows.Input;
 
-    using BusinessLogic;
+    using Events;
 
     using Prism.Commands;
     using Prism.Events;
@@ -18,9 +18,7 @@ namespace Rythm.Client.ViewModel
         #region Fields
 
         private string _login;
-        private readonly IUserLoginDisplayController _userLoginDisplayController;
         private readonly IEventAggregator _eventAggregator;
-
 
         #endregion
 
@@ -38,11 +36,10 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public UserLoginDisplayViewModel(IUserLoginDisplayController userLoginDisplayController, IEventAggregator eventAggregator)
+        public UserLoginDisplayViewModel(IEventAggregator eventAggregator)
         {
-            _userLoginDisplayController = userLoginDisplayController ?? throw new ArgumentNullException(nameof(userLoginDisplayController));
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
-            _userLoginDisplayController.NewUserLoginEvent += HandleNewLoginSelected;
+            _eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleNewLoginSelected);
             ChangeSettingsVisibilityCommand = new DelegateCommand(ExecuteChangeSettingsVisibilityCommand);
         }
 

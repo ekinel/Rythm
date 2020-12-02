@@ -12,7 +12,10 @@ namespace Rythm.Client.ViewModel
 
     using BusinessLogic;
 
+    using Events;
+
     using Prism.Commands;
+    using Prism.Events;
     using Prism.Mvvm;
 
     public class MessageViewModel : BindableBase
@@ -23,7 +26,7 @@ namespace Rythm.Client.ViewModel
 
         private string _outgoingMessage;
         private string _chatMessages;
-        private string _login;
+        private string _loginFrom;
 
         #endregion
 
@@ -54,12 +57,12 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public MessageViewModel(IMessagingController settingConnectionController)
+        public MessageViewModel(IMessagingController settingConnectionController, IEventAggregator eventAggregator)
         {
             SendCommand = new DelegateCommand(SendMessageCommand, (() => (!string.IsNullOrEmpty(OutgoingMessage))));
+            eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleUserLogin);
             _settingConnectionController = settingConnectionController ?? throw new ArgumentNullException(nameof(settingConnectionController));
             _settingConnectionController.MessageReceivedEvent += HandleNewMessageRecieved;
-            _settingConnectionController.UserLoginEvent += HandleUserLogin;
         }
 
         #endregion
@@ -72,23 +75,20 @@ namespace Rythm.Client.ViewModel
                 new Action(
                     () =>
                     {
-                        ReceivedMessagesList.Add(new SendMessageViewModel(_login, message));
+                        ReceivedMessagesList.Add(new SendMessageViewModel(_loginFrom, message));
                     }));
         }
 
-        public void HandleUserLogin(string login)
+        public void HandleUserLogin(string loginFrom)
         {
-            _login = login;
+            _loginFrom = loginFrom;
         }
 
         private void SendMessageCommand()
         {
-            if (OutgoingMessage.Length != 0)
-            {
-                _settingConnectionController.MessageSend(OutgoingMessage);
-                HandleNewMessageRecieved(OutgoingMessage);
-                OutgoingMessage = string.Empty;
-            }
+            _settingConnectionController.MessageSend(OutgoingMessage, _loginFrom);
+            HandleNewMessageRecieved(OutgoingMessage);
+            OutgoingMessage = string.Empty;
         }
 
         #endregion

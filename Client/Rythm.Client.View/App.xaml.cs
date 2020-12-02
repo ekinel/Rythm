@@ -21,7 +21,6 @@
             containerRegistry.RegisterSingleton<IConnectionController, ConnectionController>();
             containerRegistry.Register<ConnectionParametersViewModel>();
 
-            containerRegistry.RegisterSingleton<IUserListController, UserListController>();
             containerRegistry.Register<UserListViewModel>();
 
             containerRegistry.RegisterSingleton<IUserLoginDisplayController, UserLoginDisplayController>();

@@ -74,6 +74,7 @@
     <Compile Include="ConnectionParametersViewModel.cs" />
     <Compile Include="Events\ConnectionIndicatorColorChangedEvent.cs" />
     <Compile Include="Events\ConnectionPanelVisibilityChangedEvent.cs" />
+    <Compile Include="Events\NewClientChosenViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="MessageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

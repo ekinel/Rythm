@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Prism, Version=8.0.0.1909, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.Core.8.0.0.1909\lib\net47\Prism.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,12 +47,10 @@
     <Compile Include="ApplicationDispatcherHelper.cs" />
     <Compile Include="Interfaces\IConnectionController.cs" />
     <Compile Include="ConnectionController.cs" />
-    <Compile Include="Interfaces\IUserListController.cs" />
     <Compile Include="Interfaces\IUserLoginDisplayController.cs" />
     <Compile Include="MessagingController.cs" />
     <Compile Include="Interfaces\IMessagingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserListController.cs" />
     <Compile Include="UserLoginDisplayController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,8 @@
       <Name>Rythm.Common.Network</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

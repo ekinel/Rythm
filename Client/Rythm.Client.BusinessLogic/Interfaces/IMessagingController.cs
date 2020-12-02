@@ -11,13 +11,12 @@ namespace Rythm.Client.BusinessLogic
         #region Events
 
         event Action<string> MessageReceivedEvent;
-        event Action<string> UserLoginEvent;
 
         #endregion
 
         #region Methods
 
-        void MessageSend(string currentMessage);
+        void MessageSend(string currentMessage, string loginFrom);
 
         #endregion
     }

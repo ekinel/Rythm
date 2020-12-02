@@ -4,17 +4,19 @@
 
 namespace Rythm.Client.ViewModel
 {
+    using System;
     using System.Windows.Input;
 
-    using BusinessLogic;
+    using Events;
 
     using Prism.Commands;
+    using Prism.Events;
 
     public class UsersLoginsViewModel
     {
         #region Fields
 
-        private readonly IUserListController _userListController;
+        private readonly IEventAggregator _eventAggregator;
 
         #endregion
 
@@ -27,9 +29,9 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public UsersLoginsViewModel(IUserListController userListController, string login)
+        public UsersLoginsViewModel(IEventAggregator eventAggregator, string login)
         {
-            _userListController = userListController;
+            _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             ChooseLoginCommand = new DelegateCommand(ChosenLogin);
             Login = login;
         }
@@ -40,7 +42,7 @@ namespace Rythm.Client.ViewModel
 
         private void ChosenLogin()
         {
-            _userListController.SendUserLogin(Login);
+            _eventAggregator.GetEvent<NewClientChosenViewModel>().Publish(Login);
         }
 
         #endregion

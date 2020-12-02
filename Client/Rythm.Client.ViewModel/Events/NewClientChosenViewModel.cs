@@ -2,14 +2,11 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Client.BusinessLogic
+namespace Rythm.Client.ViewModel.Events
 {
-    public interface IUserListController
+    using Prism.Events;
+
+    internal class NewClientChosenViewModel : PubSubEvent<string>
     {
-        #region Methods
-
-        void SendUserLogin(string login);
-
-        #endregion
     }
 }

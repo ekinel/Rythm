@@ -114,16 +114,13 @@ namespace Rythm.Client.ViewModel
 
         private void ExecuteConnectCommand()
         {
-            if (Login.Length != 0 && Port.Length != 0 && Address.Length != 0)
+            if (_isConnected)
             {
-                if (_isConnected)
-                {
-                    _connectionController.DoDisconnect();
-                }
-                else
-                {
-                    _connectionController.DoConnect(Address, Port, Login);
-                }
+                _connectionController.DoDisconnect();
+            }
+            else 
+            { 
+                _connectionController.DoConnect(Address, Port, Login);
             }
         }
 
