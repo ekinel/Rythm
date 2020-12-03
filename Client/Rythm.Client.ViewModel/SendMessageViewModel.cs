@@ -13,6 +13,8 @@ namespace Rythm.Client.ViewModel
         public string Name { get; }
         public string Text { get; }
         public string Time { get; }
+        public bool ServerOkStatus { get; set; }
+        public bool ClientOkStatus { get; set; }
 
         #endregion
 
@@ -23,6 +25,8 @@ namespace Rythm.Client.ViewModel
             Name = name;
             Text = text;
             Time = time;
+            ServerOkStatus = false;
+            ClientOkStatus = false;
         }
 
         #endregion

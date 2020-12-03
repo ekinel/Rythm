@@ -7,6 +7,7 @@ namespace Rythm.Client.BusinessLogic
     using System;
 
     using Common.Network;
+    using Common.Network.Messages;
 
     public interface IConnectionController
     {

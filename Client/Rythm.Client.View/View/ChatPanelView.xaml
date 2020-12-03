@@ -21,7 +21,11 @@
                     <StackPanel>
                         <TextBlock Text="{Binding Name}" FontSize="11"/>
                         <TextBlock Text="{Binding Text}" FontSize="14"/>
-                        <TextBlock Text="{Binding Time}" FontSize="8" TextAlignment="Right"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Time}" FontSize="8" TextAlignment="Right"/>
+                            <TextBlock Text="{Binding ServerOkStatus}" FontSize="8" TextAlignment="Right"/>
+                            <TextBlock Text="{Binding ClientOkStatus}" FontSize="8" TextAlignment="Right"/>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

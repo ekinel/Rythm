@@ -12,6 +12,7 @@ namespace Rythm.Client.ViewModel
     using BusinessLogic;
 
     using Common.Network;
+    using Common.Network.Messages;
 
     using Events;
 
@@ -23,7 +24,7 @@ namespace Rythm.Client.ViewModel
     {
         #region Fields
 
-        private readonly IChatPanelController _settingConnectionController;
+        private readonly IChatPanelController _chatPanelController;
 
         private string _outgoingMessage;
         private string _chatMessages;
@@ -58,13 +59,15 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public ChatPanelViewModel(IChatPanelController settingConnectionController, IEventAggregator eventAggregator)
+        public ChatPanelViewModel(IChatPanelController chatPanelController, IEventAggregator eventAggregator)
         {
             SendCommand = new DelegateCommand(SendMessageCommand, () => !string.IsNullOrEmpty(OutgoingMessage) && !string.IsNullOrEmpty(_loginTo));
             eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleUserLoginTo);
             eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleUserLoginFrom);
-            _settingConnectionController = settingConnectionController ?? throw new ArgumentNullException(nameof(settingConnectionController));
-            _settingConnectionController.MessageReceivedEvent += HandleNewMessageRecieved;
+            _chatPanelController = chatPanelController ?? throw new ArgumentNullException(nameof(chatPanelController));
+            _chatPanelController.MessageReceivedEvent += HandleNewMessageRecieved;
+            _chatPanelController.ServerOkReceivedEvent += HandleServerOkReceive;
+            _chatPanelController.ClientOkReceivedEvent += HandleClientOkReceive;
         }
 
         #endregion
@@ -93,9 +96,43 @@ namespace Rythm.Client.ViewModel
             _loginFrom = loginFrom;
         }
 
+        public void HandleServerOkReceive(ServerOkMsgResponse msgResponse)
+        {
+            foreach (var message in ReceivedMessagesList)
+            {
+                if (message.Time == msgResponse.Date)
+                {
+                    Application.Current.Dispatcher.BeginInvoke(
+                        DispatcherPriority.Background,
+                        new Action(
+                            () =>
+                            {
+                                message.ServerOkStatus = true;
+                            }));
+                }
+            }
+        }
+
+        public void HandleClientOkReceive(ClientOkMsgResponse msgResponse)
+        {
+            foreach (var message in ReceivedMessagesList)
+            {
+                if (message.Time == msgResponse.Date)
+                {
+                    Application.Current.Dispatcher.BeginInvoke(
+                        DispatcherPriority.Background,
+                        new Action(
+                            () =>
+                            {
+                                message.ClientOkStatus = true;
+                            }));
+                }
+            }
+        }
+
         private void SendMessageCommand()
         {
-            _settingConnectionController.MessageSend(OutgoingMessage, _loginTo);
+            _chatPanelController.MessageSend(OutgoingMessage, _loginTo);
             var msgRequest = new TextMsgRequest(_loginFrom, _loginTo, OutgoingMessage);
             HandleNewMessageRecieved(new MessageReceivedEventArgs(msgRequest));
             OutgoingMessage = string.Empty;
