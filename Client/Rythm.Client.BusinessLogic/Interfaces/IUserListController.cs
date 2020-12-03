@@ -2,16 +2,14 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Common.Network.Enums
+namespace Rythm.Client.BusinessLogic.Interfaces
 {
-    public enum MsgType
+    using System;
+    using System.Collections.Generic;
+
+    public interface IUserListController
     {
-        ClientRegistration,
-        GroupRegistration,
-        PersonalMessage,
-        GroupMessage,
-        ServerOk,
-        ClientOk,
-        UpdatedClientsList
+        event Action<List<string>> UpdatedUsersListEvent;
+
     }
 }

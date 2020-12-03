@@ -54,6 +54,7 @@
     <Compile Include="Messages\BaseContainer.cs" />
     <Compile Include="Messages\ServerOkMsgResponse.cs" />
     <Compile Include="Messages\TextMsgRequest.cs" />
+    <Compile Include="Messages\UpdatedClientsResponse.cs" />
     <Compile Include="TransportFactory.cs" />
     <Compile Include="[EventArgs]\ConnectionStateChangedEventArgs.cs" />
     <Compile Include="[EventArgs]\MessageReceivedEventArgs.cs" />

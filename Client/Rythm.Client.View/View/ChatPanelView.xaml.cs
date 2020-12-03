@@ -18,9 +18,9 @@ namespace Rythm.Client.View
     /// <summary>
     /// Interaction logic for TextMessageView.xaml
     /// </summary>
-    public partial class TextMessageView : UserControl
+    public partial class ChatPanelView : UserControl
     {
-        public TextMessageView()
+        public ChatPanelView()
         {
             InitializeComponent();
         }

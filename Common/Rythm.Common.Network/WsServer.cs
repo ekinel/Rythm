@@ -91,6 +91,8 @@ namespace Rythm.Common.Network
                             _connections.TryAdd(connection.Login, connection);
                             connection.Send(connectionResponse.GetContainer());
                             //
+                            var UpdatedClientsList = new UpdatedClientsResponse(_connections.Keys);
+                            Send(UpdatedClientsList.GetContainer());
                         }
                     }
 
@@ -141,6 +143,14 @@ namespace Rythm.Common.Network
                 {
                     connection.Value.Send(msgContainer);
                 }
+            }
+        }
+
+        private void Send(MessageContainer msgContainer)
+        {
+            foreach (KeyValuePair<string, WsConnection> connection in _connections)
+            {
+                connection.Value.Send(msgContainer);
             }
         }
 

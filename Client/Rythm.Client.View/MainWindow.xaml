@@ -25,7 +25,7 @@
         <view:CommunicationParametersView Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="0,30,0,0"/>
         <view:UserListView Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,5,0,0"/>
         <view:UserLoginDisplayView Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,10,0"/>
-        <view:TextMessageView Grid.Column="2" Grid.Row="1" Margin="5"/>
+        <view:ChatPanelView Grid.Column="2" Grid.Row="1" Margin="5"/>
         <view:ConnectionParametersView  Grid.Column="3" Grid.Row="1" Margin="1"/>
 
     </Grid>

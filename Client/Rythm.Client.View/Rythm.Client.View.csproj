@@ -87,8 +87,8 @@
     <Compile Include="View\ConnectionParametersView.xaml.cs">
       <DependentUpon>ConnectionParametersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TextMessageView.xaml.cs">
-      <DependentUpon>TextMessageView.xaml</DependentUpon>
+    <Compile Include="View\ChatPanelView.xaml.cs">
+      <DependentUpon>ChatPanelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserLoginDisplayView.xaml.cs">
       <DependentUpon>UserLoginDisplayView.xaml</DependentUpon>
@@ -96,6 +96,10 @@
     <Compile Include="View\UserListView.xaml.cs">
       <DependentUpon>UserListView.xaml</DependentUpon>
     </Compile>
+    <Page Include="ButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -116,7 +120,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TextMessageView.xaml">
+    <Page Include="View\ChatPanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

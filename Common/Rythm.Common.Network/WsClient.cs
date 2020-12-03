@@ -41,6 +41,8 @@ namespace Rythm.Common.Network
         public event EventHandler<MessageReceivedEventArgs> MessageReceived;
         public event EventHandler<EventArgs> ConnectionOpened;
 
+        public event EventHandler<MessageContainer> UpdatedUsersList;
+
         #endregion
 
         #region Constructors
@@ -168,6 +170,10 @@ namespace Rythm.Common.Network
                     break;
 
                 case MsgType.ServerOk:
+                    break;
+
+                case MsgType.UpdatedClientsList:
+                    UpdatedUsersList?.Invoke(this, container);
                     break;
             }
         }

@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace Rythm.Client.View
 {
     /// <summary>
-    /// Interaction logic for UserListView.xaml
+    /// Interaction logic for UserListController.xaml
     /// </summary>
     public partial class UserListView : UserControl
     {

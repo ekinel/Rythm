@@ -7,7 +7,6 @@ namespace Rythm.Client.ViewModel
     using System;
     using System.Collections.ObjectModel;
     using System.Windows;
-    using System.Windows.Input;
     using System.Windows.Threading;
 
     using BusinessLogic;
@@ -18,11 +17,11 @@ namespace Rythm.Client.ViewModel
     using Prism.Events;
     using Prism.Mvvm;
 
-    public class MessageViewModel : BindableBase
+    public class ChatPanelViewModel : BindableBase
     {
         #region Fields
 
-        private readonly IMessagingController _settingConnectionController;
+        private readonly IChatPanelController _settingConnectionController;
 
         private string _outgoingMessage;
         private string _chatMessages;
@@ -32,7 +31,7 @@ namespace Rythm.Client.ViewModel
 
         #region Properties
 
-        public DelegateCommand SendCommand { get;}
+        public DelegateCommand SendCommand { get; }
 
         public ObservableCollection<SendMessageViewModel> ReceivedMessagesList { get; set; } = new ObservableCollection<SendMessageViewModel>();
 
@@ -44,7 +43,6 @@ namespace Rythm.Client.ViewModel
                 SetProperty(ref _outgoingMessage, value);
                 SendCommand.RaiseCanExecuteChanged();
             }
-            
         }
 
         public string ChatMessages
@@ -57,9 +55,9 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public MessageViewModel(IMessagingController settingConnectionController, IEventAggregator eventAggregator)
+        public ChatPanelViewModel(IChatPanelController settingConnectionController, IEventAggregator eventAggregator)
         {
-            SendCommand = new DelegateCommand(SendMessageCommand, (() => (!string.IsNullOrEmpty(OutgoingMessage))));
+            SendCommand = new DelegateCommand(SendMessageCommand, () => !string.IsNullOrEmpty(OutgoingMessage) && !string.IsNullOrEmpty(_loginFrom));
             eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleUserLogin);
             _settingConnectionController = settingConnectionController ?? throw new ArgumentNullException(nameof(settingConnectionController));
             _settingConnectionController.MessageReceivedEvent += HandleNewMessageRecieved;
@@ -68,6 +66,7 @@ namespace Rythm.Client.ViewModel
         #endregion
 
         #region Methods
+
         public void HandleNewMessageRecieved(string message)
         {
             Application.Current.Dispatcher.BeginInvoke(
