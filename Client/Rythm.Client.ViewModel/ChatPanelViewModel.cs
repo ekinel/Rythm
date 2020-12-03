@@ -11,6 +11,8 @@ namespace Rythm.Client.ViewModel
 
     using BusinessLogic;
 
+    using Common.Network;
+
     using Events;
 
     using Prism.Commands;
@@ -25,6 +27,7 @@ namespace Rythm.Client.ViewModel
 
         private string _outgoingMessage;
         private string _chatMessages;
+        private string _loginTo;
         private string _loginFrom;
 
         #endregion
@@ -57,8 +60,9 @@ namespace Rythm.Client.ViewModel
 
         public ChatPanelViewModel(IChatPanelController settingConnectionController, IEventAggregator eventAggregator)
         {
-            SendCommand = new DelegateCommand(SendMessageCommand, () => !string.IsNullOrEmpty(OutgoingMessage) && !string.IsNullOrEmpty(_loginFrom));
-            eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleUserLogin);
+            SendCommand = new DelegateCommand(SendMessageCommand, () => !string.IsNullOrEmpty(OutgoingMessage) && !string.IsNullOrEmpty(_loginTo));
+            eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleUserLoginTo);
+            eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleUserLoginFrom);
             _settingConnectionController = settingConnectionController ?? throw new ArgumentNullException(nameof(settingConnectionController));
             _settingConnectionController.MessageReceivedEvent += HandleNewMessageRecieved;
         }
@@ -67,26 +71,33 @@ namespace Rythm.Client.ViewModel
 
         #region Methods
 
-        public void HandleNewMessageRecieved(string message)
+        public void HandleNewMessageRecieved(MessageReceivedEventArgs state)
         {
+            _loginTo = state.FromClientName;
             Application.Current.Dispatcher.BeginInvoke(
                 DispatcherPriority.Background,
                 new Action(
                     () =>
                     {
-                        ReceivedMessagesList.Add(new SendMessageViewModel(_loginFrom, message));
+                        ReceivedMessagesList.Add(new SendMessageViewModel(_loginTo, state.Message, state.Date));
                     }));
         }
 
-        public void HandleUserLogin(string loginFrom)
+        public void HandleUserLoginTo(string loginTo)
+        {
+            _loginTo = loginTo;
+        }
+
+        public void HandleUserLoginFrom(string loginFrom)
         {
             _loginFrom = loginFrom;
         }
 
         private void SendMessageCommand()
         {
-            _settingConnectionController.MessageSend(OutgoingMessage, _loginFrom);
-            HandleNewMessageRecieved(OutgoingMessage);
+            _settingConnectionController.MessageSend(OutgoingMessage, _loginTo);
+            var msgRequest = new TextMsgRequest(_loginFrom, _loginTo, OutgoingMessage);
+            HandleNewMessageRecieved(new MessageReceivedEventArgs(msgRequest));
             OutgoingMessage = string.Empty;
         }
 

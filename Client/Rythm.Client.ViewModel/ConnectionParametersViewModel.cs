@@ -9,6 +9,8 @@ namespace Rythm.Client.ViewModel
 
     using BusinessLogic;
 
+    using Events;
+
     using Prism.Commands;
     using Prism.Events;
     using Prism.Mvvm;
@@ -121,6 +123,7 @@ namespace Rythm.Client.ViewModel
             else 
             { 
                 _connectionController.DoConnect(Address, Port, Login);
+                _eventAggregator.GetEvent<PassLoginViewModel>().Publish(Login);
             }
         }
 

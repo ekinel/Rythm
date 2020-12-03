@@ -19,8 +19,9 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding Name}" FontSize="9"/>
-                        <TextBlock Text="{Binding Text}" FontSize="11"/>
+                        <TextBlock Text="{Binding Name}" FontSize="11"/>
+                        <TextBlock Text="{Binding Text}" FontSize="14"/>
+                        <TextBlock Text="{Binding Time}" FontSize="8" TextAlignment="Right"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

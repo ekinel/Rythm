@@ -32,7 +32,7 @@ namespace Rythm.Client.BusinessLogic
 
         #region Events
 
-        public event Action<string> MessageReceivedEvent;
+        public event Action<MessageReceivedEventArgs> MessageReceivedEvent;
         public event Action<List<string>> UpdatedUsersListEvent;
 
         #endregion
@@ -60,7 +60,7 @@ namespace Rythm.Client.BusinessLogic
 
         private void HandleMessageReceived(object sender, MessageReceivedEventArgs state)
         {
-            MessageReceivedEvent?.Invoke(state.Message);
+            MessageReceivedEvent?.Invoke(state);
         }
 
         private void HandleUpdatedUsersList(object sender, MessageContainer msgContainer)

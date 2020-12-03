@@ -7,8 +7,6 @@ namespace Rythm.Client.ViewModel
     using System;
     using System.Windows.Input;
 
-    using BusinessLogic.Interfaces;
-
     using Events;
 
     using Prism.Commands;

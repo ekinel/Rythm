@@ -7,13 +7,14 @@ namespace Rythm.Client.BusinessLogic
     using System;
     using System.Collections.Generic;
 
+    using Common.Network;
+
     public interface IChatPanelController
     {
         #region Events
 
-        event Action<string> MessageReceivedEvent;
+        event Action<MessageReceivedEventArgs> MessageReceivedEvent;
         event Action<List<string>> UpdatedUsersListEvent;
-
 
         #endregion
 

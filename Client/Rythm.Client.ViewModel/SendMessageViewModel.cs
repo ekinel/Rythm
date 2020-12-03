@@ -8,24 +8,21 @@ namespace Rythm.Client.ViewModel
 
     public class SendMessageViewModel : BindableBase
     {
-        #region Fields
-
-        #endregion
-
         #region Properties
 
         public string Name { get; }
-
         public string Text { get; }
+        public string Time { get; }
 
         #endregion
 
         #region Constructors
 
-        public SendMessageViewModel(string name, string text)
+        public SendMessageViewModel(string name, string text, string time)
         {
             Name = name;
             Text = text;
+            Time = time;
         }
 
         #endregion
