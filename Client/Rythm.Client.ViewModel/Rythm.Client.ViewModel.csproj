@@ -79,7 +79,7 @@
     <Compile Include="ChatPanelViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendMessageViewModel.cs" />
-    <Compile Include="UserListViewModel.cs" />
+    <Compile Include="UsersListViewModel.cs" />
     <Compile Include="UserLoginDisplayViewModel.cs" />
     <Compile Include="UsersLoginsViewModel.cs" />
   </ItemGroup>

@@ -9,7 +9,7 @@ namespace Rythm.Client.BusinessLogic
 
     using Interfaces;
 
-    public class UserListController : IUserListController
+    public class UsersListController : IUsersListController
     {
         #region Fields
 
@@ -23,7 +23,7 @@ namespace Rythm.Client.BusinessLogic
 
         #region Constructors
 
-        public UserListController(IChatPanelController chatPanelController)
+        public UsersListController(IChatPanelController chatPanelController)
         {
             _chatPanelController = chatPanelController;
             _chatPanelController.UpdatedUsersListEvent += HandleUpdatedUsersList;

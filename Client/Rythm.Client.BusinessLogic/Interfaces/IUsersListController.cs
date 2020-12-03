@@ -7,7 +7,7 @@ namespace Rythm.Client.BusinessLogic.Interfaces
     using System;
     using System.Collections.Generic;
 
-    public interface IUserListController
+    public interface IUsersListController
     {
         event Action<List<string>> UpdatedUsersListEvent;
 

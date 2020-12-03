@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Rythm.Client.View
 {
     /// <summary>
-    /// Interaction logic for UserListController.xaml
+    /// Interaction logic for UsersListController.xaml
     /// </summary>
-    public partial class UserLoginDisplayView : UserControl
+    public partial class ToolPanelView : UserControl
     {
-        public UserLoginDisplayView()
+        public ToolPanelView()
         {
             InitializeComponent();
         }

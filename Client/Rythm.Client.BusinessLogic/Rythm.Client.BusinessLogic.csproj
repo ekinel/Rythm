@@ -50,13 +50,13 @@
     <Compile Include="ApplicationDispatcherHelper.cs" />
     <Compile Include="Interfaces\IConnectionController.cs" />
     <Compile Include="ConnectionController.cs" />
-    <Compile Include="Interfaces\IUserListController.cs" />
-    <Compile Include="Interfaces\IUserLoginDisplayController.cs" />
+    <Compile Include="Interfaces\IUsersListController.cs" />
+    <Compile Include="Interfaces\IToolPanelDisplayController.cs" />
     <Compile Include="ChatPanelController.cs" />
     <Compile Include="Interfaces\IChatPanelController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserListController.cs" />
-    <Compile Include="UserLoginDisplayController.cs" />
+    <Compile Include="UsersListController.cs" />
+    <Compile Include="ToolPanelDisplayController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Rythm.Common.Network\Rythm.Common.Network.csproj">

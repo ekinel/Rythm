@@ -90,11 +90,11 @@
     <Compile Include="View\ChatPanelView.xaml.cs">
       <DependentUpon>ChatPanelView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserLoginDisplayView.xaml.cs">
-      <DependentUpon>UserLoginDisplayView.xaml</DependentUpon>
+    <Compile Include="View\ToolPanelView.xaml.cs">
+      <DependentUpon>ToolPanelView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserListView.xaml.cs">
-      <DependentUpon>UserListView.xaml</DependentUpon>
+    <Compile Include="View\UsersListView.xaml.cs">
+      <DependentUpon>UsersListView.xaml</DependentUpon>
     </Compile>
     <Page Include="ButtonStyle.xaml">
       <SubType>Designer</SubType>
@@ -124,11 +124,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserLoginDisplayView.xaml">
+    <Page Include="View\ToolPanelView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\UserListView.xaml">
+    <Page Include="View\UsersListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

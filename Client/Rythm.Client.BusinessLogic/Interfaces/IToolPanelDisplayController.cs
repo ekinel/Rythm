@@ -6,7 +6,7 @@ namespace Rythm.Client.BusinessLogic
 {
     using System;
 
-    public interface IUserLoginDisplayController
+    public interface IToolPanelDisplayController
     {
         #region Properties
 

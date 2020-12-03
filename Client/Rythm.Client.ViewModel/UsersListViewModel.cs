@@ -15,11 +15,11 @@ namespace Rythm.Client.ViewModel
     using Prism.Events;
     using Prism.Mvvm;
 
-    public class UserListViewModel : BindableBase
+    public class UsersListViewModel : BindableBase
     {
         #region Fields
 
-        private readonly IUserListController _userListController;
+        private readonly IUsersListController _usersListController;
         private readonly IEventAggregator _eventAggregator;
 
         #endregion
@@ -32,27 +32,20 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public UserListViewModel(IEventAggregator eventAggregator, IUserListController userListController)
+        public UsersListViewModel(IEventAggregator eventAggregator, IUsersListController usersListController)
         {
             _eventAggregator = eventAggregator;
-            _userListController = userListController;
-            _userListController.UpdatedUsersListEvent += HandleUpdatedUsersList;
+            _usersListController = usersListController;
+            _usersListController.UpdatedUsersListEvent += HandleUpdatedUsersesList;
 
             UserList = new ObservableCollection<UsersLoginsViewModel>();
-
-            //UserList = new ObservableCollection<UsersLoginsViewModel>
-            //{
-            //    new UsersLoginsViewModel(eventAggregator, "Никита"),
-            //    new UsersLoginsViewModel(eventAggregator, "Катя"),
-            //    new UsersLoginsViewModel(eventAggregator, "Паша")
-            //};
         }
 
         #endregion
 
         #region Methods
 
-        public void HandleUpdatedUsersList(List<string> updatedUsersList)
+        public void HandleUpdatedUsersesList(List<string> updatedUsersList)
         {
             Application.Current.Dispatcher.BeginInvoke(
                 DispatcherPriority.Background,

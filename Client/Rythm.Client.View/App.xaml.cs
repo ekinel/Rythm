@@ -23,10 +23,10 @@
             containerRegistry.RegisterSingleton<IConnectionController, ConnectionController>();
             containerRegistry.Register<ConnectionParametersViewModel>();
 
-            containerRegistry.RegisterSingleton<IUserListController, UserListController>();
-            containerRegistry.Register<UserListViewModel>();
+            containerRegistry.RegisterSingleton<IUsersListController, UsersListController>();
+            containerRegistry.Register<UsersListViewModel>();
 
-            containerRegistry.RegisterSingleton<IUserLoginDisplayController, UserLoginDisplayController>();
+            containerRegistry.RegisterSingleton<IToolPanelDisplayController, ToolPanelDisplayController>();
             containerRegistry.Register<UserLoginDisplayViewModel>();
 
             containerRegistry.Register<CommunicationParametersViewModel>();
@@ -40,8 +40,8 @@
             ViewModelLocationProvider.Register(typeof(MainWindow).ToString(), () => Container.Resolve<MainWindowViewModel>());
             ViewModelLocationProvider.Register(typeof(ChatPanelView).ToString(), () => Container.Resolve<ChatPanelViewModel>());
             ViewModelLocationProvider.Register(typeof(ConnectionParametersView).ToString(), () => Container.Resolve<ConnectionParametersViewModel>());
-            ViewModelLocationProvider.Register(typeof(UserListView).ToString(), () => Container.Resolve<UserListViewModel>());
-            ViewModelLocationProvider.Register(typeof(UserLoginDisplayView).ToString(), () => Container.Resolve<UserLoginDisplayViewModel>());
+            ViewModelLocationProvider.Register(typeof(UsersListView).ToString(), () => Container.Resolve<UsersListViewModel>());
+            ViewModelLocationProvider.Register(typeof(ToolPanelView).ToString(), () => Container.Resolve<UserLoginDisplayViewModel>());
             ViewModelLocationProvider.Register(typeof(CommunicationParametersView).ToString(), () => Container.Resolve<UserLoginDisplayViewModel>());
         }
 
