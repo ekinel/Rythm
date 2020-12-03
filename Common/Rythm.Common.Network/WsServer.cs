@@ -92,7 +92,7 @@ namespace Rythm.Common.Network
                             connection.Send(connectionResponse.GetContainer());
                             //
                             var UpdatedClientsList = new UpdatedClientsResponse(_connections.Keys);
-                            Send(UpdatedClientsList.GetContainer());
+                            Send(UpdatedClientsList);
                         }
                     }
 
@@ -146,11 +146,14 @@ namespace Rythm.Common.Network
             }
         }
 
-        private void Send(MessageContainer msgContainer)
+        private void Send(UpdatedClientsResponse updatedClientsResponse)
         {
             foreach (KeyValuePair<string, WsConnection> connection in _connections)
             {
-                connection.Value.Send(msgContainer);
+                ICollection<string> updatedClientsList = new List<string>(updatedClientsResponse.UsersList);
+                updatedClientsList.Remove(connection.Key);
+                var newUpdatedClientsResponse = new UpdatedClientsResponse(updatedClientsList);
+                connection.Value.Send(newUpdatedClientsResponse.GetContainer());
             }
         }
 
