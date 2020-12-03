@@ -8,13 +8,30 @@ namespace Rythm.Client.ViewModel
 
     public class SendMessageViewModel : BindableBase
     {
+        #region Fields
+
+        private bool _serverOkStatus;
+        private bool _clientOkStatus;
+
+        #endregion
+
         #region Properties
 
         public string Name { get; }
         public string Text { get; }
         public string Time { get; }
-        public bool ServerOkStatus { get; set; }
-        public bool ClientOkStatus { get; set; }
+
+        public bool ServerOkStatus
+        {
+            get => _serverOkStatus;
+            set => SetProperty(ref _serverOkStatus, value);
+        }
+
+        public bool ClientOkStatus
+        {
+            get => _clientOkStatus;
+            set => SetProperty(ref _clientOkStatus, value);
+        }
 
         #endregion
 
