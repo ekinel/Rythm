@@ -131,7 +131,7 @@ namespace Rythm.Common.Network
         {
             if (_connections.TryRemove(login, out WsConnection connection) && !string.IsNullOrEmpty(connection.Login))
             {
-                //
+                Send(new UpdatedClientsResponse(_connections.Keys));
             }
         }
 
