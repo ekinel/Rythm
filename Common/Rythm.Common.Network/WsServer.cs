@@ -90,9 +90,8 @@ namespace Rythm.Common.Network
                             connection.Login = connectionRequest.Login;
                             _connections.TryAdd(connection.Login, connection);
                             connection.Send(connectionResponse.GetContainer());
-                            //
-                            var UpdatedClientsList = new UpdatedClientsResponse(_connections.Keys);
-                            Send(UpdatedClientsList);
+                            var updatedClientsList = new UpdatedClientsResponse(_connections.Keys);
+                            Send(updatedClientsList);
                         }
                     }
 
@@ -100,27 +99,26 @@ namespace Rythm.Common.Network
 
                 case MsgType.PersonalMessage:
                     var messageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
-                    var textMsgContainer = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
 
-                    var serverOkPayload = new ServerOkMsgResponse(textMsgContainer.From, textMsgContainer.To, textMsgContainer.Date);
-                    MessageContainer serverOkContainer = serverOkPayload.GetContainer();
-
-                    if (textMsgContainer != null)
+                    if (((JObject)messageRequest?.MsgContainer)?.ToObject(typeof(TextMsgRequest)) is TextMsgRequest textMsgContainer)
                     {
+                        var serverOkPayload = new ServerOkMsgResponse(textMsgContainer.From, textMsgContainer.To, textMsgContainer.Date);
+                        MessageContainer serverOkContainer = serverOkPayload.GetContainer();
+
                         Send(container, textMsgContainer.To);
                         Send(serverOkContainer, textMsgContainer.From);
                     }
 
                     break;
 
+
                 case MsgType.ClientOk:
-                    var clientOkMsgContainer = ((JObject)container.Payload).ToObject(typeof(ClientOkMsgResponse)) as ClientOkMsgResponse;
 
-                    MessageContainer ClientOkContainer = clientOkMsgContainer.GetContainer();
-
-                    if (clientOkMsgContainer != null)
+                    if (((JObject)container.Payload).ToObject(typeof(ClientOkMsgResponse)) is ClientOkMsgResponse clientOkMsgContainer)
                     {
-                        Send(ClientOkContainer, clientOkMsgContainer.From);
+                        MessageContainer clientOkContainer = clientOkMsgContainer.GetContainer();
+
+                        Send(clientOkContainer, clientOkMsgContainer.From);
                     }
 
                     break;

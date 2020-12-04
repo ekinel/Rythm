@@ -22,25 +22,25 @@ namespace Rythm.Common.Network
         public string From
         {
             get => _from;
-            set => _from = value ?? throw new ArgumentNullException(nameof(value));
+            private set => _from = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public string To
         {
             get => _to;
-            set => _to = value ?? throw new ArgumentNullException(nameof(value));
+            private set => _to = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public string Message
         {
             get => _message;
-            set => _message = value ?? throw new ArgumentNullException(nameof(value));
+            private set => _message = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public string Date
         {
             get => _date;
-            set => _date = value ?? throw new ArgumentNullException(nameof(value));
+            private set => _date = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         #endregion

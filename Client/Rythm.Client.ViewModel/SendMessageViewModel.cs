@@ -10,8 +10,8 @@ namespace Rythm.Client.ViewModel
     {
         #region Fields
 
-        private bool _serverOkStatus;
-        private bool _clientOkStatus;
+        private string _serverOkStatus;
+        private string _clientOkStatus;
 
         #endregion
 
@@ -21,13 +21,13 @@ namespace Rythm.Client.ViewModel
         public string Text { get; }
         public string Time { get; }
 
-        public bool ServerOkStatus
+        public string ServerOkStatus
         {
             get => _serverOkStatus;
             set => SetProperty(ref _serverOkStatus, value);
         }
 
-        public bool ClientOkStatus
+        public string ClientOkStatus
         {
             get => _clientOkStatus;
             set => SetProperty(ref _clientOkStatus, value);
@@ -42,8 +42,6 @@ namespace Rythm.Client.ViewModel
             Name = name;
             Text = text;
             Time = time;
-            ServerOkStatus = false;
-            ClientOkStatus = false;
         }
 
         #endregion

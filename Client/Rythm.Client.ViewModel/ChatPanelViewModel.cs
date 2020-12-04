@@ -73,7 +73,7 @@ namespace Rythm.Client.ViewModel
 
         #region Methods
 
-        public void HandleNewMessageReceived(MessageReceivedEventArgs state)
+        private void HandleNewMessageReceived(MessageReceivedEventArgs state)
         {
             _loginTo = state.FromClientName;
             Application.Current.Dispatcher.BeginInvoke(
@@ -85,17 +85,17 @@ namespace Rythm.Client.ViewModel
                     }));
         }
 
-        public void HandleUserLoginTo(string loginTo)
+        private void HandleUserLoginTo(string loginTo)
         {
             _loginTo = loginTo;
         }
 
-        public void HandleUserLoginFrom(string loginFrom)
+        private void HandleUserLoginFrom(string loginFrom)
         {
             _loginFrom = loginFrom;
         }
 
-        public void HandleOkReceive((MsgType, string) okReceive)
+        private void HandleOkReceive((MsgType, string) okReceive)
         {
             foreach (SendMessageViewModel message in ReceivedMessagesList)
             {
@@ -104,11 +104,11 @@ namespace Rythm.Client.ViewModel
                     switch (okReceive.Item1)
                     {
                         case MsgType.ServerOk:
-                            message.ServerOkStatus = true;
+                            message.ServerOkStatus = "ServerOk";
                             break;
 
                         case MsgType.ClientOk:
-                            message.ClientOkStatus = true;
+                            message.ClientOkStatus = "ClientOk";
                             break;
                     }
                 }
@@ -117,9 +117,10 @@ namespace Rythm.Client.ViewModel
 
         private void SendMessageCommand()
         {
-            _chatPanelController.MessageSend(OutgoingMessage, _loginTo);
             var msgRequest = new TextMsgRequest(_loginFrom, _loginTo, OutgoingMessage);
-            HandleNewMessageReceived(new MessageReceivedEventArgs(msgRequest));
+            ReceivedMessagesList.Add(new SendMessageViewModel(_loginFrom, OutgoingMessage, msgRequest.Date));
+
+            _chatPanelController.MessageSend(OutgoingMessage, _loginTo);
             OutgoingMessage = string.Empty;
         }
 
