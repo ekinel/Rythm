@@ -3,35 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:unity="http://prismlibrary.com/">
     <Application.Resources>
-        <ResourceDictionary>
-            <Style x:Key="BlackAndWhiteButton" TargetType="{x:Type Button}">
-
-                <Setter Property="Control.Margin" Value="5" />
-                <Setter Property="Control.Padding" Value="5" />
-                <Setter Property="Control.HorizontalAlignment" Value="Center" />
-                <Setter Property="Control.VerticalAlignment" Value="Bottom" />
-                <Setter Property="Control.MaxHeight" Value="30" />
-
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Grid x:Name="MainGrid">
-                                <Border x:Name="Border" BorderThickness="1"  BorderBrush="LightGray"  CornerRadius="17">
-                                    <Label x:Name="Label"  VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"
-                                           Content="Отправить" Foreground="DimGray"></Label>
-                                </Border>
-                            </Grid>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsFocused" Value="True">
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="AliceBlue"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-
-            </Style>
+        
+        <ResourceDictionary Source="Resources/ButtonStyle.xaml">
+              
         </ResourceDictionary>
     </Application.Resources>
 </unity:PrismApplication>
