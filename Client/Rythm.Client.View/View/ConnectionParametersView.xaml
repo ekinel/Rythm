@@ -34,18 +34,7 @@
         <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" IsEnabled="{Binding FieldsEnabled}"/>
         <TextBlock Text="Логин" Foreground="DimGray" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" IsEnabled="False"/>
         <TextBox Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" IsEnabled="{Binding FieldsEnabled}"/>
-        <Button Grid.Column="1" Grid.Row="9" Width="100" HorizontalAlignment="Right" Command="{Binding ConnectCommand}">
-            <Button.Template>
-                <ControlTemplate>
-                    <Grid >
-                        <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
-                            <Label VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Content="{Binding ConnectButtonLabel}" Foreground="DimGray"/>
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Button.Template>
+        <Button Grid.Column="1" Grid.Row="9" Style="{StaticResource BlackAndWhiteButtonWithBind}" Command="{Binding ConnectCommand}">
         </Button>
 
     </Grid>
