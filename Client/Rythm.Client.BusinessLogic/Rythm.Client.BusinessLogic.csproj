@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationDispatcherHelper.cs" />
     <Compile Include="Interfaces\IConnectionController.cs" />
     <Compile Include="ConnectionController.cs" />
     <Compile Include="Interfaces\IUsersListController.cs" />

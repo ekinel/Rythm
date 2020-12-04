@@ -12,7 +12,7 @@ namespace Rythm.Client.ViewModel
     using BusinessLogic;
 
     using Common.Network;
-    using Common.Network.Messages;
+    using Common.Network.Enums;
 
     using Events;
 
@@ -66,8 +66,7 @@ namespace Rythm.Client.ViewModel
             eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleUserLoginFrom);
             _chatPanelController = chatPanelController ?? throw new ArgumentNullException(nameof(chatPanelController));
             _chatPanelController.MessageReceivedEvent += HandleNewMessageReceived;
-            _chatPanelController.ServerOkReceivedEvent += HandleServerOkReceive;
-            _chatPanelController.ClientOkReceivedEvent += HandleClientOkReceive;
+            _chatPanelController.OkReceivedEvent += HandleOkReceive;
         }
 
         #endregion
@@ -96,26 +95,22 @@ namespace Rythm.Client.ViewModel
             _loginFrom = loginFrom;
         }
 
-        public void HandleServerOkReceive(ServerOkMsgResponse msgResponse)
+        public void HandleOkReceive((MsgType, string) okReceive)
         {
-            foreach (var message in ReceivedMessagesList)
+            foreach (SendMessageViewModel message in ReceivedMessagesList)
             {
-                if (message.Time == msgResponse.Date)
+                if (message.Time == okReceive.Item2)
                 {
-                    message.ServerOkStatus = true;
+                    switch (okReceive.Item1)
+                    {
+                        case MsgType.ServerOk:
+                            message.ServerOkStatus = true;
+                            break;
 
-                }
-            }
-        }
-
-        public void HandleClientOkReceive(ClientOkMsgResponse msgResponse)
-        {
-            foreach (var message in ReceivedMessagesList)
-            {
-                if (message.Time == msgResponse.Date)
-                {
-                    message.ClientOkStatus = true;
-
+                        case MsgType.ClientOk:
+                            message.ClientOkStatus = true;
+                            break;
+                    }
                 }
             }
         }

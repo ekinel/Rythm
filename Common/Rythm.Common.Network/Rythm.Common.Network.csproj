@@ -45,8 +45,10 @@
     <Reference Include="websocket-sharp, Version=1.0.1.0, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
       <HintPath>..\..\packages\WebSocketSharp-netstandard.1.0.1\lib\net45\websocket-sharp.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationDispatcherHelper.cs" />
     <Compile Include="Messages\ClientOkMsgResponse.cs" />
     <Compile Include="Enums\MsgType.cs" />
     <Compile Include="Enums\ResultCodes.cs" />

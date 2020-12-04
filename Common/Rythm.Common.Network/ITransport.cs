@@ -6,6 +6,8 @@ namespace Rythm.Common.Network
 {
     using System;
 
+    using Enums;
+
     using Messages;
 
     public interface ITransport
@@ -16,8 +18,7 @@ namespace Rythm.Common.Network
         event EventHandler<MessageReceivedEventArgs> MessageReceived;
         event EventHandler<EventArgs> ConnectionOpened;
         event EventHandler<MessageContainer> UpdatedUsersList;
-        event EventHandler<MessageContainer> ServerOkReceive;
-        event EventHandler<MessageContainer> ClientOkReceive;
+        event EventHandler<(MsgType, string)> OkReceive;
 
 
         #endregion

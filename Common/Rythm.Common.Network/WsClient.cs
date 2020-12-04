@@ -42,8 +42,7 @@ namespace Rythm.Common.Network
         public event EventHandler<EventArgs> ConnectionOpened;
 
         public event EventHandler<MessageContainer> UpdatedUsersList;
-        public event EventHandler<MessageContainer> ServerOkReceive;
-        public event EventHandler<MessageContainer> ClientOkReceive;
+        public event EventHandler<(MsgType, string)> OkReceive;
 
         #endregion
 
@@ -169,11 +168,26 @@ namespace Rythm.Common.Network
                     break;
 
                 case MsgType.ClientOk:
-                    ClientOkReceive.Invoke(this, container);
-                    break;
-
                 case MsgType.ServerOk:
-                    ServerOkReceive?.Invoke(this, container);
+
+                    MsgType type = container.Identifier;
+                    MsgType status;
+                    string date;
+
+                    if (type == MsgType.ServerOk)
+                    {
+                        var messageResponse = ((JObject)container.Payload).ToObject(typeof(ServerOkMsgResponse)) as ServerOkMsgResponse;
+                        date = messageResponse.Date;
+                        status = MsgType.ServerOk;
+                    }
+                    else
+                    {
+                        var messageResponse = ((JObject)container.Payload).ToObject(typeof(ClientOkMsgResponse)) as ClientOkMsgResponse;
+                        date = messageResponse.Date;
+                        status = MsgType.ClientOk;
+                    }
+
+                    OkReceive?.Invoke(this, (status, date));
                     break;
 
                 case MsgType.UpdatedClientsList:

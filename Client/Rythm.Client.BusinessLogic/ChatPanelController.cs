@@ -33,8 +33,7 @@ namespace Rythm.Client.BusinessLogic
         #region Events
 
         public event Action<MessageReceivedEventArgs> MessageReceivedEvent;
-        public event Action<ServerOkMsgResponse> ServerOkReceivedEvent;
-        public event Action<ClientOkMsgResponse> ClientOkReceivedEvent;
+        public event Action<(MsgType, string)> OkReceivedEvent;
         public event Action<List<string>> UpdatedUsersListEvent;
 
         #endregion
@@ -47,8 +46,7 @@ namespace Rythm.Client.BusinessLogic
             _connectionServiceController = connectionServiceController;
             _currentTransport.MessageReceived += HandleMessageReceived;
             _currentTransport.UpdatedUsersList += HandleUpdatedUsersList;
-            _currentTransport.ServerOkReceive += HandleServerOkReceived;
-            _currentTransport.ClientOkReceive += HandleClientOkReceived;
+            _currentTransport.OkReceive += HandleOkReceived;
         }
 
         #endregion
@@ -70,20 +68,13 @@ namespace Rythm.Client.BusinessLogic
         private void HandleUpdatedUsersList(object sender, MessageContainer msgContainer)
         {
             var messageRequest = ((JObject)msgContainer.Payload).ToObject(typeof(UpdatedClientsResponse)) as UpdatedClientsResponse;
-            List<string> UpdatedUsersList = messageRequest.UsersList;
-            UpdatedUsersListEvent?.Invoke(UpdatedUsersList);
+            List<string> updatedUsersList = messageRequest.UsersList;
+            UpdatedUsersListEvent?.Invoke(updatedUsersList);
         }
 
-        private void HandleServerOkReceived(object sender, MessageContainer msgContainer)
+        private void HandleOkReceived(object sender, (MsgType, string) okReceive)
         {
-            var messageResponse = ((JObject)msgContainer.Payload).ToObject(typeof(ServerOkMsgResponse)) as ServerOkMsgResponse;
-            ServerOkReceivedEvent(messageResponse);
-        }
-
-        private void HandleClientOkReceived(object sender, MessageContainer msgContainer)
-        {
-            var messageResponse = ((JObject)msgContainer.Payload).ToObject(typeof(ClientOkMsgResponse)) as ClientOkMsgResponse;
-            ClientOkReceivedEvent(messageResponse);
+            OkReceivedEvent(okReceive);
         }
 
         #endregion
