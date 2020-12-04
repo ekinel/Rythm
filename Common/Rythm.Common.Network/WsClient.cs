@@ -6,6 +6,7 @@ namespace Rythm.Common.Network
 {
     using System;
     using System.Collections.Concurrent;
+    using System.Net.WebSockets;
     using System.Threading;
 
     using Enums;
@@ -16,6 +17,9 @@ namespace Rythm.Common.Network
     using Newtonsoft.Json.Linq;
 
     using WebSocketSharp;
+
+    using WebSocket = WebSocketSharp.WebSocket;
+    using WebSocketState = WebSocketSharp.WebSocketState;
 
     public class WsClient : ITransport
     {
