@@ -24,7 +24,7 @@
                             <TextBlock Text="{Binding Text}" FontSize="14" FontWeight="Normal"  Margin="0 5"/>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Time}" FontSize="10" TextAlignment="Right"/>
-                                <Ellipse Fill="{Binding ServerOkStatus}" Width="10" Height="10"/>
+                                <Ellipse Fill="{Binding ServerOkStatus}" Width="10" Height="10" Margin="5 0"/>
                                 <Ellipse Fill="{Binding ClientOkStatus}" Width="10" Height="10"/>
                             </StackPanel>
                         </StackPanel>
