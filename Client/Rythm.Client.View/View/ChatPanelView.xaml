@@ -36,7 +36,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox Grid.Column="0" Text="{Binding OutgoingMessage, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,5,5" TextWrapping="Wrap" MaxHeight="100"/>
-            <Button Grid.Column="1" Style="{StaticResource BlackAndWhiteButton}" Command="{Binding SendCommand}"/>
+            <Button Grid.Column="1" Style="{StaticResource BlackAndWhiteButton}" Content="123" Command="{Binding SendCommand}"/>
         </Grid>
     </Grid>
 </UserControl>

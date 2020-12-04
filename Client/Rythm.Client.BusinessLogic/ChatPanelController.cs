@@ -74,7 +74,7 @@ namespace Rythm.Client.BusinessLogic
 
         private void HandleOkReceived(object sender, (MsgType, string) okReceive)
         {
-            OkReceivedEvent(okReceive);
+            ApplicationDispatcherHelper.Invoke(() => OkReceivedEvent?.Invoke(okReceive));
         }
 
         #endregion
