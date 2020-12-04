@@ -42,6 +42,8 @@ namespace Rythm.Client.ViewModel
             Name = name;
             Text = text;
             Time = time;
+            ServerOkStatus = "white";
+            ClientOkStatus = "white";
         }
 
         #endregion

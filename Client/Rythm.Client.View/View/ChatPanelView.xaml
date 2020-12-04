@@ -18,15 +18,17 @@
         <ListBox Grid.Row="0" ItemsSource="{Binding ReceivedMessagesList}" BorderThickness="0" Background="WhiteSmoke">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Name}" FontSize="11"/>
-                        <TextBlock Text="{Binding Text}" FontSize="14"/>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Time}" FontSize="8" TextAlignment="Right"/>
-                            <TextBlock Text="{Binding ServerOkStatus}" FontSize="8" TextAlignment="Right"/>
-                            <TextBlock Text="{Binding ClientOkStatus}" FontSize="8" TextAlignment="Right"/>
+                    <Border BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="4" Background="White">
+                        <StackPanel Margin="4">
+                            <TextBlock Text="{Binding Name}" FontSize="12" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Text}" FontSize="14" FontWeight="Normal"  Margin="0 5"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Time}" FontSize="10" TextAlignment="Right"/>
+                                <Ellipse Fill="{Binding ServerOkStatus}" Width="10" Height="10"/>
+                                <Ellipse Fill="{Binding ClientOkStatus}" Width="10" Height="10"/>
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
