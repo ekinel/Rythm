@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:properties="clr-namespace:Rythm.Client.View.Properties">
-                    xmlns:res="clr-namespace:Rythm.Client.View.Properties"
 
     <Style x:Key="BlackAndWhiteButton" TargetType="{x:Type Button}">
 
@@ -18,7 +17,7 @@
                         <Border x:Name="Border" BorderThickness="1"  BorderBrush="LightGray"  CornerRadius="17">
                             <Label x:Name="Label"  VerticalAlignment="Center"
                                    HorizontalAlignment="Center"
-                                   Content="{x:Static properties:Resources.ConnectButton}" Foreground="DimGray"></Label>
+                                   Content="{x:Static properties:Resources.SendButton}" Foreground="DimGray"></Label>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>

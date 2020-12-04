@@ -61,11 +61,11 @@ namespace Rythm.Client.View.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Подключение.
+        ///   Looks up a localized string similar to Отправить.
         /// </summary>
-        public static string ConnectButton {
+        public static string SendButton {
             get {
-                return ResourceManager.GetString("ConnectButton", resourceCulture);
+                return ResourceManager.GetString("SendButton", resourceCulture);
             }
         }
     }
