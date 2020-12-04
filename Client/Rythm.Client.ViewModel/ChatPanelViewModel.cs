@@ -65,7 +65,7 @@ namespace Rythm.Client.ViewModel
             eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleUserLoginTo);
             eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleUserLoginFrom);
             _chatPanelController = chatPanelController ?? throw new ArgumentNullException(nameof(chatPanelController));
-            _chatPanelController.MessageReceivedEvent += HandleNewMessageRecieved;
+            _chatPanelController.MessageReceivedEvent += HandleNewMessageReceived;
             _chatPanelController.ServerOkReceivedEvent += HandleServerOkReceive;
             _chatPanelController.ClientOkReceivedEvent += HandleClientOkReceive;
         }
@@ -74,7 +74,7 @@ namespace Rythm.Client.ViewModel
 
         #region Methods
 
-        public void HandleNewMessageRecieved(MessageReceivedEventArgs state)
+        public void HandleNewMessageReceived(MessageReceivedEventArgs state)
         {
             _loginTo = state.FromClientName;
             Application.Current.Dispatcher.BeginInvoke(
@@ -102,13 +102,8 @@ namespace Rythm.Client.ViewModel
             {
                 if (message.Time == msgResponse.Date)
                 {
-                    Application.Current.Dispatcher.BeginInvoke(
-                        DispatcherPriority.Background,
-                        new Action(
-                            () =>
-                            {
-                                message.ServerOkStatus = true;
-                            }));
+                    message.ServerOkStatus = true;
+
                 }
             }
         }
@@ -119,13 +114,8 @@ namespace Rythm.Client.ViewModel
             {
                 if (message.Time == msgResponse.Date)
                 {
-                    Application.Current.Dispatcher.BeginInvoke(
-                        DispatcherPriority.Background,
-                        new Action(
-                            () =>
-                            {
-                                message.ClientOkStatus = true;
-                            }));
+                    message.ClientOkStatus = true;
+
                 }
             }
         }
@@ -134,7 +124,7 @@ namespace Rythm.Client.ViewModel
         {
             _chatPanelController.MessageSend(OutgoingMessage, _loginTo);
             var msgRequest = new TextMsgRequest(_loginFrom, _loginTo, OutgoingMessage);
-            HandleNewMessageRecieved(new MessageReceivedEventArgs(msgRequest));
+            HandleNewMessageReceived(new MessageReceivedEventArgs(msgRequest));
             OutgoingMessage = string.Empty;
         }
 

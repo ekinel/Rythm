@@ -96,10 +96,6 @@
     <Compile Include="View\UsersListView.xaml.cs">
       <DependentUpon>UsersListView.xaml</DependentUpon>
     </Compile>
-    <Page Include="ButtonStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
