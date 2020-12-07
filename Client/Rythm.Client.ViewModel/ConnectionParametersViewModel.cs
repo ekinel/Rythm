@@ -126,7 +126,7 @@ namespace Rythm.Client.ViewModel
             bool isNumber = int.TryParse(Port, out int number);
             if (!isNumber)
             {
-                _errorsContainer.SetErrors(() => Login, new[] { "Error in port" });
+                _errorsContainer.SetErrors(() => Port, new[] { "Error in port" });
                 CorrectPort = false;
             }
             else
