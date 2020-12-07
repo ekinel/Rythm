@@ -5,7 +5,7 @@
 namespace Rythm.Client.ViewModel
 {
     using System;
-    using System.Windows.Input;
+    using System.Text.RegularExpressions;
 
     using BusinessLogic;
 
@@ -13,9 +13,8 @@ namespace Rythm.Client.ViewModel
 
     using Prism.Commands;
     using Prism.Events;
-    using Prism.Mvvm;
 
-    public class ConnectionParametersViewModel : BindableBase
+    public class ConnectionParametersViewModel : ErrorsCheckViewModel
     {
         #region Constants
 
@@ -37,9 +36,6 @@ namespace Rythm.Client.ViewModel
         private string _label;
         private bool _fieldsEnabled = true;
         private readonly IEventAggregator _eventAggregator;
-        
-        //private bool _canExecute { get; set; } = false;
-
 
         #endregion
 
@@ -60,6 +56,7 @@ namespace Rythm.Client.ViewModel
             {
                 SetProperty(ref _address, value);
                 ConnectCommand.RaiseCanExecuteChanged();
+                CheckAddress();
             }
         }
 
@@ -70,6 +67,7 @@ namespace Rythm.Client.ViewModel
             {
                 SetProperty(ref _port, value);
                 ConnectCommand.RaiseCanExecuteChanged();
+                CheckPort();
             }
         }
 
@@ -80,6 +78,7 @@ namespace Rythm.Client.ViewModel
             {
                 SetProperty(ref _login, value);
                 ConnectCommand.RaiseCanExecuteChanged();
+                CheckLogin();
             }
         }
 
@@ -97,7 +96,9 @@ namespace Rythm.Client.ViewModel
         {
             _connectionController = connectionController ?? throw new ArgumentNullException(nameof(connectionController));
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
-            ConnectCommand = new DelegateCommand(ExecuteConnectCommand, (() => !string.IsNullOrEmpty(Address) && !string.IsNullOrEmpty(Port) && !string.IsNullOrEmpty(Login)));
+            ConnectCommand = new DelegateCommand(
+                ExecuteConnectCommand,
+                () => !string.IsNullOrEmpty(Address) && !string.IsNullOrEmpty(Port) && !string.IsNullOrEmpty(Login));
             _connectionController.ConnectionStateChanged += HandleConnectionStateChanged;
             ConnectButtonLabel = "Connect";
         }
@@ -105,6 +106,39 @@ namespace Rythm.Client.ViewModel
         #endregion
 
         #region Methods
+
+        public sealed override void CheckLogin()
+        {
+            _errorsContainer.ClearErrors(() => Login);
+
+            if (string.IsNullOrEmpty(Login))
+            {
+                _errorsContainer.SetErrors(() => Login, new[] { "Error in login" });
+            }
+        }
+
+        public sealed override void CheckPort()
+        {
+            _errorsContainer.ClearErrors(() => Port);
+            bool isNumber = int.TryParse(Port, out int number);
+            if (!isNumber)
+            {
+                _errorsContainer.SetErrors(() => Login, new[] { "Error in port" });
+            }
+        }
+
+        public sealed override void CheckAddress()
+        {
+            _errorsContainer.ClearErrors(() => Address);
+            string addressPattern = @"dd?d?.dd?d?.dd?d?.dd?d?";
+            var regex = new Regex(addressPattern);
+            Match compare = regex.Match(Address);
+
+            if (!compare.Success)
+            {
+                _errorsContainer.SetErrors(() => Address, new[] { "Error in address" });
+            }
+        }
 
         private void HandleConnectionStateChanged(bool isConnected)
         {
@@ -120,8 +154,8 @@ namespace Rythm.Client.ViewModel
             {
                 _connectionController.DoDisconnect();
             }
-            else 
-            { 
+            else
+            {
                 _connectionController.DoConnect(Address, Port, Login);
                 _eventAggregator.GetEvent<PassLoginViewModel>().Publish(Login);
             }

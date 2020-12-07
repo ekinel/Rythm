@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="CommunicationParametersViewModel.cs" />
     <Compile Include="ConnectionParametersViewModel.cs" />
+    <Compile Include="ErrorsCheckViewModel.cs" />
     <Compile Include="Events\ConnectionIndicatorColorChangedEvent.cs" />
     <Compile Include="Events\ConnectionPanelVisibilityChangedEvent.cs" />
     <Compile Include="Events\NewClientChosenViewModel.cs" />

@@ -21,9 +21,9 @@
                     <Border BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="4" Background="White">
                         <StackPanel Margin="4">
                             <TextBlock Text="{Binding Name}" FontSize="12" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding Text}" FontSize="14" FontWeight="Normal"  Margin="0 5"/>
+                            <TextBlock Text="{Binding Text}" FontSize="14" FontWeight="Normal"  Margin="0 5" MaxWidth="600" TextWrapping="Wrap"/>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Time}" FontSize="10" TextAlignment="Right"/>
+                                <TextBlock Text="{Binding Time}" FontSize="10" TextAlignment="Right" TextWrapping="Wrap"/>
                                 <Ellipse Fill="{Binding OkStatus}" Width="10" Height="10" Margin="5 0"/>
                             </StackPanel>
                         </StackPanel>
