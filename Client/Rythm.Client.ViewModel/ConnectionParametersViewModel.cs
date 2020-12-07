@@ -88,6 +88,9 @@ namespace Rythm.Client.ViewModel
             set => SetProperty(ref _fieldsEnabled, value);
         }
 
+        private bool CorrectPort { get; set; }
+        private bool CorrectAddress { get; set; }
+
         #endregion
 
         #region Constructors
@@ -98,7 +101,7 @@ namespace Rythm.Client.ViewModel
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             ConnectCommand = new DelegateCommand(
                 ExecuteConnectCommand,
-                () => !string.IsNullOrEmpty(Address) && !string.IsNullOrEmpty(Port) && !string.IsNullOrEmpty(Login));
+                () => !string.IsNullOrEmpty(Address) && !CorrectPort && !CorrectAddress);
             _connectionController.ConnectionStateChanged += HandleConnectionStateChanged;
             ConnectButtonLabel = "Connect";
         }
@@ -124,6 +127,11 @@ namespace Rythm.Client.ViewModel
             if (!isNumber)
             {
                 _errorsContainer.SetErrors(() => Login, new[] { "Error in port" });
+                CorrectPort = true;
+            }
+            else
+            {
+                CorrectPort = false;
             }
         }
 
@@ -137,6 +145,11 @@ namespace Rythm.Client.ViewModel
             if (!compare.Success)
             {
                 _errorsContainer.SetErrors(() => Address, new[] { "Error in address" });
+                CorrectAddress = true;
+            }
+            else
+            {
+                CorrectAddress = false;
             }
         }
 
