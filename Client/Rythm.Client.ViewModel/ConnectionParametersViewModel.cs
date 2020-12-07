@@ -101,7 +101,7 @@ namespace Rythm.Client.ViewModel
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             ConnectCommand = new DelegateCommand(
                 ExecuteConnectCommand,
-                () => !string.IsNullOrEmpty(Address) && !CorrectPort && !CorrectAddress);
+                () => !string.IsNullOrEmpty(Address) && CorrectPort && CorrectAddress);
             _connectionController.ConnectionStateChanged += HandleConnectionStateChanged;
             ConnectButtonLabel = "Connect";
         }
@@ -127,29 +127,29 @@ namespace Rythm.Client.ViewModel
             if (!isNumber)
             {
                 _errorsContainer.SetErrors(() => Login, new[] { "Error in port" });
-                CorrectPort = true;
+                CorrectPort = false;
             }
             else
             {
-                CorrectPort = false;
+                CorrectPort = true;
             }
         }
 
         public sealed override void CheckAddress()
         {
             _errorsContainer.ClearErrors(() => Address);
-            string addressPattern = @"dd?d?.dd?d?.dd?d?.dd?d?";
+            string addressPattern = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$";
             var regex = new Regex(addressPattern);
             Match compare = regex.Match(Address);
 
             if (!compare.Success)
             {
                 _errorsContainer.SetErrors(() => Address, new[] { "Error in address" });
-                CorrectAddress = true;
+                CorrectAddress = false;
             }
             else
             {
-                CorrectAddress = false;
+                CorrectAddress = true;
             }
         }
 
