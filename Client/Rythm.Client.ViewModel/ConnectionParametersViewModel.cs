@@ -104,7 +104,7 @@ namespace Rythm.Client.ViewModel
                 () => !string.IsNullOrEmpty(Login) && CorrectPort && CorrectAddress);
             _connectionController.ConnectionStateChanged += HandleConnectionStateChanged;
             ConnectButtonLabel = "Connect";
-            Login = "";
+            Login = string.Empty;
         }
 
         #endregion
