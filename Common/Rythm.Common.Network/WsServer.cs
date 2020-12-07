@@ -25,6 +25,7 @@ namespace Rythm.Common.Network
         private readonly ConcurrentDictionary<string, WsConnection> _connections;
 
         private WebSocketServer _server;
+        private bool _isCommonChatCreated = true;
 
         #endregion
 
@@ -49,6 +50,7 @@ namespace Rythm.Common.Network
                 {
                     client.AddServer(this);
                 });
+
             _server.Start();
         }
 
@@ -92,6 +94,15 @@ namespace Rythm.Common.Network
                             connection.Send(connectionResponse.GetContainer());
                             var updatedClientsList = new UpdatedClientsResponse(_connections.Keys);
                             Send(updatedClientsList);
+
+                            if (_isCommonChatCreated)
+                            {
+                                _connections.TryAdd("CommonChat", connection);
+                                _isCommonChatCreated = !_isCommonChatCreated;
+                                var updateClientsList = new UpdatedClientsResponse(_connections.Keys);
+                                updateClientsList.UsersList.Remove(connection.Login);
+                                Send(updateClientsList);
+                            }
                         }
                     }
 
@@ -105,12 +116,18 @@ namespace Rythm.Common.Network
                         var serverOkPayload = new ServerOkMsgResponse(textMsgContainer.From, textMsgContainer.To, textMsgContainer.Date);
                         MessageContainer serverOkContainer = serverOkPayload.GetContainer();
 
-                        Send(container, textMsgContainer.To);
-                        Send(serverOkContainer, textMsgContainer.From);
+                        if (textMsgContainer.To == "CommonChat")
+                        {
+                            BroadcastSend(container, textMsgContainer.From);
+                        }
+                        else
+                        {
+                            Send(container, textMsgContainer.To);
+                            Send(serverOkContainer, textMsgContainer.From);
+                        }
                     }
 
                     break;
-
 
                 case MsgType.ClientOk:
 
@@ -130,6 +147,17 @@ namespace Rythm.Common.Network
             if (_connections.TryRemove(login, out WsConnection connection) && !string.IsNullOrEmpty(connection.Login))
             {
                 Send(new UpdatedClientsResponse(_connections.Keys));
+            }
+        }
+
+        private void BroadcastSend(MessageContainer msgContainer, string loginFrom)
+        {
+            foreach (KeyValuePair<string, WsConnection> connection in _connections)
+            {
+                if (connection.Value.Login != loginFrom && connection.Key != "CommonChat")
+                {
+                    connection.Value.Send(msgContainer);
+                }
             }
         }
 
