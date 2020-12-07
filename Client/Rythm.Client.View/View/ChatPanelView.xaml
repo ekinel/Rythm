@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto" ></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Row="0" ItemsSource="{Binding ReceivedMessagesList}" BorderThickness="0" Background="WhiteSmoke">
+        <ListBox Grid.Row="0" ItemsSource="{Binding ReceivedMessagesList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" Background="WhiteSmoke" HorizontalContentAlignment="Stretch">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="IsEnabled" Value="false"/>
