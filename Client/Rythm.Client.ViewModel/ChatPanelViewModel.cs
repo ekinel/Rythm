@@ -27,7 +27,6 @@ namespace Rythm.Client.ViewModel
         private readonly IChatPanelController _chatPanelController;
 
         private string _outgoingMessage;
-        private string _chatMessages;
         private string _loginTo;
         private string _loginFrom;
 
@@ -47,12 +46,6 @@ namespace Rythm.Client.ViewModel
                 SetProperty(ref _outgoingMessage, value);
                 SendCommand.RaiseCanExecuteChanged();
             }
-        }
-
-        public string ChatMessages
-        {
-            get => _chatMessages;
-            set => SetProperty(ref _chatMessages, value);
         }
 
         #endregion
@@ -88,6 +81,7 @@ namespace Rythm.Client.ViewModel
         private void HandleUserLoginTo(string loginTo)
         {
             _loginTo = loginTo;
+            SendCommand.RaiseCanExecuteChanged();
         }
 
         private void HandleUserLoginFrom(string loginFrom)
@@ -119,7 +113,6 @@ namespace Rythm.Client.ViewModel
         {
             var msgRequest = new TextMsgRequest(_loginFrom, _loginTo, OutgoingMessage);
             ReceivedMessagesList.Add(new SendMessageViewModel(_loginFrom, OutgoingMessage, msgRequest.Date));
-
             _chatPanelController.MessageSend(OutgoingMessage, _loginTo);
             OutgoingMessage = string.Empty;
         }
