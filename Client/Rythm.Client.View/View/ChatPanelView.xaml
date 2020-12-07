@@ -6,7 +6,8 @@
              xmlns:viewModel="clr-namespace:Rythm.Client.ViewModel;assembly=Rythm.Client.ViewModel"
              mc:Ignorable="d"
              xmlns:interactivity="http://prismlibrary.com/"
-            interactivity:ViewModelLocator.AutoWireViewModel="True" 
+             xmlns:properties="clr-namespace:Rythm.Client.View.Properties"
+             interactivity:ViewModelLocator.AutoWireViewModel="True" 
             d:DataContext="{d:DesignInstance viewModel:ChatPanelViewModel}">
 
     <Grid>
@@ -48,7 +49,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox Grid.Column="0" Text="{Binding OutgoingMessage, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,5,5" TextWrapping="Wrap" MaxHeight="100"/>
-            <Button Grid.Column="1" Style="{StaticResource BlackAndWhiteButton}" Content="123" Command="{Binding SendCommand}"/>
+            <Button Grid.Column="1" Style="{StaticResource BlackAndWhiteButton}" Command="{Binding SendCommand}" Content="{x:Static properties:Resources.SendButton}" Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxHeight="30"/>
         </Grid>
     </Grid>
 </UserControl>

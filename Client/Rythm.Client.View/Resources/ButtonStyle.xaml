@@ -4,12 +4,6 @@
 
     <Style x:Key="BlackAndWhiteButton" TargetType="{x:Type Button}">
 
-        <Setter Property="Margin" Value="5" />
-        <Setter Property="Padding" Value="5" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Bottom" />
-        <Setter Property="MaxHeight" Value="30" />
-
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -17,41 +11,8 @@
                         <Border x:Name="Border" BorderThickness="1"  BorderBrush="LightGray"  CornerRadius="17">
                             <Label x:Name="Label"  VerticalAlignment="Center"
                                    HorizontalAlignment="Center"
-                                   Content="{x:Static properties:Resources.SendButton}" Foreground="DimGray"></Label>
-                        </Border>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="DimGray"></Setter>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="FloralWhite"></Setter>
-                            <Setter TargetName="Border" Property="Background" Value="Gray"></Setter>
-                            <Setter TargetName="Label" Property="Foreground" Value="FloralWhite"></Setter>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Label" Property="Foreground" Value="LightGray"></Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-    </Style>
-
-    <Style x:Key="BlackAndWhiteButtonWithBind" TargetType="{x:Type Button}">
-
-        <Setter Property="HorizontalAlignment" Value="Right" />
-        <Setter Property="Width" Value="100" />
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid x:Name="MainGrid">
-                        <Border x:Name="Border" BorderThickness="1"  BorderBrush="LightGray"  CornerRadius="17">
-                            <Label x:Name="Label"  VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Content="{Binding ConnectButtonLabel}" Foreground="DimGray"></Label>
+                                   Content="{TemplateBinding Content}"
+                                   Foreground="DimGray"></Label>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
