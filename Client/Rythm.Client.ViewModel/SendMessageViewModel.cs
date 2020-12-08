@@ -16,9 +16,11 @@ namespace Rythm.Client.ViewModel
 
         #region Properties
 
-        public string Name { get; }
+        public string LoginTo { get; }
         public string Text { get; }
         public string Time { get; }
+
+        public string LoginFrom { get;}
 
         public string OkStatus
         {
@@ -30,12 +32,13 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public SendMessageViewModel(string name, string text, string time)
+        public SendMessageViewModel(string loginTo, string loginFrom, string text, string time)
         {
-            Name = name;
+            LoginTo = loginTo;
             Text = text;
             Time = time;
             OkStatus = "white";
+            LoginFrom = loginFrom;
         }
 
         #endregion

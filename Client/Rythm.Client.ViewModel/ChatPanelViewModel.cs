@@ -27,7 +27,7 @@ namespace Rythm.Client.ViewModel
         private readonly IChatPanelController _chatPanelController;
 
         private string _outgoingMessage;
-        private string _loginTo;
+        private string _loginTo = string.Empty;
         private string _loginFrom;
 
         #endregion
@@ -37,6 +37,7 @@ namespace Rythm.Client.ViewModel
         public DelegateCommand SendCommand { get; }
 
         public ObservableCollection<SendMessageViewModel> ReceivedMessagesList { get; set; } = new ObservableCollection<SendMessageViewModel>();
+        public ObservableCollection<SendMessageViewModel> AllReceivedMessagesList { get; set; } = new ObservableCollection<SendMessageViewModel>();
 
         public string OutgoingMessage
         {
@@ -68,25 +69,47 @@ namespace Rythm.Client.ViewModel
 
         private void HandleNewMessageReceived(MessageReceivedEventArgs state)
         {
-            _loginTo = state.FromClientName;
-            Application.Current.Dispatcher.BeginInvoke(
-                DispatcherPriority.Background,
-                new Action(
-                    () =>
-                    {
-                        ReceivedMessagesList.Add(new SendMessageViewModel(_loginTo, state.Message, state.Date));
-                    }));
+            AllReceivedMessagesList.Add(new SendMessageViewModel(state.FromClientName, _loginFrom, state.Message, state.Date));
+
+            UpdateListByNewLoginTo();
         }
 
         private void HandleUserLoginTo(string loginTo)
         {
             _loginTo = loginTo;
             SendCommand.RaiseCanExecuteChanged();
+            UpdateListByNewLoginTo();
         }
 
         private void HandleUserLoginFrom(string loginFrom)
         {
             _loginFrom = loginFrom;
+        }
+
+        private void UpdateListByNewLoginTo()
+        {
+            Application.Current.Dispatcher.BeginInvoke(
+                DispatcherPriority.Background,
+                new Action(
+                    () =>
+                    {
+                        ReceivedMessagesList.Clear();
+                    }));
+
+            foreach (SendMessageViewModel message in AllReceivedMessagesList)
+            {
+                if (message.LoginFrom == _loginTo && message.LoginTo == _loginFrom ||
+                    message.LoginFrom == _loginFrom && message.LoginTo == _loginTo && _loginTo != string.Empty)
+                {
+                    Application.Current.Dispatcher.BeginInvoke(
+                        DispatcherPriority.Background,
+                        new Action(
+                            () =>
+                            {
+                                ReceivedMessagesList.Add(message);
+                            }));
+                }
+            }
         }
 
         private void HandleOkReceive((MsgType, string) okReceive)
@@ -112,9 +135,11 @@ namespace Rythm.Client.ViewModel
         private void SendMessageCommand()
         {
             var msgRequest = new TextMsgRequest(_loginFrom, _loginTo, OutgoingMessage);
-            ReceivedMessagesList.Add(new SendMessageViewModel(_loginFrom, OutgoingMessage, msgRequest.Date));
+            AllReceivedMessagesList.Add(new SendMessageViewModel(_loginFrom, _loginTo, OutgoingMessage, msgRequest.Date));
             _chatPanelController.MessageSend(OutgoingMessage, _loginTo);
             OutgoingMessage = string.Empty;
+
+            UpdateListByNewLoginTo();
         }
 
         #endregion
