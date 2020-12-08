@@ -22,7 +22,6 @@ namespace Rythm.Client.ViewModel
         private const string PORT = "65000";
         private const string ADDRESSPATTERN = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$";
 
-
         #endregion
 
         #region Fields
@@ -106,7 +105,7 @@ namespace Rythm.Client.ViewModel
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             ConnectCommand = new DelegateCommand(
                 ExecuteConnectCommand,
-                () => !HasErrors);
+                () => !_errorsContainer.HasErrors);
             _connectionController.ConnectionStateChanged += HandleConnectionStateChanged;
             ConnectButtonLabel = "Connect";
             CheckLogin();
