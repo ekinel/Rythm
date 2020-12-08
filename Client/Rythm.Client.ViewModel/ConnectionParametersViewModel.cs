@@ -20,6 +20,8 @@ namespace Rythm.Client.ViewModel
 
         private const string ADDRESS = "127.0.0.1";
         private const string PORT = "65000";
+        private const string ADDRESSPATTERN = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$";
+
 
         #endregion
 
@@ -54,9 +56,11 @@ namespace Rythm.Client.ViewModel
             get => _address;
             set
             {
-                SetProperty(ref _address, value);
-                ConnectCommand.RaiseCanExecuteChanged();
-                CheckAddress();
+                if (SetProperty(ref _address, value))
+                {
+                    CheckAddress();
+                    ConnectCommand.RaiseCanExecuteChanged();
+                }
             }
         }
 
@@ -65,9 +69,11 @@ namespace Rythm.Client.ViewModel
             get => _port;
             set
             {
-                SetProperty(ref _port, value);
-                ConnectCommand.RaiseCanExecuteChanged();
-                CheckPort();
+                if (SetProperty(ref _port, value))
+                {
+                    CheckPort();
+                    ConnectCommand.RaiseCanExecuteChanged();
+                }
             }
         }
 
@@ -76,9 +82,11 @@ namespace Rythm.Client.ViewModel
             get => _login;
             set
             {
-                SetProperty(ref _login, value);
-                ConnectCommand.RaiseCanExecuteChanged();
-                CheckLogin();
+                if (SetProperty(ref _login, value))
+                {
+                    CheckLogin();
+                    ConnectCommand.RaiseCanExecuteChanged();
+                }
             }
         }
 
@@ -87,9 +95,6 @@ namespace Rythm.Client.ViewModel
             get => _fieldsEnabled;
             set => SetProperty(ref _fieldsEnabled, value);
         }
-
-        private bool CorrectPort { get; set; } = true;
-        private bool CorrectAddress { get; set; } = true;
 
         #endregion
 
@@ -101,7 +106,7 @@ namespace Rythm.Client.ViewModel
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             ConnectCommand = new DelegateCommand(
                 ExecuteConnectCommand,
-                () => !string.IsNullOrEmpty(Login) && CorrectPort && CorrectAddress);
+                () => !HasErrors);
             _connectionController.ConnectionStateChanged += HandleConnectionStateChanged;
             ConnectButtonLabel = "Connect";
             CheckLogin();
@@ -113,46 +118,36 @@ namespace Rythm.Client.ViewModel
 
         #region Methods
 
-        public sealed override void CheckLogin()
+        private void CheckLogin()
         {
             _errorsContainer.ClearErrors(() => Login);
 
             if (string.IsNullOrEmpty(Login))
             {
-                _errorsContainer.SetErrors(() => Login, new[] { "Error in login" });
+                _errorsContainer.SetErrors(() => Login, new[] { "Login cannot be empty" });
             }
         }
 
-        public sealed override void CheckPort()
+        private void CheckPort()
         {
             _errorsContainer.ClearErrors(() => Port);
-            bool isNumber = int.TryParse(Port, out int number);
-            if (!isNumber)
+            int portNumber;
+            bool isNumber = int.TryParse(Port, out portNumber);
+            if (!isNumber || !(portNumber >= 49152 && portNumber <= 65535))
             {
-                _errorsContainer.SetErrors(() => Port, new[] { "Error in port" });
-                CorrectPort = false;
-            }
-            else
-            {
-                CorrectPort = true;
+                _errorsContainer.SetErrors(() => Port, new[] { "The port value must be in the range from 49152 to 65535" });
             }
         }
 
-        public sealed override void CheckAddress()
+        private void CheckAddress()
         {
             _errorsContainer.ClearErrors(() => Address);
-            string addressPattern = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$";
-            var regex = new Regex(addressPattern);
+            var regex = new Regex(ADDRESSPATTERN);
             Match compare = regex.Match(Address);
 
             if (!compare.Success)
             {
-                _errorsContainer.SetErrors(() => Address, new[] { "Error in address" });
-                CorrectAddress = false;
-            }
-            else
-            {
-                CorrectAddress = true;
+                _errorsContainer.SetErrors(() => Address, new[] { "The address must match the pattern of ip addresses" });
             }
         }
 

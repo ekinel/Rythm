@@ -46,10 +46,6 @@ namespace Rythm.Client.ViewModel
             return _errorsContainer.GetErrors(propertyName);
         }
 
-        public abstract void CheckLogin();
-        public abstract void CheckAddress();
-        public abstract void CheckPort();
-
         private void RaiseErrorsChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
