@@ -12,6 +12,7 @@ namespace Rythm.Common.Network.Enums
         GroupMessage,
         ServerOk,
         ClientOk,
-        UpdatedClientsList
+        UpdatedClientsList,
+        CommonMessage
     }
 }

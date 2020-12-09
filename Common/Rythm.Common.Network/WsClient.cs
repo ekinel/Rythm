@@ -6,7 +6,6 @@ namespace Rythm.Common.Network
 {
     using System;
     using System.Collections.Concurrent;
-    using System.Net.WebSockets;
     using System.Threading;
 
     using Enums;
@@ -17,9 +16,6 @@ namespace Rythm.Common.Network
     using Newtonsoft.Json.Linq;
 
     using WebSocketSharp;
-
-    using WebSocket = WebSocketSharp.WebSocket;
-    using WebSocketState = WebSocketSharp.WebSocketState;
 
     public class WsClient : ITransport
     {
@@ -177,12 +173,10 @@ namespace Rythm.Common.Network
                     var mess = new MessageReceivedEventArgs(new TextMsgRequest(msgRequest.From, "CommonChat", msgRequest.Message));
                     MessageReceived?.Invoke(this, mess);
 
-                    //ClientOk еще посмотреть, тут логин местный надо
                     var mgContainer = new ClientOkMsgResponse(msgRequest.From, "CommonChat", msgRequest.Date);
                     Send(mgContainer);
 
                     break;
-
 
                 case MsgType.ClientOk:
                 case MsgType.ServerOk:
