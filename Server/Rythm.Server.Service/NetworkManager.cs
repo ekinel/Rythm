@@ -36,10 +36,18 @@ namespace Rythm.Server.Service
             _wsServer = new WsServer(new IPEndPoint(IPAddress.Any, wsPort));
         }
 
-        public NetworkManager(string port, string address)
+        public NetworkManager(string address, string port)
         {
             int wsPort = Convert.ToInt32(port);
-            long wsAddress = long.Parse(address);
+            IPAddress ipAddress = IPAddress.Parse(address);
+            byte[] bytes = ipAddress.GetAddressBytes();
+
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
+
+            var wsAddress = BitConverter.ToUInt32(bytes, 0);
             _wsServer = new WsServer(new IPEndPoint(wsAddress, wsPort));
         }
 
