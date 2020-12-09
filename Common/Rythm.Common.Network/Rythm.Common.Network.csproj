@@ -53,6 +53,7 @@
     <Compile Include="Enums\ResultCodes.cs" />
     <Compile Include="Enums\TransportType.cs" />
     <Compile Include="Messages\BaseContainer.cs" />
+    <Compile Include="Messages\CommonChatMsgResponse.cs" />
     <Compile Include="Messages\ServerOkMsgResponse.cs" />
     <Compile Include="Messages\TextMsgRequest.cs" />
     <Compile Include="Messages\UpdatedClientsResponse.cs" />

@@ -107,7 +107,7 @@ namespace Rythm.Client.ViewModel
                 ExecuteConnectCommand,
                 () => !_errorsContainer.HasErrors);
             _connectionController.ConnectionStateChanged += HandleConnectionStateChanged;
-            ConnectButtonLabel = "Connect";
+            ConnectButtonLabel = Properties.Resources.StateConnect;
             CheckLogin();
             CheckAddress();
             CheckPort();
@@ -154,7 +154,7 @@ namespace Rythm.Client.ViewModel
         {
             _isConnected = isConnected;
             FieldsEnabled = !_isConnected;
-            ConnectButtonLabel = _isConnected ? "Disconnect" : "Connect";
+            ConnectButtonLabel = _isConnected ? Properties.Resources.StateDisconnect : Properties.Resources.StateConnect;
             _eventAggregator.GetEvent<ConnectionIndicatorColorChangedEvent>().Publish(_isConnected);
         }
 
