@@ -6,7 +6,8 @@ namespace Rythm.Server.UI
 {
     using System;
     using System.Windows.Forms;
-    using System.Resources;
+
+    using Properties;
 
     using Service;
 
@@ -14,7 +15,7 @@ namespace Rythm.Server.UI
     {
         #region Fields
 
-        private NetworkManager networkManager;
+        private NetworkManager _networkManager;
 
         #endregion
 
@@ -23,7 +24,7 @@ namespace Rythm.Server.UI
         public RhythmServerUI()
         {
             InitializeComponent();
-            LabelServerStatus.Text = Properties.Resources.ServerStatusStop;
+            LabelServerStatus.Text = Resources.ServerStatusStop;
         }
 
         #endregion
@@ -32,8 +33,8 @@ namespace Rythm.Server.UI
 
         private void ButtonStartClick(object sender, EventArgs e)
         {
-            var wsPort = TextBoxPort.Text;
-            var wsAddress = TextBoxAddress.Text;
+            string wsPort = TextBoxPort.Text;
+            string wsAddress = TextBoxAddress.Text;
 
             if (!string.IsNullOrEmpty(wsPort))
             {
@@ -49,14 +50,16 @@ namespace Rythm.Server.UI
                 {
                     if (string.IsNullOrEmpty(wsAddress))
                     {
-                        networkManager = new NetworkManager(wsPort);
+                        _networkManager = new NetworkManager(wsPort);
+                        _networkManager.Start();
                     }
                     else
                     {
-                        networkManager = new NetworkManager(wsAddress, wsPort);
+                        _networkManager = new NetworkManager(wsAddress, wsPort);
+                        _networkManager.Start();
                     }
 
-                    LabelServerStatus.Text = Properties.Resources.ServerStatusStart;
+                    LabelServerStatus.Text = Resources.ServerStatusStart;
                 }
                 catch (Exception ex)
                 {
@@ -67,8 +70,8 @@ namespace Rythm.Server.UI
 
         private void ButtonStopClick(object sender, EventArgs e)
         {
-            networkManager.Stop();
-            LabelServerStatus.Text = Properties.Resources.ServerStatusStop;
+            _networkManager.Stop();
+            LabelServerStatus.Text = Resources.ServerStatusStop;
 
             ButtonStart.Enabled = true;
             ButtonStop.Enabled = false;
