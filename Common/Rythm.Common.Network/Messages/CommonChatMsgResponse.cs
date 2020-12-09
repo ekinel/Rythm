@@ -55,7 +55,7 @@ namespace Rythm.Common.Network.Messages
             To = to;
             Message = message;
             Date = date;
-            MessageType = MsgType.GroupMessage;
+            MessageType = MsgType.CommonMessage;
         }
 
         #endregion

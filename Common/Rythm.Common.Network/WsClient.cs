@@ -167,7 +167,7 @@ namespace Rythm.Common.Network
 
                     break;
 
-                case MsgType.GroupMessage:
+                case MsgType.CommonMessage:
 
                     var msgRequest = ((JObject)container.Payload).ToObject(typeof(CommonChatMsgResponse)) as CommonChatMsgResponse;
                     var mess = new MessageReceivedEventArgs(new TextMsgRequest(msgRequest.From, "CommonChat", msgRequest.Message));
