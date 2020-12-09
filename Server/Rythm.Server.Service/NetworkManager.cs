@@ -30,6 +30,19 @@ namespace Rythm.Server.Service
             _wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT));
         }
 
+        public NetworkManager(string port)
+        {
+            int wsPort = Convert.ToInt32(port);
+            _wsServer = new WsServer(new IPEndPoint(IPAddress.Any, wsPort));
+        }
+
+        public NetworkManager(string port, string address)
+        {
+            int wsPort = Convert.ToInt32(port);
+            long wsAddress = long.Parse(address);
+            _wsServer = new WsServer(new IPEndPoint(wsAddress, wsPort));
+        }
+
         #endregion
 
         #region Methods
