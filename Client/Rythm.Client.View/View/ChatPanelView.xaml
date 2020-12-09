@@ -7,6 +7,7 @@
              mc:Ignorable="d"
              xmlns:interactivity="http://prismlibrary.com/"
              xmlns:properties="clr-namespace:Rythm.Client.View.Properties"
+             
              interactivity:ViewModelLocator.AutoWireViewModel="True" 
             d:DataContext="{d:DesignInstance viewModel:ChatPanelViewModel}">
 
@@ -16,33 +17,35 @@
             <RowDefinition Height="Auto" ></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Row="0" ItemsSource="{Binding ReceivedMessagesList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" Background="WhiteSmoke" HorizontalContentAlignment="Stretch">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="IsEnabled" Value="false"/>
-                </Style>
-            </ListBox.ItemContainerStyle>           
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Border Grid.Column="1" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="4" Background="White" HorizontalAlignment="Stretch">
-                            <StackPanel Margin="4">
-                                <TextBlock Text="{Binding LoginTo}" FontSize="12" FontWeight="Bold" Margin="10,0,0,0"/>
-                                <TextBlock Text="{Binding Text}" FontSize="14" FontWeight="Normal"  Margin="0 5" TextWrapping="Wrap"/>
-                                <TextBlock Text="{Binding Time}" FontSize="10" TextAlignment="Right" Margin="0, -10,0,0"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <Ellipse Fill="{Binding OkStatus}" Width="10" Height="10"/>
+        <ScrollViewer Grid.Row="0" viewModel:ScrollViewerExtensionsViewModel.AlwaysScrollToEnd="True">
+            <ListBox ItemsSource="{Binding ReceivedMessagesList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" Background="WhiteSmoke" HorizontalContentAlignment="Stretch">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="IsEnabled" Value="false"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="1" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="4" Background="White" HorizontalAlignment="Stretch">
+                                <StackPanel Margin="4">
+                                    <TextBlock Text="{Binding LoginTo}" FontSize="12" FontWeight="Bold" Margin="10,0,0,0"/>
+                                    <TextBlock Text="{Binding Text}" FontSize="14" FontWeight="Normal"  Margin="0 5" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding Time}" FontSize="10" TextAlignment="Right" Margin="0, -10,0,0"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Ellipse Fill="{Binding OkStatus}" Width="10" Height="10"/>
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
