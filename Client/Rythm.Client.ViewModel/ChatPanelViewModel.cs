@@ -69,7 +69,7 @@ namespace Rythm.Client.ViewModel
 
         private void HandleNewMessageReceived(MessageReceivedEventArgs state)
         {
-            AllReceivedMessagesList.Add(new SendMessageViewModel(state.FromClientName, _loginFrom, state.Message, state.Date));
+            AllReceivedMessagesList.Add(new SendMessageViewModel(state.ToClientName, state.FromClientName, state.Message, state.Date));
 
             UpdateListByNewLoginTo();
         }
@@ -98,15 +98,18 @@ namespace Rythm.Client.ViewModel
 
             foreach (SendMessageViewModel message in AllReceivedMessagesList)
             {
-                if (message.LoginFrom == _loginTo && message.LoginTo == _loginFrom ||
-                    message.LoginFrom == _loginFrom && message.LoginTo == _loginTo && _loginTo != string.Empty)
+                //if (message.LoginFrom == _loginTo && message.LoginTo == _loginFrom ||
+                //    message.LoginFrom == _loginFrom && message.LoginTo == _loginTo && _loginTo != string.Empty)
+                if ((message.LoginFrom == _loginTo && message.LoginTo == _loginFrom || message.LoginFrom == _loginFrom && message.LoginTo == _loginTo || message.LoginTo == "CommonChat" && _loginTo == "CommonChat") 
+                    && _loginTo != string.Empty)
                 {
                     Application.Current.Dispatcher.BeginInvoke(
                         DispatcherPriority.Background,
                         new Action(
                             () =>
                             {
-                                ReceivedMessagesList.Add(message);
+                               // ReceivedMessagesList.Add(message);
+                                ReceivedMessagesList.Add(new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time));
                             }));
                 }
             }
@@ -135,7 +138,7 @@ namespace Rythm.Client.ViewModel
         private void SendMessageCommand()
         {
             var msgRequest = new TextMsgRequest(_loginFrom, _loginTo, OutgoingMessage);
-            AllReceivedMessagesList.Add(new SendMessageViewModel(_loginFrom, _loginTo, OutgoingMessage, msgRequest.Date));
+            AllReceivedMessagesList.Add(new SendMessageViewModel( _loginTo, _loginFrom, OutgoingMessage, msgRequest.Date));
             _chatPanelController.MessageSend(OutgoingMessage, _loginTo);
             OutgoingMessage = string.Empty;
 

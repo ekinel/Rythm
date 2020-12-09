@@ -161,15 +161,28 @@ namespace Rythm.Common.Network
                     break;
 
                 case MsgType.PersonalMessage:
+
                     var messageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
                     var textMsgRequest = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
 
                     MessageReceived?.Invoke(this, new MessageReceivedEventArgs(textMsgRequest));
-
                     var msgContainer = new ClientOkMsgResponse(textMsgRequest.From, textMsgRequest.To, textMsgRequest.Date);
                     Send(msgContainer);
 
                     break;
+
+                case MsgType.GroupMessage:
+
+                    var msgRequest = ((JObject)container.Payload).ToObject(typeof(CommonChatMsgResponse)) as CommonChatMsgResponse;
+                    var mess = new MessageReceivedEventArgs(new TextMsgRequest(msgRequest.From, "CommonChat", msgRequest.Message));
+                    MessageReceived?.Invoke(this, mess);
+
+                    //ClientOk еще посмотреть, тут логин местный надо
+                    var mgContainer = new ClientOkMsgResponse(msgRequest.From, "CommonChat", msgRequest.Date);
+                    Send(mgContainer);
+
+                    break;
+
 
                 case MsgType.ClientOk:
                 case MsgType.ServerOk:

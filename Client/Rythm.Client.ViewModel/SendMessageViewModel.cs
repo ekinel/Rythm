@@ -17,8 +17,8 @@ namespace Rythm.Client.ViewModel
         #region Properties
 
         public string LoginTo { get; }
-        public string Text { get; }
-        public string Time { get; }
+        public string Text { get; set; }
+        public string Time { get; set; }
 
         public string LoginFrom { get;}
 

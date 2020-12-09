@@ -13,6 +13,7 @@ namespace Rythm.Common.Network
 
     using Messages;
 
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     using WebSocketSharp.Server;
@@ -152,11 +153,14 @@ namespace Rythm.Common.Network
 
         private void BroadcastSend(MessageContainer msgContainer, string loginFrom)
         {
+            var messageRequest = ((JObject)msgContainer.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
+            var textMsgRequest = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
+
             foreach (KeyValuePair<string, WsConnection> connection in _connections)
             {
                 if (connection.Value.Login != loginFrom && connection.Key != "CommonChat")
                 {
-                    connection.Value.Send(msgContainer);
+                    connection.Value.Send(new CommonChatMsgResponse(loginFrom, "CommonChat", textMsgRequest.Message, textMsgRequest.Date).GetContainer());
                 }
             }
         }
@@ -165,7 +169,7 @@ namespace Rythm.Common.Network
         {
             foreach (KeyValuePair<string, WsConnection> connection in _connections)
             {
-                if (connection.Value.Login == targetId)
+                if (connection.Key == targetId && connection.Key != "CommonChat")
                 {
                     connection.Value.Send(msgContainer);
                 }
