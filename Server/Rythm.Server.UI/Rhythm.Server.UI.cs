@@ -69,7 +69,7 @@ namespace Rythm.Server.UI
                     _networkManager = new NetworkManager(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut));
                     _networkManager.Start();
 
-                    LabelServerStatus.Text = Resources.ServerStatusStart;
+                    LabelServerStatus.Text = Resources.ServerStatusStart + "\n" + "at Address " + wsAddress + " on port " + wsPort + " with TimeOut " + wsTimeOut;
                 }
                 catch (Exception ex)
                 {
