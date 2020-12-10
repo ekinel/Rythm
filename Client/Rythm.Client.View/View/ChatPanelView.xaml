@@ -35,9 +35,9 @@
                                 <StackPanel Margin="4">
                                     <TextBlock Text="{Binding LoginFrom}" FontSize="12" FontWeight="Bold" Margin="10,0,0,0"/>
                                     <TextBlock Text="{Binding Text}" FontSize="14" FontWeight="Normal"  Margin="0 5" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding Time}" FontSize="10" TextAlignment="Right" Margin="0, -10,0,0"/>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Ellipse Fill="{Binding OkStatus}" Width="10" Height="10"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="10">
+                                        <TextBlock Text="{Binding Time}" FontSize="10" TextAlignment="Right" Margin="0, -10,0,0"/>
+                                        <Ellipse Fill="{Binding OkStatus}" VerticalAlignment="Center" Width="10" Margin="10, -10,0,0" Height="10"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
