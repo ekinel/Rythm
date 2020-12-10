@@ -16,7 +16,7 @@ namespace Rythm.Server.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new RhythmServerUI());
+            Application.Run(new RythmServerUI());
         }
     }
 }

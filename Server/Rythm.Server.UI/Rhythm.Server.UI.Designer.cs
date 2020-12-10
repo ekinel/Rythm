@@ -1,6 +1,6 @@
 ﻿namespace Rythm.Server.UI
 {
-    partial class RhythmServerUI
+    partial class RythmServerUI
     {
         /// <summary>
         /// Required designer variable.
@@ -155,7 +155,7 @@
             this.LabelServerStatus.Size = new System.Drawing.Size(0, 13);
             this.LabelServerStatus.TabIndex = 9;
             // 
-            // RhythmServerUI
+            // RythmServerUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -169,7 +169,7 @@
             this.MaximumSize = new System.Drawing.Size(500, 250);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(500, 250);
-            this.Name = "RhythmServerUI";
+            this.Name = "RythmServerUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Rhythm";
             this.GroupBox.ResumeLayout(false);

@@ -11,7 +11,7 @@ namespace Rythm.Server.UI
 
     using Service;
 
-    public partial class RhythmServerUI : Form
+    public partial class RythmServerUI : Form
     {
         #region Fields
 
@@ -21,7 +21,7 @@ namespace Rythm.Server.UI
 
         #region Constructors
 
-        public RhythmServerUI()
+        public RythmServerUI()
         {
             InitializeComponent();
             LabelServerStatus.Text = Resources.ServerStatusStop;
