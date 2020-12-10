@@ -4,16 +4,17 @@
 
 namespace Rythm.Common.Network
 {
+    using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+    using System.Timers;
 
     using Enums;
 
     using Messages;
 
-    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     using WebSocketSharp.Server;
@@ -24,6 +25,7 @@ namespace Rythm.Common.Network
 
         private readonly IPEndPoint _listenAddress;
         private readonly ConcurrentDictionary<string, WsConnection> _connections;
+        private readonly ConcurrentDictionary<string, ClientActivity> _clientsActivity;
 
         private WebSocketServer _server;
         private bool _isCommonChatCreated = true;
@@ -36,6 +38,7 @@ namespace Rythm.Common.Network
         {
             _listenAddress = listenAddress;
             _connections = new ConcurrentDictionary<string, WsConnection>();
+            _clientsActivity = new ConcurrentDictionary<string, ClientActivity>();
         }
 
         #endregion
@@ -53,6 +56,10 @@ namespace Rythm.Common.Network
                 });
 
             _server.Start();
+
+            var sTimer = new Timer(10000);
+            sTimer.Elapsed += OnTimedEvent;
+            sTimer.Enabled = true;
         }
 
         public void Stop()
@@ -93,8 +100,9 @@ namespace Rythm.Common.Network
                             connection.Login = connectionRequest.Login;
                             _connections.TryAdd(connection.Login, connection);
                             connection.Send(connectionResponse.GetContainer());
-                            var updatedClientsList = new UpdatedClientsResponse(_connections.Keys);
-                            Send(updatedClientsList);
+                            Send(new UpdatedClientsResponse(_connections.Keys));
+
+                            _clientsActivity.TryAdd(connection.Login, new ClientActivity(connection.Login));
 
                             if (_isCommonChatCreated)
                             {
@@ -126,6 +134,8 @@ namespace Rythm.Common.Network
                             Send(container, textMsgContainer.To);
                             Send(serverOkContainer, textMsgContainer.From);
                         }
+
+                        UpdateLastClientActivity(textMsgContainer.From);
                     }
 
                     break;
@@ -137,6 +147,7 @@ namespace Rythm.Common.Network
                         MessageContainer clientOkContainer = clientOkMsgContainer.GetContainer();
 
                         Send(clientOkContainer, clientOkMsgContainer.From);
+                        UpdateLastClientActivity(clientOkMsgContainer.From);
                     }
 
                     break;
@@ -151,6 +162,45 @@ namespace Rythm.Common.Network
             }
         }
 
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            int serverTimeSeconds = DateTime.Now.Second;
+            int serverTimeMinute = DateTime.Now.Minute;
+
+            foreach (KeyValuePair<string, ClientActivity> client in _clientsActivity)
+            {
+                DateTime clientTime = DateTime.Parse(client.Value.LastActivityTime);
+
+                int clientTimeSeconds = clientTime.Second;
+                int clientTimeMinute = clientTime.Minute;
+
+                int deltaTimeSeconds = serverTimeSeconds - clientTimeSeconds;
+                int deltaTimeMinute = serverTimeMinute - clientTimeMinute;
+
+                if (deltaTimeSeconds < 0)
+                {
+                    deltaTimeSeconds = 60 - clientTimeSeconds + serverTimeSeconds;
+                }
+
+                if (deltaTimeMinute > 0)
+                {
+                    deltaTimeSeconds += deltaTimeMinute * 60;
+                }
+
+                if (deltaTimeSeconds > 20)
+                {
+                    FreeConnection(client.Key);
+                    _clientsActivity.TryRemove(client.Key, out ClientActivity value);
+                }
+            }
+        }
+
+        private void UpdateLastClientActivity(string login)
+        {
+            _clientsActivity.TryGetValue(login, out ClientActivity lastTime);
+            _clientsActivity.TryUpdate(login, new ClientActivity(login), lastTime);
+        }
+
         private void BroadcastSend(MessageContainer msgContainer, string loginFrom)
         {
             var messageRequest = ((JObject)msgContainer.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
@@ -160,7 +210,8 @@ namespace Rythm.Common.Network
             {
                 if (connection.Value.Login != loginFrom && connection.Key != "CommonChat")
                 {
-                    connection.Value.Send(new CommonChatMsgResponse(loginFrom, "CommonChat", textMsgRequest.Message, textMsgRequest.Date).GetContainer());
+                    connection.Value.Send(
+                        new CommonChatMsgResponse(loginFrom, "CommonChat", textMsgRequest.Message, textMsgRequest.Date).GetContainer());
                 }
             }
         }
