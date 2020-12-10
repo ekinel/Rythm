@@ -30,13 +30,16 @@ namespace Rythm.Common.Network
         private WebSocketServer _server;
         private bool _isCommonChatCreated = true;
 
+        private int _timeOut;
+
         #endregion
 
         #region Constructors
 
-        public WsServer(IPEndPoint listenAddress)
+        public WsServer(IPEndPoint listenAddress, int timeOut)
         {
             _listenAddress = listenAddress;
+            _timeOut = timeOut;
             _connections = new ConcurrentDictionary<string, WsConnection>();
             _clientsActivity = new ConcurrentDictionary<string, ClientActivity>();
         }
@@ -187,7 +190,7 @@ namespace Rythm.Common.Network
                     deltaTimeSeconds += deltaTimeMinute * 60;
                 }
 
-                if (deltaTimeSeconds > 20)
+                if (deltaTimeSeconds > _timeOut)
                 {
                     FreeConnection(client.Key);
                     _clientsActivity.TryRemove(client.Key, out ClientActivity value);

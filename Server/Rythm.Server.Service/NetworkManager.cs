@@ -14,6 +14,7 @@ namespace Rythm.Server.Service
         #region Constants
 
         private const int WS_PORT = 65000;
+        private const int TIME_OUT = 20;
 
         #endregion
 
@@ -27,28 +28,29 @@ namespace Rythm.Server.Service
 
         public NetworkManager()
         {
-            _wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT));
+            _wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT), TIME_OUT);
         }
 
-        public NetworkManager(string port)
+        public NetworkManager(string address, int port, int timeOut)
         {
-            int wsPort = Convert.ToInt32(port);
-            _wsServer = new WsServer(new IPEndPoint(IPAddress.Any, wsPort));
-        }
-
-        public NetworkManager(string address, string port)
-        {
-            int wsPort = Convert.ToInt32(port);
-            IPAddress ipAddress = IPAddress.Parse(address);
-            byte[] bytes = ipAddress.GetAddressBytes();
-
-            if (BitConverter.IsLittleEndian)
+            if (string.IsNullOrEmpty(address))
             {
-                Array.Reverse(bytes);
+                _wsServer = new WsServer(new IPEndPoint(IPAddress.Any, port), timeOut);
             }
+            else
+            {
+                int wsPort = Convert.ToInt32(port);
+                IPAddress ipAddress = IPAddress.Parse(address);
+                byte[] bytes = ipAddress.GetAddressBytes();
 
-            var wsAddress = BitConverter.ToUInt32(bytes, 0);
-            _wsServer = new WsServer(new IPEndPoint(wsAddress, wsPort));
+                if (BitConverter.IsLittleEndian)
+                {
+                    Array.Reverse(bytes);
+                }
+
+                uint wsAddress = BitConverter.ToUInt32(bytes, 0);
+                _wsServer = new WsServer(new IPEndPoint(wsAddress, wsPort), Convert.ToInt32(timeOut));
+            }
         }
 
         #endregion

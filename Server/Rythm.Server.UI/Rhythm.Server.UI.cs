@@ -13,6 +13,13 @@ namespace Rythm.Server.UI
 
     public partial class RythmServerUI : Form
     {
+        #region Constants
+
+        private const int WS_PORT = 65000;
+        private const int WS_TIMEOUT = 20;
+
+        #endregion
+
         #region Fields
 
         private NetworkManager _networkManager;
@@ -35,6 +42,7 @@ namespace Rythm.Server.UI
         {
             string wsPort = TextBoxPort.Text;
             string wsAddress = TextBoxAddress.Text;
+            string wsTimeOut = TextBoxTimeOut.Text;
 
             if (!string.IsNullOrEmpty(wsPort))
             {
@@ -48,16 +56,18 @@ namespace Rythm.Server.UI
 
                 try
                 {
-                    if (string.IsNullOrEmpty(wsAddress))
+                    if (string.IsNullOrEmpty(wsPort))
                     {
-                        _networkManager = new NetworkManager(wsPort);
-                        _networkManager.Start();
+                        wsPort = WS_PORT.ToString();
                     }
-                    else
+
+                    if (string.IsNullOrEmpty(wsTimeOut))
                     {
-                        _networkManager = new NetworkManager(wsAddress, wsPort);
-                        _networkManager.Start();
+                        wsTimeOut = WS_TIMEOUT.ToString();
                     }
+
+                    _networkManager = new NetworkManager(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut));
+                    _networkManager.Start();
 
                     LabelServerStatus.Text = Resources.ServerStatusStart;
                 }
