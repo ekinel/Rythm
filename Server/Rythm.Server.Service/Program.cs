@@ -6,7 +6,7 @@ namespace Rythm.Server.Service
 {
     using System;
 
-    internal class Program
+    internal class Server
     {
         #region Methods
 

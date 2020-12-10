@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rythm.Common.Network", "Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rythm.Server.UI", "Server\Rythm.Server.UI\Rythm.Server.UI.csproj", "{8C5E5A5B-E77E-4916-B15C-767F44656CC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rythm.Server.WindowsService", "Server\Rythm.Server.WindowsService\Rythm.Server.WindowsService.csproj", "{B2925D00-A4ED-481E-898B-56AD64BE9417}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{8C5E5A5B-E77E-4916-B15C-767F44656CC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C5E5A5B-E77E-4916-B15C-767F44656CC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C5E5A5B-E77E-4916-B15C-767F44656CC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2925D00-A4ED-481E-898B-56AD64BE9417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2925D00-A4ED-481E-898B-56AD64BE9417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2925D00-A4ED-481E-898B-56AD64BE9417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2925D00-A4ED-481E-898B-56AD64BE9417}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{7FFA6135-05B4-4E3D-B5C8-DC5F1854A633} = {E4F84B58-34C6-459B-82BC-094A77661552}
 		{8FFBBA56-13DB-45E2-9D4D-8A6189294B5C} = {0B6ED9FB-0876-468A-8689-E2B30DC242BA}
 		{8C5E5A5B-E77E-4916-B15C-767F44656CC1} = {2C2534FE-7CCB-4466-AD4D-0CA5A874DCB7}
+		{B2925D00-A4ED-481E-898B-56AD64BE9417} = {2C2534FE-7CCB-4466-AD4D-0CA5A874DCB7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A50BB8D-DE33-4E33-9882-8130F9F71C87}
