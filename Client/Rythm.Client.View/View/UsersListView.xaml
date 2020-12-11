@@ -21,7 +21,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border Height="30" CornerRadius="5"   HorizontalAlignment="Stretch" Padding="0" Margin="0">
-                        <Button BorderThickness="1" BorderBrush="LightGray"  Foreground="DimGray"  Background="Transparent"  Content="{Binding Login}" Command="{Binding ChooseLoginCommand}" />
+                        <Button BorderThickness="1" BorderBrush="LightGray"  Foreground="DimGray"  Background="Transparent" IsEnabled="{Binding IsEnabled}" Content="{Binding Login}" Command="{Binding ChooseLoginCommand}" />
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>

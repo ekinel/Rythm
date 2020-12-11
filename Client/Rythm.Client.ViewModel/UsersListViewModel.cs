@@ -62,8 +62,19 @@ namespace Rythm.Client.ViewModel
                     new Action(
                         () =>
                         {
-                            UserList.Add(new UsersLoginsViewModel(_eventAggregator, user));
+                            UserList.Add(new UsersLoginsViewModel(_eventAggregator, user, true));
                         }));
+            }
+
+            foreach (string user in notActiveUsersList)
+            {
+	            Application.Current.Dispatcher.BeginInvoke(
+		            DispatcherPriority.Background,
+		            new Action(
+			            () =>
+			            {
+				            UserList.Add(new UsersLoginsViewModel(_eventAggregator, user, false));
+			            }));
             }
         }
 
