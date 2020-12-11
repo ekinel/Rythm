@@ -42,13 +42,8 @@ namespace Rythm.Server.Service
 				int wsPort = Convert.ToInt32(port);
 				IPAddress ipAddress = IPAddress.Parse(address);
 				byte[] bytes = ipAddress.GetAddressBytes();
-
-				if (BitConverter.IsLittleEndian)
-				{
-					Array.Reverse(bytes);
-				}
-
 				uint wsAddress = BitConverter.ToUInt32(bytes, 0);
+
 				_wsServer = new WsServer(new IPEndPoint(wsAddress, wsPort), Convert.ToInt32(timeOut));
 			}
 		}

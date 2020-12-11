@@ -4,94 +4,93 @@
 
 namespace Rythm.Server.UI
 {
-    using System;
-    using System.Windows.Forms;
+	using System;
+	using System.Windows.Forms;
 
-    using Properties;
+	using Properties;
 
-    using Service;
+	using Service;
 
-    public partial class RythmServerUI : Form
-    {
-        #region Constants
+	public partial class RythmServerUI : Form
+	{
+		#region Constants
 
-        private const int WS_PORT = 65000;
-        private const int WS_TIMEOUT = 20;
+		private const int WS_PORT = 65000;
+		private const int WS_TIMEOUT = 20;
 
-        #endregion
+		#endregion
 
-        #region Fields
+		#region Fields
 
-        private NetworkManager _networkManager;
+		private NetworkManager _networkManager;
 
-        #endregion
+		#endregion
 
-        #region Constructors
+		#region Constructors
 
-        public RythmServerUI()
-        {
-            InitializeComponent();
-            LabelServerStatus.Text = Resources.ServerStatusStop;
-        }
+		public RythmServerUI()
+		{
+			InitializeComponent();
+			LabelServerStatus.Text = Resources.ServerStatusStop;
+		}
 
-        #endregion
+		#endregion
 
-        #region Methods
+		#region Methods
 
-        private void ButtonStartClick(object sender, EventArgs e)
-        {
-            string wsPort = TextBoxPort.Text;
-            string wsAddress = TextBoxAddress.Text;
-            string wsTimeOut = TextBoxTimeOut.Text;
+		private void ButtonStartClick(object sender, EventArgs e)
+		{
+			string wsPort = TextBoxPort.Text;
+			string wsAddress = TextBoxAddress.Text;
+			string wsTimeOut = TextBoxTimeOut.Text;
 
-            if (!string.IsNullOrEmpty(wsPort))
-            {
-                ButtonStop.Enabled = true;
-                ButtonStart.Enabled = false;
+			ButtonStop.Enabled = true;
+			ButtonStart.Enabled = false;
 
-                TextBoxPort.Enabled = false;
-                TextBoxAddress.Enabled = false;
-                TextBoxTimeOut.Enabled = false;
-                TextBoxDataBase.Enabled = false;
+			TextBoxPort.Enabled = false;
+			TextBoxAddress.Enabled = false;
+			TextBoxTimeOut.Enabled = false;
+			TextBoxDataBase.Enabled = false;
 
-                try
-                {
-                    if (string.IsNullOrEmpty(wsPort))
-                    {
-                        wsPort = WS_PORT.ToString();
-                    }
+			try
+			{
+				if (string.IsNullOrEmpty(wsPort))
+				{
+					wsPort = WS_PORT.ToString();
+					TextBoxPort.Text = wsPort;
+				}
 
-                    if (string.IsNullOrEmpty(wsTimeOut))
-                    {
-                        wsTimeOut = WS_TIMEOUT.ToString();
-                    }
+				if (string.IsNullOrEmpty(wsTimeOut))
+				{
+					wsTimeOut = WS_TIMEOUT.ToString();
+					TextBoxTimeOut.Text = wsTimeOut;
+				}
 
-                    _networkManager = new NetworkManager(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut));
-                    _networkManager.Start();
+				_networkManager = new NetworkManager(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut));
+				_networkManager.Start();
 
-                    LabelServerStatus.Text = Resources.ServerStatusStart + "\n" + "at Address " + wsAddress + " on port " + wsPort + " with TimeOut " + wsTimeOut;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
+				LabelServerStatus.Text = Resources.ServerStatusStart;
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+		}
 
-        private void ButtonStopClick(object sender, EventArgs e)
-        {
-            _networkManager.Stop();
-            LabelServerStatus.Text = Resources.ServerStatusStop;
+		private void ButtonStopClick(object sender, EventArgs e)
+		{
+			_networkManager.Stop();
+			LabelServerStatus.Text = Resources.ServerStatusStop;
 
-            ButtonStart.Enabled = true;
-            ButtonStop.Enabled = false;
+			ButtonStart.Enabled = true;
+			ButtonStop.Enabled = false;
 
-            TextBoxAddress.Enabled = true;
-            TextBoxPort.Enabled = true;
-            TextBoxTimeOut.Enabled = true;
-            TextBoxDataBase.Enabled = true;
-        }
+			TextBoxAddress.Enabled = true;
+			TextBoxPort.Enabled = true;
+			TextBoxTimeOut.Enabled = true;
+			TextBoxDataBase.Enabled = true;
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }
