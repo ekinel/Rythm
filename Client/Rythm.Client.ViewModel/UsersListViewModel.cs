@@ -45,7 +45,7 @@ namespace Rythm.Client.ViewModel
 
         #region Methods
 
-        public void HandleUpdatedUsersList(List<string> updatedUsersList)
+        public void HandleUpdatedUsersList(List<string> activeUsersList, List<string> notActiveUsersList)
         {
             Application.Current.Dispatcher.BeginInvoke(
                 DispatcherPriority.Background,
@@ -55,7 +55,7 @@ namespace Rythm.Client.ViewModel
                         UserList.Clear();
                     }));
 
-            foreach (string user in updatedUsersList)
+            foreach (string user in activeUsersList)
             {
                 Application.Current.Dispatcher.BeginInvoke(
                     DispatcherPriority.Background,

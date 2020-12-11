@@ -9,7 +9,6 @@ namespace Rythm.Client.BusinessLogic.Interfaces
 
     public interface IUsersListController
     {
-        event Action<List<string>> UpdatedUsersListEvent;
-
+	    event Action<List<string>, List<string>> UpdatedUsersListEvent;
     }
 }

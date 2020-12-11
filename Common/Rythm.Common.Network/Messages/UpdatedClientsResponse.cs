@@ -12,19 +12,25 @@ namespace Rythm.Common.Network.Messages
     {
         #region Fields
 
-        public List<string> UsersList = new List<string>();
+        public List<string> ActiveUsersList = new List<string>();
+        public List<string> NotActiveUsersList = new List<string>();
 
         #endregion
 
         #region Constructors
 
-        public UpdatedClientsResponse(ICollection<string> usersList)
+        public UpdatedClientsResponse(ICollection<string> activeUsersList, ICollection<string> notActiveUsersList)
         {
             MessageType = MsgType.UpdatedClientsList;
 
-            foreach (string user in usersList)
+            foreach (string user in activeUsersList)
             {
-                UsersList.Add(user);
+	            ActiveUsersList.Add(user);
+            }
+
+            foreach (string user in notActiveUsersList)
+            {
+	            NotActiveUsersList.Add(user);
             }
         }
 

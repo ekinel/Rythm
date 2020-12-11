@@ -34,7 +34,7 @@ namespace Rythm.Client.BusinessLogic
 
         public event Action<MessageReceivedEventArgs> MessageReceivedEvent;
         public event Action<(MsgType, string)> OkReceivedEvent;
-        public event Action<List<string>> UpdatedUsersListEvent;
+        public event Action<List<string>, List<string>> UpdatedUsersListEvent;
 
         #endregion
 
@@ -68,8 +68,7 @@ namespace Rythm.Client.BusinessLogic
         private void HandleUpdatedUsersList(object sender, MessageContainer msgContainer)
         {
             var messageRequest = ((JObject)msgContainer.Payload).ToObject(typeof(UpdatedClientsResponse)) as UpdatedClientsResponse;
-            List<string> updatedUsersList = messageRequest.UsersList;
-            UpdatedUsersListEvent?.Invoke(updatedUsersList);
+            UpdatedUsersListEvent?.Invoke(messageRequest.ActiveUsersList, messageRequest.NotActiveUsersList);
         }
 
         private void HandleOkReceived(object sender, (MsgType, string) okReceive)

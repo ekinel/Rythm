@@ -32,6 +32,8 @@ namespace Rythm.Common.Network
 
         private readonly int _timeOut;
 
+        private List<string> _clientsNotActiveList;
+
         #endregion
 
         #region Constructors
@@ -42,6 +44,8 @@ namespace Rythm.Common.Network
             _timeOut = timeOut;
             _connections = new ConcurrentDictionary<string, WsConnection>();
             _clientsActivity = new ConcurrentDictionary<string, ClientActivity>();
+
+			_clientsNotActiveList = new List<string>() { "11", "22", "33", "44", "55" };
         }
 
         #endregion
@@ -60,9 +64,9 @@ namespace Rythm.Common.Network
 
             _server.Start();
 
-            var sTimer = new Timer(10000);
-            sTimer.Elapsed += OnTimedEvent;
-            sTimer.Enabled = true;
+            //var sTimer = new Timer(10000);
+           // sTimer.Elapsed += OnTimedEvent;
+            //sTimer.Enabled = true;
         }
 
         public void Stop()
@@ -77,6 +81,8 @@ namespace Rythm.Common.Network
             }
 
             _connections.Clear();
+
+            _clientsNotActiveList = new List<string>() { "11", "22", "33", "44", "55" };
         }
 
         internal void HandleMessage(WsConnection connection, MessageContainer container)
@@ -103,17 +109,23 @@ namespace Rythm.Common.Network
                             connection.Login = connectionRequest.Login;
                             _connections.TryAdd(connection.Login, connection);
                             connection.Send(connectionResponse.GetContainer());
-                            Send(new UpdatedClientsResponse(_connections.Keys));
+
+                            //
+                            _clientsNotActiveList.Remove(connection.Login);
+                            //
+
+                            Send(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
 
                             _clientsActivity.TryAdd(connection.Login, new ClientActivity(connection.Login));
+                            
 
                             if (_isCommonChatCreated)
                             {
                                 _connections.TryAdd("CommonChat", connection);
                                 _isCommonChatCreated = !_isCommonChatCreated;
-                                var updateClientsList = new UpdatedClientsResponse(_connections.Keys);
-                                updateClientsList.UsersList.Remove(connection.Login);
-                                Send(updateClientsList);
+                                //var updateClientsList = new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList);
+                                //updateClientsList.ActiveUsersList.Remove(connection.Login);
+                                Send(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
                             }
                         }
                     }
@@ -159,10 +171,17 @@ namespace Rythm.Common.Network
 
         internal void FreeConnection(string login)
         {
-	        _connections[login].Close();
-	        _connections.TryRemove(login, out WsConnection connection);
+	        if (login != "CommonChat" && _connections.TryGetValue(login, out var x))
+	        {
+		        _connections[login].Close();
+		        _connections.TryRemove(login, out WsConnection connection);
 
-	        Send(new UpdatedClientsResponse(_connections.Keys));
+		        //
+		        _clientsNotActiveList.Add(login);
+		        //
+
+		        Send(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
+            }
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
@@ -234,10 +253,13 @@ namespace Rythm.Common.Network
         {
             foreach (KeyValuePair<string, WsConnection> connection in _connections)
             {
-                ICollection<string> updatedClientsList = new List<string>(updatedClientsResponse.UsersList);
-                updatedClientsList.Remove(connection.Key);
-                var newUpdatedClientsResponse = new UpdatedClientsResponse(updatedClientsList);
-                connection.Value.Send(newUpdatedClientsResponse.GetContainer());
+	            if (connection.Key != "CommonChat")
+	            {
+		            ICollection<string> updatedActiveClientsList = new List<string>(updatedClientsResponse.ActiveUsersList);
+		            updatedActiveClientsList.Remove(connection.Key);
+		            var newUpdatedClientsResponse = new UpdatedClientsResponse(updatedActiveClientsList, updatedClientsResponse.NotActiveUsersList);
+		            connection.Value.Send(newUpdatedClientsResponse.GetContainer());
+                }
             }
         }
 

@@ -16,7 +16,7 @@ namespace Rythm.Client.BusinessLogic
         private List<string> UpdatedUsersList;
 
         private readonly IChatPanelController _chatPanelController;
-        public event Action<List<string>> UpdatedUsersListEvent;
+        public event Action<List<string>, List<string>> UpdatedUsersListEvent;
 
 
         #endregion
@@ -33,10 +33,10 @@ namespace Rythm.Client.BusinessLogic
 
         #region Methods
 
-        public void HandleUpdatedUsersList(List<string> updatedUsersList)
+        public void HandleUpdatedUsersList(List<string> activeUsersList, List<string> notActiveUsersList)
         {
-            UpdatedUsersList = new List<string>(updatedUsersList);
-            UpdatedUsersListEvent?.Invoke(UpdatedUsersList);
+            UpdatedUsersList = new List<string>(activeUsersList);
+            UpdatedUsersListEvent?.Invoke(activeUsersList, notActiveUsersList);
         }
 
         #endregion
