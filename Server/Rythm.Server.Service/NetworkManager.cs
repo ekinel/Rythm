@@ -4,70 +4,70 @@
 
 namespace Rythm.Server.Service
 {
-    using System;
-    using System.Net;
+	using System;
+	using System.Net;
 
-    using Common.Network;
+	using Common.Network;
 
-    public class NetworkManager
-    {
-        #region Constants
+	public class NetworkManager
+	{
+		#region Constants
 
-        private const int WS_PORT = 65000;
-        private const int TIME_OUT = 20;
+		private const int WS_PORT = 65000;
+		private const int TIME_OUT = 20;
 
-        #endregion
+		#endregion
 
-        #region Fields
+		#region Fields
 
-        private readonly WsServer _wsServer;
+		private readonly WsServer _wsServer;
 
-        #endregion
+		#endregion
 
-        #region Constructors
+		#region Constructors
 
-        public NetworkManager()
-        {
-            _wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT), TIME_OUT);
-        }
+		public NetworkManager()
+		{
+			_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT), TIME_OUT);
+		}
 
-        public NetworkManager(string address, int port, int timeOut)
-        {
-            if (string.IsNullOrEmpty(address))
-            {
-                _wsServer = new WsServer(new IPEndPoint(IPAddress.Any, port), timeOut);
-            }
-            else
-            {
-                int wsPort = Convert.ToInt32(port);
-                IPAddress ipAddress = IPAddress.Parse(address);
-                byte[] bytes = ipAddress.GetAddressBytes();
+		public NetworkManager(string address, int port, int timeOut)
+		{
+			if (string.IsNullOrEmpty(address))
+			{
+				_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, port), timeOut);
+			}
+			else
+			{
+				int wsPort = Convert.ToInt32(port);
+				IPAddress ipAddress = IPAddress.Parse(address);
+				byte[] bytes = ipAddress.GetAddressBytes();
 
-                if (BitConverter.IsLittleEndian)
-                {
-                    Array.Reverse(bytes);
-                }
+				if (BitConverter.IsLittleEndian)
+				{
+					Array.Reverse(bytes);
+				}
 
-                uint wsAddress = BitConverter.ToUInt32(bytes, 0);
-                _wsServer = new WsServer(new IPEndPoint(wsAddress, wsPort), Convert.ToInt32(timeOut));
-            }
-        }
+				uint wsAddress = BitConverter.ToUInt32(bytes, 0);
+				_wsServer = new WsServer(new IPEndPoint(wsAddress, wsPort), Convert.ToInt32(timeOut));
+			}
+		}
 
-        #endregion
+		#endregion
 
-        #region Methods
+		#region Methods
 
-        public void Start()
-        {
-            Console.WriteLine($"WebSocketServer: {IPAddress.Any}:{WS_PORT}");
-            _wsServer.Start();
-        }
+		public void Start()
+		{
+			Console.WriteLine($"WebSocketServer: {IPAddress.Any}:{WS_PORT}");
+			_wsServer.Start();
+		}
 
-        public void Stop()
-        {
-            _wsServer.Stop();
-        }
+		public void Stop()
+		{
+			_wsServer.Stop();
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

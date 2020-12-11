@@ -4,21 +4,21 @@
 
 namespace Rythm.Common.Network
 {
-    public class ConnectionStateChangedEventArgs
-    {
-        #region Properties
+	public class ConnectionStateChangedEventArgs
+	{
+		#region Properties
 
-        public bool Connected { get; }
+		public bool Connected { get; }
 
-        #endregion
+		#endregion
 
-        #region Constructors
+		#region Constructors
 
-        public ConnectionStateChangedEventArgs(bool connected)
-        {
-            Connected = connected;
-        }
+		public ConnectionStateChangedEventArgs(bool connected)
+		{
+			Connected = connected;
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

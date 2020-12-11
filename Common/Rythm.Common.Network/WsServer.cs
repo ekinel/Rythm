@@ -30,7 +30,7 @@ namespace Rythm.Common.Network
         private WebSocketServer _server;
         private bool _isCommonChatCreated = true;
 
-        private int _timeOut;
+        private readonly int _timeOut;
 
         #endregion
 
@@ -159,10 +159,10 @@ namespace Rythm.Common.Network
 
         internal void FreeConnection(string login)
         {
-            if (_connections.TryRemove(login, out WsConnection connection) && !string.IsNullOrEmpty(connection.Login))
-            {
-                Send(new UpdatedClientsResponse(_connections.Keys));
-            }
+	        _connections[login].Close();
+	        _connections.TryRemove(login, out WsConnection connection);
+
+	        Send(new UpdatedClientsResponse(_connections.Keys));
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
