@@ -30,6 +30,8 @@ namespace Rythm.Client.ViewModel
         private string _loginTo = string.Empty;
         private string _loginFrom;
 
+        private bool _connectionState = false;
+
         #endregion
 
         #region Properties
@@ -55,9 +57,10 @@ namespace Rythm.Client.ViewModel
 
         public ChatPanelViewModel(IChatPanelController chatPanelController, IEventAggregator eventAggregator)
         {
-            SendCommand = new DelegateCommand(SendMessageCommand, () => !string.IsNullOrEmpty(OutgoingMessage) && !string.IsNullOrEmpty(_loginTo));
+            SendCommand = new DelegateCommand(SendMessageCommand, () => !string.IsNullOrEmpty(OutgoingMessage) && !string.IsNullOrEmpty(_loginTo) && _connectionState);
             eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleUserLoginTo);
             eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleUserLoginFrom);
+            eventAggregator.GetEvent<ConnectionIndicatorColorChangedEvent>().Subscribe(HandleNewSateEstablished);
             _chatPanelController = chatPanelController ?? throw new ArgumentNullException(nameof(chatPanelController));
             _chatPanelController.MessageReceivedEvent += HandleNewMessageReceived;
             _chatPanelController.OkReceivedEvent += HandleOkReceive;
@@ -72,6 +75,11 @@ namespace Rythm.Client.ViewModel
             AllReceivedMessagesList.Add(new SendMessageViewModel(state.ToClientName, state.FromClientName, state.Message, state.Date));
 
             UpdateListByNewLoginTo();
+        }
+
+        private void HandleNewSateEstablished(bool connectionState)
+        {
+	        _connectionState = connectionState;
         }
 
         private void HandleUserLoginTo(string loginTo)

@@ -130,8 +130,7 @@ namespace Rythm.Client.ViewModel
         private void CheckPort()
         {
             _errorsContainer.ClearErrors(() => Port);
-            int portNumber;
-            bool isNumber = int.TryParse(Port, out portNumber);
+            bool isNumber = int.TryParse(Port, out int portNumber);
             if (!isNumber || !(portNumber >= 49152 && portNumber <= 65535))
             {
                 _errorsContainer.SetErrors(() => Port, new[] { "The port value must be in the range from 49152 to 65535" });
