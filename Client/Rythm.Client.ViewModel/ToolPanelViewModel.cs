@@ -13,7 +13,7 @@ namespace Rythm.Client.ViewModel
     using Prism.Events;
     using Prism.Mvvm;
 
-    public class UserLoginDisplayViewModel : BindableBase
+    public class ToolPanelViewModel : BindableBase
     {
         #region Fields
 
@@ -36,7 +36,7 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public UserLoginDisplayViewModel(IEventAggregator eventAggregator)
+        public ToolPanelViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             _eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleNewLoginSelected);

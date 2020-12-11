@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Rythm.Client.View
 {
     /// <summary>
-    /// Interaction logic for CommunicationParametersView.xaml
+    /// Interaction logic for DisplayingEventsView.xaml
     /// </summary>
-    public partial class CommunicationParametersView : UserControl
+    public partial class DisplayingEventsView : UserControl
     {
-        public CommunicationParametersView()
+        public DisplayingEventsView()
         {
             InitializeComponent();
         }

@@ -6,7 +6,7 @@ namespace Rythm.Client.ViewModel
 {
     using Prism.Mvvm;
 
-    public class CommunicationParametersViewModel : BindableBase
+    public class DisplayingEventsViewModel : BindableBase
     {
     }
 }

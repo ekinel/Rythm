@@ -70,7 +70,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommunicationParametersViewModel.cs" />
+    <Compile Include="DisplayingEventsViewModel.cs" />
     <Compile Include="ConnectionParametersViewModel.cs" />
     <Compile Include="ErrorsCheckViewModel.cs" />
     <Compile Include="Events\ConnectionIndicatorColorChangedEvent.cs" />
@@ -88,7 +88,7 @@
     <Compile Include="ScrollViewerExtensionsViewModel.cs" />
     <Compile Include="SendMessageViewModel.cs" />
     <Compile Include="UsersListViewModel.cs" />
-    <Compile Include="UserLoginDisplayViewModel.cs" />
+    <Compile Include="ToolPanelViewModel.cs" />
     <Compile Include="UsersLoginsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

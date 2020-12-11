@@ -27,9 +27,9 @@
             containerRegistry.Register<UsersListViewModel>();
 
             containerRegistry.RegisterSingleton<IToolPanelDisplayController, ToolPanelDisplayController>();
-            containerRegistry.Register<UserLoginDisplayViewModel>();
+            containerRegistry.Register<ToolPanelViewModel>();
 
-            containerRegistry.Register<CommunicationParametersViewModel>();
+            containerRegistry.Register<DisplayingEventsViewModel>();
 
         }
 
@@ -41,8 +41,8 @@
             ViewModelLocationProvider.Register(typeof(ChatPanelView).ToString(), () => Container.Resolve<ChatPanelViewModel>());
             ViewModelLocationProvider.Register(typeof(ConnectionParametersView).ToString(), () => Container.Resolve<ConnectionParametersViewModel>());
             ViewModelLocationProvider.Register(typeof(UsersListView).ToString(), () => Container.Resolve<UsersListViewModel>());
-            ViewModelLocationProvider.Register(typeof(ToolPanelView).ToString(), () => Container.Resolve<UserLoginDisplayViewModel>());
-            ViewModelLocationProvider.Register(typeof(CommunicationParametersView).ToString(), () => Container.Resolve<UserLoginDisplayViewModel>());
+            ViewModelLocationProvider.Register(typeof(ToolPanelView).ToString(), () => Container.Resolve<ToolPanelViewModel>());
+            ViewModelLocationProvider.Register(typeof(DisplayingEventsView).ToString(), () => Container.Resolve<DisplayingEventsViewModel>());
         }
 
         protected override Window CreateShell()

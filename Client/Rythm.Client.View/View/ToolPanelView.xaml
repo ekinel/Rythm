@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              xmlns:interactivity="http://prismlibrary.com/"
              interactivity:ViewModelLocator.AutoWireViewModel="True" 
-             d:DataContext="{d:DesignInstance viewModel:UserLoginDisplayViewModel}">
+             d:DataContext="{d:DesignInstance viewModel:ToolPanelViewModel}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
