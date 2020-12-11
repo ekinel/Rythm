@@ -8,11 +8,13 @@ namespace Rythm.Server.WindowsService
     using System.ServiceProcess;
     using System.Threading;
 
+    using Service;
+
     public partial class ServerService : ServiceBase
     {
         #region Fields
 
-        private Server server;
+        public NetworkManager _networkManager;
 
         #endregion
 
@@ -29,16 +31,12 @@ namespace Rythm.Server.WindowsService
 
         protected override void OnStart(string[] args)
         {
-            server = new Server();
-            server.Start();
-            var serverThread = new Thread(server.Start);
-            serverThread.Start();
+	        _networkManager.Start();
         }
 
         protected override void OnStop()
         {
-            server.Stop();
-            Thread.Sleep(1000);
+	        _networkManager.Stop();
         }
 
         #endregion

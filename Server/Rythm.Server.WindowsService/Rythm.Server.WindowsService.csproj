@@ -7,7 +7,7 @@
     <ProjectGuid>{B2925D00-A4ED-481E-898B-56AD64BE9417}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Rythm.Server.WindowsService</RootNamespace>
-    <AssemblyName>Rythm.Server.WindowsService</AssemblyName>
+    <AssemblyName>RythmService</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Server.cs" />
     <Compile Include="ServerService.cs">
       <SubType>Component</SubType>
     </Compile>
