@@ -36,7 +36,7 @@ namespace Rythm.Client.ViewModel
         {
             _eventAggregator = eventAggregator;
             _usersListController = usersListController;
-            _usersListController.UpdatedUsersListEvent += HandleUpdatedUsersesList;
+            _usersListController.UpdatedUsersListEvent += HandleUpdatedUsersList;
 
             UserList = new ObservableCollection<UsersLoginsViewModel>();
         }
@@ -45,7 +45,7 @@ namespace Rythm.Client.ViewModel
 
         #region Methods
 
-        public void HandleUpdatedUsersesList(List<string> updatedUsersList)
+        public void HandleUpdatedUsersList(List<string> updatedUsersList)
         {
             Application.Current.Dispatcher.BeginInvoke(
                 DispatcherPriority.Background,
