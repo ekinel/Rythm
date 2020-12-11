@@ -58,6 +58,11 @@
     <Compile Include="Messages\ServerOkMsgResponse.cs" />
     <Compile Include="Messages\TextMsgRequest.cs" />
     <Compile Include="Messages\UpdatedClientsResponse.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="TransportFactory.cs" />
     <Compile Include="[EventArgs]\ConnectionStateChangedEventArgs.cs" />
     <Compile Include="[EventArgs]\MessageReceivedEventArgs.cs" />
@@ -74,6 +79,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
