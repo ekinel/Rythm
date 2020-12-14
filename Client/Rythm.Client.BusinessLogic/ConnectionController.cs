@@ -4,65 +4,68 @@
 
 namespace Rythm.Client.BusinessLogic
 {
-    using System;
+	using System;
 
-    using Common.Network;
-    using Common.Network.Messages;
+	using Common.Network;
+	using Common.Network.Enums;
+	using Common.Network.Messages;
 
-    public class ConnectionController : IConnectionController
-    {
-        #region Properties
+	using Interfaces;
 
-        public ITransport CurrentTransport { get; }
+	public class ConnectionController : IConnectionController
+	{
+		#region Properties
 
-        public string Login { get; set; }
+		public ITransport CurrentTransport { get; }
 
-        #endregion
+		public string Login { get; set; }
 
-        #region Events
+		#endregion
 
-        public event Action<bool> ConnectionStateChanged;
+		#region Events
 
-        #endregion
+		public event Action<bool> ConnectionStateChanged;
 
-        #region Constructors
+		#endregion
 
-        public ConnectionController()
-        {
-            CurrentTransport = TransportFactory.Create(TransportType.WebSocket);
-            CurrentTransport.ConnectionStateChanged += HandleConnectionStateChanged;
-            CurrentTransport.ConnectionOpened += HandleConnectionOpened;
-        }
+		#region Constructors
 
-        #endregion
+		public ConnectionController()
+		{
+			CurrentTransport = TransportFactory.Create(TransportType.WebSocket);
+			CurrentTransport.ConnectionStateChanged += HandleConnectionStateChanged;
+			CurrentTransport.ConnectionOpened += HandleConnectionOpened;
+		}
 
-        #region Methods
+		#endregion
 
-        public void DoConnect(string address, string port, string login)
-        {
-            CurrentTransport.Connect(address, port);
-            Login = login;
-        }
+		#region Methods
 
-        public void DoDisconnect()
-        {
-            CurrentTransport.Disconnect();
-        }
+		public void DoConnect(string address, string port, string login)
+		{
+			CurrentTransport.Connect(address, port);
+			Login = login;
+		}
 
-        private void HandleConnectionStateChanged(object sender, ConnectionStateChangedEventArgs state)
-        {
-            ConnectionStateChanged?.Invoke(state.Connected);
-        }
+		public void DoDisconnect()
+		{
+			CurrentTransport.Disconnect();
+		}
 
-        private void HandleConnectionOpened(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(Login))
-            {
-                var msgContainer = new ConnectionRequest(Login);
-                CurrentTransport?.Send(msgContainer);
-            }
-        }
+		private void HandleConnectionStateChanged(object sender, ConnectionStateChangedEventArgs state)
+		{
+			ConnectionStateChanged?.Invoke(state.Connected);
+		}
 
-        #endregion
-    }
+		private void HandleConnectionOpened(object sender, EventArgs e)
+		{
+			if (!string.IsNullOrEmpty(Login))
+			{
+				var msgContainer = new ConnectionRequest(Login);
+				CurrentTransport?.Send(msgContainer);
+			}
+		}
+
+		#endregion
+	}
 }

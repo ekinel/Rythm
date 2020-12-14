@@ -2,11 +2,11 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Common.Network
+namespace Rythm.Common.Network.Messages
 {
-    using System;
+	using System;
 
-    public class TextMsgRequest
+	public class TextMsgRequest
     {
         #region Fields
 

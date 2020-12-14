@@ -4,7 +4,9 @@
 
 namespace Rythm.Common.Network
 {
-    public class MessageReceivedEventArgs
+	using Messages;
+
+	public class MessageReceivedEventArgs
     {
         #region Properties
 

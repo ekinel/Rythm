@@ -7,6 +7,8 @@ namespace Rythm.Client.ViewModel
     using System.Windows;
     using System.Windows.Media;
 
+    using Events;
+
     using Prism.Events;
     using Prism.Mvvm;
 

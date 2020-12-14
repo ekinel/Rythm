@@ -2,28 +2,28 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Client.BusinessLogic
+namespace Rythm.Client.BusinessLogic.Interfaces
 {
-    using System;
-    using System.Collections.Generic;
+	using System;
+	using System.Collections.Generic;
 
-    using Common.Network;
-    using Common.Network.Enums;
+	using Common.Network;
+	using Common.Network.Enums;
 
-    public interface IChatPanelController
-    {
-        #region Events
+	public interface IChatPanelController
+	{
+		#region Events
 
-        event Action<MessageReceivedEventArgs> MessageReceivedEvent;
-        event Action<List<string>, List<string>> UpdatedUsersListEvent;
-        event Action<(MsgType, string)> OkReceivedEvent;
+		event Action<MessageReceivedEventArgs> MessageReceivedEvent;
+		event Action<List<string>, List<string>> UpdatedUsersListEvent;
+		event Action<(MsgType, string)> OkReceivedEvent;
 
-        #endregion
+		#endregion
 
-        #region Methods
+		#region Methods
 
-        void MessageSend(string currentMessage, string loginFrom);
+		void MessageSend(string currentMessage, string loginFrom);
 
-        #endregion
-    }
+		#endregion
+	}
 }

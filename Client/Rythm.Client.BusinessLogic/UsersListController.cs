@@ -4,41 +4,42 @@
 
 namespace Rythm.Client.BusinessLogic
 {
-    using System;
-    using System.Collections.Generic;
+	using System;
+	using System.Collections.Generic;
 
-    using Interfaces;
+	using Interfaces;
 
-    public class UsersListController : IUsersListController
-    {
-        #region Fields
+	public class UsersListController : IUsersListController
+	{
+		#region Fields
 
-        private List<string> UpdatedUsersList;
+		private readonly IChatPanelController _chatPanelController;
 
-        private readonly IChatPanelController _chatPanelController;
-        public event Action<List<string>, List<string>> UpdatedUsersListEvent;
+		#endregion
 
+		#region Events
 
-        #endregion
+		public event Action<List<string>, List<string>> UpdatedUsersListEvent;
 
-        #region Constructors
+		#endregion
 
-        public UsersListController(IChatPanelController chatPanelController)
-        {
-            _chatPanelController = chatPanelController;
-            _chatPanelController.UpdatedUsersListEvent += HandleUpdatedUsersList;
-        }
+		#region Constructors
 
-        #endregion
+		public UsersListController(IChatPanelController chatPanelController)
+		{
+			_chatPanelController = chatPanelController;
+			_chatPanelController.UpdatedUsersListEvent += HandleUpdatedUsersList;
+		}
 
-        #region Methods
+		#endregion
 
-        public void HandleUpdatedUsersList(List<string> activeUsersList, List<string> notActiveUsersList)
-        {
-            UpdatedUsersList = new List<string>(activeUsersList);
-            UpdatedUsersListEvent?.Invoke(activeUsersList, notActiveUsersList);
-        }
+		#region Methods
 
-        #endregion
-    }
+		public void HandleUpdatedUsersList(List<string> activeUsersList, List<string> notActiveUsersList)
+		{
+			UpdatedUsersListEvent?.Invoke(activeUsersList, notActiveUsersList);
+		}
+
+		#endregion
+	}
 }

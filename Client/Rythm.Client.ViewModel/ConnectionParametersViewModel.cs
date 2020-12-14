@@ -8,6 +8,7 @@ namespace Rythm.Client.ViewModel
     using System.Text.RegularExpressions;
 
     using BusinessLogic;
+    using BusinessLogic.Interfaces;
 
     using Events;
 
@@ -20,7 +21,7 @@ namespace Rythm.Client.ViewModel
 
         private const string ADDRESS = "127.0.0.1";
         private const string PORT = "65000";
-        private const string ADDRESSPATTERN = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$";
+        private const string ADDRESS_PATTERN = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$";
 
         #endregion
 
@@ -140,7 +141,7 @@ namespace Rythm.Client.ViewModel
         private void CheckAddress()
         {
             _errorsContainer.ClearErrors(() => Address);
-            var regex = new Regex(ADDRESSPATTERN);
+            var regex = new Regex(ADDRESS_PATTERN);
             Match compare = regex.Match(Address);
 
             if (!compare.Success)

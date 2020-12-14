@@ -14,7 +14,7 @@ namespace Rythm.Client.ViewModel
     {
         #region Fields
 
-        protected ErrorsContainer<string> _errorsContainer;
+        protected readonly ErrorsContainer<string> _errorsContainer;
 
         #endregion
 

@@ -2,15 +2,13 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Common.Network
+namespace Rythm.Common.Network.Messages
 {
-    using System;
+	using System;
 
-    using Enums;
+	using Enums;
 
-    using Messages;
-
-    public class ClientOkMsgResponse : BaseContainer
+	public class ClientOkMsgResponse : BaseContainer
     {
         #region Fields
 

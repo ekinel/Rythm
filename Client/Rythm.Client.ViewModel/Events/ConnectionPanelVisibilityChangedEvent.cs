@@ -2,11 +2,11 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Client.ViewModel
+namespace Rythm.Client.ViewModel.Events
 {
-    using Prism.Events;
+	using Prism.Events;
 
-    public class ConnectionPanelVisibilityChangedEvent : PubSubEvent
-    {
-    }
+	public class ConnectionPanelVisibilityChangedEvent : PubSubEvent
+	{
+	}
 }

@@ -4,46 +4,48 @@
 
 namespace Rythm.Client.BusinessLogic
 {
-    using System;
+	using System;
 
-    public class ToolPanelDisplayController : IToolPanelDisplayController
-    {
-        #region Fields
+	using Interfaces;
 
-        private string _login;
-        private bool _connectionParametersViewSettingsVisibility;
+	public class ToolPanelDisplayController : IToolPanelDisplayController
+	{
+		#region Fields
 
-        #endregion
+		private string _login;
+		private bool _connectionParametersViewSettingsVisibility;
 
-        #region Properties
+		#endregion
 
-        public string Login
-        {
-            get => _login;
-            set
-            {
-                _login = value ?? throw new ArgumentNullException(nameof(value));
-                NewUserLoginEvent?.Invoke(_login);
-            }
-        }
+		#region Properties
 
-        public bool ConnectionParametersViewSettingsVisibility
-        {
-            get => _connectionParametersViewSettingsVisibility;
-            set
-            {
-                _connectionParametersViewSettingsVisibility = value;
-                NewParametersViewVisibilityEvent?.Invoke(_connectionParametersViewSettingsVisibility);
-            }
-        }
+		public string Login
+		{
+			get => _login;
+			set
+			{
+				_login = value ?? throw new ArgumentNullException(nameof(value));
+				NewUserLoginEvent?.Invoke(_login);
+			}
+		}
 
-        #endregion
+		public bool ConnectionParametersViewSettingsVisibility
+		{
+			get => _connectionParametersViewSettingsVisibility;
+			set
+			{
+				_connectionParametersViewSettingsVisibility = value;
+				NewParametersViewVisibilityEvent?.Invoke(_connectionParametersViewSettingsVisibility);
+			}
+		}
 
-        #region Events
+		#endregion
 
-        public event Action<string> NewUserLoginEvent;
-        public event Action<bool> NewParametersViewVisibilityEvent;
+		#region Events
 
-        #endregion
-    }
+		public event Action<string> NewUserLoginEvent;
+		public event Action<bool> NewParametersViewVisibilityEvent;
+
+		#endregion
+	}
 }

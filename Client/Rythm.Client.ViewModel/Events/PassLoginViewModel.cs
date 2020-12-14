@@ -4,9 +4,9 @@
 
 namespace Rythm.Client.ViewModel.Events
 {
-    using Prism.Events;
+	using Prism.Events;
 
-    internal class PassLoginViewModel : PubSubEvent<string>
-    {
-    }
+	internal class PassLoginViewModel : PubSubEvent<string>
+	{
+	}
 }

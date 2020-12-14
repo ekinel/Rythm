@@ -2,35 +2,34 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Client.BusinessLogic
+namespace Rythm.Client.BusinessLogic.Interfaces
 {
-    using System;
+	using System;
 
-    using Common.Network;
-    using Common.Network.Messages;
+	using Common.Network;
 
-    public interface IConnectionController
-    {
-        #region Properties
+	public interface IConnectionController
+	{
+		#region Properties
 
-        ITransport CurrentTransport { get; }
+		ITransport CurrentTransport { get; }
 
-        string Login { get; set; }
+		string Login { get; set; }
 
-        #endregion
+		#endregion
 
-        #region Events
+		#region Events
 
-        event Action<bool> ConnectionStateChanged;
+		event Action<bool> ConnectionStateChanged;
 
-        #endregion
+		#endregion
 
-        #region Methods
+		#region Methods
 
-        void DoConnect(string address, string port, string login);
+		void DoConnect(string address, string port, string login);
 
-        void DoDisconnect();
+		void DoDisconnect();
 
-        #endregion
-    }
+		#endregion
+	}
 }

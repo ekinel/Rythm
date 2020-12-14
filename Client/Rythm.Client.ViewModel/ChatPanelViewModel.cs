@@ -10,9 +10,11 @@ namespace Rythm.Client.ViewModel
     using System.Windows.Threading;
 
     using BusinessLogic;
+    using BusinessLogic.Interfaces;
 
     using Common.Network;
     using Common.Network.Enums;
+    using Common.Network.Messages;
 
     using Events;
 

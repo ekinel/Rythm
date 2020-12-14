@@ -4,11 +4,15 @@
 
 namespace Rythm.Client.BusinessLogic.Interfaces
 {
-    using System;
-    using System.Collections.Generic;
+	using System;
+	using System.Collections.Generic;
 
-    public interface IUsersListController
-    {
-	    event Action<List<string>, List<string>> UpdatedUsersListEvent;
-    }
+	public interface IUsersListController
+	{
+		#region Events
+
+		event Action<List<string>, List<string>> UpdatedUsersListEvent;
+
+		#endregion
+	}
 }
