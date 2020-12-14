@@ -10,10 +10,9 @@ namespace Rythm.Common.Network.DataBase
 	interface IRepository<T>
 	{
 		IEnumerable<T> GetList();
-		T GetElement(int id);
+		T GetElement(string id);
 		void Create(T item);
 		void Update(T item);
-		void Delete(int id);
 		void Save();
 	}
 }

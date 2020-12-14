@@ -1,39 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// ---------------------------------------------------------------------------------------------------------------------------------------------------
+// Copyright ElcomPlus LLC. All rights reserved.
+// ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace Rythm.Common.Network.DataBase
 {
-	class ClientRepository : IRepository<NewClientDataBase>
+	using System.Collections.Generic;
+	using System.Linq;
+
+	public class ClientRepository : IRepository<NewClientDataBase>
 	{
-		public List<NewClientDataBase> ClientsList = new List<NewClientDataBase>();
+		#region Methods
 
 		public IEnumerable<NewClientDataBase> GetList()
 		{
-			return ClientsList;
+			List<NewClientDataBase> clientsList;
+			using (var context = new DataBaseContext())
+			{
+				clientsList = context.Client.ToList();
+			}
+
+			return clientsList;
 		}
 
-		public NewClientDataBase GetElement(int id)
+		public NewClientDataBase GetElement(string id)
 		{
-			return ClientsList[id];
+			using (var context = new DataBaseContext())
+			{
+				return context.Client.Find(id);
+			}
 		}
 
 		public void Create(NewClientDataBase item)
 		{
+			using (var context = new DataBaseContext())
+			{
+				context.Client.Add(item);
+				context.SaveChanges();
+			}
 		}
 
 		public void Update(NewClientDataBase item)
 		{
 		}
 
-		public void Delete(int id)
-		{
-		}
-
 		public void Save()
 		{
+			using (var context = new DataBaseContext())
+			{
+				context.SaveChanges();
+			}
 		}
+
+		#endregion
 	}
 }

@@ -4,18 +4,22 @@
 
 namespace Rythm.Common.Network.DataBase
 {
-	using System.ComponentModel.DataAnnotations;
+	using System.Data.Entity;
 
-	public class NewClientDataBase
+	public class DataBaseContext : DbContext
 	{
 		#region Properties
 
-		[Key]
-		public string Login { get; set; }
+		public DbSet<NewClientDataBase> Client { get; set; }
 
 		#endregion
 
 		#region Constructors
+
+		public DataBaseContext()
+			: base("DBConnection")
+		{
+		}
 
 		#endregion
 	}
