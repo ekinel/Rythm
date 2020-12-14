@@ -75,6 +75,7 @@
     <Compile Include="ErrorsCheckViewModel.cs" />
     <Compile Include="Events\ConnectionIndicatorColorChangedEvent.cs" />
     <Compile Include="Events\ConnectionPanelVisibilityChangedEvent.cs" />
+    <Compile Include="Events\DisplayingEventsVisibility.cs" />
     <Compile Include="Events\NewClientChosenViewModel.cs" />
     <Compile Include="Events\PassLoginViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />

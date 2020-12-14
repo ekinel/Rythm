@@ -4,59 +4,81 @@
 
 namespace Rythm.Client.ViewModel
 {
-    using System;
-    using System.Windows.Input;
+	using System;
+	using System.Windows;
+	using System.Windows.Input;
 
-    using Events;
+	using Events;
 
-    using Prism.Commands;
-    using Prism.Events;
-    using Prism.Mvvm;
+	using Prism.Commands;
+	using Prism.Events;
+	using Prism.Mvvm;
 
-    public class ToolPanelViewModel : BindableBase
-    {
-        #region Fields
+	public class ToolPanelViewModel : BindableBase
+	{
+		#region Fields
 
-        private string _login;
-        private readonly IEventAggregator _eventAggregator;
+		private string _login;
+		private readonly IEventAggregator _eventAggregator;
 
-        #endregion
+		private bool _buttonsStackPanelVisibility;
+		private Visibility _stackPanelVisibility;
 
-        #region Properties
+		#endregion
 
-        public ICommand ChangeSettingsVisibilityCommand { get; }
+		#region Properties
 
-        public string Login
-        {
-            get => _login;
-            set => SetProperty(ref _login, value);
-        }
+		public ICommand ChangeSettingsVisibilityCommand { get; }
+		public ICommand DisplayingEventsVisibilityCommand { get; }
 
-        #endregion
+		public string Login
+		{
+			get => _login;
+			set => SetProperty(ref _login, value);
+		}
 
-        #region Constructors
+		public Visibility SplitterVisibility
+		{
+			get => _stackPanelVisibility;
+			set => SetProperty(ref _stackPanelVisibility, value);
+		}
 
-        public ToolPanelViewModel(IEventAggregator eventAggregator)
-        {
-            _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
-            _eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleNewLoginSelected);
-            ChangeSettingsVisibilityCommand = new DelegateCommand(ExecuteChangeSettingsVisibilityCommand);
-        }
+		#endregion
 
-        #endregion
+		#region Constructors
 
-        #region Methods
+		public ToolPanelViewModel(IEventAggregator eventAggregator)
+		{
+			_eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+			_eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleNewLoginSelected);
+			ChangeSettingsVisibilityCommand = new DelegateCommand(ExecuteChangeSettingsVisibilityCommand);
+			DisplayingEventsVisibilityCommand = new DelegateCommand(ExecuteDisplayingEventsVisibilityCommand);
 
-        public void HandleNewLoginSelected(string login)
-        {
-            Login = login;
-        }
+			SplitterVisibility = Visibility.Collapsed;
+		}
 
-        private void ExecuteChangeSettingsVisibilityCommand()
-        {
-            _eventAggregator.GetEvent<ConnectionPanelVisibilityChangedEvent>().Publish();
-        }
+		#endregion
 
-        #endregion
-    }
+		#region Methods
+
+		public void HandleNewLoginSelected(string login)
+		{
+			Login = login;
+		}
+
+		private void ExecuteChangeSettingsVisibilityCommand()
+		{
+			_eventAggregator.GetEvent<ConnectionPanelVisibilityChangedEvent>().Publish();
+		}
+
+		private void ExecuteDisplayingEventsVisibilityCommand()
+		{
+			_eventAggregator.GetEvent<DisplayingEventsVisibility>().Publish();
+
+			_buttonsStackPanelVisibility = !_buttonsStackPanelVisibility;
+			SplitterVisibility = _buttonsStackPanelVisibility ? Visibility.Visible : Visibility.Collapsed;
+		}
+
+		#endregion
+	}
 }

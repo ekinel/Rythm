@@ -8,6 +8,6 @@
              xmlns:interactivity="http://prismlibrary.com/"
              interactivity:ViewModelLocator.AutoWireViewModel="True" 
              d:DataContext="{d:DesignInstance viewModel:DisplayingEventsViewModel}">
-    <Grid Background="LightPink">
+    <Grid Background="AliceBlue">
     </Grid>
 </UserControl>

@@ -8,7 +8,7 @@
              xmlns:interactivity="http://prismlibrary.com/"
              interactivity:ViewModelLocator.AutoWireViewModel="True" 
              d:DataContext="{d:DesignInstance viewModel:ToolPanelViewModel}">
-    <Grid>
+    <Grid MinWidth="300">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
@@ -41,10 +41,51 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
+	        <Button  Width="32"  Height="30" Margin="0,5,5,5" Command="{Binding DisplayingEventsVisibilityCommand}">
+		        <Button.Template>
+			        <ControlTemplate>
+				        <Grid >
+					        <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
+						        <Label VerticalAlignment="Center"
+						               HorizontalAlignment="Center"
+						               Content="События" Foreground="DimGray"/>
+					        </Border>
+				        </Grid>
+			        </ControlTemplate>
+		        </Button.Template>
+	        </Button>
 
-        </StackPanel>
-        <TextBlock Grid.Column="0" Text="{Binding Login}" Foreground="DimGray" Width="Auto" FontSize="18" Margin="30,0,0,0"  VerticalAlignment="Center" ></TextBlock>
+		</StackPanel>
 
+		<StackPanel Grid.Column="0" HorizontalAlignment="Left" Margin="5 0" Orientation="Horizontal" Visibility="{Binding SplitterVisibility}">
+		    <Button  Width="32"  Height="30" Margin="5,5,5,5">
+			    <Button.Template>
+				    <ControlTemplate>
+					    <Grid >
+						    <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
+							    <Label VerticalAlignment="Center"
+							           HorizontalAlignment="Center"
+							           Content="События" Foreground="DimGray"/>
+						    </Border>
+					    </Grid>
+				    </ControlTemplate>
+			    </Button.Template>
+		    </Button>
+		    <Button  Width="32"  Height="30" Margin="0,5,5,5">
+			    <Button.Template>
+				    <ControlTemplate>
+					    <Grid >
+						    <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
+							    <Label VerticalAlignment="Center"
+							           HorizontalAlignment="Center"
+							           Content="События" Foreground="DimGray"/>
+						    </Border>
+					    </Grid>
+				    </ControlTemplate>
+			    </Button.Template>
+		    </Button>
+		</StackPanel>
+	    <TextBlock Grid.Column="0" VerticalAlignment="Center"  Text="{Binding Login}" Foreground="DimGray" Width="Auto" FontSize="18" Margin="80,0,0,0" ></TextBlock>
     </Grid>
 
 </UserControl>
