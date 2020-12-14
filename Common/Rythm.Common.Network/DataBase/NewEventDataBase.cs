@@ -4,15 +4,18 @@
 
 namespace Rythm.Common.Network.DataBase
 {
-	using System;
-	using System.Collections.Generic;
+	using System.ComponentModel.DataAnnotations;
 
-	internal interface IRepository<T>
+	public class NewEventDataBase
 	{
-		IEnumerable<T> GetList();
-		T GetElement(string id);
-		void Create(T item);
-		void Update(T item);
-		void Save();
+		#region Properties
+
+		[Key]
+		public string Date { get; set; }
+
+		public string EventType { get; set; }
+		public string Message { get; set; }
+
+		#endregion
 	}
 }

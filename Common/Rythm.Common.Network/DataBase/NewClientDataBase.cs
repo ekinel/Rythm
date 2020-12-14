@@ -14,9 +14,5 @@ namespace Rythm.Common.Network.DataBase
 		public string Login { get; set; }
 
 		#endregion
-
-		#region Constructors
-
-		#endregion
 	}
 }

@@ -4,42 +4,43 @@
 
 namespace Rythm.Common.Network.DataBase
 {
+	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 
-	public class ClientRepository : IRepository<NewClientDataBase>
+	public class EventRepository : IRepository<NewEventDataBase>
 	{
 		#region Methods
 
-		public IEnumerable<NewClientDataBase> GetList()
+		public IEnumerable<NewEventDataBase> GetList()
 		{
-			List<NewClientDataBase> clientsList;
+			List<NewEventDataBase> eventList;
 			using (var context = new DataBaseContext())
 			{
-				clientsList = context.ClientList.ToList();
+				eventList = context.EventList.ToList();
 			}
 
-			return clientsList;
+			return eventList;
 		}
 
-		public NewClientDataBase GetElement(string id)
+		public NewEventDataBase GetElement(string id)
 		{
 			using (var context = new DataBaseContext())
 			{
-				return context.ClientList.Find(id);
+				return context.EventList.Find(id);
 			}
 		}
 
-		public void Create(NewClientDataBase item)
+		public void Create(NewEventDataBase item)
 		{
 			using (var context = new DataBaseContext())
 			{
-				context.ClientList.Add(item);
+				context.EventList.Add(item);
 				context.SaveChanges();
 			}
 		}
 
-		public void Update(NewClientDataBase item)
+		public void Update(NewEventDataBase item)
 		{
 		}
 

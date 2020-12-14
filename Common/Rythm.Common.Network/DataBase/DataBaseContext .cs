@@ -5,12 +5,16 @@
 namespace Rythm.Common.Network.DataBase
 {
 	using System.Data.Entity;
+	using System.Data.Entity.ModelConfiguration.Conventions;
 
 	public class DataBaseContext : DbContext
 	{
 		#region Properties
 
-		public DbSet<NewClientDataBase> Client { get; set; }
+		public DbSet<NewClientDataBase> ClientList { get; set; }
+		public DbSet<NewMessageDataBase> MsgList { get; set; }
+		public DbSet<NewEventDataBase> EventList { get; set; }
+
 
 		#endregion
 
@@ -19,6 +23,17 @@ namespace Rythm.Common.Network.DataBase
 		public DataBaseContext()
 			: base("DBConnection")
 		{
+			//Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataBaseContext, Migrations.Configuration>());
+		}
+
+		//protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		//{
+		//	base.OnModelCreating(modelBuilder);
+		//}
+		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		{
+			//base.OnModelCreating(modelBuilder);
+			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 		}
 
 		#endregion
