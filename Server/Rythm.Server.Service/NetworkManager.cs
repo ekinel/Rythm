@@ -33,7 +33,13 @@ namespace Rythm.Server.Service
 			_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT), TIME_OUT);
 		}
 
-		public NetworkManager(string address, int port, int timeOut, ClientRepository clientRepository, MessageRepository messageRepository, EventRepository eventRepository)
+		public NetworkManager(
+			string address,
+			int port,
+			int timeOut,
+			ClientRepository clientRepository,
+			MessageRepository messageRepository,
+			EventRepository eventRepository)
 		{
 			if (string.IsNullOrEmpty(address))
 			{

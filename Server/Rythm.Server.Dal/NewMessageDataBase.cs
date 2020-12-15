@@ -4,8 +4,6 @@
 
 namespace Rythm.Server.Dal
 {
-	using System.ComponentModel.DataAnnotations;
-
 	using Common.Network.Enums;
 
 	public class NewMessageDataBase

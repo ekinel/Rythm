@@ -4,45 +4,40 @@
 
 namespace Rythm.Server.Service
 {
-    using System;
+	using System;
 
-    using Common.Network.Enums;
+	internal class Server
+	{
+		#region Methods
 
-    using Dal;
+		private static void Main(string[] args)
+		{
+			try
+			{
+				var networkWrapper = new NetworkWrapper();
+				networkWrapper.Start();
 
-    internal class Server
-    {
-        #region Methods
+				//ClientRepository clrep = new ClientRepository();
+				//clrep.Create(new NewClientDataBase() { Login = "d458" });
+				////NewClientDataBase e = clrep.GetElement("login");
 
-        private static void Main(string[] args)
-        {
-            try
-            {
-                var networkWrapper = new NetworkWrapper();
-                networkWrapper.Start();
+				//MessageRepository msgRepository = new MessageRepository();
+				//msgRepository.Create(new NewMessageDataBase() { ClientFrom = "12", ClientTo = "22", MessageType = MsgType.PersonalMessage, Message = "oo2o", Date = "3425678" });
 
+				//EventRepository eventsRepository = new EventRepository();
+				//eventsRepository.Create(new NewEventDataBase() { Date = "1232", EventType = "121", Message = "T2ext" });
 
-                //ClientRepository clrep = new ClientRepository();
-                //clrep.Create(new NewClientDataBase() { Login = "d458" });
-                ////NewClientDataBase e = clrep.GetElement("login");
+				Console.ReadLine();
 
-                //MessageRepository msgRepository = new MessageRepository();
-                //msgRepository.Create(new NewMessageDataBase() { ClientFrom = "12", ClientTo = "22", MessageType = MsgType.PersonalMessage, Message = "oo2o", Date = "3425678" });
+				networkWrapper.Stop();
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+				Console.ReadLine();
+			}
+		}
 
-                //EventRepository eventsRepository = new EventRepository();
-                //eventsRepository.Create(new NewEventDataBase() { Date = "1232", EventType = "121", Message = "T2ext" });
-
-                Console.ReadLine();
-
-                networkWrapper.Stop();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                Console.ReadLine();
-            }
-        }
-
-        #endregion
-    }
+		#endregion
+	}
 }
