@@ -5,19 +5,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FFDD9219-D462-469A-8D45-27209CBB603B}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Rythm.Server.Service</RootNamespace>
-    <AssemblyName>Rythm.Server.Service</AssemblyName>
+    <ProjectGuid>{03D3133D-55A7-4CC8-B02C-48900EDE70A0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Rythm.Server.Dal</RootNamespace>
+    <AssemblyName>Rythm.Server.Dal</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -27,7 +26,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -42,9 +40,6 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -56,8 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NetworkManager.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="ClientRepository.cs" />
+    <Compile Include="DataBaseContext.cs" />
+    <Compile Include="EventRepository.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="MessageRepository.cs" />
+    <Compile Include="NewClientDataBase.cs" />
+    <Compile Include="NewEventDataBase.cs" />
+    <Compile Include="NewMessageDataBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -66,12 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Rythm.Common.Network\Rythm.Common.Network.csproj">
-      <Project>{8ffbba56-13db-45e2-9d4d-8a6189294b5c}</Project>
+      <Project>{8FFBBA56-13DB-45E2-9D4D-8A6189294B5C}</Project>
       <Name>Rythm.Common.Network</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rythm.Server.Dal\Rythm.Server.Dal.csproj">
-      <Project>{03D3133D-55A7-4CC8-B02C-48900EDE70A0}</Project>
-      <Name>Rythm.Server.Dal</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
