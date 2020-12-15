@@ -17,6 +17,8 @@ namespace Rythm.Common.Network
 
 	using Newtonsoft.Json.Linq;
 
+	using Server.Dal;
+
 	using WebSocketSharp.Server;
 
 	public class WsServer
@@ -34,31 +36,32 @@ namespace Rythm.Common.Network
 		private readonly int _timeOut;
 
 		private List<string> _clientsNotActiveList;
-		private Timer serverTimer;
+		private readonly Timer _serverTimer;
+
+		private readonly ClientRepository _clientRepository;
+		private readonly MessageRepository _messageRepository;
+		private readonly EventRepository _eventRepository;
 
 		#endregion
 
 		#region Constructors
 
-		public WsServer(IPEndPoint listenAddress, int timeOut)
+		public WsServer(IPEndPoint listenAddress, int timeOut, ClientRepository clientRepository, MessageRepository messageRepository, EventRepository eventRepository)
 		{
 			_listenAddress = listenAddress;
 			_timeOut = timeOut;
 			_connections = new ConcurrentDictionary<string, WsConnection>();
 			_clientsActivity = new ConcurrentDictionary<string, ClientActivity>();
 
-			_clientsNotActiveList = new List<string>
-			{
-				"11",
-				"22",
-				"33",
-				"44",
-				"55"
-			};
+			_clientRepository = clientRepository;
+			_messageRepository = messageRepository;
+			_eventRepository = eventRepository;
 
-			serverTimer = new Timer(TIMER_TIME_SECOND);
-			serverTimer.Elapsed += HandleOnTimedEvent;
-			serverTimer.Enabled = true;
+			_clientsNotActiveList = new List<string>(GetDataBaseListToString());
+
+			_serverTimer = new Timer(TIMER_TIME_SECOND);
+			_serverTimer.Elapsed += HandleOnTimedEvent;
+			_serverTimer.Enabled = true;
 		}
 
 		#endregion
@@ -91,14 +94,7 @@ namespace Rythm.Common.Network
 
 			_connections.Clear();
 
-			_clientsNotActiveList = new List<string>
-			{
-				"11",
-				"22",
-				"33",
-				"44",
-				"55"
-			};
+			_clientsNotActiveList = new List<string>(GetDataBaseListToString());
 		}
 
 		internal void HandleMessage(WsConnection connection, MessageContainer container)
@@ -137,6 +133,14 @@ namespace Rythm.Common.Network
 								_isCommonChatCreated = !_isCommonChatCreated;
 
 								SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
+							}
+
+
+							var dataBaseListLoginsString = GetDataBaseListToString();
+
+							if (!dataBaseListLoginsString.Contains(connection.Login))
+							{
+								_clientRepository.Create(new NewClientDataBase() { Login = connection.Login });
 							}
 						}
 					}
@@ -269,6 +273,19 @@ namespace Rythm.Common.Network
 					connection.Value.Send(newUpdatedClientsResponse.GetContainer());
 				}
 			}
+		}
+
+		private List<string> GetDataBaseListToString()
+		{
+			var DataBaseClientsList = _clientRepository.GetList();
+			var ClientsList = new List<string>();
+
+			foreach (var element in DataBaseClientsList)
+			{
+				ClientsList.Add(element.Login);
+			}
+
+			return ClientsList;
 		}
 
 		#endregion

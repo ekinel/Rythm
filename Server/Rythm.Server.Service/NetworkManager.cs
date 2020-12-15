@@ -30,7 +30,7 @@ namespace Rythm.Server.Service
 
 		public NetworkManager(ClientRepository clientRepository, MessageRepository messageRepository, EventRepository eventRepository)
 		{
-			_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT), TIME_OUT);
+			_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT), TIME_OUT, clientRepository, messageRepository, eventRepository);
 		}
 
 		public NetworkManager(
@@ -43,7 +43,7 @@ namespace Rythm.Server.Service
 		{
 			if (string.IsNullOrEmpty(address))
 			{
-				_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, port), timeOut);
+				_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, port), timeOut, clientRepository, messageRepository, eventRepository);
 			}
 			else
 			{
@@ -52,7 +52,12 @@ namespace Rythm.Server.Service
 				byte[] bytes = ipAddress.GetAddressBytes();
 				uint wsAddress = BitConverter.ToUInt32(bytes, 0);
 
-				_wsServer = new WsServer(new IPEndPoint(wsAddress, wsPort), Convert.ToInt32(timeOut));
+				_wsServer = new WsServer(
+					new IPEndPoint(wsAddress, wsPort),
+					Convert.ToInt32(timeOut),
+					clientRepository,
+					messageRepository,
+					eventRepository);
 			}
 		}
 

@@ -15,6 +15,7 @@ namespace Rythm.Server.Service
 		private readonly MessageRepository _messageRepository = new MessageRepository();
 		private readonly EventRepository _eventRepository = new EventRepository();
 
+
 		#endregion
 
 		#region Constructors
