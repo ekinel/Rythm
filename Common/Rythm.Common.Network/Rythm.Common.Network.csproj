@@ -59,14 +59,6 @@
   <ItemGroup>
     <Compile Include="ApplicationDispatcherHelper.cs" />
     <Compile Include="ClientActivity.cs" />
-    <Compile Include="DataBase\DataBaseContext .cs" />
-    <Compile Include="DataBase\ClientRepository.cs" />
-    <Compile Include="DataBase\EventRepository.cs" />
-    <Compile Include="DataBase\IRepository.cs" />
-    <Compile Include="DataBase\MessageRepository.cs" />
-    <Compile Include="DataBase\NewClientDataBase.cs" />
-    <Compile Include="DataBase\NewEventDataBase.cs" />
-    <Compile Include="DataBase\NewMessageDataBase.cs" />
     <Compile Include="Messages\ClientOkMsgResponse.cs" />
     <Compile Include="Enums\MsgType.cs" />
     <Compile Include="Enums\ResultCodes.cs" />
@@ -76,7 +68,6 @@
     <Compile Include="Messages\ServerOkMsgResponse.cs" />
     <Compile Include="Messages\TextMsgRequest.cs" />
     <Compile Include="Messages\UpdatedClientsResponse.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
