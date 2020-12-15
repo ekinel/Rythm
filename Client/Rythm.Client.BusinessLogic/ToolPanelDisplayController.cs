@@ -13,7 +13,6 @@ namespace Rythm.Client.BusinessLogic
 		#region Fields
 
 		private string _login;
-		private bool _connectionParametersViewSettingsVisibility;
 
 		#endregion
 
@@ -29,22 +28,11 @@ namespace Rythm.Client.BusinessLogic
 			}
 		}
 
-		public bool ConnectionParametersViewSettingsVisibility
-		{
-			get => _connectionParametersViewSettingsVisibility;
-			set
-			{
-				_connectionParametersViewSettingsVisibility = value;
-				NewParametersViewVisibilityEvent?.Invoke(_connectionParametersViewSettingsVisibility);
-			}
-		}
-
 		#endregion
 
 		#region Events
 
 		public event Action<string> NewUserLoginEvent;
-		public event Action<bool> NewParametersViewVisibilityEvent;
 
 		#endregion
 	}

@@ -30,7 +30,7 @@ namespace Rythm.Common.Network
 
         public string Login { get; set; } = "";
 
-        public bool IsConnected => Context.WebSocket?.ReadyState == WebSocketState.Open;
+        private bool IsConnected => Context.WebSocket?.ReadyState == WebSocketState.Open;
 
         #endregion
 

@@ -6,7 +6,6 @@ namespace Rythm.Common.Network.Enums
 {
     public enum TransportType
     {
-        WebSocket,
-        Tcp,
+        WebSocket
     }
 }

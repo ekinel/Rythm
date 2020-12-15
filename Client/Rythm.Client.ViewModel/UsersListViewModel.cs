@@ -12,6 +12,8 @@ namespace Rythm.Client.ViewModel
 
     using BusinessLogic.Interfaces;
 
+    using Common.Network;
+
     using Prism.Events;
     using Prism.Mvvm;
 
@@ -47,34 +49,25 @@ namespace Rythm.Client.ViewModel
 
         public void HandleUpdatedUsersList(List<string> activeUsersList, List<string> notActiveUsersList)
         {
-            Application.Current.Dispatcher.BeginInvoke(
-                DispatcherPriority.Background,
-                new Action(
-                    () =>
-                    {
-                        UserList.Clear();
-                    }));
+	        ApplicationDispatcherHelper.BeginInvoke(() =>
+            {
+	            UserList.Clear();
+            });
 
             foreach (string user in activeUsersList)
             {
-                Application.Current.Dispatcher.BeginInvoke(
-                    DispatcherPriority.Background,
-                    new Action(
-                        () =>
-                        {
-                            UserList.Add(new UsersLoginsViewModel(_eventAggregator, user, true));
-                        }));
+	            ApplicationDispatcherHelper.BeginInvoke(() =>
+                {
+	                UserList.Add(new UsersLoginsViewModel(_eventAggregator, user, true));
+                });
             }
 
             foreach (string user in notActiveUsersList)
             {
-	            Application.Current.Dispatcher.BeginInvoke(
-		            DispatcherPriority.Background,
-		            new Action(
-			            () =>
-			            {
-				            UserList.Add(new UsersLoginsViewModel(_eventAggregator, user, false));
-			            }));
+	            ApplicationDispatcherHelper.BeginInvoke(() =>
+	            {
+		            UserList.Add(new UsersLoginsViewModel(_eventAggregator, user, false));
+	            });
             }
         }
 

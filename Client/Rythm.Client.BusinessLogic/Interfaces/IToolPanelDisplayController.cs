@@ -9,7 +9,6 @@ namespace Rythm.Client.BusinessLogic.Interfaces
 		#region Properties
 
 		string Login { get; set; }
-		bool ConnectionParametersViewSettingsVisibility { get; set; }
 
 		#endregion
 	}

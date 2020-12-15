@@ -134,20 +134,20 @@ namespace Rythm.Common.Network
             _socket.SendAsync(serializedMessages, SendCompleted);
         }
 
-        private void OnMessage(object sender, MessageEventArgs e)
+        private void OnMessage(object sender, MessageEventArgs message)
         {
-            if (!e.IsText)
+            if (!message.IsText)
             {
                 return;
             }
 
-            var container = JsonConvert.DeserializeObject<MessageContainer>(e.Data);
+            var container = JsonConvert.DeserializeObject<MessageContainer>(message.Data);
 
             switch (container.Identifier)
             {
                 case MsgType.ClientRegistration:
                     var connectionResponse = ((JObject)container.Payload).ToObject(typeof(ConnectionResponse)) as ConnectionResponse;
-                    if (connectionResponse.Result == ResultCodes.Failure)
+                    if (connectionResponse != null && connectionResponse.Result == ResultCodes.Failure)
                     {
                         return;
                     }
@@ -159,19 +159,28 @@ namespace Rythm.Common.Network
                 case MsgType.PersonalMessage:
 
                     var messageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
-                    var textMsgRequest = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
+                    if (messageRequest != null)
+                    {
+	                    var textMsgRequest = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
 
-                    MessageReceived?.Invoke(this, new MessageReceivedEventArgs(textMsgRequest));
-                    var msgContainer = new ClientOkMsgResponse(textMsgRequest.From, textMsgRequest.To, textMsgRequest.Date);
-                    Send(msgContainer);
+	                    MessageReceived?.Invoke(this, new MessageReceivedEventArgs(textMsgRequest));
+	                    if (textMsgRequest != null)
+	                    {
+		                    var msgContainer = new ClientOkMsgResponse(textMsgRequest.From, textMsgRequest.To, textMsgRequest.Date);
+		                    Send(msgContainer);
+	                    }
+                    }
 
                     break;
 
                 case MsgType.CommonMessage:
 
                     var msgRequest = ((JObject)container.Payload).ToObject(typeof(CommonChatMsgResponse)) as CommonChatMsgResponse;
-                    var mess = new MessageReceivedEventArgs(new TextMsgRequest(msgRequest.From, "CommonChat", msgRequest.Message));
-                    MessageReceived?.Invoke(this, mess);
+                    if (msgRequest != null)
+                    {
+	                    var mess = new MessageReceivedEventArgs(new TextMsgRequest(msgRequest.From, "CommonChat", msgRequest.Message));
+	                    MessageReceived?.Invoke(this, mess);
+                    }
 
                     var mgContainer = new ClientOkMsgResponse(msgRequest.From, "CommonChat", msgRequest.Date);
                     Send(mgContainer);
@@ -183,18 +192,26 @@ namespace Rythm.Common.Network
 
                     MsgType type = container.Identifier;
                     MsgType status;
-                    string date;
+                    string date = String.Empty;
 
                     if (type == MsgType.ServerOk)
                     {
                         var messageResponse = ((JObject)container.Payload).ToObject(typeof(ServerOkMsgResponse)) as ServerOkMsgResponse;
-                        date = messageResponse.Date;
+                        if (messageResponse != null)
+                        {
+	                        date = messageResponse.Date;
+                        }
+
                         status = MsgType.ServerOk;
                     }
                     else
                     {
                         var messageResponse = ((JObject)container.Payload).ToObject(typeof(ClientOkMsgResponse)) as ClientOkMsgResponse;
-                        date = messageResponse.Date;
+                        if (messageResponse != null)
+                        {
+	                        date = messageResponse.Date;
+                        }
+
                         status = MsgType.ClientOk;
                     }
 

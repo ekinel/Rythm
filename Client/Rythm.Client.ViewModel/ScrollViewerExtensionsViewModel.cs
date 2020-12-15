@@ -28,7 +28,7 @@ namespace Rythm.Client.ViewModel
         {
             if (scroll == null)
             {
-                throw new ArgumentNullException("scroll");
+                throw new ArgumentNullException("ScrollViewer is not exist");
             }
 
             return (bool)scroll.GetValue(AlwaysScrollToEndProperty);
@@ -38,7 +38,7 @@ namespace Rythm.Client.ViewModel
         {
             if (scroll == null)
             {
-                throw new ArgumentNullException("scroll");
+                throw new ArgumentNullException("ScrollViewer is not exist");
             }
 
             scroll.SetValue(AlwaysScrollToEndProperty, alwaysScrollToEnd);
@@ -46,8 +46,7 @@ namespace Rythm.Client.ViewModel
 
         private static void AlwaysScrollToEndChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var scroll = sender as ScrollViewer;
-            if (scroll != null)
+	        if (sender is ScrollViewer scroll)
             {
                 bool alwaysScrollToEnd = e.NewValue != null && (bool)e.NewValue;
                 if (alwaysScrollToEnd)
@@ -68,8 +67,7 @@ namespace Rythm.Client.ViewModel
 
         private static void ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            var scroll = sender as ScrollViewer;
-            if (scroll == null)
+	        if (!(sender is ScrollViewer scroll))
             {
                 throw new InvalidOperationException("The attached AlwaysScrollToEnd property can only be applied to ScrollViewer instances.");
             }

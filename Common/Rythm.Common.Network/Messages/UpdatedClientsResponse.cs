@@ -12,8 +12,8 @@ namespace Rythm.Common.Network.Messages
     {
         #region Fields
 
-        public List<string> ActiveUsersList = new List<string>();
-        public List<string> NotActiveUsersList = new List<string>();
+        public readonly List<string> ActiveUsersList = new List<string>();
+        public readonly List<string> NotActiveUsersList = new List<string>();
 
         #endregion
 

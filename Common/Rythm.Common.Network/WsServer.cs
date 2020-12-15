@@ -21,6 +21,7 @@ namespace Rythm.Common.Network
 
 	public class WsServer
 	{
+		private const int TIMER_TIME_SECOND = 10000;
 		#region Fields
 
 		private readonly IPEndPoint _listenAddress;
@@ -33,6 +34,7 @@ namespace Rythm.Common.Network
 		private readonly int _timeOut;
 
 		private List<string> _clientsNotActiveList;
+		private Timer serverTimer;
 
 		#endregion
 
@@ -53,6 +55,10 @@ namespace Rythm.Common.Network
 				"44",
 				"55"
 			};
+
+			serverTimer = new Timer(TIMER_TIME_SECOND);
+			serverTimer.Elapsed += HandleOnTimedEvent;
+			serverTimer.Enabled = true;
 		}
 
 		#endregion
@@ -70,10 +76,6 @@ namespace Rythm.Common.Network
 				});
 
 			_server.Start();
-
-			var sTimer = new Timer(10000);
-			sTimer.Elapsed += OnTimedEvent;
-			sTimer.Enabled = true;
 		}
 
 		public void Stop()
@@ -126,7 +128,7 @@ namespace Rythm.Common.Network
 							connection.Send(connectionResponse.GetContainer());
 							_clientsNotActiveList.Remove(connection.Login);
 
-							Send(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
+							SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
 							_clientsActivity.TryAdd(connection.Login, new ClientActivity(connection.Login));
 
 							if (_isCommonChatCreated)
@@ -134,7 +136,7 @@ namespace Rythm.Common.Network
 								_connections.TryAdd(Properties.Resources.CommonChat, connection);
 								_isCommonChatCreated = !_isCommonChatCreated;
 
-								Send(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
+								SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
 							}
 						}
 					}
@@ -155,8 +157,8 @@ namespace Rythm.Common.Network
 						}
 						else
 						{
-							Send(container, textMsgContainer.To);
-							Send(serverOkContainer, textMsgContainer.From);
+							SendMessage(container, textMsgContainer.To);
+							SendMessage(serverOkContainer, textMsgContainer.From);
 						}
 
 						UpdateLastClientActivity(textMsgContainer.From);
@@ -170,7 +172,7 @@ namespace Rythm.Common.Network
 					{
 						MessageContainer clientOkContainer = clientOkMsgContainer.GetContainer();
 
-						Send(clientOkContainer, clientOkMsgContainer.From);
+						SendMessage(clientOkContainer, clientOkMsgContainer.From);
 						UpdateLastClientActivity(clientOkMsgContainer.From);
 					}
 
@@ -186,11 +188,11 @@ namespace Rythm.Common.Network
 				_connections.TryRemove(login, out WsConnection connection);
 				_clientsNotActiveList.Add(login);
 
-				Send(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
+				SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
 			}
 		}
 
-		private void OnTimedEvent(object source, ElapsedEventArgs e)
+		private void HandleOnTimedEvent(object source, ElapsedEventArgs e)
 		{
 			int serverTimeSeconds = DateTime.Now.Second;
 			int serverTimeMinute = DateTime.Now.Minute;
@@ -244,7 +246,7 @@ namespace Rythm.Common.Network
 			}
 		}
 
-		private void Send(MessageContainer msgContainer, string targetId)
+		private void SendMessage(MessageContainer msgContainer, string targetId)
 		{
 			foreach (KeyValuePair<string, WsConnection> connection in _connections)
 			{
@@ -255,7 +257,7 @@ namespace Rythm.Common.Network
 			}
 		}
 
-		private void Send(UpdatedClientsResponse updatedClientsResponse)
+		private void SendUpdatedClientsList(UpdatedClientsResponse updatedClientsResponse)
 		{
 			foreach (KeyValuePair<string, WsConnection> connection in _connections)
 			{
