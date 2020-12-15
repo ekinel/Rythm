@@ -22,6 +22,9 @@ namespace Rythm.Client.ViewModel
         private const string ADDRESS = "127.0.0.1";
         private const string PORT = "65000";
         private const string ADDRESS_PATTERN = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$";
+        private const string STATE_CONNECT = "Connect";
+        private const string STATE_DISCONNECT = "Disconnect";
+
 
         #endregion
 
@@ -108,7 +111,7 @@ namespace Rythm.Client.ViewModel
                 ExecuteConnectCommand,
                 () => !_errorsContainer.HasErrors);
             _connectionController.ConnectionStateChanged += HandleConnectionStateChanged;
-            ConnectButtonLabel = Properties.Resources.StateConnect;
+            ConnectButtonLabel = STATE_CONNECT;
             CheckLogin();
             CheckAddress();
             CheckPort();
@@ -154,7 +157,7 @@ namespace Rythm.Client.ViewModel
         {
             _isConnected = isConnected;
             FieldsEnabled = !_isConnected;
-            ConnectButtonLabel = _isConnected ? Properties.Resources.StateDisconnect : Properties.Resources.StateConnect;
+            ConnectButtonLabel = _isConnected ? STATE_DISCONNECT : STATE_CONNECT;
             _eventAggregator.GetEvent<ConnectionIndicatorColorChangedEvent>().Publish(_isConnected);
         }
 

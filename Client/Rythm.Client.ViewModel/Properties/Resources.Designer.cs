@@ -59,23 +59,5 @@ namespace Rythm.Client.ViewModel.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connect.
-        /// </summary>
-        internal static string StateConnect {
-            get {
-                return ResourceManager.GetString("StateConnect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disconnect.
-        /// </summary>
-        internal static string StateDisconnect {
-            get {
-                return ResourceManager.GetString("StateDisconnect", resourceCulture);
-            }
-        }
     }
 }
