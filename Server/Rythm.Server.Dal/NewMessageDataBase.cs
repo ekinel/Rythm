@@ -12,9 +12,8 @@ namespace Rythm.Server.Dal
 	{
 		#region Properties
 
-		[Key]
+		public int ID { get; set; }
 		public string Date { get; set; }
-
 		public MsgType MessageType { get; set; }
 		public string Message { get; set; }
 		public string ClientTo { get; set; }

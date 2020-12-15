@@ -18,22 +18,23 @@ namespace Rythm.Server.Service
         {
             try
             {
-                var networkManager = new NetworkManager();
-                networkManager.Start();
+                var networkWrapper = new NetworkWrapper();
+                networkWrapper.Start();
 
-                ClientRepository clrep = new ClientRepository();
-                clrep.Create(new NewClientDataBase() { Login = "d458" });
-                //NewClientDataBase e = clrep.GetElement("login");
 
-                MessageRepository msgRepository = new MessageRepository();
-                msgRepository.Create(new NewMessageDataBase() { ClientFrom = "12", ClientTo = "22", MessageType = MsgType.PersonalMessage, Message = "oo2o", Date = "3425678" });
+                //ClientRepository clrep = new ClientRepository();
+                //clrep.Create(new NewClientDataBase() { Login = "d458" });
+                ////NewClientDataBase e = clrep.GetElement("login");
 
-                EventRepository eventsRepository = new EventRepository();
-                eventsRepository.Create(new NewEventDataBase() { Date = "1232", EventType = "121", Message = "T2ext" });
+                //MessageRepository msgRepository = new MessageRepository();
+                //msgRepository.Create(new NewMessageDataBase() { ClientFrom = "12", ClientTo = "22", MessageType = MsgType.PersonalMessage, Message = "oo2o", Date = "3425678" });
+
+                //EventRepository eventsRepository = new EventRepository();
+                //eventsRepository.Create(new NewEventDataBase() { Date = "1232", EventType = "121", Message = "T2ext" });
 
                 Console.ReadLine();
-                networkManager.Stop();
-                networkManager.Stop();
+
+                networkWrapper.Stop();
             }
             catch (Exception ex)
             {

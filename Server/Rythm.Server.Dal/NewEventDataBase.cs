@@ -4,15 +4,12 @@
 
 namespace Rythm.Server.Dal
 {
-	using System.ComponentModel.DataAnnotations;
-
 	public class NewEventDataBase
 	{
 		#region Properties
 
-		[Key]
+		public int ID { get; set; }
 		public string Date { get; set; }
-
 		public string EventType { get; set; }
 		public string Message { get; set; }
 

@@ -9,6 +9,8 @@ namespace Rythm.Server.Service
 
 	using Common.Network;
 
+	using Dal;
+
 	public class NetworkManager
 	{
 		#region Constants
@@ -26,12 +28,12 @@ namespace Rythm.Server.Service
 
 		#region Constructors
 
-		public NetworkManager()
+		public NetworkManager(ClientRepository clientRepository, MessageRepository messageRepository, EventRepository eventRepository)
 		{
 			_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT), TIME_OUT);
 		}
 
-		public NetworkManager(string address, int port, int timeOut)
+		public NetworkManager(string address, int port, int timeOut, ClientRepository clientRepository, MessageRepository messageRepository, EventRepository eventRepository)
 		{
 			if (string.IsNullOrEmpty(address))
 			{
