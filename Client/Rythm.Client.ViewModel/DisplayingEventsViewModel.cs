@@ -23,7 +23,7 @@ namespace Rythm.Client.ViewModel
 
 		#region Properties
 
-		public ObservableCollection<DataBaseClient> DataBaseClientsList { get; set; } = new ObservableCollection<DataBaseClient>();
+		public ObservableCollection<DataBaseClientsViewModel> DataBaseClientsList { get; set; } = new ObservableCollection<DataBaseClientsViewModel>();
 
 		#endregion
 
@@ -52,27 +52,9 @@ namespace Rythm.Client.ViewModel
 				ApplicationDispatcherHelper.BeginInvoke(
 					() =>
 					{
-						DataBaseClientsList.Add(new DataBaseClient(client));
+						DataBaseClientsList.Add(new DataBaseClientsViewModel(client));
 					});
 			}
-		}
-
-		#endregion
-	}
-
-	public class DataBaseClient
-	{
-		#region Properties
-
-		public string Login { get; }
-
-		#endregion
-
-		#region Constructors
-
-		public DataBaseClient(string login)
-		{
-			Login = login;
 		}
 
 		#endregion
