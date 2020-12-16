@@ -19,6 +19,9 @@ namespace Rythm.Common.Network
         event EventHandler<EventArgs> ConnectionOpened;
         event EventHandler<MessageContainer> UpdatedUsersList;
         event EventHandler<(MsgType, string)> OkReceive;
+        event EventHandler<MessageContainer> UpdatedDataBaseClients;
+        event EventHandler<MessageContainer> UpdatedDataBaseMessages;
+        event EventHandler<MessageContainer> UpdatedDataBaseEvents;
 
 
         #endregion

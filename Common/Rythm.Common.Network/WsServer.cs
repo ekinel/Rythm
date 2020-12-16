@@ -210,6 +210,8 @@ namespace Rythm.Common.Network
 								Login = connection.Login
 							});
 					}
+
+					SendUpdatedDataBaseClientsResponse();
 				}
 			}
 		}
@@ -294,6 +296,14 @@ namespace Rythm.Common.Network
 		{
 			_clientsActivity.TryGetValue(login, out ClientActivity lastTime);
 			_clientsActivity.TryUpdate(login, new ClientActivity(login), lastTime);
+		}
+
+		private void SendUpdatedDataBaseClientsResponse()
+		{
+			foreach (KeyValuePair<string, WsConnection> connection in _connections)
+			{
+				connection.Value.Send(new UpdatedDataBaseClients(GetDataBaseClientsListToString()).GetContainer());
+			}
 		}
 
 		private void BroadcastSend(MessageContainer msgContainer, string loginFrom)

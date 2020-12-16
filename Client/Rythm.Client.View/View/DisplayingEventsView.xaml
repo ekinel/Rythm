@@ -9,5 +9,10 @@
              interactivity:ViewModelLocator.AutoWireViewModel="True" 
              d:DataContext="{d:DesignInstance viewModel:DisplayingEventsViewModel}">
     <Grid Background="AliceBlue">
+		<DataGrid Name="DgUsers" AutoGenerateColumns="False" ItemsSource="{Binding DataBaseClientsList}">
+		    <DataGrid.Columns>
+			    <DataGridTextColumn Header="Client" Binding="{Binding Login}" />
+		    </DataGrid.Columns>
+	    </DataGrid>
     </Grid>
 </UserControl>

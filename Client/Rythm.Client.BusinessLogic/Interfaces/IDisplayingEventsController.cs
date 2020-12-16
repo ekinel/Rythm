@@ -2,18 +2,17 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Common.Network.Enums
+namespace Rythm.Client.BusinessLogic.Interfaces
 {
-    public enum MsgType
-    {
-        ClientRegistration,
-        PersonalMessage,
-        ServerOk,
-        ClientOk,
-        UpdatedClientsList,
-        CommonMessage,
-        UpdatedDataBaseClients,
-        UpdatedDataBaseMessages,
-        UpdatedDataBaseEvents
-    }
+	using System;
+	using System.Collections.Generic;
+
+	public interface IDisplayingEventsController
+	{
+		#region Events
+
+		event Action<List<string>> UpdatedDataBaseClientsEvent;
+
+		#endregion
+	}
 }

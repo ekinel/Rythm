@@ -47,8 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DisplayingEventsController.cs" />
     <Compile Include="Interfaces\IConnectionController.cs" />
     <Compile Include="ConnectionController.cs" />
+    <Compile Include="Interfaces\IDisplayingEventsController.cs" />
     <Compile Include="Interfaces\IUsersListController.cs" />
     <Compile Include="Interfaces\IToolPanelDisplayController.cs" />
     <Compile Include="ChatPanelController.cs" />
