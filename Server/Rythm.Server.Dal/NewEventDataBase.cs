@@ -10,7 +10,6 @@ namespace Rythm.Server.Dal
 
 		public int ID { get; set; }
 		public string Date { get; set; }
-		public string EventType { get; set; }
 		public string Message { get; set; }
 
 		#endregion

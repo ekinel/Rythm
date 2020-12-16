@@ -57,7 +57,7 @@ namespace Rythm.Common.Network
 			_messageRepository = messageRepository;
 			_eventRepository = eventRepository;
 
-			_clientsNotActiveList = new List<string>(GetDataBaseListToString());
+			_clientsNotActiveList = new List<string>(GetDataBaseClientsListToString());
 
 			_serverTimer = new Timer(TIMER_TIME_SECOND);
 			_serverTimer.Elapsed += HandleOnTimedEvent;
@@ -79,6 +79,7 @@ namespace Rythm.Common.Network
 				});
 
 			_server.Start();
+			_eventRepository.Create(new NewEventDataBase(){Date = DateTime.Now.ToString(), Message = "Server started"});
 		}
 
 		public void Stop()
@@ -94,7 +95,8 @@ namespace Rythm.Common.Network
 
 			_connections.Clear();
 
-			_clientsNotActiveList = new List<string>(GetDataBaseListToString());
+			_clientsNotActiveList = new List<string>(GetDataBaseClientsListToString());
+			_eventRepository.Create(new NewEventDataBase() { Date = DateTime.Now.ToString(), Message = "Server stopped" });
 		}
 
 		internal void HandleMessage(WsConnection connection, MessageContainer container)
@@ -127,6 +129,8 @@ namespace Rythm.Common.Network
 							SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
 							_clientsActivity.TryAdd(connection.Login, new ClientActivity(connection.Login));
 
+							_eventRepository.Create(new NewEventDataBase() { Date = DateTime.Now.ToString(), Message = $"Client {connection.Login} connected" });
+
 							if (_isCommonChatCreated)
 							{
 								_connections.TryAdd(Properties.Resources.CommonChat, connection);
@@ -135,8 +139,7 @@ namespace Rythm.Common.Network
 								SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
 							}
 
-
-							var dataBaseListLoginsString = GetDataBaseListToString();
+							var dataBaseListLoginsString = GetDataBaseClientsListToString();
 
 							if (!dataBaseListLoginsString.Contains(connection.Login))
 							{
@@ -166,6 +169,8 @@ namespace Rythm.Common.Network
 						}
 
 						UpdateLastClientActivity(textMsgContainer.From);
+
+						_messageRepository.Create(new NewMessageDataBase(){Date = textMsgContainer.Date, Message = textMsgContainer.Message, ClientFrom = textMsgContainer.From, ClientTo = textMsgContainer.To});
 					}
 
 					break;
@@ -193,6 +198,8 @@ namespace Rythm.Common.Network
 				_clientsNotActiveList.Add(login);
 
 				SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
+
+				_eventRepository.Create(new NewEventDataBase() { Date = DateTime.Now.ToString(), Message = $"Client {connection.Login} disconnected" });
 			}
 		}
 
@@ -275,7 +282,7 @@ namespace Rythm.Common.Network
 			}
 		}
 
-		private List<string> GetDataBaseListToString()
+		private List<string> GetDataBaseClientsListToString()
 		{
 			var DataBaseClientsList = _clientRepository.GetList();
 			var ClientsList = new List<string>();
@@ -286,6 +293,32 @@ namespace Rythm.Common.Network
 			}
 
 			return ClientsList;
+		}
+
+		private List<string> GetActiveClientsList(string login)
+		{
+			var clientsList = new List<string>();
+
+			foreach (var connection in _connections)
+			{
+				if (connection.Key != login) 
+				clientsList.Add(connection.Key);
+			}
+
+			return clientsList;
+		}
+
+		private List<string> GetNotActiveClientsList(string login)
+		{
+			List<string> clientsList = GetDataBaseClientsListToString();
+			clientsList.Remove(login);
+
+			foreach (var connection in _connections)
+			{
+				clientsList.Remove(connection.Key);
+			}
+
+			return clientsList;
 		}
 
 		#endregion
