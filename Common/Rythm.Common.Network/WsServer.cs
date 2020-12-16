@@ -8,6 +8,7 @@ namespace Rythm.Common.Network
 	using System.Collections.Concurrent;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Linq.Expressions;
 	using System.Net;
 	using System.Timers;
 
@@ -71,9 +72,9 @@ namespace Rythm.Common.Network
 
 			_clientsNotActiveList = new List<string>(GetDataBaseClientsListToString());
 
-			_serverTimer = new Timer(TIMER_TIME_SECOND);
-			_serverTimer.Elapsed += HandleOnTimedEvent;
-			_serverTimer.Enabled = true;
+			//_serverTimer = new Timer(TIMER_TIME_SECOND);
+			//_serverTimer.Elapsed += HandleOnTimedEvent;
+			//_serverTimer.Enabled = true;
 		}
 
 		#endregion
@@ -155,6 +156,7 @@ namespace Rythm.Common.Network
 						Date = DateTime.Now.ToString(),
 						Message = $"Client {login} disconnected"
 					});
+				SendUpdatedDataBaseEventsResponse();
 			}
 		}
 
@@ -212,6 +214,8 @@ namespace Rythm.Common.Network
 					}
 
 					SendUpdatedDataBaseClientsResponse();
+					SendUpdatedDataBaseMsgResponse();
+					SendUpdatedDataBaseEventsResponse();
 				}
 			}
 		}
@@ -245,6 +249,8 @@ namespace Rythm.Common.Network
 						ClientFrom = textMsgContainer.From,
 						ClientTo = textMsgContainer.To
 					});
+
+				SendUpdatedDataBaseMsgResponse();
 			}
 		}
 
@@ -298,11 +304,54 @@ namespace Rythm.Common.Network
 			_clientsActivity.TryUpdate(login, new ClientActivity(login), lastTime);
 		}
 
+		private void SendUpdatedDataBaseMsgResponse()
+		{
+			IEnumerable<NewMessageDataBase> dataBaseMessages = _msgDataBase.GetList();
+			List<string> dataBaseMsgTextList = new List<string>();
+			List<string> dataBaseToList = new List<string>();
+			List<string> dataBaseFromList = new List<string>();
+			List<string> dataBaseDateList = new List<string>();
+
+			foreach (var element in dataBaseMessages)
+			{
+				dataBaseMsgTextList.Add(element.Message);
+				dataBaseFromList.Add(element.ClientFrom);
+				dataBaseToList.Add(element.ClientTo);
+				dataBaseDateList.Add(element.Date);
+			}
+
+			UpdatedDataBaseMessages updatedDataBaseMessages = new UpdatedDataBaseMessages(dataBaseDateList, dataBaseFromList, dataBaseToList, dataBaseMsgTextList);
+
+			foreach (KeyValuePair<string, WsConnection> connection in _connections)
+			{
+				connection.Value.Send(updatedDataBaseMessages.GetContainer());
+			}
+		}
+
 		private void SendUpdatedDataBaseClientsResponse()
 		{
 			foreach (KeyValuePair<string, WsConnection> connection in _connections)
 			{
 				connection.Value.Send(new UpdatedDataBaseClients(GetDataBaseClientsListToString()).GetContainer());
+			}
+		}
+
+		private void SendUpdatedDataBaseEventsResponse()
+		{
+			IEnumerable<NewEventDataBase> dataBaseEvents = _eventDataBase.GetList();
+			List<string> eventListString = new List<string>();
+			List<string> dateListString = new List<string>();
+
+			foreach (NewEventDataBase element in dataBaseEvents)
+			{
+				eventListString.Add(element.Message);
+				dateListString.Add(element.Date);
+
+			}
+
+			foreach (KeyValuePair<string, WsConnection> connection in _connections)
+			{
+				connection.Value.Send(new UpdatedDataBaseEvents(eventListString, dateListString).GetContainer());
 			}
 		}
 

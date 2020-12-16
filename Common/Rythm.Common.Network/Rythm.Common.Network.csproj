@@ -69,6 +69,8 @@
     <Compile Include="Messages\TextMsgRequest.cs" />
     <Compile Include="Messages\UpdatedClientsResponse.cs" />
     <Compile Include="Messages\UpdatedDataBaseClients.cs" />
+    <Compile Include="Messages\UpdatedDataBaseEvents.cs" />
+    <Compile Include="Messages\UpdatedDataBaseMessages.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -16,15 +16,11 @@ namespace Rythm.Client.BusinessLogic
 
 	public class DisplayingEventsController : IDisplayingEventsController
 	{
-		#region Fields
-
-		private readonly ITransport _currentTransport;
-
-		#endregion
-
 		#region Events
 
 		public event Action<List<string>> UpdatedDataBaseClientsEvent;
+		public event Action<List<string>, List<string>, List<string>, List<string>> UpdatedDataBaseMessagesEvent;
+		public event Action<List<string>, List<string>> UpdatedDataBaseEventsEvent;
 
 		#endregion
 
@@ -32,8 +28,11 @@ namespace Rythm.Client.BusinessLogic
 
 		public DisplayingEventsController(IConnectionController connectionServiceController)
 		{
-			_currentTransport = connectionServiceController.CurrentTransport ?? throw new ArgumentNullException(nameof(connectionServiceController));
-			_currentTransport.UpdatedDataBaseClients += HandleUpdatedDataBaseClients;
+			ITransport currentTransport = connectionServiceController.CurrentTransport ??
+			                              throw new ArgumentNullException(nameof(connectionServiceController));
+			currentTransport.UpdatedDataBaseClients += HandleUpdatedDataBaseClients;
+			currentTransport.UpdatedDataBaseMessages += HandleUpdatedDataBaseMessages;
+			currentTransport.UpdatedDataBaseEvents += HandleUpdatedDataBaseEvents;
 		}
 
 		#endregion
@@ -42,10 +41,29 @@ namespace Rythm.Client.BusinessLogic
 
 		private void HandleUpdatedDataBaseClients(object sender, MessageContainer msgContainer)
 		{
-			var messageRequest = ((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseClients)) as UpdatedDataBaseClients;
-			if (messageRequest != null)
+			if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseClients)) is UpdatedDataBaseClients messageRequest)
 			{
 				UpdatedDataBaseClientsEvent?.Invoke(messageRequest.ClientsList);
+			}
+		}
+
+		private void HandleUpdatedDataBaseMessages(object sender, MessageContainer msgContainer)
+		{
+			if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseMessages)) is UpdatedDataBaseMessages messageRequest)
+			{
+				UpdatedDataBaseMessagesEvent?.Invoke(
+					messageRequest._msgFrom,
+					messageRequest._msgTo,
+					messageRequest._msgText,
+					messageRequest._msgDate);
+			}
+		}
+
+		private void HandleUpdatedDataBaseEvents(object sender, MessageContainer msgContainer)
+		{
+			if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseEvents)) is UpdatedDataBaseEvents messageRequest)
+			{
+				UpdatedDataBaseEventsEvent?.Invoke(messageRequest.EventsList, messageRequest.DateList);
 			}
 		}
 

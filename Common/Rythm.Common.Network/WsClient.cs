@@ -172,6 +172,14 @@ namespace Rythm.Common.Network
 				case MsgType.UpdatedDataBaseClients:
 					UpdatedDataBaseClients?.Invoke(this, container);
 					break;
+
+				case MsgType.UpdatedDataBaseMessages:
+					UpdatedDataBaseMessages?.Invoke(this, container);
+					break;
+
+				case MsgType.UpdatedDataBaseEvents:
+					UpdatedDataBaseEvents?.Invoke(this, container);
+					break;
 			}
 		}
 

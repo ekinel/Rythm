@@ -17,8 +17,6 @@ namespace Rythm.Client.ViewModel
 	{
 		#region Fields
 
-		private readonly IDisplayingEventsController _displayingEventsController;
-
 		#endregion
 
 		#region Properties
@@ -31,8 +29,9 @@ namespace Rythm.Client.ViewModel
 
 		public DisplayingEventsViewModel(IDisplayingEventsController displayingEventsController)
 		{
-			_displayingEventsController = displayingEventsController;
-			_displayingEventsController.UpdatedDataBaseClientsEvent += HandleUpdatedDataBaseClientsEvent;
+			displayingEventsController.UpdatedDataBaseClientsEvent += HandleUpdatedDataBaseClientsEvent;
+			displayingEventsController.UpdatedDataBaseMessagesEvent += HandleUpdatedDataBaseMessagesEvent;
+			displayingEventsController.UpdatedDataBaseEventsEvent += HandleUpdatedDataBaseEventsEvent;
 		}
 
 		#endregion
@@ -55,6 +54,16 @@ namespace Rythm.Client.ViewModel
 						DataBaseClientsList.Add(new DataBaseClientsViewModel(client));
 					});
 			}
+		}
+
+		private void HandleUpdatedDataBaseMessagesEvent(List<string> fromMessage, List<string> toMessage, List<string> textMessage, List<string> dateMessage)
+		{
+
+		}
+
+		private void HandleUpdatedDataBaseEventsEvent(List<string> eventMessage,List<string> dateEvent)
+		{
+
 		}
 
 		#endregion
