@@ -6,7 +6,7 @@ namespace Rythm.Server.Dal
 {
 	using System.Collections.Generic;
 
-	internal interface IRepository<T>
+	public interface IRepository<T>
 	{
 		#region Methods
 

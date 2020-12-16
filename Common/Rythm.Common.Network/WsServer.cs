@@ -38,24 +38,24 @@ namespace Rythm.Common.Network
 		private List<string> _clientsNotActiveList;
 		private readonly Timer _serverTimer;
 
-		private readonly ClientRepository _clientRepository;
-		private readonly MessageRepository _messageRepository;
-		private readonly EventRepository _eventRepository;
+		private readonly IRepository<NewClientDataBase> ClientDataBase;
+		private readonly IRepository<NewMessageDataBase> MsgDataBase;
+		private readonly IRepository<NewEventDataBase> EventDataBase;
 
 		#endregion
 
 		#region Constructors
 
-		public WsServer(IPEndPoint listenAddress, int timeOut, ClientRepository clientRepository, MessageRepository messageRepository, EventRepository eventRepository)
+		public WsServer(IPEndPoint listenAddress, int timeOut, IRepository<NewClientDataBase> clientDataBase, IRepository<NewMessageDataBase> msgDataBase, IRepository<NewEventDataBase> eventDataBase)
 		{
 			_listenAddress = listenAddress;
 			_timeOut = timeOut;
 			_connections = new ConcurrentDictionary<string, WsConnection>();
 			_clientsActivity = new ConcurrentDictionary<string, ClientActivity>();
 
-			_clientRepository = clientRepository;
-			_messageRepository = messageRepository;
-			_eventRepository = eventRepository;
+			ClientDataBase = clientDataBase;
+			MsgDataBase = msgDataBase;
+			EventDataBase = eventDataBase;
 
 			_clientsNotActiveList = new List<string>(GetDataBaseClientsListToString());
 
@@ -79,7 +79,7 @@ namespace Rythm.Common.Network
 				});
 
 			_server.Start();
-			_eventRepository.Create(new NewEventDataBase(){Date = DateTime.Now.ToString(), Message = "Server started"});
+			EventDataBase.Create(new NewEventDataBase(){Date = DateTime.Now.ToString(), Message = "Server started"});
 		}
 
 		public void Stop()
@@ -96,7 +96,7 @@ namespace Rythm.Common.Network
 			_connections.Clear();
 
 			_clientsNotActiveList = new List<string>(GetDataBaseClientsListToString());
-			_eventRepository.Create(new NewEventDataBase() { Date = DateTime.Now.ToString(), Message = "Server stopped" });
+			EventDataBase.Create(new NewEventDataBase() { Date = DateTime.Now.ToString(), Message = "Server stopped" });
 		}
 
 		internal void HandleMessage(WsConnection connection, MessageContainer container)
@@ -129,7 +129,7 @@ namespace Rythm.Common.Network
 							SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
 							_clientsActivity.TryAdd(connection.Login, new ClientActivity(connection.Login));
 
-							_eventRepository.Create(new NewEventDataBase() { Date = DateTime.Now.ToString(), Message = $"Client {connection.Login} connected" });
+							EventDataBase.Create(new NewEventDataBase() { Date = DateTime.Now.ToString(), Message = $"Client {connection.Login} connected" });
 
 							if (_isCommonChatCreated)
 							{
@@ -143,7 +143,7 @@ namespace Rythm.Common.Network
 
 							if (!dataBaseListLoginsString.Contains(connection.Login))
 							{
-								_clientRepository.Create(new NewClientDataBase() { Login = connection.Login });
+								ClientDataBase.Create(new NewClientDataBase() { Login = connection.Login });
 							}
 						}
 					}
@@ -170,7 +170,7 @@ namespace Rythm.Common.Network
 
 						UpdateLastClientActivity(textMsgContainer.From);
 
-						_messageRepository.Create(new NewMessageDataBase(){Date = textMsgContainer.Date, Message = textMsgContainer.Message, ClientFrom = textMsgContainer.From, ClientTo = textMsgContainer.To});
+						MsgDataBase.Create(new NewMessageDataBase(){Date = textMsgContainer.Date, Message = textMsgContainer.Message, ClientFrom = textMsgContainer.From, ClientTo = textMsgContainer.To});
 					}
 
 					break;
@@ -199,7 +199,7 @@ namespace Rythm.Common.Network
 
 				SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, _clientsNotActiveList));
 
-				_eventRepository.Create(new NewEventDataBase() { Date = DateTime.Now.ToString(), Message = $"Client {connection.Login} disconnected" });
+				EventDataBase.Create(new NewEventDataBase() { Date = DateTime.Now.ToString(), Message = $"Client {connection.Login} disconnected" });
 			}
 		}
 
@@ -284,22 +284,22 @@ namespace Rythm.Common.Network
 
 		private List<string> GetDataBaseClientsListToString()
 		{
-			var DataBaseClientsList = _clientRepository.GetList();
-			var ClientsList = new List<string>();
+			var dataBaseClientsList = ClientDataBase.GetList();
+			var clientsList = new List<string>();
 
-			foreach (var element in DataBaseClientsList)
+			foreach (NewClientDataBase element in dataBaseClientsList)
 			{
-				ClientsList.Add(element.Login);
+				clientsList.Add(element.Login);
 			}
 
-			return ClientsList;
+			return clientsList;
 		}
 
 		private List<string> GetActiveClientsList(string login)
 		{
 			var clientsList = new List<string>();
 
-			foreach (var connection in _connections)
+			foreach (KeyValuePair<string, WsConnection> connection in _connections)
 			{
 				if (connection.Key != login) 
 				clientsList.Add(connection.Key);
@@ -313,7 +313,7 @@ namespace Rythm.Common.Network
 			List<string> clientsList = GetDataBaseClientsListToString();
 			clientsList.Remove(login);
 
-			foreach (var connection in _connections)
+			foreach (KeyValuePair<string, WsConnection> connection in _connections)
 			{
 				clientsList.Remove(connection.Key);
 			}

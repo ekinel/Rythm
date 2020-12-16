@@ -28,22 +28,25 @@ namespace Rythm.Server.Service
 
 		#region Constructors
 
-		public NetworkManager(ClientRepository clientRepository, MessageRepository messageRepository, EventRepository eventRepository)
+		public NetworkManager(
+			IRepository<NewClientDataBase> clientDataBase,
+			IRepository<NewMessageDataBase> msgDataBase,
+			IRepository<NewEventDataBase> eventDataBase)
 		{
-			_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT), TIME_OUT, clientRepository, messageRepository, eventRepository);
+			_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT), TIME_OUT, clientDataBase, msgDataBase, eventDataBase);
 		}
 
 		public NetworkManager(
 			string address,
 			int port,
 			int timeOut,
-			ClientRepository clientRepository,
-			MessageRepository messageRepository,
-			EventRepository eventRepository)
+			IRepository<NewClientDataBase> clientDataBase,
+			IRepository<NewMessageDataBase> msgDataBase,
+			IRepository<NewEventDataBase> eventDataBase)
 		{
 			if (string.IsNullOrEmpty(address))
 			{
-				_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, port), timeOut, clientRepository, messageRepository, eventRepository);
+				_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, port), timeOut, clientDataBase, msgDataBase, eventDataBase);
 			}
 			else
 			{
@@ -52,12 +55,7 @@ namespace Rythm.Server.Service
 				byte[] bytes = ipAddress.GetAddressBytes();
 				uint wsAddress = BitConverter.ToUInt32(bytes, 0);
 
-				_wsServer = new WsServer(
-					new IPEndPoint(wsAddress, wsPort),
-					Convert.ToInt32(timeOut),
-					clientRepository,
-					messageRepository,
-					eventRepository);
+				_wsServer = new WsServer(new IPEndPoint(wsAddress, wsPort), Convert.ToInt32(timeOut), clientDataBase, msgDataBase, eventDataBase);
 			}
 		}
 
