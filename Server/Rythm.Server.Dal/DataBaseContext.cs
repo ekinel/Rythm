@@ -29,10 +29,6 @@ namespace Rythm.Server.Dal
 
 		#region Methods
 
-		//protected override void OnModelCreating(DbModelBuilder modelBuilder)
-		//{
-		//	base.OnModelCreating(modelBuilder);
-		//}
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			//base.OnModelCreating(modelBuilder);
