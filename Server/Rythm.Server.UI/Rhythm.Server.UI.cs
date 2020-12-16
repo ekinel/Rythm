@@ -22,7 +22,7 @@ namespace Rythm.Server.UI
 
 		#region Fields
 
-		private NetworkManager _networkManager;
+		private NetworkWrapper _networkWrapper;
 
 		#endregion
 
@@ -66,8 +66,8 @@ namespace Rythm.Server.UI
 					TextBoxTimeOut.Text = wsTimeOut;
 				}
 
-				_networkManager = new NetworkManager(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut));
-				_networkManager.Start();
+				_networkWrapper = new NetworkWrapper(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut));
+				_networkWrapper.Start();
 
 				LabelServerStatus.Text = Resources.ServerStatusStart;
 			}
@@ -79,7 +79,7 @@ namespace Rythm.Server.UI
 
 		private void ButtonStopClick(object sender, EventArgs e)
 		{
-			_networkManager.Stop();
+			_networkWrapper.Stop();
 			LabelServerStatus.Text = Resources.ServerStatusStop;
 
 			ButtonStart.Enabled = true;
