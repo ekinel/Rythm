@@ -126,103 +126,15 @@ namespace Rythm.Common.Network
 			switch (container.Identifier)
 			{
 				case MsgType.ClientRegistration:
-					var connectionRequest = ((JObject)container.Payload).ToObject(typeof(ConnectionRequest)) as ConnectionRequest;
-					var connectionResponse = new ConnectionResponse
-					{
-						Result = ResultCodes.Ok
-					};
-
-					if (connectionRequest != null)
-					{
-						if (_connections.Values.Any(item => item.Login == connectionRequest.Login))
-						{
-							connectionResponse.Result = ResultCodes.Failure;
-							connectionResponse.Reason = $"Клиент с именем '{connectionRequest.Login}' уже подключен.";
-							connection.Send(connectionResponse.GetContainer());
-						}
-						else
-						{
-							connection.Login = connectionRequest.Login;
-							_connections.TryAdd(connection.Login, connection);
-
-							connection.Send(connectionResponse.GetContainer());
-							_clientsNotActiveList.Remove(connection.Login);
-
-							SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, GetNotActiveClientsList()));
-							_clientsActivity.TryAdd(connection.Login, new ClientActivity(connection.Login));
-
-							_eventDataBase.Create(
-								new NewEventDataBase
-								{
-									Date = DateTime.Now.ToString(),
-									Message = $"Client {connection.Login} connected"
-								});
-
-							if (_isCommonChatCreated)
-							{
-								_connections.TryAdd(Resources.CommonChat, connection);
-								_isCommonChatCreated = !_isCommonChatCreated;
-
-								SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, GetNotActiveClientsList()));
-							}
-
-							List<string> dataBaseListLoginsString = GetDataBaseClientsListToString();
-
-							if (!dataBaseListLoginsString.Contains(connection.Login))
-							{
-								_clientDataBase.Create(
-									new NewClientDataBase
-									{
-										Login = connection.Login
-									});
-							}
-						}
-					}
-
+					HandleClientRegistration(connection, container);
 					break;
 
 				case MsgType.PersonalMessage:
-					var messageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
-
-					if (((JObject)messageRequest?.MsgContainer)?.ToObject(typeof(TextMsgRequest)) is TextMsgRequest textMsgContainer)
-					{
-						var serverOkPayload = new ServerOkMsgResponse(textMsgContainer.From, textMsgContainer.To, textMsgContainer.Date);
-						MessageContainer serverOkContainer = serverOkPayload.GetContainer();
-
-						if (textMsgContainer.To == Resources.CommonChat)
-						{
-							BroadcastSend(container, textMsgContainer.From);
-						}
-						else
-						{
-							SendMessage(container, textMsgContainer.To);
-							SendMessage(serverOkContainer, textMsgContainer.From);
-						}
-
-						UpdateLastClientActivity(textMsgContainer.From);
-
-						_msgDataBase.Create(
-							new NewMessageDataBase
-							{
-								Date = textMsgContainer.Date,
-								Message = textMsgContainer.Message,
-								ClientFrom = textMsgContainer.From,
-								ClientTo = textMsgContainer.To
-							});
-					}
-
+					HandlePersonalMessage(connection, container);
 					break;
 
 				case MsgType.ClientOk:
-
-					if (((JObject)container.Payload).ToObject(typeof(ClientOkMsgResponse)) is ClientOkMsgResponse clientOkMsgContainer)
-					{
-						MessageContainer clientOkContainer = clientOkMsgContainer.GetContainer();
-
-						SendMessage(clientOkContainer, clientOkMsgContainer.From);
-						UpdateLastClientActivity(clientOkMsgContainer.From);
-					}
-
+					HandleClientOk(container);
 					break;
 			}
 		}
@@ -243,6 +155,105 @@ namespace Rythm.Common.Network
 						Date = DateTime.Now.ToString(),
 						Message = $"Client {login} disconnected"
 					});
+			}
+		}
+
+		private void HandleClientRegistration(WsConnection connection, MessageContainer container)
+		{
+			var connectionRequest = ((JObject)container.Payload).ToObject(typeof(ConnectionRequest)) as ConnectionRequest;
+			var connectionResponse = new ConnectionResponse
+			{
+				Result = ResultCodes.Ok
+			};
+
+			if (connectionRequest != null)
+			{
+				if (_connections.Values.Any(item => item.Login == connectionRequest.Login))
+				{
+					connectionResponse.Result = ResultCodes.Failure;
+					connectionResponse.Reason = $"Клиент с именем '{connectionRequest.Login}' уже подключен.";
+					connection.Send(connectionResponse.GetContainer());
+				}
+				else
+				{
+					connection.Login = connectionRequest.Login;
+					_connections.TryAdd(connection.Login, connection);
+
+					connection.Send(connectionResponse.GetContainer());
+					_clientsNotActiveList.Remove(connection.Login);
+
+					SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, GetNotActiveClientsList()));
+					_clientsActivity.TryAdd(connection.Login, new ClientActivity(connection.Login));
+
+					_eventDataBase.Create(
+						new NewEventDataBase
+						{
+							Date = DateTime.Now.ToString(),
+							Message = $"Client {connection.Login} connected"
+						});
+
+					if (_isCommonChatCreated)
+					{
+						_connections.TryAdd(Resources.CommonChat, connection);
+						_isCommonChatCreated = !_isCommonChatCreated;
+
+						SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, GetNotActiveClientsList()));
+					}
+
+					List<string> dataBaseListLoginsString = GetDataBaseClientsListToString();
+
+					if (!dataBaseListLoginsString.Contains(connection.Login))
+					{
+						_clientDataBase.Create(
+							new NewClientDataBase
+							{
+								Login = connection.Login
+							});
+					}
+				}
+			}
+		}
+
+		private void HandlePersonalMessage(WsConnection connection, MessageContainer container)
+		{
+			var messageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
+
+			if (((JObject)messageRequest?.MsgContainer)?.ToObject(typeof(TextMsgRequest)) is TextMsgRequest textMsgContainer)
+			{
+				var serverOkPayload = new ServerOkMsgResponse(textMsgContainer.From, textMsgContainer.To, textMsgContainer.Date);
+				MessageContainer serverOkContainer = serverOkPayload.GetContainer();
+
+				if (textMsgContainer.To == Resources.CommonChat)
+				{
+					BroadcastSend(container, textMsgContainer.From);
+				}
+				else
+				{
+					SendMessage(container, textMsgContainer.To);
+					SendMessage(serverOkContainer, textMsgContainer.From);
+				}
+
+				UpdateLastClientActivity(textMsgContainer.From);
+
+				_msgDataBase.Create(
+					new NewMessageDataBase
+					{
+						Date = textMsgContainer.Date,
+						Message = textMsgContainer.Message,
+						ClientFrom = textMsgContainer.From,
+						ClientTo = textMsgContainer.To
+					});
+			}
+		}
+
+		private void HandleClientOk(MessageContainer container)
+		{
+			if (((JObject)container.Payload).ToObject(typeof(ClientOkMsgResponse)) is ClientOkMsgResponse clientOkMsgContainer)
+			{
+				MessageContainer clientOkContainer = clientOkMsgContainer.GetContainer();
+
+				SendMessage(clientOkContainer, clientOkMsgContainer.From);
+				UpdateLastClientActivity(clientOkMsgContainer.From);
 			}
 		}
 

@@ -19,7 +19,7 @@ namespace Rythm.Common.Network.Messages
 
         #region Constructors
 
-        public UpdatedClientsResponse(ICollection<string> activeUsersList, ICollection<string> notActiveUsersList)
+        public UpdatedClientsResponse(IEnumerable<string> activeUsersList, IEnumerable<string> notActiveUsersList)
         {
             MessageType = MsgType.UpdatedClientsList;
 
