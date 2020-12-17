@@ -5,6 +5,7 @@
 namespace Rythm.Client.ViewModel
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 
 	using BusinessLogic.Interfaces;
@@ -112,7 +113,7 @@ namespace Rythm.Client.ViewModel
 					ApplicationDispatcherHelper.BeginInvoke(
 						() =>
 						{
-							ReceivedMessagesList.Add(new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time));
+							ReceivedMessagesList.Add(new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time){OkStatus = message.OkStatus});
 						});
 				}
 			}
@@ -120,9 +121,9 @@ namespace Rythm.Client.ViewModel
 
 		private void HandleOkReceive((MsgType, string) okReceive)
 		{
-			foreach (SendMessageViewModel message in ReceivedMessagesList)
+			foreach (SendMessageViewModel message in AllReceivedMessagesList)
 			{
-				if (message.Time == okReceive.Item2)
+				if (message.Time == okReceive.Item2 && message.LoginTo != "CommonChat")
 				{
 					switch (okReceive.Item1)
 					{
@@ -136,6 +137,8 @@ namespace Rythm.Client.ViewModel
 					}
 				}
 			}
+
+			UpdateListByNewLoginTo();
 		}
 
 		private void SendMessageCommand()
