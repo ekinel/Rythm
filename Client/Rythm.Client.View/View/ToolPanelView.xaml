@@ -71,21 +71,34 @@
 				    </ControlTemplate>
 			    </Button.Template>
 		    </Button>
-			<Button  Width="32"  Height="30" Margin="0,5,5,5" Command="{Binding ShowEventsListCommand}">
+			<Button  Width="32"  Height="30" Margin="0,5,5,5" Command="{Binding ShowMessagesListCommand}">
 			    <Button.Template>
 				    <ControlTemplate>
 					    <Grid >
 						    <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
 							    <Label VerticalAlignment="Center"
 							           HorizontalAlignment="Center"
-							           Content="События" Foreground="DimGray"/>
+							           Content="Сообщения" Foreground="DimGray"/>
 						    </Border>
 					    </Grid>
 				    </ControlTemplate>
 			    </Button.Template>
 		    </Button>
+			<Button  Width="32"  Height="30" Margin="0,5,5,5" Command="{Binding ShowEventsListCommand}">
+				<Button.Template>
+					<ControlTemplate>
+						<Grid >
+							<Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
+								<Label VerticalAlignment="Center"
+								       HorizontalAlignment="Center"
+								       Content="События" Foreground="DimGray"/>
+							</Border>
+						</Grid>
+					</ControlTemplate>
+				</Button.Template>
+			</Button>
 		</StackPanel>
-	    <TextBlock Grid.Column="0" VerticalAlignment="Center"  Text="{Binding Login}" Foreground="DimGray" Width="Auto" FontSize="18" Margin="80,0,0,0" ></TextBlock>
+	    <TextBlock Grid.Column="0" VerticalAlignment="Center"  Text="{Binding Login}" Foreground="DimGray" Width="Auto" FontSize="18" Margin="120,0,0,0" ></TextBlock>
     </Grid>
 
 </UserControl>

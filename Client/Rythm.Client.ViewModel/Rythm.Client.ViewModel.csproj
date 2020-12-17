@@ -80,6 +80,7 @@
     <Compile Include="Events\ConnectionPanelVisibilityChangedEvent.cs" />
     <Compile Include="Events\DataBaseButtonClientsChosen.cs" />
     <Compile Include="Events\DataBaseButtonEventsChosen.cs" />
+    <Compile Include="Events\DataBaseButtonMessagesChosen.cs" />
     <Compile Include="Events\DisplayingEventsVisibility.cs" />
     <Compile Include="Events\NewClientChosenViewModel.cs" />
     <Compile Include="Events\PassLoginViewModel.cs" />

@@ -57,6 +57,7 @@ namespace Rythm.Client.ViewModel
 			ChangeSettingsVisibilityCommand = new DelegateCommand(ExecuteChangeSettingsVisibilityCommand);
 			ShowClientsListCommand = new DelegateCommand(ExecuteShowClientsListCommand);
 			ShowEventsListCommand = new DelegateCommand(ExecuteShowEventsListCommand);
+			ShowMessagesListCommand = new DelegateCommand(ExecuteShowMessagesListCommand);
 			DisplayingEventsVisibilityCommand = new DelegateCommand(ExecuteDisplayingEventsVisibilityCommand);
 
 			SplitterVisibility = Visibility.Collapsed;
@@ -75,6 +76,12 @@ namespace Rythm.Client.ViewModel
 		{
 			_eventAggregator.GetEvent<DataBaseButtonClientsChosen>().Publish();
 		}
+
+		private void ExecuteShowMessagesListCommand()
+		{
+			_eventAggregator.GetEvent<DataBaseButtonMessagesChosen>().Publish();
+		}
+
 		private void ExecuteShowEventsListCommand()
 		{
 			_eventAggregator.GetEvent<DataBaseButtonEventsChosen>().Publish();

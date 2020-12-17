@@ -20,9 +20,27 @@ namespace Rythm.Client.ViewModel
 
 	public class DisplayingEventsViewModel : BindableBase
 	{
-		public Visibility DataGridClientsVisibility = Visibility.Visible;
+		private Visibility _dataGridClientsVisibility = Visibility.Visible;
+		private Visibility _dataGridMessagesVisibility = Visibility.Hidden;
+		private Visibility _dataGridEventsVisibility = Visibility.Hidden;
 
-		public Visibility DataGridEventsVisibility = Visibility.Hidden;
+		public Visibility DataGridClientsVisibility
+		{
+			get => _dataGridClientsVisibility;
+			set => SetProperty(ref _dataGridClientsVisibility, value);
+		}
+		public Visibility DataGridMessagesVisibility
+		{
+			get => _dataGridMessagesVisibility;
+			set => SetProperty(ref _dataGridMessagesVisibility, value);
+		}
+		public Visibility DataGridEventsVisibility
+		{
+			get => _dataGridEventsVisibility;
+			set => SetProperty(ref _dataGridEventsVisibility, value);
+		}
+
+
 		#region Properties
 
 		public ObservableCollection<DataBaseClientsViewModel> DataBaseClientsList { get; set; } =
@@ -42,6 +60,11 @@ namespace Rythm.Client.ViewModel
 			displayingEventsController.UpdatedDataBaseEventsEvent += HandleUpdatedDataBaseEventsEvent;
 			eventAggregator.GetEvent<DataBaseButtonClientsChosen>().Subscribe(HandleDataBaseButtonClientsChosen);
 			eventAggregator.GetEvent<DataBaseButtonEventsChosen>().Subscribe(HandleDataBaseButtonEventsChosen);
+			eventAggregator.GetEvent<DataBaseButtonMessagesChosen>().Subscribe(HandleDataBaseButtonMessagesChosen);
+
+			DataGridClientsVisibility = Visibility.Visible;
+			DataGridMessagesVisibility = Visibility.Hidden;
+			DataGridEventsVisibility = Visibility.Hidden;
 		}
 
 		#endregion
@@ -106,12 +129,21 @@ namespace Rythm.Client.ViewModel
 		{
 			DataGridClientsVisibility = Visibility.Visible;
 			DataGridEventsVisibility = Visibility.Hidden;
+			DataGridMessagesVisibility = Visibility.Hidden;
 		}
 
 		private void HandleDataBaseButtonEventsChosen()
 		{
 			DataGridClientsVisibility = Visibility.Hidden;
+			DataGridMessagesVisibility = Visibility.Hidden;
 			DataGridEventsVisibility = Visibility.Visible;
+		}
+
+		private void HandleDataBaseButtonMessagesChosen()
+		{
+			DataGridClientsVisibility = Visibility.Hidden;
+			DataGridEventsVisibility = Visibility.Hidden;
+			DataGridMessagesVisibility = Visibility.Visible;
 		}
 
 		#endregion

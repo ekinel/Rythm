@@ -2,17 +2,11 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Common.Network.Messages
+namespace Rythm.Client.ViewModel.Events
 {
-	public class DataBaseEvent : BaseContainer
-	{
-		public string Message;
-		public string Date;
+	using Prism.Events;
 
-		public DataBaseEvent(string message, string date)
-		{
-			Message = message;
-			Date = date;
-		}
+	public class DataBaseButtonMessagesChosen : PubSubEvent
+	{
 	}
 }
