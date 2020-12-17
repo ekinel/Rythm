@@ -98,7 +98,7 @@
 				</Button.Template>
 			</Button>
 		</StackPanel>
-	    <TextBlock Grid.Column="0" VerticalAlignment="Center"  Text="{Binding Login}" Foreground="DimGray" Width="Auto" FontSize="18" Margin="120,0,0,0" ></TextBlock>
+	    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Login}" Visibility="{Binding LoginVisibility}" Foreground="DimGray" Width="Auto" FontSize="18" Margin="120,0,0,0" ></TextBlock>
     </Grid>
 
 </UserControl>

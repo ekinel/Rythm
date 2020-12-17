@@ -8,6 +8,7 @@ namespace Rythm.Client.BusinessLogic
 	using System.Collections.Generic;
 
 	using Common.Network;
+	using Common.Network.Enums;
 	using Common.Network.Messages;
 
 	using Interfaces;
@@ -30,9 +31,7 @@ namespace Rythm.Client.BusinessLogic
 		{
 			ITransport currentTransport = connectionServiceController.CurrentTransport ??
 			                              throw new ArgumentNullException(nameof(connectionServiceController));
-			currentTransport.UpdatedDataBaseClients += HandleUpdatedDataBaseClients;
-			currentTransport.UpdatedDataBaseMessages += HandleUpdatedDataBaseMessages;
-			currentTransport.UpdatedDataBaseEvents += HandleUpdatedDataBaseEvents;
+			currentTransport.UpdatedDataBaseData += HandleUpdatedDataBaseClients;
 		}
 
 		#endregion
@@ -41,25 +40,28 @@ namespace Rythm.Client.BusinessLogic
 
 		private void HandleUpdatedDataBaseClients(object sender, MessageContainer msgContainer)
 		{
-			if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseClients)) is UpdatedDataBaseClients messageRequest)
+			switch (msgContainer.Identifier)
 			{
-				UpdatedDataBaseClientsEvent?.Invoke(messageRequest.ClientsList);
-			}
-		}
+				case MsgType.UpdatedDataBaseClients:
+					if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseClients)) is UpdatedDataBaseClients messageRequest)
+					{
+						UpdatedDataBaseClientsEvent?.Invoke(messageRequest.ClientsList);
+					}
+					break;
 
-		private void HandleUpdatedDataBaseMessages(object sender, MessageContainer msgContainer)
-		{
-			if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseMessages)) is UpdatedDataBaseMessages messageRequest)
-			{
-				UpdatedDataBaseMessagesEvent?.Invoke(messageRequest.MessagesList);
-			}
-		}
+				case MsgType.UpdatedDataBaseMessages:
+					if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseMessages)) is UpdatedDataBaseMessages messageRequest1)
+					{
+						UpdatedDataBaseMessagesEvent?.Invoke(messageRequest1.MessagesList);
+					}
+					break;
 
-		private void HandleUpdatedDataBaseEvents(object sender, MessageContainer msgContainer)
-		{
-			if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseEvents)) is UpdatedDataBaseEvents messageRequest)
-			{
-				UpdatedDataBaseEventsEvent?.Invoke(messageRequest.EventsList);
+				case MsgType.UpdatedDataBaseEvents:
+					if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseEvents)) is UpdatedDataBaseEvents messageRequest2)
+					{
+						UpdatedDataBaseEventsEvent?.Invoke(messageRequest2.EventsList);
+					}
+					break;
 			}
 		}
 

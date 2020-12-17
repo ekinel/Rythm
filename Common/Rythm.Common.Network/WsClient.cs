@@ -42,9 +42,7 @@ namespace Rythm.Common.Network
 		public event EventHandler<EventArgs> ConnectionOpened;
 
 		public event EventHandler<MessageContainer> UpdatedUsersList;
-		public event EventHandler<MessageContainer> UpdatedDataBaseClients;
-		public event EventHandler<MessageContainer> UpdatedDataBaseMessages;
-		public event EventHandler<MessageContainer> UpdatedDataBaseEvents;
+		public event EventHandler<MessageContainer> UpdatedDataBaseData;
 		public event EventHandler<(MsgType, string)> OkReceive;
 
 		#endregion
@@ -170,15 +168,9 @@ namespace Rythm.Common.Network
 					break;
 
 				case MsgType.UpdatedDataBaseClients:
-					UpdatedDataBaseClients?.Invoke(this, container);
-					break;
-
 				case MsgType.UpdatedDataBaseMessages:
-					UpdatedDataBaseMessages?.Invoke(this, container);
-					break;
-
 				case MsgType.UpdatedDataBaseEvents:
-					UpdatedDataBaseEvents?.Invoke(this, container);
+					UpdatedDataBaseData?.Invoke(this, container);
 					break;
 			}
 		}

@@ -23,6 +23,8 @@ namespace Rythm.Client.ViewModel
 
 		private bool _buttonsStackPanelVisibility;
 		private Visibility _stackPanelVisibility;
+		private bool _changedLoginVisibility;
+		private Visibility _loginVisibility;
 
 		#endregion
 
@@ -45,6 +47,11 @@ namespace Rythm.Client.ViewModel
 			get => _stackPanelVisibility;
 			set => SetProperty(ref _stackPanelVisibility, value);
 		}
+		public Visibility LoginVisibility
+		{
+			get => _loginVisibility;
+			set => SetProperty(ref _loginVisibility, value);
+		}
 
 		#endregion
 
@@ -61,6 +68,8 @@ namespace Rythm.Client.ViewModel
 			DisplayingEventsVisibilityCommand = new DelegateCommand(ExecuteDisplayingEventsVisibilityCommand);
 
 			SplitterVisibility = Visibility.Collapsed;
+			LoginVisibility = Visibility.Visible;
+			_changedLoginVisibility = true;
 		}
 
 		#endregion
@@ -98,6 +107,9 @@ namespace Rythm.Client.ViewModel
 
 			_buttonsStackPanelVisibility = !_buttonsStackPanelVisibility;
 			SplitterVisibility = _buttonsStackPanelVisibility ? Visibility.Visible : Visibility.Collapsed;
+
+			_changedLoginVisibility = !_changedLoginVisibility;
+			LoginVisibility = _changedLoginVisibility ? Visibility.Visible : Visibility.Hidden;
 		}
 
 		#endregion

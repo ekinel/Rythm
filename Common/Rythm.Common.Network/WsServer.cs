@@ -172,7 +172,7 @@ namespace Rythm.Common.Network
 				if (_connections.Values.Any(item => item.Login == connectionRequest.Login))
 				{
 					connectionResponse.Result = ResultCodes.Failure;
-					connectionResponse.Reason = $"Клиент с именем '{connectionRequest.Login}' уже подключен.";
+					connectionResponse.Reason = $"Client named '{connectionRequest.Login}' is already connected.";
 					connection.Send(connectionResponse.GetContainer());
 				}
 				else
@@ -195,10 +195,7 @@ namespace Rythm.Common.Network
 
 					if (_isCommonChatCreated)
 					{
-						_connections.TryAdd(Resources.CommonChat, connection);
-						_isCommonChatCreated = !_isCommonChatCreated;
-
-						SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, GetNotActiveClientsList()));
+						CreateCommonChat(connection);
 					}
 
 					List<string> dataBaseListLoginsString = GetDataBaseClientsListToString();
@@ -217,6 +214,14 @@ namespace Rythm.Common.Network
 					SendUpdatedDataBaseEventsResponse();
 				}
 			}
+		}
+
+		private void CreateCommonChat(WsConnection connection)
+		{
+			_connections.TryAdd(Resources.CommonChat, connection);
+			_isCommonChatCreated = !_isCommonChatCreated;
+
+			SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, GetNotActiveClientsList()));
 		}
 
 		private void PersonalMessage(WsConnection connection, MessageContainer container)
