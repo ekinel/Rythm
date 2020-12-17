@@ -8,7 +8,6 @@ namespace Rythm.Common.Network
 	using System.Collections.Concurrent;
 	using System.Collections.Generic;
 	using System.Linq;
-	using System.Linq.Expressions;
 	using System.Net;
 	using System.Timers;
 
@@ -127,15 +126,15 @@ namespace Rythm.Common.Network
 			switch (container.Identifier)
 			{
 				case MsgType.ClientRegistration:
-					HandleClientRegistration(connection, container);
+					ClientRegistration(connection, container);
 					break;
 
 				case MsgType.PersonalMessage:
-					HandlePersonalMessage(connection, container);
+					PersonalMessage(connection, container);
 					break;
 
 				case MsgType.ClientOk:
-					HandleClientOk(container);
+					ClientOk(container);
 					break;
 			}
 		}
@@ -160,7 +159,7 @@ namespace Rythm.Common.Network
 			}
 		}
 
-		private void HandleClientRegistration(WsConnection connection, MessageContainer container)
+		private void ClientRegistration(WsConnection connection, MessageContainer container)
 		{
 			var connectionRequest = ((JObject)container.Payload).ToObject(typeof(ConnectionRequest)) as ConnectionRequest;
 			var connectionResponse = new ConnectionResponse
@@ -220,7 +219,7 @@ namespace Rythm.Common.Network
 			}
 		}
 
-		private void HandlePersonalMessage(WsConnection connection, MessageContainer container)
+		private void PersonalMessage(WsConnection connection, MessageContainer container)
 		{
 			var messageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
 
@@ -254,7 +253,7 @@ namespace Rythm.Common.Network
 			}
 		}
 
-		private void HandleClientOk(MessageContainer container)
+		private void ClientOk(MessageContainer container)
 		{
 			if (((JObject)container.Payload).ToObject(typeof(ClientOkMsgResponse)) is ClientOkMsgResponse clientOkMsgContainer)
 			{
@@ -309,12 +308,12 @@ namespace Rythm.Common.Network
 			IEnumerable<NewMessageDataBase> dataBaseMessages = _msgDataBase.GetList();
 			var dataBaseMessagesList = new List<DataBaseMessage>();
 
-			foreach (var element in dataBaseMessages)
+			foreach (NewMessageDataBase element in dataBaseMessages)
 			{
 				dataBaseMessagesList.Add(new DataBaseMessage(element.Message, element.Date, element.ClientFrom, element.ClientTo));
 			}
 
-			UpdatedDataBaseMessages updatedDataBaseMessages = new UpdatedDataBaseMessages(dataBaseMessagesList);
+			var updatedDataBaseMessages = new UpdatedDataBaseMessages(dataBaseMessagesList);
 
 			foreach (KeyValuePair<string, WsConnection> connection in _connections)
 			{

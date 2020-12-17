@@ -149,20 +149,20 @@ namespace Rythm.Common.Network
 			switch (container.Identifier)
 			{
 				case MsgType.ClientRegistration:
-					HandleClientRegistration(container);
+					ClientRegistration(container);
 					break;
 
 				case MsgType.PersonalMessage:
-					HandlePersonalMessage(container);
+					PersonalMessage(container);
 					break;
 
 				case MsgType.CommonMessage:
-					HandleCommonMessage(container);
+					CommonMessage(container);
 					break;
 
 				case MsgType.ClientOk:
 				case MsgType.ServerOk:
-					HandleOkResponse(container);
+					OkResponse(container);
 					break;
 
 				case MsgType.UpdatedClientsList:
@@ -183,7 +183,7 @@ namespace Rythm.Common.Network
 			}
 		}
 
-		private void HandleClientRegistration(MessageContainer container)
+		private void ClientRegistration(MessageContainer container)
 		{
 			var connectionResponse = ((JObject)container.Payload).ToObject(typeof(ConnectionResponse)) as ConnectionResponse;
 			if (connectionResponse != null && connectionResponse.Result == ResultCodes.Failure)
@@ -194,7 +194,7 @@ namespace Rythm.Common.Network
 			ConnectionStateChanged?.Invoke(this, new ConnectionStateChangedEventArgs(true));
 		}
 
-		private void HandlePersonalMessage(MessageContainer container)
+		private void PersonalMessage(MessageContainer container)
 		{
 			if (((JObject)container.Payload).ToObject(typeof(MessageRequest)) is MessageRequest messageRequest)
 			{
@@ -209,7 +209,7 @@ namespace Rythm.Common.Network
 			}
 		}
 
-		private void HandleCommonMessage(MessageContainer container)
+		private void CommonMessage(MessageContainer container)
 		{
 			var msgRequest = ((JObject)container.Payload).ToObject(typeof(CommonChatMsgResponse)) as CommonChatMsgResponse;
 			if (msgRequest != null)
@@ -225,7 +225,7 @@ namespace Rythm.Common.Network
 			}
 		}
 
-		private void HandleOkResponse(MessageContainer container)
+		private void OkResponse(MessageContainer container)
 		{
 			MsgType type = container.Identifier;
 			MsgType status;
