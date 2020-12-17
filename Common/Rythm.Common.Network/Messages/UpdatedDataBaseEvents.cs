@@ -12,20 +12,19 @@ namespace Rythm.Common.Network.Messages
 	{
 		#region Fields
 
-		public readonly List<KeyValuePair<string, string>> EventsList;
+		public readonly List<DataBaseEvent> EventsList = new List<DataBaseEvent>();
 
 		#endregion
 
 		#region Constructors
 
-		public UpdatedDataBaseEvents(List<string> eventsList, List<string> dateList)
+		public UpdatedDataBaseEvents(List<DataBaseEvent> eventsList)
 		{
 			MessageType = MsgType.UpdatedDataBaseEvents;
-			EventsList = new List<KeyValuePair<string, string>>();
 
-			for (int i = 0; i < eventsList.Count; i++)
+			foreach (var element in eventsList)
 			{
-				EventsList.Add(new KeyValuePair<string, string>(eventsList[i], dateList[i]));
+				EventsList.Add(element);
 			}
 		}
 

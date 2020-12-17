@@ -4,27 +4,14 @@
 
 namespace Rythm.Common.Network.Messages
 {
-	public class DataBaseMessage
+	public class DataBaseEvent : BaseContainer
 	{
-		#region Properties
-
-		public string Text;
+		public string Message;
 		public string Date;
-		public string ClientFrom;
-		public string ClientTo;
 
-		#endregion
-
-		#region Constructors
-
-		public DataBaseMessage(string text, string date, string clientFrom, string clientTo)
+		public DataBaseEvent(string message, string date)
 		{
-			Text = text;
-			Date = date;
-			ClientFrom = clientFrom;
-			ClientTo = clientTo;
-		}
 
-		#endregion
+		}
 	}
 }

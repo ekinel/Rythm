@@ -82,10 +82,9 @@ namespace Rythm.Client.ViewModel
 						DataBaseMessagesList.Add(new DataBaseMessagesViewModel(message));
 					});
 			}
-
 		}
 
-		private void HandleUpdatedDataBaseEventsEvent(List<KeyValuePair<string, string>> eventMessage)
+		private void HandleUpdatedDataBaseEventsEvent(List<DataBaseEvent> eventMessage)
 		{
 			ApplicationDispatcherHelper.BeginInvoke(
 				() =>
@@ -93,12 +92,12 @@ namespace Rythm.Client.ViewModel
 					DataBaseEventsList.Clear();
 				});
 
-			foreach (KeyValuePair<string, string> element in eventMessage)
+			foreach (DataBaseEvent element in eventMessage)
 			{
 				ApplicationDispatcherHelper.BeginInvoke(
 					() =>
 					{
-						DataBaseEventsList.Add(new DataBaseEventsViewModel(element.Key, element.Value));
+						DataBaseEventsList.Add(new DataBaseEventsViewModel(element.Message, element.Date));
 					});
 			}
 		}

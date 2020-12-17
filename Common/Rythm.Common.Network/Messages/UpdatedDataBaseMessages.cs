@@ -12,7 +12,7 @@ namespace Rythm.Common.Network.Messages
 	{
 		#region Properties
 
-		public List<DataBaseMessage> MessagesList;
+		public List<DataBaseMessage> MessagesList = new List<DataBaseMessage>();
 
 		#endregion
 
@@ -21,6 +21,10 @@ namespace Rythm.Common.Network.Messages
 		public UpdatedDataBaseMessages(List<DataBaseMessage> messagesList)
 		{
 			MessageType = MsgType.UpdatedDataBaseMessages;
+			foreach (var element in messagesList)
+			{
+				MessagesList.Add(element);
+			}
 			MessagesList = messagesList;
 		}
 

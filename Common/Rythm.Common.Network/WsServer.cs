@@ -333,18 +333,16 @@ namespace Rythm.Common.Network
 		private void SendUpdatedDataBaseEventsResponse()
 		{
 			IEnumerable<NewEventDataBase> dataBaseEvents = _eventDataBase.GetList();
-			var eventListString = new List<string>();
-			var dateListString = new List<string>();
+			var eventsList = new List<DataBaseEvent>();
 
 			foreach (NewEventDataBase element in dataBaseEvents)
 			{
-				eventListString.Add(element.Message);
-				dateListString.Add(element.Date);
+				eventsList.Add(new DataBaseEvent(element.Message, element.Date));
 			}
 
 			foreach (KeyValuePair<string, WsConnection> connection in _connections)
 			{
-				connection.Value.Send(new UpdatedDataBaseEvents(eventListString, dateListString).GetContainer());
+				connection.Value.Send(new UpdatedDataBaseEvents(eventsList).GetContainer());
 			}
 		}
 

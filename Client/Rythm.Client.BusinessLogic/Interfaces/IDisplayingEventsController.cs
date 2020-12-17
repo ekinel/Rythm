@@ -15,7 +15,7 @@ namespace Rythm.Client.BusinessLogic.Interfaces
 
 		event Action<List<string>> UpdatedDataBaseClientsEvent;
 		event Action<List<DataBaseMessage>> UpdatedDataBaseMessagesEvent;
-		event Action<List<KeyValuePair<string, string>>> UpdatedDataBaseEventsEvent;
+		event Action<List<DataBaseEvent>> UpdatedDataBaseEventsEvent;
 
 		#endregion
 	}
