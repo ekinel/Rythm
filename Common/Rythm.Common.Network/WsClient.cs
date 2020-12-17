@@ -233,8 +233,7 @@ namespace Rythm.Common.Network
 
 			if (type == MsgType.ServerOk)
 			{
-				var messageResponse = ((JObject)container.Payload).ToObject(typeof(ServerOkMsgResponse)) as ServerOkMsgResponse;
-				if (messageResponse != null)
+				if (((JObject)container.Payload).ToObject(typeof(ServerOkMsgResponse)) is ServerOkMsgResponse messageResponse)
 				{
 					date = messageResponse.Date;
 				}
@@ -243,8 +242,7 @@ namespace Rythm.Common.Network
 			}
 			else
 			{
-				var messageResponse = ((JObject)container.Payload).ToObject(typeof(ClientOkMsgResponse)) as ClientOkMsgResponse;
-				if (messageResponse != null)
+				if (((JObject)container.Payload).ToObject(typeof(ClientOkMsgResponse)) is ClientOkMsgResponse messageResponse)
 				{
 					date = messageResponse.Date;
 				}

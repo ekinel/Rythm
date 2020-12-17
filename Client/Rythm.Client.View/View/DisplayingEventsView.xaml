@@ -9,10 +9,24 @@
              interactivity:ViewModelLocator.AutoWireViewModel="True" 
              d:DataContext="{d:DesignInstance viewModel:DisplayingEventsViewModel}">
     <Grid Background="AliceBlue">
-		<DataGrid Name="DgUsers" AutoGenerateColumns="False" ItemsSource="{Binding DataBaseClientsList}">
+		<DataGrid AutoGenerateColumns="False" ItemsSource="{Binding DataBaseClientsList}" Visibility="{Binding DataGridClientsVisibility}">
 		    <DataGrid.Columns>
 			    <DataGridTextColumn Header="Client" Binding="{Binding Login}" />
 		    </DataGrid.Columns>
 	    </DataGrid>
-    </Grid>
+		<DataGrid AutoGenerateColumns="False" ItemsSource="{Binding DataBaseEventsList}" Visibility="{Binding DataGridEventsVisibility}">
+		    <DataGrid.Columns>
+				<DataGridTextColumn Header="Event" Binding="{Binding EventMessage}" />
+				<DataGridTextColumn Header="Date" Binding="{Binding EventDate}" />
+		    </DataGrid.Columns>
+	    </DataGrid>
+	    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding DataBaseMessagesList}" Visibility="{Binding DataGridEventsVisibility}">
+		    <DataGrid.Columns>
+			    <DataGridTextColumn Header="Message" Binding="{Binding Text}" />
+				<DataGridTextColumn Header="Date" Binding="{Binding Date}" />
+			    <DataGridTextColumn Header="From" Binding="{Binding ClientFrom}" />
+			    <DataGridTextColumn Header="To" Binding="{Binding ClientTo}" />
+			</DataGrid.Columns>
+	    </DataGrid>
+	</Grid>
 </UserControl>

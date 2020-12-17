@@ -71,11 +71,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBaseClientsViewModel.cs" />
+    <Compile Include="DataBaseEventsViewModel.cs" />
+    <Compile Include="DataBaseMessagesViewModel.cs" />
     <Compile Include="DisplayingEventsViewModel.cs" />
     <Compile Include="ConnectionParametersViewModel.cs" />
     <Compile Include="ErrorsCheckViewModel.cs" />
     <Compile Include="Events\ConnectionIndicatorColorChangedEvent.cs" />
     <Compile Include="Events\ConnectionPanelVisibilityChangedEvent.cs" />
+    <Compile Include="Events\DataBaseButtonClientsChosen.cs" />
+    <Compile Include="Events\DataBaseButtonEventsChosen.cs" />
     <Compile Include="Events\DisplayingEventsVisibility.cs" />
     <Compile Include="Events\NewClientChosenViewModel.cs" />
     <Compile Include="Events\PassLoginViewModel.cs" />

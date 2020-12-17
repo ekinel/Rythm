@@ -8,14 +8,11 @@ namespace Rythm.Common.Network.Messages
 
 	using Enums;
 
-	using Server.Dal;
-
 	public class UpdatedDataBaseEvents : BaseContainer
 	{
 		#region Fields
 
-		public readonly List<string> EventsList;
-		public readonly List<string> DateList;
+		public readonly List<KeyValuePair<string, string>> EventsList;
 
 		#endregion
 
@@ -24,8 +21,12 @@ namespace Rythm.Common.Network.Messages
 		public UpdatedDataBaseEvents(List<string> eventsList, List<string> dateList)
 		{
 			MessageType = MsgType.UpdatedDataBaseEvents;
-			EventsList = eventsList;
-			DateList = dateList;
+			EventsList = new List<KeyValuePair<string, string>>();
+
+			for (int i = 0; i < eventsList.Count; i++)
+			{
+				EventsList.Add(new KeyValuePair<string, string>(eventsList[i], dateList[i]));
+			}
 		}
 
 		#endregion

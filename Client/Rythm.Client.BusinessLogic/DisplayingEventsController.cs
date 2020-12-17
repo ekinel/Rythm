@@ -19,8 +19,8 @@ namespace Rythm.Client.BusinessLogic
 		#region Events
 
 		public event Action<List<string>> UpdatedDataBaseClientsEvent;
-		public event Action<List<string>, List<string>, List<string>, List<string>> UpdatedDataBaseMessagesEvent;
-		public event Action<List<string>, List<string>> UpdatedDataBaseEventsEvent;
+		public event Action<List<DataBaseMessage>> UpdatedDataBaseMessagesEvent;
+		public event Action<List<KeyValuePair<string, string>>> UpdatedDataBaseEventsEvent;
 
 		#endregion
 
@@ -51,11 +51,7 @@ namespace Rythm.Client.BusinessLogic
 		{
 			if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseMessages)) is UpdatedDataBaseMessages messageRequest)
 			{
-				UpdatedDataBaseMessagesEvent?.Invoke(
-					messageRequest._msgFrom,
-					messageRequest._msgTo,
-					messageRequest._msgText,
-					messageRequest._msgDate);
+				UpdatedDataBaseMessagesEvent?.Invoke(messageRequest.MessagesList);
 			}
 		}
 
@@ -63,7 +59,7 @@ namespace Rythm.Client.BusinessLogic
 		{
 			if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseEvents)) is UpdatedDataBaseEvents messageRequest)
 			{
-				UpdatedDataBaseEventsEvent?.Invoke(messageRequest.EventsList, messageRequest.DateList);
+				UpdatedDataBaseEventsEvent?.Invoke(messageRequest.EventsList);
 			}
 		}
 

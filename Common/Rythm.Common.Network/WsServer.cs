@@ -307,20 +307,14 @@ namespace Rythm.Common.Network
 		private void SendUpdatedDataBaseMsgResponse()
 		{
 			IEnumerable<NewMessageDataBase> dataBaseMessages = _msgDataBase.GetList();
-			List<string> dataBaseMsgTextList = new List<string>();
-			List<string> dataBaseToList = new List<string>();
-			List<string> dataBaseFromList = new List<string>();
-			List<string> dataBaseDateList = new List<string>();
+			var dataBaseMessagesList = new List<DataBaseMessage>();
 
 			foreach (var element in dataBaseMessages)
 			{
-				dataBaseMsgTextList.Add(element.Message);
-				dataBaseFromList.Add(element.ClientFrom);
-				dataBaseToList.Add(element.ClientTo);
-				dataBaseDateList.Add(element.Date);
+				dataBaseMessagesList.Add(new DataBaseMessage(element.Message, element.Date, element.ClientFrom, element.ClientTo));
 			}
 
-			UpdatedDataBaseMessages updatedDataBaseMessages = new UpdatedDataBaseMessages(dataBaseDateList, dataBaseFromList, dataBaseToList, dataBaseMsgTextList);
+			UpdatedDataBaseMessages updatedDataBaseMessages = new UpdatedDataBaseMessages(dataBaseMessagesList);
 
 			foreach (KeyValuePair<string, WsConnection> connection in _connections)
 			{
@@ -339,14 +333,13 @@ namespace Rythm.Common.Network
 		private void SendUpdatedDataBaseEventsResponse()
 		{
 			IEnumerable<NewEventDataBase> dataBaseEvents = _eventDataBase.GetList();
-			List<string> eventListString = new List<string>();
-			List<string> dateListString = new List<string>();
+			var eventListString = new List<string>();
+			var dateListString = new List<string>();
 
 			foreach (NewEventDataBase element in dataBaseEvents)
 			{
 				eventListString.Add(element.Message);
 				dateListString.Add(element.Date);
-
 			}
 
 			foreach (KeyValuePair<string, WsConnection> connection in _connections)
@@ -357,15 +350,17 @@ namespace Rythm.Common.Network
 
 		private void BroadcastSend(MessageContainer msgContainer, string loginFrom)
 		{
-			var messageRequest = ((JObject)msgContainer.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
-			var textMsgRequest = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
-
-			foreach (KeyValuePair<string, WsConnection> connection in _connections)
+			if (((JObject)msgContainer.Payload).ToObject(typeof(MessageRequest)) is MessageRequest messageRequest)
 			{
-				if (connection.Value.Login != loginFrom && connection.Key != Resources.CommonChat)
+				var textMsgRequest = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
+
+				foreach (KeyValuePair<string, WsConnection> connection in _connections)
 				{
-					connection.Value.Send(
-						new CommonChatMsgResponse(loginFrom, Resources.CommonChat, textMsgRequest.Message, textMsgRequest.Date).GetContainer());
+					if (connection.Value.Login != loginFrom && connection.Key != Resources.CommonChat)
+					{
+						connection.Value.Send(
+							new CommonChatMsgResponse(loginFrom, Resources.CommonChat, textMsgRequest.Message, textMsgRequest.Date).GetContainer());
+					}
 				}
 			}
 		}

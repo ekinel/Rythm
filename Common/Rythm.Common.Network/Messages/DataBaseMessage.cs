@@ -4,24 +4,25 @@
 
 namespace Rythm.Common.Network.Messages
 {
-	using System.Collections.Generic;
-
-	using Enums;
-
-	public class UpdatedDataBaseMessages : BaseContainer
+	public class DataBaseMessage
 	{
 		#region Properties
 
-		public List<DataBaseMessage> MessagesList;
+		public string Text { get; }
+		public string Date { get; }
+		public string ClientFrom { get; }
+		public string ClientTo { get; }
 
 		#endregion
 
 		#region Constructors
 
-		public UpdatedDataBaseMessages(List<DataBaseMessage> messagesList)
+		public DataBaseMessage(string text, string date, string clientFrom, string clientTo)
 		{
-			MessageType = MsgType.UpdatedDataBaseMessages;
-			MessagesList = messagesList;
+			Text = text;
+			Date = date;
+			ClientFrom = clientFrom;
+			ClientTo = clientTo;
 		}
 
 		#endregion

@@ -2,26 +2,23 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Common.Network.Messages
+namespace Rythm.Client.ViewModel
 {
-	using System.Collections.Generic;
-
-	using Enums;
-
-	public class UpdatedDataBaseMessages : BaseContainer
+	public class DataBaseEventsViewModel
 	{
 		#region Properties
 
-		public List<DataBaseMessage> MessagesList;
+		public string EventMessage { get; }
+		public string EventDate { get; }
 
 		#endregion
 
 		#region Constructors
 
-		public UpdatedDataBaseMessages(List<DataBaseMessage> messagesList)
+		public DataBaseEventsViewModel(string eventMessage, string date)
 		{
-			MessageType = MsgType.UpdatedDataBaseMessages;
-			MessagesList = messagesList;
+			EventMessage = eventMessage;
+			EventDate = date;
 		}
 
 		#endregion

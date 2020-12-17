@@ -30,6 +30,9 @@ namespace Rythm.Client.ViewModel
 
 		public ICommand ChangeSettingsVisibilityCommand { get; }
 		public ICommand DisplayingEventsVisibilityCommand { get; }
+		public ICommand ShowClientsListCommand { get; }
+		public ICommand ShowMessagesListCommand { get; }
+		public ICommand ShowEventsListCommand { get; }
 
 		public string Login
 		{
@@ -52,6 +55,8 @@ namespace Rythm.Client.ViewModel
 			_eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
 			_eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleNewLoginSelected);
 			ChangeSettingsVisibilityCommand = new DelegateCommand(ExecuteChangeSettingsVisibilityCommand);
+			ShowClientsListCommand = new DelegateCommand(ExecuteShowClientsListCommand);
+			ShowEventsListCommand = new DelegateCommand(ExecuteShowEventsListCommand);
 			DisplayingEventsVisibilityCommand = new DelegateCommand(ExecuteDisplayingEventsVisibilityCommand);
 
 			SplitterVisibility = Visibility.Collapsed;
@@ -64,6 +69,15 @@ namespace Rythm.Client.ViewModel
 		public void HandleNewLoginSelected(string login)
 		{
 			Login = login;
+		}
+
+		private void ExecuteShowClientsListCommand()
+		{
+			_eventAggregator.GetEvent<DataBaseButtonClientsChosen>().Publish();
+		}
+		private void ExecuteShowEventsListCommand()
+		{
+			_eventAggregator.GetEvent<DataBaseButtonEventsChosen>().Publish();
 		}
 
 		private void ExecuteChangeSettingsVisibilityCommand()
