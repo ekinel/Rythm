@@ -21,8 +21,6 @@ namespace Rythm.Common.Network
         event EventHandler<(MsgType, string)> OkReceive;
         event EventHandler<MessageContainer> UpdatedDataBaseData;
 
-
-
         #endregion
 
         #region Methods

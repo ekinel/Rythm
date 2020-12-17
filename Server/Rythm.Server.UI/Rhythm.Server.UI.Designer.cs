@@ -30,12 +30,12 @@
         {
 			this.ButtonStop = new System.Windows.Forms.Button();
 			this.ButtonStart = new System.Windows.Forms.Button();
-			this.TextBoxPort = new System.Windows.Forms.TextBox();
 			this.GroupBox = new System.Windows.Forms.GroupBox();
+			this.maskedTextBoxTimeOut = new System.Windows.Forms.MaskedTextBox();
+			this.MaskedTextBoxPort = new System.Windows.Forms.MaskedTextBox();
 			this.LabelDataBase = new System.Windows.Forms.Label();
 			this.TextBoxDataBase = new System.Windows.Forms.TextBox();
 			this.LabelTimeOut = new System.Windows.Forms.Label();
-			this.TextBoxTimeOut = new System.Windows.Forms.TextBox();
 			this.LabelAddress = new System.Windows.Forms.Label();
 			this.TextBoxAddress = new System.Windows.Forms.TextBox();
 			this.LabelPort = new System.Windows.Forms.Label();
@@ -66,28 +66,39 @@
 			this.ButtonStart.UseVisualStyleBackColor = true;
 			this.ButtonStart.Click += new System.EventHandler(this.ButtonStartClick);
 			// 
-			// TextBoxPort
-			// 
-			this.TextBoxPort.Location = new System.Drawing.Point(21, 61);
-			this.TextBoxPort.Name = "TextBoxPort";
-			this.TextBoxPort.Size = new System.Drawing.Size(120, 20);
-			this.TextBoxPort.TabIndex = 5;
-			// 
 			// GroupBox
 			// 
+			this.GroupBox.Controls.Add(this.maskedTextBoxTimeOut);
+			this.GroupBox.Controls.Add(this.MaskedTextBoxPort);
 			this.GroupBox.Controls.Add(this.LabelDataBase);
 			this.GroupBox.Controls.Add(this.TextBoxDataBase);
 			this.GroupBox.Controls.Add(this.LabelTimeOut);
-			this.GroupBox.Controls.Add(this.TextBoxTimeOut);
 			this.GroupBox.Controls.Add(this.LabelAddress);
 			this.GroupBox.Controls.Add(this.TextBoxAddress);
 			this.GroupBox.Controls.Add(this.LabelPort);
-			this.GroupBox.Controls.Add(this.TextBoxPort);
 			this.GroupBox.Location = new System.Drawing.Point(27, 14);
 			this.GroupBox.Name = "GroupBox";
 			this.GroupBox.Size = new System.Drawing.Size(200, 172);
 			this.GroupBox.TabIndex = 8;
 			this.GroupBox.TabStop = false;
+			// 
+			// maskedTextBoxTimeOut
+			// 
+			this.maskedTextBoxTimeOut.Location = new System.Drawing.Point(21, 99);
+			this.maskedTextBoxTimeOut.Mask = "00000";
+			this.maskedTextBoxTimeOut.Name = "maskedTextBoxTimeOut";
+			this.maskedTextBoxTimeOut.Size = new System.Drawing.Size(120, 20);
+			this.maskedTextBoxTimeOut.TabIndex = 17;
+			this.maskedTextBoxTimeOut.ValidatingType = typeof(int);
+			// 
+			// MaskedTextBoxPort
+			// 
+			this.MaskedTextBoxPort.Location = new System.Drawing.Point(21, 61);
+			this.MaskedTextBoxPort.Mask = "00000";
+			this.MaskedTextBoxPort.Name = "MaskedTextBoxPort";
+			this.MaskedTextBoxPort.Size = new System.Drawing.Size(120, 20);
+			this.MaskedTextBoxPort.TabIndex = 16;
+			this.MaskedTextBoxPort.ValidatingType = typeof(int);
 			// 
 			// LabelDataBase
 			// 
@@ -113,13 +124,6 @@
 			this.LabelTimeOut.Size = new System.Drawing.Size(73, 13);
 			this.LabelTimeOut.TabIndex = 13;
 			this.LabelTimeOut.Text = "TimeOut (sec)";
-			// 
-			// TextBoxTimeOut
-			// 
-			this.TextBoxTimeOut.Location = new System.Drawing.Point(21, 99);
-			this.TextBoxTimeOut.Name = "TextBoxTimeOut";
-			this.TextBoxTimeOut.Size = new System.Drawing.Size(120, 20);
-			this.TextBoxTimeOut.TabIndex = 12;
 			// 
 			// LabelAddress
 			// 
@@ -182,15 +186,15 @@
 
         private System.Windows.Forms.Button ButtonStop;
         private System.Windows.Forms.Button ButtonStart;
-        private System.Windows.Forms.TextBox TextBoxPort;
         private System.Windows.Forms.GroupBox GroupBox;
         private System.Windows.Forms.Label LabelDataBase;
         private System.Windows.Forms.TextBox TextBoxDataBase;
         private System.Windows.Forms.Label LabelTimeOut;
-        private System.Windows.Forms.TextBox TextBoxTimeOut;
         private System.Windows.Forms.Label LabelAddress;
         private System.Windows.Forms.TextBox TextBoxAddress;
         private System.Windows.Forms.Label LabelPort;
         private System.Windows.Forms.Label LabelServerStatus;
-    }
+		private System.Windows.Forms.MaskedTextBox MaskedTextBoxPort;
+		private System.Windows.Forms.MaskedTextBox maskedTextBoxTimeOut;
+	}
 }

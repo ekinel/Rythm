@@ -10,7 +10,7 @@ namespace Rythm.Server.Service
 	{
 		#region Fields
 
-		private readonly NetworkManager networkManager;
+		private readonly NetworkManager _networkManager;
 		private readonly ClientRepository _clientRepository = new ClientRepository();
 		private readonly MessageRepository _messageRepository = new MessageRepository();
 		private readonly EventRepository _eventRepository = new EventRepository();
@@ -22,12 +22,12 @@ namespace Rythm.Server.Service
 
 		public NetworkWrapper()
 		{
-			networkManager = new NetworkManager(_clientRepository, _messageRepository, _eventRepository);
+			_networkManager = new NetworkManager(_clientRepository, _messageRepository, _eventRepository);
 		}
 
 		public NetworkWrapper(string address, int port, int timeOut)
 		{
-			networkManager = new NetworkManager(address, port, timeOut, _clientRepository, _messageRepository, _eventRepository);
+			_networkManager = new NetworkManager(address, port, timeOut, _clientRepository, _messageRepository, _eventRepository);
 		}
 
 		#endregion
@@ -36,12 +36,12 @@ namespace Rythm.Server.Service
 
 		public void Start()
 		{
-			networkManager.Start();
+			_networkManager.Start();
 		}
 
 		public void Stop()
 		{
-			networkManager.Stop();
+			_networkManager.Stop();
 		}
 
 		#endregion

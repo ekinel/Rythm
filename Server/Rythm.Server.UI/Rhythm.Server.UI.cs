@@ -17,6 +17,7 @@ namespace Rythm.Server.UI
 
 		private const int WS_PORT = 65000;
 		private const int WS_TIMEOUT = 20;
+		private const string WS_ADDRESS = "127.0.0.1";
 
 		#endregion
 
@@ -32,6 +33,9 @@ namespace Rythm.Server.UI
 		{
 			InitializeComponent();
 			LabelServerStatus.Text = Resources.ServerStatusStop;
+			maskedTextBoxTimeOut.Text = WS_TIMEOUT.ToString();
+			TextBoxAddress.Text = WS_ADDRESS;
+			MaskedTextBoxPort.Text = WS_PORT.ToString();
 		}
 
 		#endregion
@@ -40,16 +44,16 @@ namespace Rythm.Server.UI
 
 		private void ButtonStartClick(object sender, EventArgs e)
 		{
-			string wsPort = TextBoxPort.Text;
+			string wsPort = MaskedTextBoxPort.Text;
 			string wsAddress = TextBoxAddress.Text;
-			string wsTimeOut = TextBoxTimeOut.Text;
+			string wsTimeOut = maskedTextBoxTimeOut.Text;
 
 			ButtonStop.Enabled = true;
 			ButtonStart.Enabled = false;
 
-			TextBoxPort.Enabled = false;
+			MaskedTextBoxPort.Enabled = false;
 			TextBoxAddress.Enabled = false;
-			TextBoxTimeOut.Enabled = false;
+			maskedTextBoxTimeOut.Enabled = false;
 			TextBoxDataBase.Enabled = false;
 
 			try
@@ -57,13 +61,13 @@ namespace Rythm.Server.UI
 				if (string.IsNullOrEmpty(wsPort))
 				{
 					wsPort = WS_PORT.ToString();
-					TextBoxPort.Text = wsPort;
+					MaskedTextBoxPort.Text = wsPort;
 				}
 
 				if (string.IsNullOrEmpty(wsTimeOut))
 				{
 					wsTimeOut = WS_TIMEOUT.ToString();
-					TextBoxTimeOut.Text = wsTimeOut;
+					maskedTextBoxTimeOut.Text = wsTimeOut;
 				}
 
 				_networkWrapper = new NetworkWrapper(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut));
@@ -74,20 +78,26 @@ namespace Rythm.Server.UI
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message);
+				BlockingFields();
 			}
 		}
 
 		private void ButtonStopClick(object sender, EventArgs e)
 		{
 			_networkWrapper.Stop();
+			BlockingFields();
+		}
+
+		private void BlockingFields()
+		{
 			LabelServerStatus.Text = Resources.ServerStatusStop;
 
 			ButtonStart.Enabled = true;
 			ButtonStop.Enabled = false;
 
 			TextBoxAddress.Enabled = true;
-			TextBoxPort.Enabled = true;
-			TextBoxTimeOut.Enabled = true;
+			MaskedTextBoxPort.Enabled = true;
+			maskedTextBoxTimeOut.Enabled = true;
 			TextBoxDataBase.Enabled = true;
 		}
 
