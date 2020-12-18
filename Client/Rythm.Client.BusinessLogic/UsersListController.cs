@@ -11,12 +11,6 @@ namespace Rythm.Client.BusinessLogic
 
 	public class UsersListController : IUsersListController
 	{
-		#region Fields
-
-		private readonly IChatPanelController _chatPanelController;
-
-		#endregion
-
 		#region Events
 
 		public event Action<List<string>, List<string>> UpdatedUsersListEvent;
@@ -27,8 +21,7 @@ namespace Rythm.Client.BusinessLogic
 
 		public UsersListController(IChatPanelController chatPanelController)
 		{
-			_chatPanelController = chatPanelController;
-			_chatPanelController.UpdatedUsersListEvent += HandleUpdatedUsersList;
+			chatPanelController.UpdatedUsersListEvent += HandleUpdatedUsersList;
 		}
 
 		#endregion

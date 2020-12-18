@@ -61,8 +61,7 @@ namespace Rythm.Client.BusinessLogic
 
 		private void HandleUpdatedUsersList(object sender, MessageContainer msgContainer)
 		{
-			var messageRequest = ((JObject)msgContainer.Payload).ToObject(typeof(UpdatedClientsResponse)) as UpdatedClientsResponse;
-			if (messageRequest != null)
+			if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedClientsResponse)) is UpdatedClientsResponse messageRequest)
 			{
 				UpdatedUsersListEvent?.Invoke(messageRequest.ActiveUsersList, messageRequest.NotActiveUsersList);
 			}

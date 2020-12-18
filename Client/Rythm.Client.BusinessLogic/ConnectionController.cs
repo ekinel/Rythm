@@ -59,11 +59,13 @@ namespace Rythm.Client.BusinessLogic
 
 		private void HandleConnectionOpened(object sender, EventArgs e)
 		{
-			if (!string.IsNullOrEmpty(Login))
+			if (string.IsNullOrEmpty(Login))
 			{
-				var msgContainer = new ConnectionRequest(Login);
-				CurrentTransport?.Send(msgContainer);
+				return;
 			}
+
+			var msgContainer = new ConnectionRequest(Login);
+			CurrentTransport?.Send(msgContainer);
 		}
 
 		#endregion
