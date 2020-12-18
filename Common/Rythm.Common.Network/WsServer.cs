@@ -71,7 +71,7 @@ namespace Rythm.Common.Network
 
 			_clientsNotActiveList = new List<string>(GetDataBaseClientsListToString());
 
-			//_serverTimer = new Timer(TIMER_TIME_SECOND);
+			//_serverTimer = new Timer(timeOut);
 			//_serverTimer.Elapsed += HandleOnTimedEvent;
 			//_serverTimer.Enabled = true;
 		}
