@@ -25,7 +25,7 @@ namespace Rythm.Server.UI
 		#region Fields
 
 		private NetworkWrapper _networkWrapper;
-		private readonly ServerConfiguration serverConfiguration;
+		private readonly ServerConfiguration _serverConfiguration;
 
 		#endregion
 
@@ -36,8 +36,8 @@ namespace Rythm.Server.UI
 			InitializeComponent();
 			LabelServerStatus.Text = Resources.ServerStatusStop;
 
-			serverConfiguration = new ServerConfiguration();
-			ServerParameters serverParameters = serverConfiguration.UseConfigurationFile();
+			_serverConfiguration = new ServerConfiguration();
+			ServerParameters serverParameters = _serverConfiguration.ReadConfigurationFile();
 
 			TextBoxAddress.Text = serverParameters.Address;
 			MaskedTextBoxPort.Text = serverParameters.Port.ToString();
@@ -100,7 +100,7 @@ namespace Rythm.Server.UI
 		{
 			_networkWrapper.Stop();
 			BlockingFields();
-			serverConfiguration.SaveConfigurationFile(
+			_serverConfiguration.SaveConfigurationFile(
 				TextBoxAddress.Text,
 				Convert.ToInt32(MaskedTextBoxPort.Text),
 				Convert.ToInt32(maskedTextBoxTimeOut.Text),

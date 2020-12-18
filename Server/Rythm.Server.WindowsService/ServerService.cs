@@ -27,7 +27,7 @@ namespace Rythm.Server.WindowsService
             InitializeComponent();
 
             _serverConfiguration = new ServerConfiguration();
-             _serverParameters = _serverConfiguration.UseConfigurationFile();
+             _serverParameters = _serverConfiguration.ReadConfigurationFile();
             _networkWrapper = new NetworkWrapper(_serverParameters.Address, _serverParameters.Port, _serverParameters.TimeOut, _serverParameters.DataBaseConnectionString);
         }
 

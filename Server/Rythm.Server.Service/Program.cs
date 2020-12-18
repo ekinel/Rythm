@@ -15,7 +15,7 @@ namespace Rythm.Server.Service
 			try
 			{
 				var serverConfiguration = new ServerConfiguration();
-				ServerParameters serverParameters = serverConfiguration.UseConfigurationFile();
+				ServerParameters serverParameters = serverConfiguration.ReadConfigurationFile();
 
 				var networkWrapper = new NetworkWrapper(serverParameters.Address, serverParameters.Port, serverParameters.TimeOut, serverParameters.DataBaseConnectionString);
 				networkWrapper.Start();

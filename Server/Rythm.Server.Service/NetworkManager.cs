@@ -67,8 +67,6 @@ namespace Rythm.Server.Service
 				uint wsAddress = BitConverter.ToUInt32(bytes, 0);
 
 				_wsServer = new WsServer(new IPEndPoint(wsAddress, wsPort), Convert.ToInt32(timeOut), clientDataBase, msgDataBase, eventDataBase);
-
-
 			}
 		}
 

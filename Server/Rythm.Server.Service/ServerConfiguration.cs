@@ -4,6 +4,7 @@
 
 namespace Rythm.Server.Service
 {
+	using System;
 	using System.IO;
 
 	using Newtonsoft.Json;
@@ -15,17 +16,19 @@ namespace Rythm.Server.Service
 		public void SaveConfigurationFile(string address, int port, int timeOut, string dataBaseConnectionString)
 		{
 			var serverParameters = new ServerParameters(address, port, timeOut, dataBaseConnectionString);
+			string path = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + "Configuration.json";
 
-			using (StreamWriter file = File.CreateText(@"..\..\..\..\Server\Rythm.Server.Service\Configuration.json"))
+			using (StreamWriter file = File.CreateText(path))
 			{
 				var serializer = new JsonSerializer();
 				serializer.Serialize(file, serverParameters);
 			}
 		}
 
-		public ServerParameters UseConfigurationFile()
+		public ServerParameters ReadConfigurationFile()
 		{
-			string configurationString = File.ReadAllText(@"..\..\..\..\Server\Rythm.Server.Service\Configuration.json");
+			string path = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + "Configuration.json";
+			string configurationString = File.ReadAllText(path);
 			var container = JsonConvert.DeserializeObject<ServerParameters>(configurationString);
 			return container;
 		}
