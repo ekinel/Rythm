@@ -188,17 +188,21 @@ namespace Rythm.Common.Network
 
 		private void PersonalMessage(MessageContainer container)
 		{
-			if (((JObject)container.Payload).ToObject(typeof(MessageRequest)) is MessageRequest messageRequest)
+			if (!(((JObject)container.Payload).ToObject(typeof(MessageRequest)) is MessageRequest messageRequest))
 			{
-				var textMsgRequest = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
-
-				MessageReceived?.Invoke(this, new MessageReceivedEventArgs(textMsgRequest));
-				if (textMsgRequest != null)
-				{
-					var msgContainer = new ClientOkMsgResponse(textMsgRequest.From, textMsgRequest.To, textMsgRequest.Date);
-					Send(msgContainer);
-				}
+				return;
 			}
+
+			var textMsgRequest = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
+
+			MessageReceived?.Invoke(this, new MessageReceivedEventArgs(textMsgRequest));
+			if (textMsgRequest == null)
+			{
+				return;
+			}
+
+			var msgContainer = new ClientOkMsgResponse(textMsgRequest.From, textMsgRequest.To, textMsgRequest.Date);
+			Send(msgContainer);
 		}
 
 		private void CommonMessage(MessageContainer container)
@@ -210,11 +214,13 @@ namespace Rythm.Common.Network
 				MessageReceived?.Invoke(this, mess);
 			}
 
-			if (msgRequest != null)
+			if (msgRequest == null)
 			{
-				var mgContainer = new ClientOkMsgResponse(msgRequest.From, "CommonChat", msgRequest.Date);
-				Send(mgContainer);
+				return;
 			}
+
+			var mgContainer = new ClientOkMsgResponse(msgRequest.From, "CommonChat", msgRequest.Date);
+			Send(mgContainer);
 		}
 
 		private void OkResponse(MessageContainer container)
