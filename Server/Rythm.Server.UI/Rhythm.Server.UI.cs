@@ -18,7 +18,7 @@ namespace Rythm.Server.UI
 		private const int WS_PORT = 65000;
 		private const int WS_TIMEOUT = 20;
 		private const string WS_ADDRESS = "127.0.0.1";
-		private const string WS_DATABASE_CONNECTION_STRING = "";
+		private const string WS_DATABASE_CONNECTION_STRING = "(localdb)/MSSQLLocalDB;Initial Catalog=MessageDb;Integrated Security=True;";
 
 		#endregion
 

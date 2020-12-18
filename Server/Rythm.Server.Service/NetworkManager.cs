@@ -11,6 +11,9 @@ namespace Rythm.Server.Service
 
 	using Dal;
 
+	using System.Configuration;
+
+
 	public class NetworkManager
 	{
 		#region Constants
@@ -40,7 +43,7 @@ namespace Rythm.Server.Service
 			string address,
 			int port,
 			int timeOut,
-			string edataBaseConnectionString,
+			string dataBaseConnectionString,
 			IRepository<NewClientDataBase> clientDataBase,
 			IRepository<NewMessageDataBase> msgDataBase,
 			IRepository<NewEventDataBase> eventDataBase)
@@ -57,6 +60,13 @@ namespace Rythm.Server.Service
 				uint wsAddress = BitConverter.ToUInt32(bytes, 0);
 
 				_wsServer = new WsServer(new IPEndPoint(wsAddress, wsPort), Convert.ToInt32(timeOut), clientDataBase, msgDataBase, eventDataBase);
+
+				var dataBaseConnectionSettings = new ConnectionStringSettings("DBConnection", dataBaseConnectionString, "System.Data.SqlClient");
+				Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+				config.ConnectionStrings.ConnectionStrings.Clear();
+				config.ConnectionStrings.ConnectionStrings.Add(dataBaseConnectionSettings);
+				config.Save(ConfigurationSaveMode.Modified);
+				ConfigurationManager.RefreshSection(config.ConnectionStrings.SectionInformation.Name);
 			}
 		}
 

@@ -1,1 +1,1 @@
-{"Address":"127.0.0.1","Port":65000,"TimeOut":30,"DataBaseConnectionString":"30"}
+{"Address":"127.0.0.1","Port":65000,"TimeOut":30,"DataBaseConnectionString":"data source=(localdb)/MSSQLLocalDB;Initial Catalog=MessageDb;Integrated Security=True;"}
