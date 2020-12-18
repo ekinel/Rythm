@@ -54,6 +54,13 @@ namespace Rythm.Server.Service
 			}
 			else
 			{
+				var dataBaseConnectionSettings = new ConnectionStringSettings("DBConnection", dataBaseConnectionString, "System.Data.SqlClient");
+				Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+				config.ConnectionStrings.ConnectionStrings.Clear();
+				config.ConnectionStrings.ConnectionStrings.Add(dataBaseConnectionSettings);
+				config.Save(ConfigurationSaveMode.Modified);
+				ConfigurationManager.RefreshSection(config.ConnectionStrings.SectionInformation.Name);
+
 				int wsPort = Convert.ToInt32(port);
 				IPAddress ipAddress = IPAddress.Parse(address);
 				byte[] bytes = ipAddress.GetAddressBytes();
@@ -61,12 +68,7 @@ namespace Rythm.Server.Service
 
 				_wsServer = new WsServer(new IPEndPoint(wsAddress, wsPort), Convert.ToInt32(timeOut), clientDataBase, msgDataBase, eventDataBase);
 
-				var dataBaseConnectionSettings = new ConnectionStringSettings("DBConnection", dataBaseConnectionString, "System.Data.SqlClient");
-				Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-				config.ConnectionStrings.ConnectionStrings.Clear();
-				config.ConnectionStrings.ConnectionStrings.Add(dataBaseConnectionSettings);
-				config.Save(ConfigurationSaveMode.Modified);
-				ConfigurationManager.RefreshSection(config.ConnectionStrings.SectionInformation.Name);
+
 			}
 		}
 
