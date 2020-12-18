@@ -177,8 +177,7 @@ namespace Rythm.Common.Network
 
 		private void ClientRegistration(MessageContainer container)
 		{
-			var connectionResponse = ((JObject)container.Payload).ToObject(typeof(ConnectionResponse)) as ConnectionResponse;
-			if (connectionResponse != null && connectionResponse.Result == ResultCodes.Failure)
+			if (((JObject)container.Payload).ToObject(typeof(ConnectionResponse)) is ConnectionResponse connectionResponse && connectionResponse.Result == ResultCodes.Failure)
 			{
 				return;
 			}
