@@ -14,7 +14,9 @@ namespace Rythm.Server.WindowsService
     {
         #region Fields
 
-        public NetworkManager _networkManager;
+        private readonly NetworkWrapper _networkWrapper;
+        private readonly ServerConfiguration _serverConfiguration;
+        private readonly ServerParameters _serverParameters;
 
         #endregion
 
@@ -23,6 +25,10 @@ namespace Rythm.Server.WindowsService
         public ServerService()
         {
             InitializeComponent();
+
+            _serverConfiguration = new ServerConfiguration();
+             _serverParameters = _serverConfiguration.UseConfigurationFile();
+            _networkWrapper = new NetworkWrapper(_serverParameters.Address, _serverParameters.Port, _serverParameters.TimeOut, _serverParameters.DataBaseConnectionString);
         }
 
         #endregion
@@ -31,12 +37,13 @@ namespace Rythm.Server.WindowsService
 
         protected override void OnStart(string[] args)
         {
-	        _networkManager.Start();
+	        _networkWrapper.Start();
         }
 
         protected override void OnStop()
         {
-	        _networkManager.Stop();
+	        _networkWrapper.Stop();
+	        _serverConfiguration.SaveConfigurationFile(_serverParameters.Address, _serverParameters.Port, _serverParameters.TimeOut, _serverParameters.DataBaseConnectionString);
         }
 
         #endregion
