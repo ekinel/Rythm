@@ -28,7 +28,13 @@ namespace Rythm.Server.Service
 		public ServerParameters ReadConfigurationFile()
 		{
 			string path = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + "Configuration.json";
+			if (!File.Exists(path))
+			{
+				return new ServerParameters(string.Empty, 0, 0, string.Empty);
+			}
+
 			string configurationString = File.ReadAllText(path);
+
 			var container = JsonConvert.DeserializeObject<ServerParameters>(configurationString);
 			return container;
 		}
