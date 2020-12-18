@@ -41,7 +41,7 @@ namespace Rythm.Server.UI
 
 			_serverConfiguration = new ServerConfiguration();
 
-			if (FillingFields(_serverConfiguration))
+			if (FillingFields())
 			{
 				return;
 			}
@@ -160,7 +160,7 @@ namespace Rythm.Server.UI
 			TextBoxDataBase.Enabled = true;
 		}
 
-		private bool FillingFields(ServerConfiguration serverConfiguration)
+		private bool FillingFields()
 		{
 			ServerParameters serverParameters = _serverConfiguration.ReadConfigurationFile();
 			if (string.IsNullOrEmpty(serverParameters.Address))

@@ -15,16 +15,25 @@ namespace Rythm.Server.Service
 			try
 			{
 				var serverConfiguration = new ServerConfiguration();
-				ServerParameters serverParameters = serverConfiguration.ReadConfigurationFile();
+				NetworkWrapper networkWrapper;
 
-				var networkWrapper = new NetworkWrapper(serverParameters.Address, serverParameters.Port, serverParameters.TimeOut, serverParameters.DataBaseConnectionString);
+				if (FillingFields(serverConfiguration))
+				{
+					ServerParameters serverParameters = serverConfiguration.ReadConfigurationFile();
+					networkWrapper = new NetworkWrapper(serverParameters.Address, serverParameters.Port, serverParameters.TimeOut, serverParameters.DataBaseConnectionString);
+
+				}
+				else
+				{
+					networkWrapper = new NetworkWrapper();
+				}
+
 				networkWrapper.Start();
-
 
 				Console.ReadLine();
 
 				networkWrapper.Stop();
-				serverConfiguration.SaveConfigurationFile(serverParameters.Address, serverParameters.Port, serverParameters.TimeOut, serverParameters.DataBaseConnectionString);
+				//serverConfiguration.SaveConfigurationFile(serverParameters.Address, serverParameters.Port, serverParameters.TimeOut, serverParameters.DataBaseConnectionString);
 			}
 			catch (Exception ex)
 			{
@@ -34,5 +43,11 @@ namespace Rythm.Server.Service
 		}
 
 		#endregion
+
+		private static bool FillingFields(ServerConfiguration serverConfiguration)
+		{
+			ServerParameters serverParameters = serverConfiguration.ReadConfigurationFile();
+			return !string.IsNullOrEmpty(serverParameters.Address);
+		}
 	}
 }
