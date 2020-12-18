@@ -167,52 +167,54 @@ namespace Rythm.Common.Network
 				Result = ResultCodes.Ok
 			};
 
-			if (connectionRequest != null)
+			if (connectionRequest == null)
 			{
-				if (_connections.Values.Any(item => item.Login == connectionRequest.Login))
+				return;
+			}
+
+			if (_connections.Values.Any(item => item.Login == connectionRequest.Login))
+			{
+				connectionResponse.Result = ResultCodes.Failure;
+				connectionResponse.Reason = $"Client named '{connectionRequest.Login}' is already connected.";
+				connection.Send(connectionResponse.GetContainer());
+			}
+			else
+			{
+				connection.Login = connectionRequest.Login;
+				_connections.TryAdd(connection.Login, connection);
+
+				connection.Send(connectionResponse.GetContainer());
+				_clientsNotActiveList.Remove(connection.Login);
+
+				SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, GetNotActiveClientsList()));
+				_clientsActivity.TryAdd(connection.Login, new ClientActivity(connection.Login));
+
+				_eventDataBase.Create(
+					new NewEventDataBase
+					{
+						Date = DateTime.Now.ToString(),
+						Message = $"Client {connection.Login} connected"
+					});
+
+				if (_isCommonChatCreated)
 				{
-					connectionResponse.Result = ResultCodes.Failure;
-					connectionResponse.Reason = $"Client named '{connectionRequest.Login}' is already connected.";
-					connection.Send(connectionResponse.GetContainer());
+					CreateCommonChat(connection);
 				}
-				else
+
+				List<string> dataBaseListLoginsString = GetDataBaseClientsListToString();
+
+				if (!dataBaseListLoginsString.Contains(connection.Login))
 				{
-					connection.Login = connectionRequest.Login;
-					_connections.TryAdd(connection.Login, connection);
-
-					connection.Send(connectionResponse.GetContainer());
-					_clientsNotActiveList.Remove(connection.Login);
-
-					SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, GetNotActiveClientsList()));
-					_clientsActivity.TryAdd(connection.Login, new ClientActivity(connection.Login));
-
-					_eventDataBase.Create(
-						new NewEventDataBase
+					_clientDataBase.Create(
+						new NewClientDataBase
 						{
-							Date = DateTime.Now.ToString(),
-							Message = $"Client {connection.Login} connected"
+							Login = connection.Login
 						});
-
-					if (_isCommonChatCreated)
-					{
-						CreateCommonChat(connection);
-					}
-
-					List<string> dataBaseListLoginsString = GetDataBaseClientsListToString();
-
-					if (!dataBaseListLoginsString.Contains(connection.Login))
-					{
-						_clientDataBase.Create(
-							new NewClientDataBase
-							{
-								Login = connection.Login
-							});
-					}
-
-					SendUpdatedDataBaseClientsResponse();
-					SendUpdatedDataBaseMsgResponse();
-					SendUpdatedDataBaseEventsResponse();
 				}
+
+				SendUpdatedDataBaseClientsResponse();
+				SendUpdatedDataBaseMsgResponse();
+				SendUpdatedDataBaseEventsResponse();
 			}
 		}
 
@@ -228,45 +230,49 @@ namespace Rythm.Common.Network
 		{
 			var messageRequest = ((JObject)container.Payload).ToObject(typeof(MessageRequest)) as MessageRequest;
 
-			if (((JObject)messageRequest?.MsgContainer)?.ToObject(typeof(TextMsgRequest)) is TextMsgRequest textMsgContainer)
+			if (!(((JObject)messageRequest?.MsgContainer)?.ToObject(typeof(TextMsgRequest)) is TextMsgRequest textMsgContainer))
 			{
-				var serverOkPayload = new ServerOkMsgResponse(textMsgContainer.From, textMsgContainer.To, textMsgContainer.Date);
-				MessageContainer serverOkContainer = serverOkPayload.GetContainer();
-
-				if (textMsgContainer.To == Resources.CommonChat)
-				{
-					BroadcastSend(container, textMsgContainer.From);
-				}
-				else
-				{
-					SendMessage(container, textMsgContainer.To);
-					SendMessage(serverOkContainer, textMsgContainer.From);
-				}
-
-				UpdateLastClientActivity(textMsgContainer.From);
-
-				_msgDataBase.Create(
-					new NewMessageDataBase
-					{
-						Date = textMsgContainer.Date,
-						Message = textMsgContainer.Message,
-						ClientFrom = textMsgContainer.From,
-						ClientTo = textMsgContainer.To
-					});
-
-				SendUpdatedDataBaseMsgResponse();
+				return;
 			}
+
+			var serverOkPayload = new ServerOkMsgResponse(textMsgContainer.From, textMsgContainer.To, textMsgContainer.Date);
+			MessageContainer serverOkContainer = serverOkPayload.GetContainer();
+
+			if (textMsgContainer.To == Resources.CommonChat)
+			{
+				BroadcastSend(container, textMsgContainer.From);
+			}
+			else
+			{
+				SendMessage(container, textMsgContainer.To);
+				SendMessage(serverOkContainer, textMsgContainer.From);
+			}
+
+			UpdateLastClientActivity(textMsgContainer.From);
+
+			_msgDataBase.Create(
+				new NewMessageDataBase
+				{
+					Date = textMsgContainer.Date,
+					Message = textMsgContainer.Message,
+					ClientFrom = textMsgContainer.From,
+					ClientTo = textMsgContainer.To
+				});
+
+			SendUpdatedDataBaseMsgResponse();
 		}
 
 		private void ClientOk(MessageContainer container)
 		{
-			if (((JObject)container.Payload).ToObject(typeof(ClientOkMsgResponse)) is ClientOkMsgResponse clientOkMsgContainer)
+			if (!(((JObject)container.Payload).ToObject(typeof(ClientOkMsgResponse)) is ClientOkMsgResponse clientOkMsgContainer))
 			{
-				MessageContainer clientOkContainer = clientOkMsgContainer.GetContainer();
-
-				SendMessage(clientOkContainer, clientOkMsgContainer.From);
-				UpdateLastClientActivity(clientOkMsgContainer.From);
+				return;
 			}
+
+			MessageContainer clientOkContainer = clientOkMsgContainer.GetContainer();
+
+			SendMessage(clientOkContainer, clientOkMsgContainer.From);
+			UpdateLastClientActivity(clientOkMsgContainer.From);
 		}
 
 		private void HandleOnTimedEvent(object source, ElapsedEventArgs e)
@@ -294,11 +300,13 @@ namespace Rythm.Common.Network
 					deltaTimeSeconds += deltaTimeMinute * 60;
 				}
 
-				if (deltaTimeSeconds > _timeOut)
+				if (deltaTimeSeconds <= _timeOut)
 				{
-					FreeConnection(client.Key);
-					_clientsActivity.TryRemove(client.Key, out ClientActivity value);
+					continue;
 				}
+
+				FreeConnection(client.Key);
+				_clientsActivity.TryRemove(client.Key, out ClientActivity value);
 			}
 		}
 
@@ -352,17 +360,19 @@ namespace Rythm.Common.Network
 
 		private void BroadcastSend(MessageContainer msgContainer, string loginFrom)
 		{
-			if (((JObject)msgContainer.Payload).ToObject(typeof(MessageRequest)) is MessageRequest messageRequest)
+			if (!(((JObject)msgContainer.Payload).ToObject(typeof(MessageRequest)) is MessageRequest messageRequest))
 			{
-				var textMsgRequest = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
+				return;
+			}
 
-				foreach (KeyValuePair<string, WsConnection> connection in _connections)
+			var textMsgRequest = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
+
+			foreach (KeyValuePair<string, WsConnection> connection in _connections)
+			{
+				if (connection.Value.Login != loginFrom && connection.Key != Resources.CommonChat)
 				{
-					if (connection.Value.Login != loginFrom && connection.Key != Resources.CommonChat)
-					{
-						connection.Value.Send(
-							new CommonChatMsgResponse(loginFrom, Resources.CommonChat, textMsgRequest.Message, textMsgRequest.Date).GetContainer());
-					}
+					connection.Value.Send(
+						new CommonChatMsgResponse(loginFrom, Resources.CommonChat, textMsgRequest.Message, textMsgRequest.Date).GetContainer());
 				}
 			}
 		}
@@ -382,13 +392,15 @@ namespace Rythm.Common.Network
 		{
 			foreach (KeyValuePair<string, WsConnection> connection in _connections)
 			{
-				if (connection.Key != Resources.CommonChat)
+				if (connection.Key == Resources.CommonChat)
 				{
-					ICollection<string> updatedActiveClientsList = new List<string>(updatedClientsResponse.ActiveUsersList);
-					updatedActiveClientsList.Remove(connection.Key);
-					var newUpdatedClientsResponse = new UpdatedClientsResponse(updatedActiveClientsList, updatedClientsResponse.NotActiveUsersList);
-					connection.Value.Send(newUpdatedClientsResponse.GetContainer());
+					continue;
 				}
+
+				ICollection<string> updatedActiveClientsList = new List<string>(updatedClientsResponse.ActiveUsersList);
+				updatedActiveClientsList.Remove(connection.Key);
+				var newUpdatedClientsResponse = new UpdatedClientsResponse(updatedActiveClientsList, updatedClientsResponse.NotActiveUsersList);
+				connection.Value.Send(newUpdatedClientsResponse.GetContainer());
 			}
 		}
 
