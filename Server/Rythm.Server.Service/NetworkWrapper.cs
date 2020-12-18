@@ -25,9 +25,9 @@ namespace Rythm.Server.Service
 			_networkManager = new NetworkManager(_clientRepository, _messageRepository, _eventRepository);
 		}
 
-		public NetworkWrapper(string address, int port, int timeOut)
+		public NetworkWrapper(string address, int port, int timeOut, string dataBaseConnectionString)
 		{
-			_networkManager = new NetworkManager(address, port, timeOut, _clientRepository, _messageRepository, _eventRepository);
+			_networkManager = new NetworkManager(address, port, timeOut, dataBaseConnectionString, _clientRepository, _messageRepository, _eventRepository);
 		}
 
 		#endregion

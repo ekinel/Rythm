@@ -40,6 +40,7 @@ namespace Rythm.Server.Service
 			string address,
 			int port,
 			int timeOut,
+			string edataBaseConnectionString,
 			IRepository<NewClientDataBase> clientDataBase,
 			IRepository<NewMessageDataBase> msgDataBase,
 			IRepository<NewEventDataBase> eventDataBase)

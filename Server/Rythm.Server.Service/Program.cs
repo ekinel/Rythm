@@ -14,12 +14,17 @@ namespace Rythm.Server.Service
 		{
 			try
 			{
-				var networkWrapper = new NetworkWrapper();
+				var serverConfiguration = new ServerConfiguration();
+				ServerParameters serverParameters = serverConfiguration.UseConfigurationFile();
+
+				var networkWrapper = new NetworkWrapper(serverParameters.Address, serverParameters.Port, serverParameters.TimeOut, serverParameters.DataBaseConnectionString);
 				networkWrapper.Start();
+
 
 				Console.ReadLine();
 
 				networkWrapper.Stop();
+				serverConfiguration.SaveConfigurationFile(serverParameters.Address, serverParameters.Port, serverParameters.TimeOut, serverParameters.DataBaseConnectionString);
 			}
 			catch (Exception ex)
 			{

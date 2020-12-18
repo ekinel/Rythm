@@ -18,6 +18,7 @@ namespace Rythm.Server.UI
 		private const int WS_PORT = 65000;
 		private const int WS_TIMEOUT = 20;
 		private const string WS_ADDRESS = "127.0.0.1";
+		private const string WS_DATABASE_CONNECTION_STRING = "";
 
 		#endregion
 
@@ -33,9 +34,14 @@ namespace Rythm.Server.UI
 		{
 			InitializeComponent();
 			LabelServerStatus.Text = Resources.ServerStatusStop;
-			maskedTextBoxTimeOut.Text = WS_TIMEOUT.ToString();
-			TextBoxAddress.Text = WS_ADDRESS;
-			MaskedTextBoxPort.Text = WS_PORT.ToString();
+
+			var serverConfiguration = new ServerConfiguration();
+			ServerParameters serverParameters = serverConfiguration.UseConfigurationFile();
+
+			TextBoxAddress.Text = serverParameters.Address;
+			MaskedTextBoxPort.Text = serverParameters.Port.ToString();
+			maskedTextBoxTimeOut.Text = serverParameters.TimeOut.ToString();
+			TextBoxDataBase.Text = serverParameters.DataBaseConnectionString;
 		}
 
 		#endregion
@@ -47,6 +53,7 @@ namespace Rythm.Server.UI
 			string wsPort = MaskedTextBoxPort.Text;
 			string wsAddress = TextBoxAddress.Text;
 			string wsTimeOut = maskedTextBoxTimeOut.Text;
+			string wsDataBase = TextBoxDataBase.Text;
 
 			ButtonStop.Enabled = true;
 			ButtonStart.Enabled = false;
@@ -70,7 +77,13 @@ namespace Rythm.Server.UI
 					maskedTextBoxTimeOut.Text = wsTimeOut;
 				}
 
-				_networkWrapper = new NetworkWrapper(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut));
+				if (string.IsNullOrEmpty(wsDataBase))
+				{
+					wsDataBase = WS_DATABASE_CONNECTION_STRING;
+					TextBoxDataBase.Text = wsTimeOut;
+				}
+
+				_networkWrapper = new NetworkWrapper(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut), wsDataBase);
 				_networkWrapper.Start();
 
 				LabelServerStatus.Text = Resources.ServerStatusStart;

@@ -48,6 +48,9 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Text.Json, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Text.Json.2.0.0.11\lib\net40\System.Text.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +63,8 @@
     <Compile Include="NetworkWrapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerConfiguration.cs" />
+    <Compile Include="ServerParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
