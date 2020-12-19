@@ -39,10 +39,6 @@ namespace Rythm.Server.Dal
 			}
 		}
 
-		public void Update(NewMessageDataBase item)
-		{
-		}
-
 		public void Save()
 		{
 			using (var context = new DataBaseContext())

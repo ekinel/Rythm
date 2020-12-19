@@ -13,7 +13,6 @@ namespace Rythm.Server.Dal
 		IEnumerable<T> GetList();
 		T GetElement(string id);
 		void Create(T item);
-		void Update(T item);
 		void Save();
 
 		#endregion
