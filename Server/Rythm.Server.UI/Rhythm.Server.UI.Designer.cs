@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RythmServerUI));
 			this.ButtonStop = new System.Windows.Forms.Button();
 			this.ButtonStart = new System.Windows.Forms.Button();
 			this.GroupBox = new System.Windows.Forms.GroupBox();
@@ -168,6 +169,7 @@
 			this.Controls.Add(this.ButtonStop);
 			this.Controls.Add(this.ButtonStart);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.MaximumSize = new System.Drawing.Size(500, 250);
 			this.MinimizeBox = false;
