@@ -38,7 +38,6 @@ namespace Rythm.Common.Network
 		private readonly ConcurrentDictionary<string, ClientActivity> _clientsActivity;
 
 		private WebSocketServer _server;
-		private bool _isCommonChatCreated = true;
 
 		private readonly int _timeOut;
 
@@ -141,7 +140,7 @@ namespace Rythm.Common.Network
 
 		internal void FreeConnection(string login)
 		{
-			if (login != Resources.CommonChat && _connections.TryGetValue(login, out WsConnection x))
+			if (_connections.TryGetValue(login, out WsConnection x))
 			{
 				_connections[login].Close();
 				_connections.TryRemove(login, out WsConnection connection);
@@ -196,11 +195,6 @@ namespace Rythm.Common.Network
 						Message = $"Client {connection.Login} connected"
 					});
 
-				if (_isCommonChatCreated)
-				{
-					CreateCommonChat(connection);
-				}
-
 				List<string> dataBaseListLoginsString = GetDataBaseClientsListToString();
 
 				if (!dataBaseListLoginsString.Contains(connection.Login))
@@ -216,14 +210,6 @@ namespace Rythm.Common.Network
 				SendUpdatedDataBaseMsgResponse();
 				SendUpdatedDataBaseEventsResponse();
 			}
-		}
-
-		private void CreateCommonChat(WsConnection connection)
-		{
-			_connections.TryAdd(Resources.CommonChat, connection);
-			_isCommonChatCreated = !_isCommonChatCreated;
-
-			SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, GetNotActiveClientsList()));
 		}
 
 		private void PersonalMessage(WsConnection connection, MessageContainer container)
@@ -369,7 +355,7 @@ namespace Rythm.Common.Network
 
 			foreach (KeyValuePair<string, WsConnection> connection in _connections)
 			{
-				if (connection.Value.Login != loginFrom && connection.Key != Resources.CommonChat)
+				if (connection.Value.Login != loginFrom)
 				{
 					connection.Value.Send(
 						new CommonChatMsgResponse(loginFrom, Resources.CommonChat, textMsgRequest.Message, textMsgRequest.Date).GetContainer());
@@ -381,7 +367,7 @@ namespace Rythm.Common.Network
 		{
 			foreach (KeyValuePair<string, WsConnection> connection in _connections)
 			{
-				if (connection.Key == targetId && connection.Key != Resources.CommonChat)
+				if (connection.Key == targetId)
 				{
 					connection.Value.Send(msgContainer);
 				}
@@ -392,11 +378,6 @@ namespace Rythm.Common.Network
 		{
 			foreach (KeyValuePair<string, WsConnection> connection in _connections)
 			{
-				if (connection.Key == Resources.CommonChat)
-				{
-					continue;
-				}
-
 				ICollection<string> updatedActiveClientsList = new List<string>(updatedClientsResponse.ActiveUsersList);
 				updatedActiveClientsList.Remove(connection.Key);
 				var newUpdatedClientsResponse = new UpdatedClientsResponse(updatedActiveClientsList, updatedClientsResponse.NotActiveUsersList);

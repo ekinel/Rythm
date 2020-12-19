@@ -41,6 +41,7 @@ namespace Rythm.Client.ViewModel
             _usersListController.UpdatedUsersListEvent += HandleUpdatedUsersList;
 
             UserList = new ObservableCollection<UsersLoginsViewModel>();
+
         }
 
         #endregion
@@ -53,6 +54,11 @@ namespace Rythm.Client.ViewModel
             {
 	            UserList.Clear();
             });
+
+	        ApplicationDispatcherHelper.BeginInvoke(() =>
+	        {
+		        UserList.Add(new UsersLoginsViewModel(_eventAggregator, "CommonChat", true));
+	        });
 
             foreach (string user in activeUsersList)
             {
