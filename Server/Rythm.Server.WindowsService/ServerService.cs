@@ -4,48 +4,69 @@
 
 namespace Rythm.Server.WindowsService
 {
-    using System.ComponentModel;
-    using System.ServiceProcess;
-    using System.Threading;
+	using System.ServiceProcess;
 
-    using Service;
+	using Service;
 
-    public partial class ServerService : ServiceBase
-    {
-        #region Fields
+	public partial class ServerService : ServiceBase
+	{
+		#region Fields
 
-        private readonly NetworkWrapper _networkWrapper;
-        private readonly ServerConfiguration _serverConfiguration;
-        private readonly ServerParameters _serverParameters;
+		private readonly NetworkWrapper _networkWrapper;
+		private readonly ServerConfiguration _serverConfiguration;
+		private readonly ServerParameters _serverParameters;
 
-        #endregion
+		#endregion
 
-        #region Constructors
+		#region Constructors
 
-        public ServerService()
-        {
-            InitializeComponent();
+		public ServerService()
+		{
+			InitializeComponent();
 
-            _serverConfiguration = new ServerConfiguration();
-             _serverParameters = _serverConfiguration.ReadConfigurationFile();
-            _networkWrapper = new NetworkWrapper(_serverParameters.Address, _serverParameters.Port, _serverParameters.TimeOut, _serverParameters.DataBaseConnectionString);
-        }
+			_serverConfiguration = new ServerConfiguration();
+			_serverParameters = _serverConfiguration.ReadConfigurationFile();
 
-        #endregion
+			if (FillingFields(_serverConfiguration))
+			{
+				ServerParameters serverParameters = _serverConfiguration.ReadConfigurationFile();
+				_networkWrapper = new NetworkWrapper(
+					serverParameters.Address,
+					serverParameters.Port,
+					serverParameters.TimeOut,
+					serverParameters.DataBaseConnectionString);
+			}
+			else
+			{
+				_networkWrapper = new NetworkWrapper();
+			}
+		}
 
-        #region Methods
+		#endregion
 
-        protected override void OnStart(string[] args)
-        {
-	        _networkWrapper.Start();
-        }
+		#region Methods
 
-        protected override void OnStop()
-        {
-	        _networkWrapper.Stop();
-	        _serverConfiguration.SaveConfigurationFile(_serverParameters.Address, _serverParameters.Port, _serverParameters.TimeOut, _serverParameters.DataBaseConnectionString);
-        }
+		protected override void OnStart(string[] args)
+		{
+			_networkWrapper.Start();
+		}
 
-        #endregion
-    }
+		protected override void OnStop()
+		{
+			_networkWrapper.Stop();
+			_serverConfiguration.SaveConfigurationFile(
+				_serverParameters.Address,
+				_serverParameters.Port,
+				_serverParameters.TimeOut,
+				_serverParameters.DataBaseConnectionString);
+		}
+
+		private static bool FillingFields(ServerConfiguration serverConfiguration)
+		{
+			ServerParameters serverParameters = serverConfiguration.ReadConfigurationFile();
+			return !string.IsNullOrEmpty(serverParameters.Address);
+		}
+
+		#endregion
+	}
 }

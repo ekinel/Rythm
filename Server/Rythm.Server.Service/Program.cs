@@ -8,20 +8,30 @@ namespace Rythm.Server.Service
 
 	internal class Server
 	{
+		#region Fields
+
+		private static ServerConfiguration _serverConfiguration;
+		private static ServerParameters _serverParameters;
+
+		#endregion
+
 		#region Methods
 
 		private static void Main(string[] args)
 		{
 			try
 			{
-				var serverConfiguration = new ServerConfiguration();
+				_serverConfiguration = new ServerConfiguration();
 				NetworkWrapper networkWrapper;
 
-				if (FillingFields(serverConfiguration))
+				if (FillingFields(_serverConfiguration))
 				{
-					ServerParameters serverParameters = serverConfiguration.ReadConfigurationFile();
-					networkWrapper = new NetworkWrapper(serverParameters.Address, serverParameters.Port, serverParameters.TimeOut, serverParameters.DataBaseConnectionString);
-
+					_serverParameters = _serverConfiguration.ReadConfigurationFile();
+					networkWrapper = new NetworkWrapper(
+						_serverParameters.Address,
+						_serverParameters.Port,
+						_serverParameters.TimeOut,
+						_serverParameters.DataBaseConnectionString);
 				}
 				else
 				{
@@ -33,7 +43,11 @@ namespace Rythm.Server.Service
 				Console.ReadLine();
 
 				networkWrapper.Stop();
-				//serverConfiguration.SaveConfigurationFile(serverParameters.Address, serverParameters.Port, serverParameters.TimeOut, serverParameters.DataBaseConnectionString);
+				_serverConfiguration.SaveConfigurationFile(
+					_serverParameters.Address,
+					_serverParameters.Port,
+					_serverParameters.TimeOut,
+					_serverParameters.DataBaseConnectionString);
 			}
 			catch (Exception ex)
 			{
@@ -42,12 +56,12 @@ namespace Rythm.Server.Service
 			}
 		}
 
-		#endregion
-
 		private static bool FillingFields(ServerConfiguration serverConfiguration)
 		{
 			ServerParameters serverParameters = serverConfiguration.ReadConfigurationFile();
 			return !string.IsNullOrEmpty(serverParameters.Address);
 		}
+
+		#endregion
 	}
 }
