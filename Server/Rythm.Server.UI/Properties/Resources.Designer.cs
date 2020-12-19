@@ -61,6 +61,15 @@ namespace Rythm.Server.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IP-address isn&apos;t corrects.
+        /// </summary>
+        internal static string NotCorrectIPAddess {
+            get {
+                return ResourceManager.GetString("NotCorrectIPAddess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Server status: server started.
         /// </summary>
         internal static string ServerStatusStart {

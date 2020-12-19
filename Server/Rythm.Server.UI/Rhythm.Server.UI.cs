@@ -30,6 +30,8 @@ namespace Rythm.Server.UI
 		private NetworkWrapper _networkWrapper;
 		private readonly ServerConfiguration _serverConfiguration;
 
+		private bool _buttonEnabled = true;
+
 		#endregion
 
 		#region Constructors
@@ -65,20 +67,13 @@ namespace Rythm.Server.UI
 
 			if (!CheckingParameters(wsAddress, wsPort, wsTimeOut, wsDataBase))
 			{
-				MessageBox.Show("IP-address isn't corrects");
+				MessageBox.Show(Properties.Resources.NotCorrectIPAddess);
 			}
 			else
 			{
 				try
 				{
-					ButtonStop.Enabled = true;
-					ButtonStart.Enabled = false;
-
-					MaskedTextBoxPort.Enabled = false;
-					TextBoxAddress.Enabled = false;
-					maskedTextBoxTimeOut.Enabled = false;
-					TextBoxDataBase.Enabled = false;
-
+					BlockingFields();
 					_networkWrapper = new NetworkWrapper(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut), wsDataBase);
 					_networkWrapper.Start();
 
@@ -137,9 +132,11 @@ namespace Rythm.Server.UI
 				Convert.ToInt32(MaskedTextBoxPort.Text),
 				Convert.ToInt32(maskedTextBoxTimeOut.Text),
 				TextBoxDataBase.Text);
+
+			LabelServerStatus.Text = Resources.ServerStatusStop;
 		}
 
-		private bool CorrectAddress(string address)
+		private static bool CorrectAddress(string address)
 		{
 			var regex = new Regex(ADDRESS_PATTERN);
 			Match compare = regex.Match(address);
@@ -149,15 +146,15 @@ namespace Rythm.Server.UI
 
 		private void BlockingFields()
 		{
-			LabelServerStatus.Text = Resources.ServerStatusStop;
+			_buttonEnabled = !_buttonEnabled;
 
-			ButtonStart.Enabled = true;
-			ButtonStop.Enabled = false;
+			ButtonStart.Enabled = _buttonEnabled;
+			ButtonStop.Enabled = !_buttonEnabled;
 
-			TextBoxAddress.Enabled = true;
-			MaskedTextBoxPort.Enabled = true;
-			maskedTextBoxTimeOut.Enabled = true;
-			TextBoxDataBase.Enabled = true;
+			TextBoxAddress.Enabled = _buttonEnabled;
+			MaskedTextBoxPort.Enabled = _buttonEnabled;
+			maskedTextBoxTimeOut.Enabled = _buttonEnabled;
+			TextBoxDataBase.Enabled = _buttonEnabled;
 		}
 
 		private bool FillingFields()
