@@ -56,7 +56,6 @@
     <Compile Include="EventRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="MessageRepository.cs" />
-    <Compile Include="Migrations\Configurations.cs" />
     <Compile Include="NewClientDataBase.cs" />
     <Compile Include="NewEventDataBase.cs" />
     <Compile Include="NewMessageDataBase.cs" />

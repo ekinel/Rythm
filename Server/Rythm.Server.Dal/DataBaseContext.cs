@@ -22,7 +22,6 @@ namespace Rythm.Server.Dal
 		public DataBaseContext()
 			: base("DBConnection")
 		{
-			//Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataBaseContext, Migrations.Configuration>());
 		}
 
 		#endregion
@@ -31,7 +30,6 @@ namespace Rythm.Server.Dal
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			//base.OnModelCreating(modelBuilder);
 			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 		}
 
