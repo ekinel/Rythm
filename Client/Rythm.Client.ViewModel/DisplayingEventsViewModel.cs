@@ -6,6 +6,7 @@ namespace Rythm.Client.ViewModel
 {
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
+	using System.Linq;
 	using System.Windows;
 
 	using BusinessLogic.Interfaces;
@@ -20,34 +21,42 @@ namespace Rythm.Client.ViewModel
 
 	public class DisplayingEventsViewModel : BindableBase
 	{
+		#region Fields
+
 		private Visibility _dataGridClientsVisibility = Visibility.Visible;
 		private Visibility _dataGridMessagesVisibility = Visibility.Hidden;
 		private Visibility _dataGridEventsVisibility = Visibility.Hidden;
+
+		#endregion
+
+		#region Properties
 
 		public Visibility DataGridClientsVisibility
 		{
 			get => _dataGridClientsVisibility;
 			set => SetProperty(ref _dataGridClientsVisibility, value);
 		}
+
 		public Visibility DataGridMessagesVisibility
 		{
 			get => _dataGridMessagesVisibility;
 			set => SetProperty(ref _dataGridMessagesVisibility, value);
 		}
+
 		public Visibility DataGridEventsVisibility
 		{
 			get => _dataGridEventsVisibility;
 			set => SetProperty(ref _dataGridEventsVisibility, value);
 		}
 
-
-		#region Properties
-
 		public ObservableCollection<DataBaseClientsViewModel> DataBaseClientsList { get; set; } =
 			new ObservableCollection<DataBaseClientsViewModel>();
 
-		public ObservableCollection<DataBaseMessagesViewModel> DataBaseMessagesList { get; set; } = new ObservableCollection<DataBaseMessagesViewModel>();
+		public ObservableCollection<DataBaseMessagesViewModel> DataBaseOwnMessagesList { get; set; } =
+			new ObservableCollection<DataBaseMessagesViewModel>();
+
 		public ObservableCollection<DataBaseEventsViewModel> DataBaseEventsList { get; set; } = new ObservableCollection<DataBaseEventsViewModel>();
+		private string Login { get; set; }
 
 		#endregion
 
@@ -61,6 +70,7 @@ namespace Rythm.Client.ViewModel
 			eventAggregator.GetEvent<DataBaseButtonClientsChosen>().Subscribe(HandleDataBaseButtonClientsChosen);
 			eventAggregator.GetEvent<DataBaseButtonEventsChosen>().Subscribe(HandleDataBaseButtonEventsChosen);
 			eventAggregator.GetEvent<DataBaseButtonMessagesChosen>().Subscribe(HandleDataBaseButtonMessagesChosen);
+			eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleClientLoginFrom);
 
 			DataGridClientsVisibility = Visibility.Visible;
 			DataGridMessagesVisibility = Visibility.Hidden;
@@ -70,6 +80,11 @@ namespace Rythm.Client.ViewModel
 		#endregion
 
 		#region Methods
+
+		private void HandleClientLoginFrom(string login)
+		{
+			Login = login;
+		}
 
 		private void HandleUpdatedDataBaseClientsEvent(List<string> dataBaseClientsList)
 		{
@@ -94,15 +109,15 @@ namespace Rythm.Client.ViewModel
 			ApplicationDispatcherHelper.BeginInvoke(
 				() =>
 				{
-					DataBaseMessagesList.Clear();
+					DataBaseOwnMessagesList.Clear();
 				});
 
-			foreach (DataBaseMessage message in messagesList)
+			foreach (DataBaseMessage message in messagesList.Where(message => message.ClientTo == Login || message.ClientFrom == Login))
 			{
 				ApplicationDispatcherHelper.BeginInvoke(
 					() =>
 					{
-						DataBaseMessagesList.Add(new DataBaseMessagesViewModel(message));
+						DataBaseOwnMessagesList.Add(new DataBaseMessagesViewModel(message));
 					});
 			}
 		}

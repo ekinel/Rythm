@@ -14,7 +14,7 @@
 			    <DataGridTextColumn Header="Client" Binding="{Binding Login}" />
 		    </DataGrid.Columns>
 	    </DataGrid>
-	    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding DataBaseMessagesList}" Visibility="{Binding DataGridMessagesVisibility}">
+	    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding DataBaseOwnMessagesList}" Visibility="{Binding DataGridMessagesVisibility}">
 		    <DataGrid.Columns>
 			    <DataGridTextColumn Header="Message" Binding="{Binding Text}" />
 			    <DataGridTextColumn Header="Date" Binding="{Binding Date}" />
