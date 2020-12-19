@@ -43,8 +43,8 @@ namespace Rythm.Client.BusinessLogic
 
 		public void DoConnect(string address, string port, string login)
 		{
-			CurrentTransport.Connect(address, port);
 			Login = login;
+			CurrentTransport.Connect(address, port);
 		}
 
 		public void DoDisconnect()
