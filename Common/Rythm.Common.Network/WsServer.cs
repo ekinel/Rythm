@@ -59,6 +59,7 @@ namespace Rythm.Common.Network
 			IRepository<NewMessageDataBase> msgDataBase,
 			IRepository<NewEventDataBase> eventDataBase)
 		{
+
 			_listenAddress = listenAddress;
 			_timeOut = timeOut;
 			_connections = new ConcurrentDictionary<string, WsConnection>();
@@ -408,6 +409,11 @@ namespace Rythm.Common.Network
 			}
 
 			return clientsList;
+		}
+
+		public void WriteErrorToDataBase(Exception exception)
+		{
+			_eventDataBase.Create(new NewEventDataBase(){Message = exception.Message, Date = DateTime.Now.ToString()});
 		}
 
 		#endregion

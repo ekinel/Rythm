@@ -79,10 +79,11 @@ namespace Rythm.Server.UI
 
 					LabelServerStatus.Text = Resources.ServerStatusStart;
 				}
-				catch (Exception ex)
+				catch (Exception exception)
 				{
-					MessageBox.Show(ex.Message);
+					MessageBox.Show(exception.Message);
 					BlockingFields();
+					_networkWrapper.WriteErrorToDataBase(exception);
 				}
 			}
 		}

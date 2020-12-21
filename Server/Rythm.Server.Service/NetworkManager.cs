@@ -5,14 +5,12 @@
 namespace Rythm.Server.Service
 {
 	using System;
+	using System.Configuration;
 	using System.Net;
 
 	using Common.Network;
 
 	using Dal;
-
-	using System.Configuration;
-
 
 	public class NetworkManager
 	{
@@ -83,6 +81,11 @@ namespace Rythm.Server.Service
 		public void Stop()
 		{
 			_wsServer.Stop();
+		}
+
+		public void WriteErrorToDataBase(Exception exception)
+		{
+			_wsServer.WriteErrorToDataBase(exception);
 		}
 
 		#endregion

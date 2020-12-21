@@ -4,6 +4,8 @@
 
 namespace Rythm.Server.Service
 {
+	using System;
+
 	using Dal;
 
 	public class NetworkWrapper
@@ -14,7 +16,6 @@ namespace Rythm.Server.Service
 		private readonly ClientRepository _clientRepository = new ClientRepository();
 		private readonly MessageRepository _messageRepository = new MessageRepository();
 		private readonly EventRepository _eventRepository = new EventRepository();
-
 
 		#endregion
 
@@ -42,6 +43,11 @@ namespace Rythm.Server.Service
 		public void Stop()
 		{
 			_networkManager.Stop();
+		}
+
+		public void WriteErrorToDataBase(Exception exception)
+		{
+			_networkManager.WriteErrorToDataBase(exception);
 		}
 
 		#endregion

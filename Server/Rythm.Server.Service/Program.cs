@@ -5,6 +5,7 @@
 namespace Rythm.Server.Service
 {
 	using System;
+	using System.Linq.Expressions;
 
 	internal class Server
 	{
@@ -12,6 +13,8 @@ namespace Rythm.Server.Service
 
 		private static ServerConfiguration _serverConfiguration;
 		private static ServerParameters _serverParameters;
+
+		private static NetworkWrapper _networkWrapper;
 
 		#endregion
 
@@ -22,12 +25,11 @@ namespace Rythm.Server.Service
 			try
 			{
 				_serverConfiguration = new ServerConfiguration();
-				NetworkWrapper networkWrapper;
 
 				if (FillingFields(_serverConfiguration))
 				{
 					_serverParameters = _serverConfiguration.ReadConfigurationFile();
-					networkWrapper = new NetworkWrapper(
+					_networkWrapper = new NetworkWrapper(
 						_serverParameters.Address,
 						_serverParameters.Port,
 						_serverParameters.TimeOut,
@@ -35,23 +37,24 @@ namespace Rythm.Server.Service
 				}
 				else
 				{
-					networkWrapper = new NetworkWrapper();
+					_networkWrapper = new NetworkWrapper();
 				}
 
-				networkWrapper.Start();
+				_networkWrapper.Start();
 
 				Console.ReadLine();
 
-				networkWrapper.Stop();
+				_networkWrapper.Stop();
 				_serverConfiguration.SaveConfigurationFile(
 					_serverParameters.Address,
 					_serverParameters.Port,
 					_serverParameters.TimeOut,
 					_serverParameters.DataBaseConnectionString);
 			}
-			catch (Exception ex)
+			catch (Exception exception)
 			{
-				Console.WriteLine(ex);
+				_networkWrapper.WriteErrorToDataBase(exception);
+				Console.WriteLine(exception);
 				Console.ReadLine();
 			}
 		}
