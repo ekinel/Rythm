@@ -8,6 +8,10 @@ namespace Rythm.Client.ViewModel
     using System.Windows;
     using System.Windows.Controls;
 
+    using Events;
+
+    using Prism.Events;
+
     public class ScrollViewerExtensionsViewModel
     {
         #region Fields
@@ -20,9 +24,16 @@ namespace Rythm.Client.ViewModel
 
         private static bool _autoScroll;
 
+        private static IEventAggregator _eventAggregator;
+
         #endregion
 
         #region Methods
+
+        public ScrollViewerExtensionsViewModel(IEventAggregator eventAggregator)
+        {
+	        _eventAggregator = eventAggregator;
+        }
 
         public static bool GetAlwaysScrollToEnd(ScrollViewer scroll)
         {
@@ -80,6 +91,11 @@ namespace Rythm.Client.ViewModel
             if (_autoScroll && e.ExtentHeightChange != 0)
             {
                 scroll.ScrollToVerticalOffset(scroll.ExtentHeight);
+            }
+
+            if (e.VerticalOffset == 0 && e.VerticalChange != 0)
+            {
+	            _eventAggregator.GetEvent<ScrollAtTheTop>().Publish();
             }
         }
 

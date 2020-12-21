@@ -31,6 +31,8 @@ namespace Rythm.Common.Network
 
         void Send(BaseContainer request);
 
+        void DownloadMoreMessages(string loginFrom, string loginTo, string data);
+
         #endregion
     }
 }

@@ -6,6 +6,7 @@ namespace Rythm.Client.ViewModel
 {
 	using System;
 	using System.Collections.ObjectModel;
+	using System.Windows.Controls;
 
 	using BusinessLogic.Interfaces;
 
@@ -62,6 +63,7 @@ namespace Rythm.Client.ViewModel
 			eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleUserLoginTo);
 			eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleUserLoginFrom);
 			eventAggregator.GetEvent<ConnectionIndicatorColorChangedEvent>().Subscribe(HandleNewSateEstablished);
+			eventAggregator.GetEvent<ScrollAtTheTop>().Subscribe(HandleDownloadMoreMessages);
 			_chatPanelController = chatPanelController ?? throw new ArgumentNullException(nameof(chatPanelController));
 			_chatPanelController.MessageReceivedEvent += HandleNewMessageReceived;
 			_chatPanelController.OkReceivedEvent += HandleOkReceive;
@@ -146,6 +148,10 @@ namespace Rythm.Client.ViewModel
 			UpdateListByNewLoginTo();
 		}
 
+		private void HandleDownloadMoreMessages()
+		{
+			_chatPanelController.DownloadMoreMessages(_loginFrom, _loginTo, ReceivedMessagesList[0].Time);
+		}
 		#endregion
 	}
 }

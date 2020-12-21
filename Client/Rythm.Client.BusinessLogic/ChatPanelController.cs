@@ -72,6 +72,11 @@ namespace Rythm.Client.BusinessLogic
 			ApplicationDispatcherHelper.Invoke(() => OkReceivedEvent?.Invoke(okReceive));
 		}
 
+		public void DownloadMoreMessages(string loginFrom,string loginTo, string data)
+		{
+			_currentTransport.DownloadMoreMessages(loginFrom, loginTo, data);
+		}
+
 		#endregion
 	}
 }

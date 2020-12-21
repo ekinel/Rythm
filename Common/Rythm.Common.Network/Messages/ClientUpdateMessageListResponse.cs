@@ -2,33 +2,28 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Client.BusinessLogic.Interfaces
+namespace Rythm.Common.Network.Messages
 {
-	using System;
+	using System.Collections.Generic;
 
-	using Common.Network;
+	using Enums;
 
-	public interface IConnectionController
+	internal class ClientUpdateMessageListResponse : BaseContainer
 	{
-		#region Properties
+		#region Fields
 
-		ITransport CurrentTransport { get; }
-
-		string Login { get; set; }
+		public List<DataBaseMessage> Messages;
 
 		#endregion
 
-		#region Events
+		#region Constructors
 
-		event Action<bool> ConnectionStateChanged;
+		public ClientUpdateMessageListResponse(List<DataBaseMessage> messages)
+		{
+			MessageType = MsgType.ClientUpdateMessageListResponse;
+			Messages = messages;
+		}
 
-		#endregion
-
-		#region Methods
-
-		void DoConnect(string address, string port, string login);
-
-		void DoDisconnect();
 		#endregion
 	}
 }

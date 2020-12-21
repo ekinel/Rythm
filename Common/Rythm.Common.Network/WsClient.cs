@@ -260,6 +260,11 @@ namespace Rythm.Common.Network
 			ConnectionOpened?.Invoke(this, EventArgs.Empty);
 		}
 
+		public void DownloadMoreMessages(string loginFrom, string loginTo, string date)
+		{
+			Send(new ClientUpdateMessageListRequest(new DataBaseMessage(string.Empty, date, loginFrom, loginTo)));
+		}
+
 		#endregion
 	}
 }
