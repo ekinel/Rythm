@@ -24,16 +24,11 @@ namespace Rythm.Client.ViewModel
 
         private static bool _autoScroll;
 
-        private static IEventAggregator _eventAggregator;
+        public static event Action ScrollAtTheTop;
 
         #endregion
 
         #region Methods
-
-        public ScrollViewerExtensionsViewModel(IEventAggregator eventAggregator)
-        {
-	        _eventAggregator = eventAggregator;
-        }
 
         public static bool GetAlwaysScrollToEnd(ScrollViewer scroll)
         {
@@ -93,10 +88,11 @@ namespace Rythm.Client.ViewModel
                 scroll.ScrollToVerticalOffset(scroll.ExtentHeight);
             }
 
-            if (e.VerticalOffset == 0 && e.VerticalChange != 0)
-            {
-	            _eventAggregator.GetEvent<ScrollAtTheTop>().Publish();
-            }
+            //if (e.VerticalOffset == 0 && e.VerticalChange != 0)
+            //{
+            //    // _eventAggregator.GetEvent<ScrollAtTheTop>().Publish();
+            //    ScrollAtTheTop?.Invoke();
+            //}
         }
 
         #endregion

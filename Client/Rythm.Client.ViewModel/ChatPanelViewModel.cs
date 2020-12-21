@@ -37,6 +37,7 @@ namespace Rythm.Client.ViewModel
 		#region Properties
 
 		public DelegateCommand SendCommand { get; }
+		public DelegateCommand<ScrollChangedEventArgs> ScrollChanged { get; }
 
 		public ObservableCollection<SendMessageViewModel> ReceivedMessagesList { get; set; } = new ObservableCollection<SendMessageViewModel>();
 		public ObservableCollection<SendMessageViewModel> AllReceivedMessagesList { get; set; } = new ObservableCollection<SendMessageViewModel>();
@@ -60,10 +61,10 @@ namespace Rythm.Client.ViewModel
 			SendCommand = new DelegateCommand(
 				SendMessageCommand,
 				() => !string.IsNullOrEmpty(OutgoingMessage) && !string.IsNullOrEmpty(_loginTo) && _connectionState);
+			ScrollChanged = new DelegateCommand<ScrollChangedEventArgs>(ScrollAtTheTop);
 			eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleUserLoginTo);
 			eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleUserLoginFrom);
 			eventAggregator.GetEvent<ConnectionIndicatorColorChangedEvent>().Subscribe(HandleNewSateEstablished);
-			eventAggregator.GetEvent<ScrollAtTheTop>().Subscribe(HandleDownloadMoreMessages);
 			_chatPanelController = chatPanelController ?? throw new ArgumentNullException(nameof(chatPanelController));
 			_chatPanelController.MessageReceivedEvent += HandleNewMessageReceived;
 			_chatPanelController.OkReceivedEvent += HandleOkReceive;
@@ -73,6 +74,13 @@ namespace Rythm.Client.ViewModel
 
 		#region Methods
 
+		private void ScrollAtTheTop(ScrollChangedEventArgs e)
+		{
+			if (e.VerticalOffset == 0 && e.VerticalChange != 0)
+			{
+				// _eventAggregator.GetEvent<ScrollAtTheTop>().Publish();
+			}
+		}
 		private void HandleNewMessageReceived(MessageReceivedEventArgs state)
 		{
 			AllReceivedMessagesList.Add(new SendMessageViewModel(state.ToClientName, state.FromClientName, state.Message, state.Date));

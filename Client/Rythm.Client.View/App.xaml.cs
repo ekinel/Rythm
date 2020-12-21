@@ -35,8 +35,6 @@ namespace Rythm.Client.View
 
 			containerRegistry.RegisterSingleton<IDisplayingEventsController, DisplayingEventsController>();
 			containerRegistry.Register<DisplayingEventsViewModel>();
-
-			containerRegistry.Register<ScrollViewerExtensionsViewModel>();
 		}
 
 		protected override void ConfigureViewModelLocator()
