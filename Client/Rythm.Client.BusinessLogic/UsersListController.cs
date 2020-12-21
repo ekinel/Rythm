@@ -7,6 +7,8 @@ namespace Rythm.Client.BusinessLogic
 	using System;
 	using System.Collections.Generic;
 
+	using Common.Network;
+
 	using Interfaces;
 
 	public class UsersListController : IUsersListController
@@ -30,7 +32,7 @@ namespace Rythm.Client.BusinessLogic
 
 		public void HandleUpdatedUsersList(List<string> activeUsersList, List<string> notActiveUsersList)
 		{
-			UpdatedUsersListEvent?.Invoke(activeUsersList, notActiveUsersList);
+			ApplicationDispatcherHelper.BeginInvoke(() => UpdatedUsersListEvent?.Invoke(activeUsersList, notActiveUsersList));
 		}
 
 		#endregion

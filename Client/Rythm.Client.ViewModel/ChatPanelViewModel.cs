@@ -5,7 +5,6 @@
 namespace Rythm.Client.ViewModel
 {
 	using System;
-	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 
 	using BusinessLogic.Interfaces;
@@ -98,11 +97,7 @@ namespace Rythm.Client.ViewModel
 
 		private void UpdateListByNewLoginTo()
 		{
-			ApplicationDispatcherHelper.BeginInvoke(
-				() =>
-				{
-					ReceivedMessagesList.Clear();
-				});
+			ReceivedMessagesList.Clear();
 
 			foreach (SendMessageViewModel message in AllReceivedMessagesList)
 			{
@@ -110,10 +105,10 @@ namespace Rythm.Client.ViewModel
 				     message.LoginFrom == _loginFrom && message.LoginTo == _loginTo || message.LoginTo == "CommonChat" && _loginTo == "CommonChat") &&
 				    _loginTo != string.Empty)
 				{
-					ApplicationDispatcherHelper.BeginInvoke(
-						() =>
+					ReceivedMessagesList.Add(
+						new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time)
 						{
-							ReceivedMessagesList.Add(new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time){OkStatus = message.OkStatus});
+							OkStatus = message.OkStatus
 						});
 				}
 			}

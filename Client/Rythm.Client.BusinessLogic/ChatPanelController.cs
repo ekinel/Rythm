@@ -56,7 +56,7 @@ namespace Rythm.Client.BusinessLogic
 
 		private void HandleMessageReceived(object sender, MessageReceivedEventArgs state)
 		{
-			MessageReceivedEvent?.Invoke(state);
+			ApplicationDispatcherHelper.BeginInvoke(() => MessageReceivedEvent?.Invoke(state));
 		}
 
 		private void HandleUpdatedUsersList(object sender, MessageContainer msgContainer)

@@ -4,79 +4,59 @@
 
 namespace Rythm.Client.ViewModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Windows;
-    using System.Windows.Threading;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 
-    using BusinessLogic.Interfaces;
+	using BusinessLogic.Interfaces;
 
-    using Common.Network;
+	using Common.Network;
 
-    using Prism.Events;
-    using Prism.Mvvm;
+	using Prism.Events;
+	using Prism.Mvvm;
 
-    public class UsersListViewModel : BindableBase
-    {
-        #region Fields
+	public class UsersListViewModel : BindableBase
+	{
+		#region Fields
 
-        private readonly IUsersListController _usersListController;
-        private readonly IEventAggregator _eventAggregator;
+		private readonly IEventAggregator _eventAggregator;
 
-        #endregion
+		#endregion
 
-        #region Properties
+		#region Properties
 
-        public ObservableCollection<UsersLoginsViewModel> UserList { get; set; }
+		public ObservableCollection<UsersLoginsViewModel> UserList { get; set; }
 
-        #endregion
+		#endregion
 
-        #region Constructors
+		#region Constructors
 
-        public UsersListViewModel(IEventAggregator eventAggregator, IUsersListController usersListController)
-        {
-            _eventAggregator = eventAggregator;
-            _usersListController = usersListController;
-            _usersListController.UpdatedUsersListEvent += HandleUpdatedUsersList;
+		public UsersListViewModel(IEventAggregator eventAggregator, IUsersListController usersListController)
+		{
+			_eventAggregator = eventAggregator;
+			usersListController.UpdatedUsersListEvent += HandleUpdatedUsersList;
 
-            UserList = new ObservableCollection<UsersLoginsViewModel>();
+			UserList = new ObservableCollection<UsersLoginsViewModel>();
+		}
 
-        }
+		#endregion
 
-        #endregion
+		#region Methods
 
-        #region Methods
+		public void HandleUpdatedUsersList(List<string> activeUsersList, List<string> notActiveUsersList)
+		{
+			UserList.Clear();
+			UserList.Add(new UsersLoginsViewModel(_eventAggregator, "CommonChat", true));
+			foreach (string user in activeUsersList)
+			{
+				UserList.Add(new UsersLoginsViewModel(_eventAggregator, user, true));
+			}
 
-        public void HandleUpdatedUsersList(List<string> activeUsersList, List<string> notActiveUsersList)
-        {
-	        ApplicationDispatcherHelper.BeginInvoke(() =>
-            {
-	            UserList.Clear();
-            });
+			foreach (string user in notActiveUsersList)
+			{
+				UserList.Add(new UsersLoginsViewModel(_eventAggregator, user, false));
+			}
+		}
 
-	        ApplicationDispatcherHelper.BeginInvoke(() =>
-	        {
-		        UserList.Add(new UsersLoginsViewModel(_eventAggregator, "CommonChat", true));
-	        });
-
-            foreach (string user in activeUsersList)
-            {
-	            ApplicationDispatcherHelper.BeginInvoke(() =>
-                {
-	                UserList.Add(new UsersLoginsViewModel(_eventAggregator, user, true));
-                });
-            }
-
-            foreach (string user in notActiveUsersList)
-            {
-	            ApplicationDispatcherHelper.BeginInvoke(() =>
-	            {
-		            UserList.Add(new UsersLoginsViewModel(_eventAggregator, user, false));
-	            });
-            }
-        }
-
-        #endregion
-    }
+		#endregion
+	}
 }
