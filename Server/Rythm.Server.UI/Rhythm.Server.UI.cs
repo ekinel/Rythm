@@ -19,7 +19,7 @@ namespace Rythm.Server.UI
 		private const int WS_PORT = 65000;
 		private const int WS_TIMEOUT = 20;
 		private const string WS_ADDRESS = "127.0.0.1";
-		private const string WS_DATABASE_CONNECTION_STRING = "(localdb)/MSSQLLocalDB;Initial Catalog=MessageDb;Integrated Security=True;";
+		private const string WS_DATABASE_CONNECTION_STRING = "data source=(localdb)/MSSQLLocalDB;Initial Catalog=MessageDb;Integrated Security=True;";
 
 		private const string ADDRESS_PATTERN = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$";
 

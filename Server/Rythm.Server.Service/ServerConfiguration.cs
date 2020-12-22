@@ -11,12 +11,26 @@ namespace Rythm.Server.Service
 
 	public class ServerConfiguration
 	{
+		#region Fields
+
+		private readonly string path;
+
+		#endregion
+
+		#region Constructors
+
+		public ServerConfiguration()
+		{
+			path = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Rythm\\Configuration.json";
+		}
+
+		#endregion
+
 		#region Methods
 
 		public void SaveConfigurationFile(string address, int port, int timeOut, string dataBaseConnectionString)
 		{
 			var serverParameters = new ServerParameters(address, port, timeOut, dataBaseConnectionString);
-			string path = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + "Configuration.json";
 
 			using (StreamWriter file = File.CreateText(path))
 			{
@@ -27,7 +41,6 @@ namespace Rythm.Server.Service
 
 		public ServerParameters ReadConfigurationFile()
 		{
-			string path = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + "Configuration.json";
 			if (!File.Exists(path))
 			{
 				return new ServerParameters(string.Empty, 0, 0, string.Empty);
