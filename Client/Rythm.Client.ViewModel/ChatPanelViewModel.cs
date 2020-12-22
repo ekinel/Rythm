@@ -133,7 +133,11 @@ namespace Rythm.Client.ViewModel
 					switch (okReceive.Item1)
 					{
 						case MsgType.ServerOk:
-							message.OkStatus = "Gray";
+							if (message.OkStatus != "Green")
+							{
+								message.OkStatus = "Gray";
+
+							}
 							break;
 
 						case MsgType.ClientOk:
