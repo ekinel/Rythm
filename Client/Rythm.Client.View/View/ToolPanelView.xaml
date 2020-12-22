@@ -14,89 +14,16 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft" Margin="1,1,5,1" HorizontalAlignment="Left">
-            <Button  Width="70"  Height="30" Margin="0,5,5,5">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Grid >
-                            <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
-                                <Label VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Content="Тема" Foreground="DimGray"/>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-            <Button  Width="70"  Height="30" Margin="0,5,5,5" Command="{Binding ChangeSettingsVisibilityCommand}">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Grid >
-                            <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
-                                <Label VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"
-                                       Content="Настройки" Foreground="DimGray"/>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-            <Button  Width="70"  Height="30" Margin="0,5,5,5" Command="{Binding DisplayingEventsVisibilityCommand}">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Grid >
-                            <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
-                                <Label VerticalAlignment="Center"
-						               HorizontalAlignment="Center"
-						               Content="События" Foreground="DimGray"/>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-
-        </StackPanel>
+		<Grid Grid.Column="1" FlowDirection="RightToLeft" Margin="1,1,5,1" HorizontalAlignment="Left" Width="250">
+			<Button Style="{StaticResource BlackAndWhiteButton}" Content="Тема" Margin="0,5,5,5" HorizontalAlignment="Left"/>
+			<Button Style="{StaticResource BlackAndWhiteButton}"  Margin="0,5,5,5" Content="Настройки" HorizontalAlignment="Center" Command="{Binding ChangeSettingsVisibilityCommand}"/>
+			<Button Style="{StaticResource BlackAndWhiteButton}" Margin="0,5,5,5" Content="События" HorizontalAlignment="Right" Command="{Binding DisplayingEventsVisibilityCommand}"/>
+        </Grid>
 
         <Grid Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" Visibility="{Binding SplitterVisibility}" Width="250">
-            <Button  Width="80"  Height="30" Margin="0,0,0,0" Command="{Binding ShowClientsListCommand}" HorizontalAlignment="Left">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Grid >
-                            <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
-                                <Label VerticalAlignment="Center"
-							           HorizontalAlignment="Center"
-							           Content="Клиенты" Foreground="DimGray"/>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-            <Button  Width="80"  Height="30" Margin="0,0,0,0" Command="{Binding ShowMessagesListCommand}" HorizontalAlignment="Center">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Grid >
-                            <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
-                                <Label VerticalAlignment="Center"
-							           HorizontalAlignment="Center"
-							           Content="Сообщения" Foreground="DimGray"/>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-            <Button  Width="80"  Height="30" Margin="0,0,0,0" Command="{Binding ShowEventsListCommand}" HorizontalAlignment="Right">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Grid >
-                            <Border BorderThickness="1" BorderBrush="LightGray"  CornerRadius="17"  >
-                                <Label VerticalAlignment="Center"
-								       HorizontalAlignment="Center"
-								       Content="События" Foreground="DimGray"/>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+			<Button  Style="{StaticResource BlackAndWhiteButton}" Content="Клиенты" Command="{Binding ShowClientsListCommand}" HorizontalAlignment="Left"/>
+			<Button  Style="{StaticResource BlackAndWhiteButton}" Content="Сообщения" Command="{Binding ShowMessagesListCommand}" HorizontalAlignment="Center"/>
+			<Button  Style="{StaticResource BlackAndWhiteButton}" Content="События" Command="{Binding ShowEventsListCommand}" HorizontalAlignment="Right"/>
         </Grid>
         <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Login}" Visibility="{Binding LoginVisibility}" Foreground="DimGray" Width="Auto" FontSize="18" Margin="10,0,0,0" ></TextBlock>
     </Grid>
