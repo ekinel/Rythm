@@ -61,7 +61,7 @@ namespace Rythm.Server.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IP-address isn&apos;t corrects.
+        ///   Looks up a localized string similar to IP-address isn&apos;t correct.
         /// </summary>
         internal static string NotCorrectIPAddess {
             get {
@@ -70,7 +70,7 @@ namespace Rythm.Server.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Port isn&apos;t corrects.
+        ///   Looks up a localized string similar to Port isn&apos;t correct.
         /// </summary>
         internal static string NotCorrectPort {
             get {
