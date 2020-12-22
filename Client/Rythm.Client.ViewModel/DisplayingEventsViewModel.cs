@@ -6,7 +6,6 @@ namespace Rythm.Client.ViewModel
 {
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
-	using System.Linq;
 	using System.Windows;
 
 	using BusinessLogic.Interfaces;
@@ -26,6 +25,8 @@ namespace Rythm.Client.ViewModel
 		private Visibility _dataGridClientsVisibility = Visibility.Visible;
 		private Visibility _dataGridMessagesVisibility = Visibility.Hidden;
 		private Visibility _dataGridEventsVisibility = Visibility.Hidden;
+
+		private readonly IDisplayingEventsController _displayingEventsController;
 
 		#endregion
 
@@ -64,9 +65,10 @@ namespace Rythm.Client.ViewModel
 
 		public DisplayingEventsViewModel(IDisplayingEventsController displayingEventsController, IEventAggregator eventAggregator)
 		{
-			displayingEventsController.UpdatedDataBaseClientsEvent += HandleUpdatedDataBaseClientsEvent;
-			displayingEventsController.UpdatedDataBaseMessagesEvent += HandleUpdatedDataBaseMessagesEvent;
-			displayingEventsController.UpdatedDataBaseEventsEvent += HandleUpdatedDataBaseEventsEvent;
+			_displayingEventsController = displayingEventsController;
+			_displayingEventsController.UpdatedDataBaseClientsEvent += HandleUpdatedDataBaseClientsEvent;
+			_displayingEventsController.UpdatedDataBaseMessagesEvent += HandleUpdatedDataBaseMessagesEvent;
+			_displayingEventsController.UpdatedDataBaseEventsEvent += HandleUpdatedDataBaseEventsEvent;
 			eventAggregator.GetEvent<DataBaseButtonClientsChosen>().Subscribe(HandleDataBaseButtonClientsChosen);
 			eventAggregator.GetEvent<DataBaseButtonEventsChosen>().Subscribe(HandleDataBaseButtonEventsChosen);
 			eventAggregator.GetEvent<DataBaseButtonMessagesChosen>().Subscribe(HandleDataBaseButtonMessagesChosen);
@@ -84,6 +86,7 @@ namespace Rythm.Client.ViewModel
 		private void HandleClientLoginFrom(string login)
 		{
 			Login = login;
+			_displayingEventsController.Login = login;
 		}
 
 		private void HandleUpdatedDataBaseClientsEvent(List<string> dataBaseClientsList)
@@ -112,7 +115,7 @@ namespace Rythm.Client.ViewModel
 					DataBaseOwnMessagesList.Clear();
 				});
 
-			foreach (DataBaseMessage message in messagesList.Where(message => message.ClientTo == Login || message.ClientFrom == Login))
+			foreach (DataBaseMessage message in messagesList)
 			{
 				ApplicationDispatcherHelper.BeginInvoke(
 					() =>

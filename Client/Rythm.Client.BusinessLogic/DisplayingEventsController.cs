@@ -17,6 +17,12 @@ namespace Rythm.Client.BusinessLogic
 
 	public class DisplayingEventsController : IDisplayingEventsController
 	{
+		#region Properties
+
+		public string Login { get; set; }
+
+		#endregion
+
 		#region Events
 
 		public event Action<List<string>> UpdatedDataBaseClientsEvent;
@@ -47,13 +53,24 @@ namespace Rythm.Client.BusinessLogic
 					{
 						UpdatedDataBaseClientsEvent?.Invoke(messageRequest.ClientsList);
 					}
+
 					break;
 
 				case MsgType.UpdatedDataBaseMessages:
 					if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseMessages)) is UpdatedDataBaseMessages messageRequest1)
 					{
-						UpdatedDataBaseMessagesEvent?.Invoke(messageRequest1.MessagesList);
+						var personalMessagesList = new List<DataBaseMessage>();
+						foreach (DataBaseMessage message in messageRequest1.MessagesList)
+						{
+							if (message.ClientFrom == Login || message.ClientTo == Login || message.ClientTo == "CommonChat")
+							{
+								personalMessagesList.Add(message);
+							}
+						}
+
+						UpdatedDataBaseMessagesEvent?.Invoke(personalMessagesList);
 					}
+
 					break;
 
 				case MsgType.UpdatedDataBaseEvents:
@@ -61,6 +78,7 @@ namespace Rythm.Client.BusinessLogic
 					{
 						UpdatedDataBaseEventsEvent?.Invoke(messageRequest2.EventsList);
 					}
+
 					break;
 			}
 		}

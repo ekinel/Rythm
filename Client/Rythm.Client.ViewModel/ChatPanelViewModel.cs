@@ -5,6 +5,7 @@
 namespace Rythm.Client.ViewModel
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 
 	using BusinessLogic.Interfaces;
@@ -53,7 +54,10 @@ namespace Rythm.Client.ViewModel
 
 		#region Constructors
 
-		public ChatPanelViewModel(IChatPanelController chatPanelController, IEventAggregator eventAggregator)
+		public ChatPanelViewModel(
+			IChatPanelController chatPanelController,
+			IEventAggregator eventAggregator,
+			IDisplayingEventsController eventsController)
 		{
 			SendCommand = new DelegateCommand(
 				SendMessageCommand,
@@ -64,11 +68,20 @@ namespace Rythm.Client.ViewModel
 			_chatPanelController = chatPanelController ?? throw new ArgumentNullException(nameof(chatPanelController));
 			_chatPanelController.MessageReceivedEvent += HandleNewMessageReceived;
 			_chatPanelController.OkReceivedEvent += HandleOkReceive;
+			eventsController.UpdatedDataBaseMessagesEvent += HandleDownloadMessagesList;
 		}
 
 		#endregion
 
 		#region Methods
+
+		private void HandleDownloadMessagesList(List<DataBaseMessage> messagesList)
+		{
+			foreach (DataBaseMessage message in messagesList)
+			{
+				AllReceivedMessagesList.Add(new SendMessageViewModel(message.ClientTo, message.ClientFrom, message.Text, message.Date));
+			}
+		}
 
 		private void HandleNewMessageReceived(MessageReceivedEventArgs state)
 		{

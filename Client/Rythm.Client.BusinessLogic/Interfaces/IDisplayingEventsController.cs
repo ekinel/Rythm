@@ -18,5 +18,7 @@ namespace Rythm.Client.BusinessLogic.Interfaces
 		event Action<List<DataBaseEvent>> UpdatedDataBaseEventsEvent;
 
 		#endregion
+
+		string Login { get; set; }
 	}
 }
