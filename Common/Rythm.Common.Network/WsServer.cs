@@ -71,9 +71,9 @@ namespace Rythm.Common.Network
 
 			_clientsNotActiveList = new List<string>(GetDataBaseClientsListToString());
 
-			//_serverTimer = new Timer(timeOut);
-			//_serverTimer.Elapsed += HandleOnTimedEvent;
-			//_serverTimer.Enabled = true;
+			_serverTimer = new Timer(timeOut);
+			_serverTimer.Elapsed += HandleOnTimedEvent;
+			_serverTimer.Enabled = true;
 		}
 
 		#endregion
@@ -135,10 +135,6 @@ namespace Rythm.Common.Network
 
 				case MsgType.ClientOk:
 					ClientOk(container);
-					break;
-
-				case MsgType.ClientUpdateMessageListRequest:
-					ClientUpdateMessageList(container);
 					break;
 			}
 		}
@@ -264,17 +260,6 @@ namespace Rythm.Common.Network
 
 			SendMessage(clientOkContainer, clientOkMsgContainer.From);
 			UpdateLastClientActivity(clientOkMsgContainer.From);
-		}
-
-		private void ClientUpdateMessageList(MessageContainer container)
-		{
-			if (!(((JObject)container.Payload).ToObject(typeof(ClientUpdateMessageListRequest)) is ClientUpdateMessageListRequest clientUpdateMessageListContainer))
-			{
-				return;
-			}
-
-			MessageContainer clientContainer = clientUpdateMessageListContainer.GetContainer();
-			//тут же отправляем ответное сообщение с 20-ю новыми
 		}
 
 		private void HandleOnTimedEvent(object source, ElapsedEventArgs e)
