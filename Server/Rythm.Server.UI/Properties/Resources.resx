@@ -120,6 +120,9 @@
   <data name="NotCorrectIPAddess" xml:space="preserve">
     <value>IP-address isn't corrects</value>
   </data>
+  <data name="NotCorrectPort" xml:space="preserve">
+    <value>Port isn't corrects</value>
+  </data>
   <data name="ServerStatusStart" xml:space="preserve">
     <value>Server status: server started</value>
   </data>

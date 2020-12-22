@@ -70,6 +70,15 @@ namespace Rythm.Server.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Port isn&apos;t corrects.
+        /// </summary>
+        internal static string NotCorrectPort {
+            get {
+                return ResourceManager.GetString("NotCorrectPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Server status: server started.
         /// </summary>
         internal static string ServerStatusStart {
