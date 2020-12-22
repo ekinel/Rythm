@@ -177,7 +177,8 @@ namespace Rythm.Common.Network
 
 		private void ClientRegistration(MessageContainer container)
 		{
-			if (((JObject)container.Payload).ToObject(typeof(ConnectionResponse)) is ConnectionResponse connectionResponse && connectionResponse.Result == ResultCodes.Failure)
+			if (((JObject)container.Payload).ToObject(typeof(ConnectionResponse)) is ConnectionResponse connectionResponse &&
+			    connectionResponse.Result == ResultCodes.Failure)
 			{
 				return;
 			}
@@ -258,11 +259,6 @@ namespace Rythm.Common.Network
 		private void OnOpen(object sender, EventArgs e)
 		{
 			ConnectionOpened?.Invoke(this, EventArgs.Empty);
-		}
-
-		public void DownloadMoreMessages(string loginFrom, string loginTo, string date)
-		{
-			Send(new ClientUpdateMessageListRequest(new DataBaseMessage(string.Empty, date, loginFrom, loginTo)));
 		}
 
 		#endregion

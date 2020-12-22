@@ -14,8 +14,6 @@ namespace Rythm.Common.Network.Enums
         CommonMessage,
         UpdatedDataBaseClients,
         UpdatedDataBaseMessages,
-        UpdatedDataBaseEvents,
-        ClientUpdateMessageListResponse,
-        ClientUpdateMessageListRequest
+        UpdatedDataBaseEvents
     }
 }

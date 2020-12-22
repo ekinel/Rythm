@@ -23,8 +23,6 @@ namespace Rythm.Client.BusinessLogic.Interfaces
 		#region Methods
 
 		void MessageSend(string currentMessage, string loginFrom);
-		void DownloadMoreMessages(string loginFrom, string loginTo, string data);
-
 		#endregion
 	}
 }
