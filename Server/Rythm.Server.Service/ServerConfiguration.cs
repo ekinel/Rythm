@@ -13,7 +13,7 @@ namespace Rythm.Server.Service
 	{
 		#region Fields
 
-		private readonly string path;
+		private readonly string _path;
 
 		#endregion
 
@@ -21,7 +21,7 @@ namespace Rythm.Server.Service
 
 		public ServerConfiguration()
 		{
-			path = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Rythm\\Configuration.json";
+			_path = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Rythm\\Configuration.json";
 		}
 
 		#endregion
@@ -32,7 +32,7 @@ namespace Rythm.Server.Service
 		{
 			var serverParameters = new ServerParameters(address, port, timeOut, dataBaseConnectionString);
 
-			using (StreamWriter file = File.CreateText(path))
+			using (StreamWriter file = File.CreateText(_path))
 			{
 				var serializer = new JsonSerializer();
 				serializer.Serialize(file, serverParameters);
@@ -41,12 +41,12 @@ namespace Rythm.Server.Service
 
 		public ServerParameters ReadConfigurationFile()
 		{
-			if (!File.Exists(path))
+			if (!File.Exists(_path))
 			{
 				return new ServerParameters(string.Empty, 0, 0, string.Empty);
 			}
 
-			string configurationString = File.ReadAllText(path);
+			string configurationString = File.ReadAllText(_path);
 
 			var container = JsonConvert.DeserializeObject<ServerParameters>(configurationString);
 			return container;
