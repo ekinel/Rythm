@@ -135,15 +135,14 @@ namespace Rythm.Client.ViewModel
 
 		private void SelectEntryCommand()
 		{
-			//var checkingDateFrom = new DateTime(DayFrom.Year, DayFrom.Month, DayFrom.Day, );
 			int intHourTo = CheckingTime(HourTo);
 			int intHourFrom = CheckingTime(HourFrom);
 			int intMinuteTo = CheckingTime(MinuteTo);
 			int intMinuteFrom = CheckingTime(MinuteFrom);
 
+			DayTo = CheckingDay(DayFrom, DayTo);
 			var checkingDateFrom = new DateTime(DayFrom.Year, DayFrom.Month, DayFrom.Day, intHourFrom, intMinuteFrom, 0);
 			var checkingDateTo = new DateTime(DayTo.Year, DayTo.Month, DayTo.Day, intHourTo, intMinuteTo, 0);
-
 
 			if (DataGridMessagesVisibility == Visibility.Visible)
 			{
@@ -168,12 +167,11 @@ namespace Rythm.Client.ViewModel
 					{
 						DataBaseVisibleEventsList.Add(new DataBaseEventsViewModel(element.EventMessage, element.EventDate));
 					}
-
 				}
 			}
 		}
 
-		private int CheckingTime(string time)
+		private static int CheckingTime(string time)
 		{
 			if (int.TryParse(time, out int result))
 			{
@@ -182,8 +180,12 @@ namespace Rythm.Client.ViewModel
 					return result;
 				}
 			}
-
 			return 0;
+		}
+
+		private DateTime CheckingDay(DateTime dayFrom, DateTime dayTo)
+		{
+			return dayTo < dayFrom ? dayFrom : DayTo;
 		}
 		#endregion
 
