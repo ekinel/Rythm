@@ -6,6 +6,8 @@ namespace Rythm.Server.UI
 {
 	using System;
 	using System.Text.RegularExpressions;
+	using System.Threading;
+	using System.Threading.Tasks;
 	using System.Windows.Forms;
 
 	using Properties;
@@ -60,8 +62,9 @@ namespace Rythm.Server.UI
 
 		#region Methods
 
-		private void ButtonStartClick(object sender, EventArgs e)
+		private async void ButtonStartClick(object sender, EventArgs e)
 		{
+
 			string wsPort = MaskedTextBoxPort.Text;
 			string wsAddress = TextBoxAddress.Text;
 			string wsTimeOut = maskedTextBoxTimeOut.Text;
@@ -78,8 +81,8 @@ namespace Rythm.Server.UI
 				try
 				{
 					BlockingFields();
-					_networkWrapper = new NetworkWrapper(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut), wsDataBase);
-					_networkWrapper.Start();
+
+					await Task.Run(() => InitializationServer(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut), wsDataBase));
 
 					LabelServerStatus.Text = Resources.ServerStatusStart;
 				}
@@ -90,6 +93,12 @@ namespace Rythm.Server.UI
 					_networkWrapper.WriteErrorToDataBase(exception);
 				}
 			}
+		}
+
+		private void InitializationServer(string wsAddress, int wsPort, int wsTimeOut, string wsDataBase)
+		{
+			_networkWrapper = new NetworkWrapper(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut), wsDataBase);
+			_networkWrapper.Start();
 		}
 
 		private (bool, string) CheckingParameters(string wsAddress, string wsPort, string wsTimeOut, string wsDataBase)
