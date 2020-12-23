@@ -22,6 +22,12 @@ namespace Rythm.Client.ViewModel
 
 	public class DisplayingEventsViewModel : BindableBase
 	{
+		#region Constants
+
+		private const int DEFAULT_TIME_VALUE = 0;
+
+		#endregion
+
 		#region Fields
 
 		private Visibility _dataGridClientsVisibility = Visibility.Visible;
@@ -37,11 +43,12 @@ namespace Rythm.Client.ViewModel
 
 		private readonly IDisplayingEventsController _displayingEventsController;
 
-		public DelegateCommand SelectCommand { get; }
-
 		#endregion
 
 		#region Properties
+
+		public DelegateCommand SelectCommand { get; }
+		public DelegateCommand ResetCommand { get; }
 
 		public Visibility DataGridClientsVisibility
 		{
@@ -60,21 +67,25 @@ namespace Rythm.Client.ViewModel
 			get => _dataGridEventsVisibility;
 			set => SetProperty(ref _dataGridEventsVisibility, value);
 		}
+
 		public DateTime DayFrom
 		{
 			get => _dayFrom;
 			set => SetProperty(ref _dayFrom, value);
 		}
+
 		public DateTime DayTo
 		{
 			get => _dayTo;
 			set => SetProperty(ref _dayTo, value);
 		}
+
 		public string HourTo
 		{
 			get => _hourTo;
 			set => SetProperty(ref _hourTo, value);
 		}
+
 		public string HourFrom
 		{
 			get => _hourFrom;
@@ -86,6 +97,7 @@ namespace Rythm.Client.ViewModel
 			get => _minuteTo;
 			set => SetProperty(ref _minuteTo, value);
 		}
+
 		public string MinuteFrom
 		{
 			get => _minuteFrom;
@@ -97,12 +109,15 @@ namespace Rythm.Client.ViewModel
 
 		public ObservableCollection<DataBaseMessagesViewModel> DataBaseAllOwnMessagesList { get; set; } =
 			new ObservableCollection<DataBaseMessagesViewModel>();
+
 		public ObservableCollection<DataBaseMessagesViewModel> DataBaseVisibleOwnMessagesList { get; set; } =
 			new ObservableCollection<DataBaseMessagesViewModel>();
 
-		public ObservableCollection<DataBaseEventsViewModel> DataBaseAllEventsList { get; set; } = new ObservableCollection<DataBaseEventsViewModel>();
-		public ObservableCollection<DataBaseEventsViewModel> DataBaseVisibleEventsList { get; set; } = new ObservableCollection<DataBaseEventsViewModel>();
-		private string Login { get; set; }
+		public ObservableCollection<DataBaseEventsViewModel> DataBaseAllEventsList { get; set; } =
+			new ObservableCollection<DataBaseEventsViewModel>();
+
+		public ObservableCollection<DataBaseEventsViewModel> DataBaseVisibleEventsList { get; set; } =
+			new ObservableCollection<DataBaseEventsViewModel>();
 
 		#endregion
 
@@ -119,7 +134,8 @@ namespace Rythm.Client.ViewModel
 			eventAggregator.GetEvent<DataBaseButtonMessagesChosen>().Subscribe(HandleDataBaseButtonMessagesChosen);
 			eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleClientLoginFrom);
 
-			SelectCommand = new DelegateCommand(SelectEntryCommand);
+			SelectCommand = new DelegateCommand(SelectEntriesCommand);
+			ResetCommand = new DelegateCommand(ResetEntriesCommand);
 
 			DataGridClientsVisibility = Visibility.Visible;
 			DataGridMessagesVisibility = Visibility.Hidden;
@@ -127,18 +143,51 @@ namespace Rythm.Client.ViewModel
 
 			DayFrom = DateTime.Today;
 			DayTo = DateTime.Today;
-			HourTo = "0";
-			HourFrom = "0";
-			MinuteTo = "0";
-			MinuteFrom = "0";
+			HourTo = DEFAULT_TIME_VALUE.ToString();
+			HourFrom = DEFAULT_TIME_VALUE.ToString();
+			MinuteTo = DEFAULT_TIME_VALUE.ToString();
+			MinuteFrom = DEFAULT_TIME_VALUE.ToString();
 		}
 
-		private void SelectEntryCommand()
+		#endregion
+
+		#region Methods
+
+		private void ResetEntriesCommand()
 		{
-			int intHourTo = CheckingTime(HourTo);
-			int intHourFrom = CheckingTime(HourFrom);
-			int intMinuteTo = CheckingTime(MinuteTo);
-			int intMinuteFrom = CheckingTime(MinuteFrom);
+			if (DataGridMessagesVisibility == Visibility.Visible)
+			{
+				DataBaseVisibleOwnMessagesList.Clear();
+
+				foreach (DataBaseMessagesViewModel element in DataBaseAllOwnMessagesList)
+				{
+					DataBaseVisibleOwnMessagesList.Add(
+						new DataBaseMessagesViewModel(new DataBaseMessage(element.Text, element.Date, element.ClientFrom, element.ClientTo)));
+				}
+			}
+
+			if (DataGridEventsVisibility == Visibility.Visible)
+			{
+				DataBaseVisibleEventsList.Clear();
+
+				foreach (DataBaseEventsViewModel element in DataBaseAllEventsList)
+				{
+					DataBaseVisibleEventsList.Add(new DataBaseEventsViewModel(element.EventMessage, element.EventDate));
+				}
+			}
+		}
+
+		private void SelectEntriesCommand()
+		{
+			int intHourTo = CheckingTimeHours(HourTo);
+			int intHourFrom = CheckingTimeHours(HourFrom);
+			int intMinuteTo = CheckingTimeMinutes(MinuteTo);
+			int intMinuteFrom = CheckingTimeMinutes(MinuteFrom);
+
+			HourTo = intHourTo.ToString();
+			HourFrom = intHourFrom.ToString();
+			MinuteTo = intMinuteTo.ToString();
+			MinuteFrom = intMinuteFrom.ToString();
 
 			DayTo = CheckingDay(DayFrom, DayTo);
 			var checkingDateFrom = new DateTime(DayFrom.Year, DayFrom.Month, DayFrom.Day, intHourFrom, intMinuteFrom, 0);
@@ -152,11 +201,12 @@ namespace Rythm.Client.ViewModel
 				{
 					if (element.Date >= checkingDateFrom && element.Date <= checkingDateTo)
 					{
-						DataBaseVisibleOwnMessagesList.Add(new DataBaseMessagesViewModel(new DataBaseMessage(element.Text, element.Date, element.ClientFrom, element.ClientTo)));
+						DataBaseVisibleOwnMessagesList.Add(
+							new DataBaseMessagesViewModel(new DataBaseMessage(element.Text, element.Date, element.ClientFrom, element.ClientTo)));
 					}
-
 				}
 			}
+
 			if (DataGridEventsVisibility == Visibility.Visible)
 			{
 				DataBaseVisibleEventsList.Clear();
@@ -171,15 +221,33 @@ namespace Rythm.Client.ViewModel
 			}
 		}
 
-		private static int CheckingTime(string time)
+		private static int CheckingTimeMinutes(string time)
 		{
-			if (int.TryParse(time, out int result))
+			if (!int.TryParse(time, out int result))
 			{
-				if (result >= 0 && result < 60)
-				{
-					return result;
-				}
+				return 0;
 			}
+
+			if (result >= 0 && result < 60)
+			{
+				return result;
+			}
+
+			return 0;
+		}
+
+		private static int CheckingTimeHours(string time)
+		{
+			if (!int.TryParse(time, out int result))
+			{
+				return 0;
+			}
+
+			if (result >= 0 && result < 24)
+			{
+				return result;
+			}
+
 			return 0;
 		}
 
@@ -187,13 +255,9 @@ namespace Rythm.Client.ViewModel
 		{
 			return dayTo < dayFrom ? dayFrom : DayTo;
 		}
-		#endregion
-
-		#region Methods
 
 		private void HandleClientLoginFrom(string login)
 		{
-			Login = login;
 			_displayingEventsController.Login = login;
 		}
 
