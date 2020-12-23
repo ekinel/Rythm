@@ -32,6 +32,11 @@ namespace Rythm.Server.Service
 		{
 			var serverParameters = new ServerParameters(address, port, timeOut, dataBaseConnectionString);
 
+			if (!File.Exists(_path))
+			{
+				return;
+			}
+
 			using (StreamWriter file = File.CreateText(_path))
 			{
 				var serializer = new JsonSerializer();
