@@ -94,7 +94,7 @@ namespace Rythm.Common.Network
 			_eventDataBase.Create(
 				new NewEventDataBase
 				{
-					Date = DateTime.Now.ToString(),
+					Date = DateTime.Now,
 					Message = "Server started"
 				});
 		}
@@ -116,7 +116,7 @@ namespace Rythm.Common.Network
 			_eventDataBase.Create(
 				new NewEventDataBase
 				{
-					Date = DateTime.Now.ToString(),
+					Date = DateTime.Now,
 					Message = "Server stopped"
 				});
 		}
@@ -152,7 +152,7 @@ namespace Rythm.Common.Network
 				_eventDataBase.Create(
 					new NewEventDataBase
 					{
-						Date = DateTime.Now.ToString(),
+						Date = DateTime.Now,
 						Message = $"Client {login} disconnected"
 					});
 				SendUpdatedDataBaseEventsResponse();
@@ -192,7 +192,7 @@ namespace Rythm.Common.Network
 				_eventDataBase.Create(
 					new NewEventDataBase
 					{
-						Date = DateTime.Now.ToString(),
+						Date = DateTime.Now,
 						Message = $"Client {connection.Login} connected"
 					});
 
@@ -413,7 +413,7 @@ namespace Rythm.Common.Network
 
 		public void WriteErrorToDataBase(Exception exception)
 		{
-			_eventDataBase.Create(new NewEventDataBase(){Message = exception.Message, Date = DateTime.Now.ToString()});
+			_eventDataBase.Create(new NewEventDataBase(){Message = exception.Message, Date = DateTime.Now});
 		}
 
 		#endregion

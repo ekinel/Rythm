@@ -4,12 +4,14 @@
 
 namespace Rythm.Common.Network.Messages
 {
+	using System;
+
 	public class DataBaseEvent : BaseContainer
 	{
 		public string Message;
-		public string Date;
+		public DateTime Date;
 
-		public DataBaseEvent(string message, string date)
+		public DataBaseEvent(string message, DateTime date)
 		{
 			Message = message;
 			Date = date;

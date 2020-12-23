@@ -4,12 +4,14 @@
 
 namespace Rythm.Server.Dal
 {
+	using System;
+
 	public class NewEventDataBase
 	{
 		#region Properties
 
 		public int ID { get; set; }
-		public string Date { get; set; }
+		public DateTime Date { get; set; }
 		public string Message { get; set; }
 
 		#endregion
