@@ -47,6 +47,7 @@ namespace Rythm.Client.ViewModel
 			get => _stackPanelVisibility;
 			set => SetProperty(ref _stackPanelVisibility, value);
 		}
+
 		public Visibility LoginVisibility
 		{
 			get => _loginVisibility;

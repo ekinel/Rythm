@@ -9,8 +9,6 @@ namespace Rythm.Client.ViewModel
 
 	using BusinessLogic.Interfaces;
 
-	using Common.Network;
-
 	using Prism.Events;
 	using Prism.Mvvm;
 
