@@ -77,6 +77,7 @@ namespace Rythm.Client.ViewModel
 
 		private void HandleDownloadMessagesList(List<DataBaseMessage> messagesList)
 		{
+			AllReceivedMessagesList.Clear();
 			foreach (DataBaseMessage message in messagesList)
 			{
 				AllReceivedMessagesList.Add(new SendMessageViewModel(message.ClientTo, message.ClientFrom, message.Text, message.Date));
