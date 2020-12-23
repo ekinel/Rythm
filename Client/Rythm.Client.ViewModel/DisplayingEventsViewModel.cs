@@ -32,7 +32,8 @@ namespace Rythm.Client.ViewModel
 		private DateTime _dayTo;
 		private string _hourFrom;
 		private string _hourTo;
-
+		private string _minuteFrom;
+		private string _minuteTo;
 
 		private readonly IDisplayingEventsController _displayingEventsController;
 
@@ -80,6 +81,17 @@ namespace Rythm.Client.ViewModel
 			set => SetProperty(ref _hourFrom, value);
 		}
 
+		public string MinuteTo
+		{
+			get => _minuteTo;
+			set => SetProperty(ref _minuteTo, value);
+		}
+		public string MinuteFrom
+		{
+			get => _minuteFrom;
+			set => SetProperty(ref _minuteFrom, value);
+		}
+
 		public ObservableCollection<DataBaseClientsViewModel> DataBaseClientsList { get; set; } =
 			new ObservableCollection<DataBaseClientsViewModel>();
 
@@ -115,27 +127,64 @@ namespace Rythm.Client.ViewModel
 
 			DayFrom = DateTime.Today;
 			DayTo = DateTime.Today;
-			HourTo = "0.00";
-			HourFrom = "23.00";
+			HourTo = "0";
+			HourFrom = "0";
+			MinuteTo = "0";
+			MinuteFrom = "0";
 		}
 
 		private void SelectEntryCommand()
 		{
+			//var checkingDateFrom = new DateTime(DayFrom.Year, DayFrom.Month, DayFrom.Day, );
+			int intHourTo = CheckingTime(HourTo);
+			int intHourFrom = CheckingTime(HourFrom);
+			int intMinuteTo = CheckingTime(MinuteTo);
+			int intMinuteFrom = CheckingTime(MinuteFrom);
+
+			var checkingDateFrom = new DateTime(DayFrom.Year, DayFrom.Month, DayFrom.Day, intHourFrom, intMinuteFrom, 0);
+			var checkingDateTo = new DateTime(DayTo.Year, DayTo.Month, DayTo.Day, intHourTo, intMinuteTo, 0);
+
+
 			if (DataGridMessagesVisibility == Visibility.Visible)
 			{
-				foreach (var element in DataBaseAllOwnMessagesList)
+				DataBaseVisibleOwnMessagesList.Clear();
+
+				foreach (DataBaseMessagesViewModel element in DataBaseAllOwnMessagesList)
 				{
-					var a = element.Date;
-					var b = a.Date;
+					if (element.Date >= checkingDateFrom && element.Date <= checkingDateTo)
+					{
+						DataBaseVisibleOwnMessagesList.Add(new DataBaseMessagesViewModel(new DataBaseMessage(element.Text, element.Date, element.ClientFrom, element.ClientTo)));
+					}
 
 				}
 			}
 			if (DataGridEventsVisibility == Visibility.Visible)
 			{
+				DataBaseVisibleEventsList.Clear();
 
+				foreach (DataBaseEventsViewModel element in DataBaseAllEventsList)
+				{
+					if (element.EventDate >= checkingDateFrom && element.EventDate <= checkingDateTo)
+					{
+						DataBaseVisibleEventsList.Add(new DataBaseEventsViewModel(element.EventMessage, element.EventDate));
+					}
+
+				}
 			}
 		}
 
+		private int CheckingTime(string time)
+		{
+			if (int.TryParse(time, out int result))
+			{
+				if (result >= 0 && result < 60)
+				{
+					return result;
+				}
+			}
+
+			return 0;
+		}
 		#endregion
 
 		#region Methods
