@@ -16,7 +16,7 @@ namespace Rythm.Client.BusinessLogic.Interfaces
 
 		event Action<MessageReceivedEventArgs> MessageReceivedEvent;
 		event Action<List<string>, List<string>> UpdatedUsersListEvent;
-		event Action<(MsgType, string)> OkReceivedEvent;
+		event Action<(MsgType, DateTime)> OkReceivedEvent;
 
 		#endregion
 

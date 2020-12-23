@@ -4,6 +4,8 @@
 
 namespace Rythm.Common.Network
 {
+	using System;
+
 	using Messages;
 
 	public class MessageReceivedEventArgs
@@ -16,7 +18,7 @@ namespace Rythm.Common.Network
 
         public string FromClientName { get; }
 
-        public string Date { get; }
+        public DateTime Date { get; }
 
         #endregion
 

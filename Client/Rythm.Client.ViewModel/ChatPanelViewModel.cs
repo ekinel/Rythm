@@ -127,7 +127,7 @@ namespace Rythm.Client.ViewModel
 			}
 		}
 
-		private void HandleOkReceive((MsgType, string) okReceive)
+		private void HandleOkReceive((MsgType, DateTime) okReceive)
 		{
 			foreach (SendMessageViewModel message in AllReceivedMessagesList)
 			{

@@ -12,7 +12,7 @@ namespace Rythm.Common.Network.Messages
     {
         #region Fields
 
-        private string _date;
+        private DateTime _date;
         private string _from;
         private string _to;
 
@@ -32,17 +32,17 @@ namespace Rythm.Common.Network.Messages
             set => _to = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public string Date
+        public DateTime Date
         {
             get => _date;
-            set => _date = value ?? throw new ArgumentNullException(nameof(value));
+            set => _date = value;
         }
 
         #endregion
 
         #region Constructors
 
-        public ServerOkMsgResponse(string from, string to, string date)
+        public ServerOkMsgResponse(string from, string to, DateTime date)
         {
             From = from;
             To = to;

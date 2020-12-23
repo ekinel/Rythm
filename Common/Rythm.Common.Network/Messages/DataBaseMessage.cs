@@ -4,12 +4,14 @@
 
 namespace Rythm.Common.Network.Messages
 {
+	using System;
+
 	public class DataBaseMessage
 	{
 		#region Properties
 
 		public string Text;
-		public string Date;
+		public DateTime Date;
 		public string ClientFrom;
 		public string ClientTo;
 
@@ -17,7 +19,7 @@ namespace Rythm.Common.Network.Messages
 
 		#region Constructors
 
-		public DataBaseMessage(string text, string date, string clientFrom, string clientTo)
+		public DataBaseMessage(string text, DateTime date, string clientFrom, string clientTo)
 		{
 			Text = text;
 			Date = date;

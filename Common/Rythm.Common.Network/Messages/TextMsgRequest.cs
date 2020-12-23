@@ -13,7 +13,6 @@ namespace Rythm.Common.Network.Messages
         private string _from;
         private string _to;
         private string _message;
-        private string _date;
 
         #endregion
 
@@ -37,11 +36,7 @@ namespace Rythm.Common.Network.Messages
             private set => _message = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public string Date
-        {
-            get => _date;
-            private set => _date = value ?? throw new ArgumentNullException(nameof(value));
-        }
+        public DateTime Date { get; set; }
 
         #endregion
 
@@ -52,7 +47,7 @@ namespace Rythm.Common.Network.Messages
             From = from;
             To = to;
             Message = message;
-            Date = DateTime.Now.ToString();
+            Date = DateTime.Now;
         }
 
         #endregion

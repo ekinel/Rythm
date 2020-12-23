@@ -43,7 +43,7 @@ namespace Rythm.Common.Network
 
 		public event EventHandler<MessageContainer> UpdatedUsersList;
 		public event EventHandler<MessageContainer> UpdatedDataBaseData;
-		public event EventHandler<(MsgType, string)> OkReceive;
+		public event EventHandler<(MsgType, DateTime)> OkReceive;
 
 		#endregion
 
@@ -227,7 +227,7 @@ namespace Rythm.Common.Network
 		{
 			MsgType type = container.Identifier;
 			MsgType status;
-			string date = string.Empty;
+			DateTime date = DateTime.Now;
 
 			if (type == MsgType.ServerOk)
 			{

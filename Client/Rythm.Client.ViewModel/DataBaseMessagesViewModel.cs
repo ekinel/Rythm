@@ -4,6 +4,8 @@
 
 namespace Rythm.Client.ViewModel
 {
+	using System;
+
 	using Common.Network.Messages;
 
 	public class DataBaseMessagesViewModel
@@ -11,7 +13,7 @@ namespace Rythm.Client.ViewModel
 		#region Properties
 
 		public string Text { get; }
-		public string Date { get; }
+		public DateTime Date { get; }
 		public string ClientFrom { get; }
 		public string ClientTo { get; }
 

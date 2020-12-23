@@ -27,7 +27,7 @@ namespace Rythm.Client.BusinessLogic
 		#region Events
 
 		public event Action<MessageReceivedEventArgs> MessageReceivedEvent;
-		public event Action<(MsgType, string)> OkReceivedEvent;
+		public event Action<(MsgType, DateTime)> OkReceivedEvent;
 		public event Action<List<string>, List<string>> UpdatedUsersListEvent;
 
 		#endregion
@@ -67,7 +67,7 @@ namespace Rythm.Client.BusinessLogic
 			}
 		}
 
-		private void HandleOkReceived(object sender, (MsgType, string) okReceive)
+		private void HandleOkReceived(object sender, (MsgType, DateTime) okReceive)
 		{
 			ApplicationDispatcherHelper.Invoke(() => OkReceivedEvent?.Invoke(okReceive));
 		}

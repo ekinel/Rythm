@@ -4,6 +4,7 @@
 
 namespace Rythm.Client.ViewModel
 {
+	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.Windows;
@@ -15,6 +16,7 @@ namespace Rythm.Client.ViewModel
 
 	using Events;
 
+	using Prism.Commands;
 	using Prism.Events;
 	using Prism.Mvvm;
 
@@ -26,7 +28,15 @@ namespace Rythm.Client.ViewModel
 		private Visibility _dataGridMessagesVisibility = Visibility.Hidden;
 		private Visibility _dataGridEventsVisibility = Visibility.Hidden;
 
+		private DateTime _dayFrom;
+		private DateTime _dayTo;
+		private string _hourFrom;
+		private string _hourTo;
+
+
 		private readonly IDisplayingEventsController _displayingEventsController;
+
+		public DelegateCommand SelectCommand { get; }
 
 		#endregion
 
@@ -49,14 +59,37 @@ namespace Rythm.Client.ViewModel
 			get => _dataGridEventsVisibility;
 			set => SetProperty(ref _dataGridEventsVisibility, value);
 		}
+		public DateTime DayFrom
+		{
+			get => _dayFrom;
+			set => SetProperty(ref _dayFrom, value);
+		}
+		public DateTime DayTo
+		{
+			get => _dayTo;
+			set => SetProperty(ref _dayTo, value);
+		}
+		public string HourTo
+		{
+			get => _hourTo;
+			set => SetProperty(ref _hourTo, value);
+		}
+		public string HourFrom
+		{
+			get => _hourFrom;
+			set => SetProperty(ref _hourFrom, value);
+		}
 
 		public ObservableCollection<DataBaseClientsViewModel> DataBaseClientsList { get; set; } =
 			new ObservableCollection<DataBaseClientsViewModel>();
 
-		public ObservableCollection<DataBaseMessagesViewModel> DataBaseOwnMessagesList { get; set; } =
+		public ObservableCollection<DataBaseMessagesViewModel> DataBaseAllOwnMessagesList { get; set; } =
+			new ObservableCollection<DataBaseMessagesViewModel>();
+		public ObservableCollection<DataBaseMessagesViewModel> DataBaseVisibleOwnMessagesList { get; set; } =
 			new ObservableCollection<DataBaseMessagesViewModel>();
 
-		public ObservableCollection<DataBaseEventsViewModel> DataBaseEventsList { get; set; } = new ObservableCollection<DataBaseEventsViewModel>();
+		public ObservableCollection<DataBaseEventsViewModel> DataBaseAllEventsList { get; set; } = new ObservableCollection<DataBaseEventsViewModel>();
+		public ObservableCollection<DataBaseEventsViewModel> DataBaseVisibleEventsList { get; set; } = new ObservableCollection<DataBaseEventsViewModel>();
 		private string Login { get; set; }
 
 		#endregion
@@ -74,9 +107,33 @@ namespace Rythm.Client.ViewModel
 			eventAggregator.GetEvent<DataBaseButtonMessagesChosen>().Subscribe(HandleDataBaseButtonMessagesChosen);
 			eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleClientLoginFrom);
 
+			SelectCommand = new DelegateCommand(SelectEntryCommand);
+
 			DataGridClientsVisibility = Visibility.Visible;
 			DataGridMessagesVisibility = Visibility.Hidden;
 			DataGridEventsVisibility = Visibility.Hidden;
+
+			DayFrom = DateTime.Today;
+			DayTo = DateTime.Today;
+			HourTo = "0.00";
+			HourFrom = "23.00";
+		}
+
+		private void SelectEntryCommand()
+		{
+			if (DataGridMessagesVisibility == Visibility.Visible)
+			{
+				foreach (var element in DataBaseAllOwnMessagesList)
+				{
+					var a = element.Date;
+					var b = a.Date;
+
+				}
+			}
+			if (DataGridEventsVisibility == Visibility.Visible)
+			{
+
+			}
 		}
 
 		#endregion
@@ -112,7 +169,7 @@ namespace Rythm.Client.ViewModel
 			ApplicationDispatcherHelper.BeginInvoke(
 				() =>
 				{
-					DataBaseOwnMessagesList.Clear();
+					DataBaseAllOwnMessagesList.Clear();
 				});
 
 			foreach (DataBaseMessage message in messagesList)
@@ -120,7 +177,8 @@ namespace Rythm.Client.ViewModel
 				ApplicationDispatcherHelper.BeginInvoke(
 					() =>
 					{
-						DataBaseOwnMessagesList.Add(new DataBaseMessagesViewModel(message));
+						DataBaseAllOwnMessagesList.Add(new DataBaseMessagesViewModel(message));
+						DataBaseVisibleOwnMessagesList.Add(new DataBaseMessagesViewModel(message));
 					});
 			}
 		}
@@ -130,7 +188,7 @@ namespace Rythm.Client.ViewModel
 			ApplicationDispatcherHelper.BeginInvoke(
 				() =>
 				{
-					DataBaseEventsList.Clear();
+					DataBaseAllEventsList.Clear();
 				});
 
 			foreach (DataBaseEvent element in eventMessage)
@@ -138,7 +196,8 @@ namespace Rythm.Client.ViewModel
 				ApplicationDispatcherHelper.BeginInvoke(
 					() =>
 					{
-						DataBaseEventsList.Add(new DataBaseEventsViewModel(element.Message, element.Date));
+						DataBaseAllEventsList.Add(new DataBaseEventsViewModel(element.Message, element.Date));
+						DataBaseVisibleEventsList.Add(new DataBaseEventsViewModel(element.Message, element.Date));
 					});
 			}
 		}

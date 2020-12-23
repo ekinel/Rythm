@@ -4,7 +4,9 @@
 
 namespace Rythm.Client.ViewModel
 {
-    using Prism.Mvvm;
+	using System;
+
+	using Prism.Mvvm;
 
     public class SendMessageViewModel : BindableBase
     {
@@ -18,7 +20,7 @@ namespace Rythm.Client.ViewModel
 
         public string LoginTo { get; }
         public string Text { get; set; }
-        public string Time { get; set; }
+        public DateTime Time { get; set; }
 
         public string LoginFrom { get;}
 
@@ -32,7 +34,7 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public SendMessageViewModel(string loginTo, string loginFrom, string text, string time)
+        public SendMessageViewModel(string loginTo, string loginFrom, string text, DateTime time)
         {
             LoginTo = loginTo;
             Text = text;
