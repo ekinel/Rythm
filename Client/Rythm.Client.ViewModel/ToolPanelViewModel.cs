@@ -75,11 +75,12 @@ namespace Rythm.Client.ViewModel
 			ShowEventsListCommand = new DelegateCommand(ExecuteShowEventsListCommand);
 			ShowMessagesListCommand = new DelegateCommand(ExecuteShowMessagesListCommand);
 			DisplayingEventsVisibilityCommand = new DelegateCommand(ExecuteDisplayingEventsVisibilityCommand);
+			ChangeThemeColorCommand = new DelegateCommand(ChangeThemeCommand);
 
 			SplitterVisibility = Visibility.Collapsed;
 			LoginVisibility = Visibility.Visible;
 			_changedLoginVisibility = true;
-			IsDarkTheme = true;
+			IsDarkTheme = false;
 		}
 
 		#endregion
@@ -89,6 +90,11 @@ namespace Rythm.Client.ViewModel
 		public void HandleNewLoginSelected(string login)
 		{
 			Login = login;
+		}
+
+		private void ChangeThemeCommand()
+		{
+			IsDarkTheme = !IsDarkTheme;
 		}
 
 		private void ExecuteShowClientsListCommand()

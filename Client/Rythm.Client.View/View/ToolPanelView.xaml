@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
 
 		<Grid Grid.Column="1" FlowDirection="RightToLeft"  Margin="5,0,0,0" HorizontalAlignment="Left" Width="250">
-			<Button Style="{StaticResource BlackAndWhiteButton}" Content="Тема"  HorizontalAlignment="Left"/>
+			<Button Style="{StaticResource BlackAndWhiteButton}" Content="Тема"  HorizontalAlignment="Left" Command="{Binding ChangeThemeColorCommand}"/>
 			<Button Style="{StaticResource BlackAndWhiteButton}" Content="Настройки" HorizontalAlignment="Center" Command="{Binding ChangeSettingsVisibilityCommand}"/>
 			<Button Style="{StaticResource BlackAndWhiteButton}"  Content="События" HorizontalAlignment="Right" Command="{Binding DisplayingEventsVisibilityCommand}"/>
         </Grid>
