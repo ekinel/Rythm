@@ -13,6 +13,7 @@ namespace Rythm.Client.ViewModel
 	using Prism.Commands;
 	using Prism.Events;
 	using Prism.Mvvm;
+	using Rythm.Client.ViewModel.Properties;
 
 	public class ToolPanelViewModel : BindableBase
 	{
@@ -89,7 +90,7 @@ namespace Rythm.Client.ViewModel
 			_changedLoginVisibility = true;
 			IsDarkTheme = false;
 			_changeButtonContent = true;
-			ButtonContent = "События";
+			ButtonContent = Resources.EventsButton;
 		}
 
 		#endregion
@@ -130,7 +131,7 @@ namespace Rythm.Client.ViewModel
 		private void ExecuteDisplayingEventsVisibilityCommand()
 		{
 			_changeButtonContent = !_changeButtonContent;
-			ButtonContent = _changeButtonContent ? "События" : "Чат";
+			ButtonContent = _changeButtonContent ? Resources.EventsButton : Resources.ChatButton;
 
 			_eventAggregator.GetEvent<DisplayingEventsVisibility>().Publish();
 

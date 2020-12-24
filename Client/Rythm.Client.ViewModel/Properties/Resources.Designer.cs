@@ -59,5 +59,32 @@ namespace Rythm.Client.ViewModel.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Чат.
+        /// </summary>
+        internal static string ChatButton {
+            get {
+                return ResourceManager.GetString("ChatButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CommonChat.
+        /// </summary>
+        internal static string CommonChat {
+            get {
+                return ResourceManager.GetString("CommonChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to События.
+        /// </summary>
+        internal static string EventsButton {
+            get {
+                return ResourceManager.GetString("EventsButton", resourceCulture);
+            }
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace Rythm.Client.ViewModel
 		public void HandleUpdatedUsersList(List<string> activeUsersList, List<string> notActiveUsersList)
 		{
 			UserList.Clear();
-			UserList.Add(new UsersLoginsViewModel(_eventAggregator, "CommonChat", true));
+			UserList.Add(new UsersLoginsViewModel(_eventAggregator, Properties.Resources.CommonChat, true));
 			foreach (string user in activeUsersList)
 			{
 				UserList.Add(new UsersLoginsViewModel(_eventAggregator, user, true));

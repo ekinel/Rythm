@@ -11,7 +11,6 @@ namespace Rythm.Client.ViewModel
 	using BusinessLogic.Interfaces;
 
 	using Common.Network;
-	using Common.Network.Enums;
 	using Common.Network.Messages;
 
 	using Events;
@@ -115,7 +114,7 @@ namespace Rythm.Client.ViewModel
 			foreach (SendMessageViewModel message in AllReceivedMessagesList)
 			{
 				if ((message.LoginFrom == _loginTo && message.LoginTo == _loginFrom ||
-				     message.LoginFrom == _loginFrom && message.LoginTo == _loginTo || message.LoginTo == "CommonChat" && _loginTo == "CommonChat") &&
+				     message.LoginFrom == _loginFrom && message.LoginTo == _loginTo || message.LoginTo == Properties.Resources.CommonChat && _loginTo == Properties.Resources.CommonChat) &&
 				    _loginTo != string.Empty)
 				{
 					ReceivedMessagesList.Add(
@@ -128,7 +127,7 @@ namespace Rythm.Client.ViewModel
 		{
 			foreach (SendMessageViewModel message in AllReceivedMessagesList)
 			{
-				if (message.Time == okReceive.Item2 && message.LoginTo != "CommonChat")
+				if (message.Time == okReceive.Item2 && message.LoginTo != Properties.Resources.CommonChat)
 				{
 					switch (okReceive.Item1)
 					{
