@@ -80,13 +80,13 @@ namespace Rythm.Client.ViewModel
 			AllReceivedMessagesList.Clear();
 			foreach (DataBaseMessage message in messagesList)
 			{
-				AllReceivedMessagesList.Add(new SendMessageViewModel(message.ClientTo, message.ClientFrom, message.Text, message.Date));
+				AllReceivedMessagesList.Add(new SendMessageViewModel(message.ClientTo, message.ClientFrom, message.Text, message.Date, message.MsgStatus));
 			}
 		}
 
 		private void HandleNewMessageReceived(MessageReceivedEventArgs state)
 		{
-			AllReceivedMessagesList.Add(new SendMessageViewModel(state.ToClientName, state.FromClientName, state.Message, state.Date));
+			AllReceivedMessagesList.Add(new SendMessageViewModel(state.ToClientName, state.FromClientName, state.Message, state.Date, state.Status));
 
 			UpdateListByNewLoginTo();
 		}
@@ -119,10 +119,7 @@ namespace Rythm.Client.ViewModel
 				    _loginTo != string.Empty)
 				{
 					ReceivedMessagesList.Add(
-						new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time)
-						{
-							OkStatus = message.OkStatus
-						});
+						new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time, message.OkStatus));
 				}
 			}
 		}

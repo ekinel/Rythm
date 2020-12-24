@@ -20,6 +20,8 @@ namespace Rythm.Common.Network
 
         public DateTime Date { get; }
 
+        public string Status { get; }
+
         #endregion
 
         #region Constructors
@@ -30,6 +32,7 @@ namespace Rythm.Common.Network
             Message = msgRequest.Message;
             FromClientName = msgRequest.From;
             Date = msgRequest.Date;
+            Status = msgRequest.Status;
         }
 
         #endregion

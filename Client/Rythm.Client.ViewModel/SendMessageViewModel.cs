@@ -34,15 +34,28 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public SendMessageViewModel(string loginTo, string loginFrom, string text, DateTime time)
+        public SendMessageViewModel(string loginTo, string loginFrom, string text, DateTime time, string okStatus = "white")
         {
             LoginTo = loginTo;
             Text = text;
             Time = time;
-            OkStatus = "white";
             LoginFrom = loginFrom;
-        }
 
-        #endregion
-    }
+			switch (okStatus)
+            {
+                case "ServerOk":
+                    OkStatus = "gray";
+                    break;
+
+                case "ClientOk":
+                    OkStatus = "green";
+                    break;
+
+                default:
+                    OkStatus = okStatus;
+					break;
+			};
+		}
+		#endregion
+	}
 }
