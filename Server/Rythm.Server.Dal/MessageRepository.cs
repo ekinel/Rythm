@@ -47,6 +47,16 @@ namespace Rythm.Server.Dal
 			}
 		}
 
+		public void Remove(NewMessageDataBase item)
+		{
+			using (var context = new DataBaseContext())
+			{
+				var t = context.MsgList.Find(item.ID);
+				context.MsgList.Remove(t);
+				context.SaveChanges();
+			}
+		}
+
 		#endregion
 	}
 }

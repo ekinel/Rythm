@@ -162,7 +162,7 @@ namespace Rythm.Client.ViewModel
 				foreach (DataBaseMessagesViewModel element in DataBaseAllOwnMessagesList)
 				{
 					DataBaseVisibleOwnMessagesList.Add(
-						new DataBaseMessagesViewModel(new DataBaseMessage(element.Text, element.Date, element.ClientFrom, element.ClientTo)));
+						new DataBaseMessagesViewModel(new DataBaseMessage(element.Text, element.Date, element.ClientFrom, element.ClientTo, element.Status)));
 				}
 			}
 
@@ -202,7 +202,7 @@ namespace Rythm.Client.ViewModel
 					if (element.Date >= checkingDateFrom && element.Date <= checkingDateTo)
 					{
 						DataBaseVisibleOwnMessagesList.Add(
-							new DataBaseMessagesViewModel(new DataBaseMessage(element.Text, element.Date, element.ClientFrom, element.ClientTo)));
+							new DataBaseMessagesViewModel(new DataBaseMessage(element.Text, element.Date, element.ClientFrom, element.ClientTo, element.Status)));
 					}
 				}
 			}

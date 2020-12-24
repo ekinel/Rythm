@@ -16,6 +16,7 @@ namespace Rythm.Client.ViewModel
 		public DateTime Date { get; }
 		public string ClientFrom { get; }
 		public string ClientTo { get; }
+		public string Status { get; }
 
 		#endregion
 
@@ -27,6 +28,7 @@ namespace Rythm.Client.ViewModel
 			Date = message.Date;
 			ClientFrom = message.ClientFrom;
 			ClientTo = message.ClientTo;
+			Status = message.MsgStatus;
 		}
 
 		#endregion

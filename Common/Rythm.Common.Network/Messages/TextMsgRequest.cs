@@ -13,6 +13,7 @@ namespace Rythm.Common.Network.Messages
         private string _from;
         private string _to;
         private string _message;
+        private string _status;
 
         #endregion
 
@@ -35,6 +36,11 @@ namespace Rythm.Common.Network.Messages
             get => _message;
             private set => _message = value ?? throw new ArgumentNullException(nameof(value));
         }
+        public string Status
+        {
+            get => _status;
+            private set => _status = value ?? throw new ArgumentNullException(nameof(value));
+        }
 
         public DateTime Date { get; set; }
 
@@ -42,12 +48,13 @@ namespace Rythm.Common.Network.Messages
 
         #region Constructors
 
-        public TextMsgRequest(string from, string to, string message)
+        public TextMsgRequest(string from, string to, string message, string status)
         {
             From = from;
             To = to;
             Message = message;
             Date = DateTime.Now;
+			Status = status;
         }
 
         #endregion

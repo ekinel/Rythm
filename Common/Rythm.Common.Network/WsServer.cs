@@ -243,8 +243,9 @@ namespace Rythm.Common.Network
 					Date = textMsgContainer.Date,
 					Message = textMsgContainer.Message,
 					ClientFrom = textMsgContainer.From,
-					ClientTo = textMsgContainer.To
-				});
+					ClientTo = textMsgContainer.To,
+					MsgStatus = "ServerOk"
+				}); ;
 
 			SendUpdatedDataBaseMsgResponse();
 		}
@@ -260,6 +261,42 @@ namespace Rythm.Common.Network
 
 			SendMessage(clientOkContainer, clientOkMsgContainer.From);
 			UpdateLastClientActivity(clientOkMsgContainer.From);
+
+			var msgListDataBase = _msgDataBase.GetList();
+			NewMessageDataBase RemovedItem = new NewMessageDataBase();
+
+			foreach (var element in msgListDataBase)
+			{
+
+				if((element.ClientFrom == clientOkMsgContainer.From) && (element.ClientTo == clientOkMsgContainer.To) && CompareDate(element.Date, clientOkMsgContainer.Date))
+				{
+					RemovedItem = element;
+				}
+			}
+
+			if(RemovedItem.Message != string.Empty)
+			{
+				_msgDataBase.Remove(RemovedItem);
+				
+				_msgDataBase.Create(
+				new NewMessageDataBase
+				{
+					Date = RemovedItem.Date,
+					Message = RemovedItem.Message,
+					ClientFrom = RemovedItem.ClientFrom,
+					ClientTo = RemovedItem.ClientTo,
+					MsgStatus = "ClientOk"
+				}); ;
+			}
+		}
+
+		private bool CompareDate(DateTime dateTime1, DateTime dateTime2)
+		{
+			if ((dateTime1.Year == dateTime2.Year) && (dateTime1.Month == dateTime2.Month) && (dateTime1.Day == dateTime2.Day) && (dateTime1.Hour == dateTime2.Hour) && (dateTime1.Minute == dateTime2.Minute) && (dateTime1.Second == dateTime2.Second))
+			{
+				return true;
+			}
+			else return false;
 		}
 
 		private void HandleOnTimedEvent(object source, ElapsedEventArgs e)
@@ -310,7 +347,7 @@ namespace Rythm.Common.Network
 
 			foreach (NewMessageDataBase element in dataBaseMessages)
 			{
-				dataBaseMessagesList.Add(new DataBaseMessage(element.Message, element.Date, element.ClientFrom, element.ClientTo));
+				dataBaseMessagesList.Add(new DataBaseMessage(element.Message, element.Date, element.ClientFrom, element.ClientTo, element.MsgStatus));
 			}
 
 			var updatedDataBaseMessages = new UpdatedDataBaseMessages(dataBaseMessagesList);

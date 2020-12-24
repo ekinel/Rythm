@@ -4,6 +4,7 @@
 
 namespace Rythm.Common.Network.Messages
 {
+	using Rythm.Common.Network.Enums;
 	using System;
 
 	public class DataBaseMessage
@@ -14,17 +15,19 @@ namespace Rythm.Common.Network.Messages
 		public DateTime Date;
 		public string ClientFrom;
 		public string ClientTo;
+		public string MsgStatus; 
 
 		#endregion
 
 		#region Constructors
 
-		public DataBaseMessage(string text, DateTime date, string clientFrom, string clientTo)
+		public DataBaseMessage(string text, DateTime date, string clientFrom, string clientTo, string msgStatus)
 		{
 			Text = text;
 			Date = date;
 			ClientFrom = clientFrom;
 			ClientTo = clientTo;
+			MsgStatus = msgStatus;
 		}
 
 		#endregion

@@ -27,7 +27,7 @@ namespace Rythm.Client.BusinessLogic
 		#region Events
 
 		public event Action<MessageReceivedEventArgs> MessageReceivedEvent;
-		public event Action<(MsgType, DateTime)> OkReceivedEvent;
+		public event Action<(string, DateTime)> OkReceivedEvent;
 		public event Action<List<string>, List<string>> UpdatedUsersListEvent;
 
 		#endregion
@@ -49,7 +49,7 @@ namespace Rythm.Client.BusinessLogic
 
 		public void MessageSend(string currentMessage, string loginTo)
 		{
-			var msgContainer = new TextMsgRequest(_connectionServiceController.Login, loginTo, currentMessage);
+			var msgContainer = new TextMsgRequest(_connectionServiceController.Login, loginTo, currentMessage, "None");
 			var mr = new MessageRequest(msgContainer, MsgType.PersonalMessage);
 			_currentTransport?.Send(mr);
 		}
@@ -67,7 +67,7 @@ namespace Rythm.Client.BusinessLogic
 			}
 		}
 
-		private void HandleOkReceived(object sender, (MsgType, DateTime) okReceive)
+		private void HandleOkReceived(object sender, (string, DateTime) okReceive)
 		{
 			ApplicationDispatcherHelper.Invoke(() => OkReceivedEvent?.Invoke(okReceive));
 		}

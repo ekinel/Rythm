@@ -127,7 +127,7 @@ namespace Rythm.Client.ViewModel
 			}
 		}
 
-		private void HandleOkReceive((MsgType, DateTime) okReceive)
+		private void HandleOkReceive((string, DateTime) okReceive)
 		{
 			foreach (SendMessageViewModel message in AllReceivedMessagesList)
 			{
@@ -135,7 +135,7 @@ namespace Rythm.Client.ViewModel
 				{
 					switch (okReceive.Item1)
 					{
-						case MsgType.ServerOk:
+						case "ServerOk":
 							if (message.OkStatus != "Green")
 							{
 								message.OkStatus = "Gray";
@@ -143,7 +143,7 @@ namespace Rythm.Client.ViewModel
 
 							break;
 
-						case MsgType.ClientOk:
+						case "ClientOk":
 							message.OkStatus = "Green";
 							break;
 					}
@@ -155,7 +155,7 @@ namespace Rythm.Client.ViewModel
 
 		private void SendMessageCommand()
 		{
-			var msgRequest = new TextMsgRequest(_loginFrom, _loginTo, OutgoingMessage);
+			var msgRequest = new TextMsgRequest(_loginFrom, _loginTo, OutgoingMessage, "None");
 			AllReceivedMessagesList.Add(new SendMessageViewModel(_loginTo, _loginFrom, OutgoingMessage, msgRequest.Date));
 			_chatPanelController.MessageSend(OutgoingMessage, _loginTo);
 			OutgoingMessage = string.Empty;

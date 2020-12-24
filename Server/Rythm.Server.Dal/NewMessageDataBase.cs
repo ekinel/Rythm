@@ -5,7 +5,6 @@
 namespace Rythm.Server.Dal
 {
 	using System;
-
 	public class NewMessageDataBase
 	{
 		#region Properties
@@ -15,6 +14,7 @@ namespace Rythm.Server.Dal
 		public string Message { get; set; }
 		public string ClientTo { get; set; }
 		public string ClientFrom { get; set; }
+		public string MsgStatus { get; set; }
 
 		#endregion
 	}

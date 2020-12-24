@@ -47,6 +47,11 @@ namespace Rythm.Server.Dal
 			}
 		}
 
+		public void Remove(NewClientDataBase item)
+		{
+
+		}
+
 		#endregion
 	}
 }

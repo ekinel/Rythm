@@ -14,6 +14,7 @@ namespace Rythm.Server.Dal
 		T GetElement(string id);
 		void Create(T item);
 		void Save();
+		void Remove(T item);
 
 		#endregion
 	}
