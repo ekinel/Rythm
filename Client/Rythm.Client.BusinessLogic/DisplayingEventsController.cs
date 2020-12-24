@@ -51,7 +51,7 @@ namespace Rythm.Client.BusinessLogic
 				case MsgType.UpdatedDataBaseClients:
 					if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseClients)) is UpdatedDataBaseClients messageRequest)
 					{
-						UpdatedDataBaseClientsEvent?.Invoke(messageRequest.ClientsList);
+						ApplicationDispatcherHelper.BeginInvoke(() => UpdatedDataBaseClientsEvent?.Invoke(messageRequest.ClientsList));
 					}
 
 					break;
@@ -68,7 +68,7 @@ namespace Rythm.Client.BusinessLogic
 							}
 						}
 
-						UpdatedDataBaseMessagesEvent?.Invoke(personalMessagesList);
+						ApplicationDispatcherHelper.BeginInvoke(() => UpdatedDataBaseMessagesEvent?.Invoke(personalMessagesList));
 					}
 
 					break;
@@ -76,7 +76,7 @@ namespace Rythm.Client.BusinessLogic
 				case MsgType.UpdatedDataBaseEvents:
 					if (((JObject)msgContainer.Payload).ToObject(typeof(UpdatedDataBaseEvents)) is UpdatedDataBaseEvents messageRequest2)
 					{
-						UpdatedDataBaseEventsEvent?.Invoke(messageRequest2.EventsList);
+						ApplicationDispatcherHelper.BeginInvoke(() => UpdatedDataBaseEventsEvent?.Invoke(messageRequest2.EventsList));
 					}
 
 					break;

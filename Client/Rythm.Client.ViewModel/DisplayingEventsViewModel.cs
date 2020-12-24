@@ -11,7 +11,6 @@ namespace Rythm.Client.ViewModel
 
 	using BusinessLogic.Interfaces;
 
-	using Common.Network;
 	using Common.Network.Messages;
 
 	using Events;
@@ -263,57 +262,30 @@ namespace Rythm.Client.ViewModel
 
 		private void HandleUpdatedDataBaseClientsEvent(List<string> dataBaseClientsList)
 		{
-			ApplicationDispatcherHelper.BeginInvoke(
-				() =>
-				{
-					DataBaseClientsList.Clear();
-				});
-
+			DataBaseClientsList.Clear();
 			foreach (string client in dataBaseClientsList)
 			{
-				ApplicationDispatcherHelper.BeginInvoke(
-					() =>
-					{
-						DataBaseClientsList.Add(new DataBaseClientsViewModel(client));
-					});
+				DataBaseClientsList.Add(new DataBaseClientsViewModel(client));
 			}
 		}
 
 		private void HandleUpdatedDataBaseMessagesEvent(List<DataBaseMessage> messagesList)
 		{
-			ApplicationDispatcherHelper.BeginInvoke(
-				() =>
-				{
-					DataBaseAllOwnMessagesList.Clear();
-				});
-
+			DataBaseAllOwnMessagesList.Clear();
 			foreach (DataBaseMessage message in messagesList)
 			{
-				ApplicationDispatcherHelper.BeginInvoke(
-					() =>
-					{
-						DataBaseAllOwnMessagesList.Add(new DataBaseMessagesViewModel(message));
-						DataBaseVisibleOwnMessagesList.Add(new DataBaseMessagesViewModel(message));
-					});
+				DataBaseAllOwnMessagesList.Add(new DataBaseMessagesViewModel(message));
+				DataBaseVisibleOwnMessagesList.Add(new DataBaseMessagesViewModel(message));
 			}
 		}
 
 		private void HandleUpdatedDataBaseEventsEvent(List<DataBaseEvent> eventMessage)
 		{
-			ApplicationDispatcherHelper.BeginInvoke(
-				() =>
-				{
-					DataBaseAllEventsList.Clear();
-				});
-
+			DataBaseAllEventsList.Clear();
 			foreach (DataBaseEvent element in eventMessage)
 			{
-				ApplicationDispatcherHelper.BeginInvoke(
-					() =>
-					{
-						DataBaseAllEventsList.Add(new DataBaseEventsViewModel(element.Message, element.Date));
-						DataBaseVisibleEventsList.Add(new DataBaseEventsViewModel(element.Message, element.Date));
-					});
+				DataBaseAllEventsList.Add(new DataBaseEventsViewModel(element.Message, element.Date));
+				DataBaseVisibleEventsList.Add(new DataBaseEventsViewModel(element.Message, element.Date));
 			}
 		}
 
