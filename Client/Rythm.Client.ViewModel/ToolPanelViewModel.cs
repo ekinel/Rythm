@@ -26,6 +26,8 @@ namespace Rythm.Client.ViewModel
 		private bool _changedLoginVisibility;
 		private Visibility _loginVisibility;
 
+		private bool _colorTheme;
+
 		#endregion
 
 		#region Properties
@@ -35,6 +37,7 @@ namespace Rythm.Client.ViewModel
 		public ICommand ShowClientsListCommand { get; }
 		public ICommand ShowMessagesListCommand { get; }
 		public ICommand ShowEventsListCommand { get; }
+		public ICommand ChangeThemeColorCommand { get; }
 
 		public string Login
 		{
@@ -54,6 +57,11 @@ namespace Rythm.Client.ViewModel
 			set => SetProperty(ref _loginVisibility, value);
 		}
 
+		public bool IsDarkTheme
+		{
+			get => _colorTheme;
+			set => SetProperty(ref _colorTheme, value);
+		}
 		#endregion
 
 		#region Constructors
@@ -71,6 +79,7 @@ namespace Rythm.Client.ViewModel
 			SplitterVisibility = Visibility.Collapsed;
 			LoginVisibility = Visibility.Visible;
 			_changedLoginVisibility = true;
+			IsDarkTheme = true;
 		}
 
 		#endregion
