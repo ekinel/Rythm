@@ -19,6 +19,8 @@ namespace Rythm.Client.ViewModel
 		#region Fields
 
 		private string _login;
+		private string _buttonContent;
+		private bool _changeButtonContent;
 		private readonly IEventAggregator _eventAggregator;
 
 		private bool _buttonsStackPanelVisibility;
@@ -62,6 +64,11 @@ namespace Rythm.Client.ViewModel
 			get => _colorTheme;
 			set => SetProperty(ref _colorTheme, value);
 		}
+		public string ButtonContent
+		{
+			get => _buttonContent;
+			set => SetProperty(ref _buttonContent, value);
+		}
 		#endregion
 
 		#region Constructors
@@ -81,6 +88,8 @@ namespace Rythm.Client.ViewModel
 			LoginVisibility = Visibility.Visible;
 			_changedLoginVisibility = true;
 			IsDarkTheme = false;
+			_changeButtonContent = true;
+			ButtonContent = "События";
 		}
 
 		#endregion
@@ -95,6 +104,7 @@ namespace Rythm.Client.ViewModel
 		private void ChangeThemeCommand()
 		{
 			IsDarkTheme = !IsDarkTheme;
+
 		}
 
 		private void ExecuteShowClientsListCommand()
@@ -119,6 +129,9 @@ namespace Rythm.Client.ViewModel
 
 		private void ExecuteDisplayingEventsVisibilityCommand()
 		{
+			_changeButtonContent = !_changeButtonContent;
+			ButtonContent = _changeButtonContent ? "События" : "Чат";
+
 			_eventAggregator.GetEvent<DisplayingEventsVisibility>().Publish();
 
 			_buttonsStackPanelVisibility = !_buttonsStackPanelVisibility;
