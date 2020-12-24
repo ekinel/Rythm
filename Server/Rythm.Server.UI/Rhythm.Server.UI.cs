@@ -6,7 +6,6 @@ namespace Rythm.Server.UI
 {
 	using System;
 	using System.Text.RegularExpressions;
-	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
 
@@ -33,9 +32,6 @@ namespace Rythm.Server.UI
 
 		private NetworkWrapper _networkWrapper;
 		private readonly ServerConfiguration _serverConfiguration;
-
-		private bool _buttonEnabled = true;
-
 		#endregion
 
 		#region Constructors
@@ -80,16 +76,16 @@ namespace Rythm.Server.UI
 			{
 				try
 				{
-					BlockingFields();
-
+					BlockingFields(false);
 					await Task.Run(() => InitializationServer(wsAddress, Convert.ToInt32(wsPort), Convert.ToInt32(wsTimeOut), wsDataBase));
+					BlockingFields(false);
 
 					LabelServerStatus.Text = Resources.ServerStatusStart;
 				}
 				catch (Exception exception)
 				{
 					MessageBox.Show(exception.Message);
-					BlockingFields();
+					BlockingFields(true);
 					_networkWrapper.WriteErrorToDataBase(exception);
 				}
 			}
@@ -145,7 +141,7 @@ namespace Rythm.Server.UI
 		private void ButtonStopClick(object sender, EventArgs e)
 		{
 			_networkWrapper.Stop();
-			BlockingFields();
+			BlockingFields(true);
 			_serverConfiguration.SaveConfigurationFile(
 				TextBoxAddress.Text,
 				Convert.ToInt32(MaskedTextBoxPort.Text),
@@ -170,17 +166,22 @@ namespace Rythm.Server.UI
 			return (valuePort > MIN_PORT && valuePort < MAX_PORT);
 		}
 
-		private void BlockingFields()
+		private void BlockingFields(bool buttonEnabled)
 		{
-			_buttonEnabled = !_buttonEnabled;
+			ButtonStart.Enabled = buttonEnabled;
 
-			ButtonStart.Enabled = _buttonEnabled;
-			ButtonStop.Enabled = !_buttonEnabled;
+			TextBoxAddress.Enabled = buttonEnabled;
+			MaskedTextBoxPort.Enabled = buttonEnabled;
+			maskedTextBoxTimeOut.Enabled = buttonEnabled;
+			TextBoxDataBase.Enabled = buttonEnabled;
 
-			TextBoxAddress.Enabled = _buttonEnabled;
-			MaskedTextBoxPort.Enabled = _buttonEnabled;
-			maskedTextBoxTimeOut.Enabled = _buttonEnabled;
-			TextBoxDataBase.Enabled = _buttonEnabled;
+			if (_networkWrapper == null)
+			{
+				buttonEnabled = true;
+			}
+
+			ButtonStop.Enabled = !buttonEnabled;
+
 		}
 
 		private bool FillingFields()
