@@ -117,7 +117,7 @@ namespace Rythm.Client.ViewModel
 				     message.LoginFrom == _loginFrom && message.LoginTo == _loginTo || message.LoginTo == Properties.Resources.CommonChat && _loginTo == Properties.Resources.CommonChat) &&
 				    _loginTo != string.Empty)
 				{
-					if(message.LoginTo == "CommonChat")
+					if(message.LoginTo == "CommonChat" || message.LoginFrom != _loginFrom)
 					{
 						ReceivedMessagesList.Add(
 							new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time));
