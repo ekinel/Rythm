@@ -117,8 +117,16 @@ namespace Rythm.Client.ViewModel
 				     message.LoginFrom == _loginFrom && message.LoginTo == _loginTo || message.LoginTo == Properties.Resources.CommonChat && _loginTo == Properties.Resources.CommonChat) &&
 				    _loginTo != string.Empty)
 				{
-					ReceivedMessagesList.Add(
-						new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time, message.OkStatus));
+					if(message.LoginTo == "CommonChat")
+					{
+						ReceivedMessagesList.Add(
+							new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time));
+					}
+					else
+					{
+						ReceivedMessagesList.Add(
+							new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time, message.OkStatus));
+					}
 				}
 			}
 		}
@@ -132,15 +140,15 @@ namespace Rythm.Client.ViewModel
 					switch (okReceive.Item1)
 					{
 						case "ServerOk":
-							if (message.OkStatus != "Green")
+							if (message.OkStatus != "Orange")
 							{
-								message.OkStatus = "Gray";
+								message.OkStatus = "Red";
 							}
 
 							break;
 
 						case "ClientOk":
-							message.OkStatus = "Green";
+							message.OkStatus = "Orange";
 							break;
 					}
 				}

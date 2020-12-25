@@ -34,7 +34,7 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public SendMessageViewModel(string loginTo, string loginFrom, string text, DateTime time, string okStatus = "white")
+        public SendMessageViewModel(string loginTo, string loginFrom, string text, DateTime time, string okStatus = "White")
         {
             LoginTo = loginTo;
             Text = text;
