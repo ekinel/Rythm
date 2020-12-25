@@ -47,7 +47,7 @@ namespace Rythm.Server.Dal
 			}
 		}
 
-		public void Remove(NewClientDataBase item)
+		public void Modify(NewClientDataBase item)
 		{
 
 		}
