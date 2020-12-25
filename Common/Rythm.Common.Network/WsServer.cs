@@ -95,7 +95,7 @@ namespace Rythm.Common.Network
 				new NewEventDataBase
 				{
 					Date = DateTime.Now,
-					Message = "Server started"
+					Message = Resources.ServerStartedMessage
 				});
 		}
 
@@ -117,7 +117,7 @@ namespace Rythm.Common.Network
 				new NewEventDataBase
 				{
 					Date = DateTime.Now,
-					Message = "Server stopped"
+					Message = Resources.ServerStoppedMessage
 				});
 		}
 
@@ -244,8 +244,8 @@ namespace Rythm.Common.Network
 					Message = textMsgContainer.Message,
 					ClientFrom = textMsgContainer.From,
 					ClientTo = textMsgContainer.To,
-					MsgStatus = "ServerOk"
-				}); ;
+					MsgStatus = Resources.ServerOkStatus
+				}); ; ;
 
 			SendUpdatedDataBaseMsgResponse();
 		}

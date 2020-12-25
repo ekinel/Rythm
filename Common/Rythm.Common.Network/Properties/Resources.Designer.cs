@@ -68,5 +68,32 @@ namespace Rythm.Common.Network.Properties {
                 return ResourceManager.GetString("CommonChat", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ServerOk.
+        /// </summary>
+        internal static string ServerOkStatus {
+            get {
+                return ResourceManager.GetString("ServerOkStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server started.
+        /// </summary>
+        internal static string ServerStartedMessage {
+            get {
+                return ResourceManager.GetString("ServerStartedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server stopped.
+        /// </summary>
+        internal static string ServerStoppedMessage {
+            get {
+                return ResourceManager.GetString("ServerStoppedMessage", resourceCulture);
+            }
+        }
     }
 }

@@ -120,4 +120,13 @@
   <data name="CommonChat" xml:space="preserve">
     <value>CommonChat</value>
   </data>
+  <data name="ServerOkStatus" xml:space="preserve">
+    <value>ServerOk</value>
+  </data>
+  <data name="ServerStartedMessage" xml:space="preserve">
+    <value>Server started</value>
+  </data>
+  <data name="ServerStoppedMessage" xml:space="preserve">
+    <value>Server stopped</value>
+  </data>
 </root>
