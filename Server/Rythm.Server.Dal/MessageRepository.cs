@@ -47,13 +47,17 @@ namespace Rythm.Server.Dal
 			}
 		}
 
-		public void Remove(NewMessageDataBase item)
+		public void Modify(NewMessageDataBase item)
 		{
 			using (var context = new DataBaseContext())
 			{
-				var t = context.MsgList.Find(item.ID);
-				context.MsgList.Remove(t);
-				context.SaveChanges();
+				var element = context.MsgList.FirstOrDefault(message => message.ID == item.ID);
+
+				if(element != null)
+				{
+					element.MsgStatus = "ClientOk";
+					context.SaveChanges();
+				}
 			}
 		}
 

@@ -268,25 +268,17 @@ namespace Rythm.Common.Network
 			foreach (var element in msgListDataBase)
 			{
 
-				if((element.ClientFrom == clientOkMsgContainer.From) && (element.ClientTo == clientOkMsgContainer.To) && CompareDate(element.Date, clientOkMsgContainer.Date))
+				if ((element.ClientFrom == clientOkMsgContainer.From) && (element.ClientTo == clientOkMsgContainer.To) && CompareDate(element.Date, clientOkMsgContainer.Date))
 				{
 					RemovedItem = element;
 				}
 			}
 
-			if(RemovedItem.Message != string.Empty)
+			if (RemovedItem.Message != null)
 			{
-				_msgDataBase.Remove(RemovedItem);
-				
-				_msgDataBase.Create(
-				new NewMessageDataBase
-				{
-					Date = RemovedItem.Date,
-					Message = RemovedItem.Message,
-					ClientFrom = RemovedItem.ClientFrom,
-					ClientTo = RemovedItem.ClientTo,
-					MsgStatus = "ClientOk"
-				}); ;
+				_msgDataBase.Modify(RemovedItem);
+
+				SendUpdatedDataBaseMsgResponse();
 			}
 		}
 
