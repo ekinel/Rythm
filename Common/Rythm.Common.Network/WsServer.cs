@@ -231,8 +231,8 @@ namespace Rythm.Common.Network
 			}
 			else
 			{
-				SendMessage(container, textMsgContainer.To);
 				SendMessage(serverOkContainer, textMsgContainer.From);
+				SendMessage(container, textMsgContainer.To);
 			}
 
 			UpdateLastClientActivity(textMsgContainer.From);
