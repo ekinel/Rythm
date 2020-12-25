@@ -13,7 +13,8 @@ namespace Rythm.Server.Service
 	{
 		#region Fields
 
-		private readonly string _path;
+		private readonly string _pathToConfigurationFile;
+		private readonly string _pathToFolder;
 
 		#endregion
 
@@ -21,7 +22,10 @@ namespace Rythm.Server.Service
 
 		public ServerConfiguration()
 		{
-			_path = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Rythm\\Configuration.json";
+			_pathToConfigurationFile = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Rythm\\Configuration.json";
+			_pathToFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Rythm";
+
+			Directory.CreateDirectory(_pathToFolder);
 		}
 
 		#endregion
@@ -32,12 +36,12 @@ namespace Rythm.Server.Service
 		{
 			var serverParameters = new ServerParameters(address, port, timeOut, dataBaseConnectionString);
 
-			if (!File.Exists(_path))
+			if (!File.Exists(_pathToConfigurationFile))
 			{
 				return;
 			}
 
-			using (StreamWriter file = File.CreateText(_path))
+			using (StreamWriter file = File.CreateText(_pathToConfigurationFile))
 			{
 				var serializer = new JsonSerializer();
 				serializer.Serialize(file, serverParameters);
@@ -46,14 +50,17 @@ namespace Rythm.Server.Service
 
 		public ServerParameters ReadConfigurationFile()
 		{
-			if (!File.Exists(_path))
+			if (!File.Exists(_pathToConfigurationFile))
 			{
 				return new ServerParameters(string.Empty, 0, 0, string.Empty);
 			}
 
-			string configurationString = File.ReadAllText(_path);
+			string configurationString = File.ReadAllText(_pathToConfigurationFile);
 
 			var container = JsonConvert.DeserializeObject<ServerParameters>(configurationString);
+
+			if(container == null) return new ServerParameters(string.Empty, 0, 0, string.Empty);
+
 			return container;
 		}
 
