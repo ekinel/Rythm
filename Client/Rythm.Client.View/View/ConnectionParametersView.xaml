@@ -9,7 +9,7 @@
              interactivity:ViewModelLocator.AutoWireViewModel="True"
              d:DataContext="{d:DesignInstance viewModel:ConnectionParametersViewModel}" >
 
-	<Grid  Style="{DynamicResource CommonBackground}">
+	<Grid Style="{DynamicResource CommonBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
