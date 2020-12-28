@@ -15,15 +15,15 @@
         </Grid.ColumnDefinitions>
 
 		<Grid Grid.Column="1" FlowDirection="RightToLeft"  Margin="5,0,0,0" HorizontalAlignment="Left" Width="250">
-			<Button Style="{StaticResource BlackAndWhiteButton}" Content="Тема"  HorizontalAlignment="Left" Command="{Binding ChangeThemeColorCommand}"/>
-			<Button Style="{StaticResource BlackAndWhiteButton}" Content="Настройки" HorizontalAlignment="Center" Command="{Binding ChangeSettingsVisibilityCommand}"/>
-			<Button Style="{StaticResource BlackAndWhiteButton}" Content="{Binding ButtonContent}" HorizontalAlignment="Right" Command="{Binding DisplayingEventsVisibilityCommand}"/>
+			<Button Style="{DynamicResource BlackAndWhiteButton}" x:Name="themeButton" Content="Тема"  HorizontalAlignment="Left" Command="{Binding ChangeThemeColorCommand}"/>
+			<Button Style="{DynamicResource BlackAndWhiteButton}" Content="Настройки" HorizontalAlignment="Center" Command="{Binding ChangeSettingsVisibilityCommand}"/>
+			<Button Style="{DynamicResource BlackAndWhiteButton}" Content="{Binding ButtonContent}" HorizontalAlignment="Right" Command="{Binding DisplayingEventsVisibilityCommand}"/>
         </Grid>
 
         <Grid Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" Visibility="{Binding SplitterVisibility}" Width="250">
-			<Button  Style="{StaticResource BlackAndWhiteButton}" Content="Клиенты" Command="{Binding ShowClientsListCommand}" HorizontalAlignment="Left"/>
-			<Button  Style="{StaticResource BlackAndWhiteButton}" Content="Сообщения" Command="{Binding ShowMessagesListCommand}" HorizontalAlignment="Center"/>
-			<Button  Style="{StaticResource BlackAndWhiteButton}" Content="События" Command="{Binding ShowEventsListCommand}" HorizontalAlignment="Right"/>
+			<Button  Style="{DynamicResource BlackAndWhiteButton}" Content="Клиенты" Command="{Binding ShowClientsListCommand}" HorizontalAlignment="Left"/>
+			<Button  Style="{DynamicResource BlackAndWhiteButton}" Content="Сообщения" Command="{Binding ShowMessagesListCommand}" HorizontalAlignment="Center"/>
+			<Button  Style="{DynamicResource BlackAndWhiteButton}" Content="События" Command="{Binding ShowEventsListCommand}" HorizontalAlignment="Right"/>
         </Grid>
         <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Login}" Visibility="{Binding LoginVisibility}" Foreground="DimGray" Width="Auto" FontSize="18" Margin="10,0,0,0" ></TextBlock>
     </Grid>
