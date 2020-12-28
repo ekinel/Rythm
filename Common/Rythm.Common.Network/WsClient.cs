@@ -31,7 +31,7 @@ namespace Rythm.Common.Network
 
 		#region Properties
 
-		public bool IsConnected => _socket?.ReadyState == WebSocketState.Open;
+		private bool IsConnected => _socket?.ReadyState == WebSocketState.Open;
 
 		#endregion
 
@@ -193,34 +193,24 @@ namespace Rythm.Common.Network
 				return;
 			}
 
-			var textMsgRequest = ((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) as TextMsgRequest;
 
-			MessageReceived?.Invoke(this, new MessageReceivedEventArgs(textMsgRequest));
-			if (textMsgRequest == null)
+			if(((JObject)messageRequest.MsgContainer).ToObject(typeof(TextMsgRequest)) is TextMsgRequest textMsgRequest)
 			{
-				return;
+				MessageReceived?.Invoke(this, new MessageReceivedEventArgs(textMsgRequest));
+				var msgContainer = new ClientOkMsgResponse(textMsgRequest.From, textMsgRequest.To, textMsgRequest.Date);
+				Send(msgContainer);
 			}
-
-			var msgContainer = new ClientOkMsgResponse(textMsgRequest.From, textMsgRequest.To, textMsgRequest.Date);
-			Send(msgContainer);
 		}
 
 		private void CommonMessage(MessageContainer container)
 		{
-			var msgRequest = ((JObject)container.Payload).ToObject(typeof(CommonChatMsgResponse)) as CommonChatMsgResponse;
-			if (msgRequest != null)
+			if(((JObject)container.Payload).ToObject(typeof(CommonChatMsgResponse)) is CommonChatMsgResponse msgRequest)
 			{
 				var mess = new MessageReceivedEventArgs(new TextMsgRequest(msgRequest.From, "CommonChat", msgRequest.Message, "None"));
 				MessageReceived?.Invoke(this, mess);
+				var mgContainer = new ClientOkMsgResponse(msgRequest.From, "CommonChat", msgRequest.Date);
+				Send(mgContainer);
 			}
-
-			if (msgRequest == null)
-			{
-				return;
-			}
-
-			var mgContainer = new ClientOkMsgResponse(msgRequest.From, "CommonChat", msgRequest.Date);
-			Send(mgContainer);
 		}
 
 		private void OkResponse(MessageContainer container)
