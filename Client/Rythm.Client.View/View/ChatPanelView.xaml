@@ -11,7 +11,7 @@
              interactivity:ViewModelLocator.AutoWireViewModel="True" 
             d:DataContext="{d:DesignInstance viewModel:ChatPanelViewModel}">
 
-    <Grid>
+	<Grid Style="{DynamicResource CommonBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" ></RowDefinition>
             <RowDefinition Height="Auto" ></RowDefinition>
