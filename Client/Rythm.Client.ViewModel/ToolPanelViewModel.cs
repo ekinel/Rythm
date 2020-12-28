@@ -60,7 +60,7 @@ namespace Rythm.Client.ViewModel
 			set => SetProperty(ref _loginVisibility, value);
 		}
 
-		public bool IsDarkTheme
+		public bool IsLightTheme
 		{
 			get => _colorTheme;
 			set => SetProperty(ref _colorTheme, value);
@@ -88,7 +88,7 @@ namespace Rythm.Client.ViewModel
 			SplitterVisibility = Visibility.Collapsed;
 			LoginVisibility = Visibility.Visible;
 			_changedLoginVisibility = true;
-			IsDarkTheme = false;
+			IsLightTheme = true;
 			_changeButtonContent = true;
 			ButtonContent = Resources.EventsButton;
 		}
@@ -104,8 +104,27 @@ namespace Rythm.Client.ViewModel
 
 		private void ChangeThemeCommand()
 		{
-			IsDarkTheme = !IsDarkTheme;
+			IsLightTheme = !IsLightTheme;
+			string _theme = string.Empty;
 
+			switch (IsLightTheme)
+			{
+				case true:
+					_theme = "ButtonStyle";
+					break;
+
+				case false:
+					_theme = "ButtonStyleDark";
+					break;
+			}
+
+			var uri = new Uri(@"../../Resources/" + _theme + ".xaml", UriKind.Relative);
+			// загружаем словарь ресурсов
+			ResourceDictionary resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
+			// очищаем коллекцию ресурсов приложения
+			Application.Current.Resources.Clear();
+			// добавляем загруженный словарь ресурсов
+			Application.Current.Resources.MergedDictionaries.Add(resourceDict);
 		}
 
 		private void ExecuteShowClientsListCommand()
