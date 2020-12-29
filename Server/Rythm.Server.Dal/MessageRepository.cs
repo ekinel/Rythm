@@ -7,13 +7,13 @@ namespace Rythm.Server.Dal
 	using System.Collections.Generic;
 	using System.Linq;
 
-	public class MessageRepository : IRepository<NewMessageDataBase>
+	public class MessageRepository : IRepository<MessageDTO>
 	{
 		#region Methods
 
-		public IEnumerable<NewMessageDataBase> GetList()
+		public IEnumerable<MessageDTO> GetList()
 		{
-			List<NewMessageDataBase> msgList;
+			List<MessageDTO> msgList;
 			using (var context = new DataBaseContext())
 			{
 				msgList = context.MsgList.ToList();
@@ -22,7 +22,7 @@ namespace Rythm.Server.Dal
 			return msgList;
 		}
 
-		public NewMessageDataBase GetElement(string id)
+		public MessageDTO GetElement(string id)
 		{
 			using (var context = new DataBaseContext())
 			{
@@ -30,7 +30,7 @@ namespace Rythm.Server.Dal
 			}
 		}
 
-		public void Create(NewMessageDataBase item)
+		public void Create(MessageDTO item)
 		{
 			using (var context = new DataBaseContext())
 			{
@@ -47,7 +47,7 @@ namespace Rythm.Server.Dal
 			}
 		}
 
-		public void Modify(NewMessageDataBase item)
+		public void Modify(MessageDTO item)
 		{
 			using (var context = new DataBaseContext())
 			{

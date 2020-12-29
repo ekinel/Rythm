@@ -4,15 +4,14 @@
 
 namespace Rythm.Server.Dal
 {
-	using System;
+	using System.ComponentModel.DataAnnotations;
 
-	public class NewEventDataBase
+	public class ClientDTO
 	{
 		#region Properties
 
-		public int ID { get; set; }
-		public DateTime Date { get; set; }
-		public string Message { get; set; }
+		[Key]
+		public string Login { get; set; }
 
 		#endregion
 	}

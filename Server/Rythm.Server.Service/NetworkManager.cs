@@ -30,9 +30,9 @@ namespace Rythm.Server.Service
 		#region Constructors
 
 		public NetworkManager(
-			IRepository<NewClientDataBase> clientDataBase,
-			IRepository<NewMessageDataBase> msgDataBase,
-			IRepository<NewEventDataBase> eventDataBase)
+			IRepository<ClientDTO> clientDataBase,
+			IRepository<MessageDTO> msgDataBase,
+			IRepository<EventDTO> eventDataBase)
 		{
 			_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT), TIME_OUT, clientDataBase, msgDataBase, eventDataBase);
 		}
@@ -42,9 +42,9 @@ namespace Rythm.Server.Service
 			int port,
 			int timeOut,
 			string dataBaseConnectionString,
-			IRepository<NewClientDataBase> clientDataBase,
-			IRepository<NewMessageDataBase> msgDataBase,
-			IRepository<NewEventDataBase> eventDataBase)
+			IRepository<ClientDTO> clientDataBase,
+			IRepository<MessageDTO> msgDataBase,
+			IRepository<EventDTO> eventDataBase)
 		{
 			if (string.IsNullOrEmpty(address))
 			{

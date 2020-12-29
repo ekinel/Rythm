@@ -56,9 +56,9 @@
     <Compile Include="EventRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="MessageRepository.cs" />
-    <Compile Include="NewClientDataBase.cs" />
-    <Compile Include="NewEventDataBase.cs" />
-    <Compile Include="NewMessageDataBase.cs" />
+    <Compile Include="ClientDTO.cs" />
+    <Compile Include="EventDTO.cs" />
+    <Compile Include="MessageDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
