@@ -10,21 +10,8 @@
              d:DataContext="{d:DesignInstance viewModel:UsersListViewModel}">
 
     <Grid>
-        <ListBox ItemsSource="{Binding UserList}" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" >
-            <ListBox.ItemContainerStyle>
-                <Style>
-                    <Setter Property="ListBoxItem.Margin" Value="3"/>
-                    <Setter Property="ListBoxItem.Padding" Value="0"/>
-                    <Setter Property="ListBoxItem.BorderThickness" Value="0"/>
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border Height="30" CornerRadius="5"   HorizontalAlignment="Stretch" Padding="0" Margin="0">
-                        <Button BorderThickness="1" BorderBrush="LightGray"  Foreground="DimGray"  Background="Transparent" IsEnabled="{Binding IsEnabled}" Content="{Binding Login}" Command="{Binding ChooseLoginCommand}" />
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+		<ListBox ItemsSource="{Binding UserList}" ItemContainerStyle="{DynamicResource ClientsListBoxStyle}" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" >
+
         </ListBox>
     </Grid>
 </UserControl>

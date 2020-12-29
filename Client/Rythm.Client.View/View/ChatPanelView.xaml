@@ -18,12 +18,7 @@
         </Grid.RowDefinitions>
 
 		<ScrollViewer Grid.Row="0" viewModel:ScrollViewerExtensionsViewModel.AlwaysScrollToEnd="True" >
-			<ListBox ItemContainerStyle="{DynamicResource ListBoxStyle}" ItemsSource="{Binding ReceivedMessagesList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" Background="WhiteSmoke" HorizontalContentAlignment="Stretch">
-				<!--<ListBox.ItemContainerStyle>
-					<Style TargetType="ListBoxItem">
-						<Setter Property="IsEnabled" Value="false"/>
-					</Style>
-				</ListBox.ItemContainerStyle>-->
+			<ListBox ItemContainerStyle="{DynamicResource ChatListBoxStyle}" ItemsSource="{Binding ReceivedMessagesList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" Background="WhiteSmoke" HorizontalContentAlignment="Stretch">
 			</ListBox>
         </ScrollViewer>
         <Grid Grid.Row="1">
