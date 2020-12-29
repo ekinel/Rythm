@@ -7,8 +7,9 @@ namespace Rythm.Client.ViewModel
 	using System;
 
 	using Prism.Mvvm;
+	using Rythm.Common.Network.Enums;
 
-    public class SendMessageViewModel : BindableBase
+	public class SendMessageViewModel : BindableBase
     {
         #region Fields
 
@@ -34,7 +35,7 @@ namespace Rythm.Client.ViewModel
 
         #region Constructors
 
-        public SendMessageViewModel(string loginTo, string loginFrom, string text, DateTime time, string okStatus = "White")
+        public SendMessageViewModel(string loginTo, string loginFrom, string text, DateTime time, MsgStatus okStatus)
         {
             LoginTo = loginTo;
             Text = text;
@@ -43,19 +44,45 @@ namespace Rythm.Client.ViewModel
 
 			switch (okStatus)
             {
-                case "ServerOk":
-                    OkStatus = "gray";
+                case MsgStatus.ServerOk:
+                    OkStatus = "Gray";
                     break;
 
-                case "ClientOk":
-                    OkStatus = "green";
+                case MsgStatus.ClientOk:
+                    OkStatus = "Green";
                     break;
 
                 default:
-                    OkStatus = okStatus;
+                    OkStatus = "White";
 					break;
 			};
+
 		}
-		#endregion
-	}
+
+        public SendMessageViewModel(string loginTo, string loginFrom, string text, DateTime time, string okStatus)
+        {
+            LoginTo = loginTo;
+            Text = text;
+            Time = time;
+            LoginFrom = loginFrom;
+
+            switch (okStatus)
+            {
+                case "ServerOk":
+                case "Gray":
+                    OkStatus = "Gray";
+                    break;
+
+                case "ClientOk":
+                case "Green":
+                    OkStatus = "Green";
+                    break;
+
+                default:
+                    OkStatus = "White";
+                    break;
+            };
+        }
+        #endregion
+    }
 }

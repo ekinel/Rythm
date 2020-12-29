@@ -11,6 +11,7 @@ namespace Rythm.Server.Service
 	using Common.Network;
 
 	using Dal;
+	using Rythm.Server.Dal.Interfaces;
 
 	public class NetworkManager
 	{

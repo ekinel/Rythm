@@ -2,7 +2,7 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Server.Dal
+namespace Rythm.Server.Dal.Interfaces
 {
 	using System.Collections.Generic;
 

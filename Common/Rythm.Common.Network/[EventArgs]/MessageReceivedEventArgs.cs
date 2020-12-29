@@ -7,6 +7,7 @@ namespace Rythm.Common.Network
 	using System;
 
 	using Messages;
+	using Rythm.Common.Network.Enums;
 
 	public class MessageReceivedEventArgs
     {
@@ -20,7 +21,7 @@ namespace Rythm.Common.Network
 
         public DateTime Date { get; }
 
-        public string Status { get; }
+        public MsgStatus Status { get; }
 
         #endregion
 

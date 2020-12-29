@@ -4,6 +4,7 @@
 
 namespace Rythm.Server.Dal
 {
+	using Rythm.Server.Dal.Interfaces;
 	using System.Collections.Generic;
 	using System.Linq;
 

@@ -43,7 +43,7 @@ namespace Rythm.Common.Network
 
 		public event EventHandler<MessageContainer> UpdatedUsersList;
 		public event EventHandler<MessageContainer> UpdatedDataBaseData;
-		public event EventHandler<(string, DateTime)> OkReceive;
+		public event EventHandler<(MsgStatus, DateTime)> OkReceive;
 
 		#endregion
 
@@ -206,7 +206,7 @@ namespace Rythm.Common.Network
 		{
 			if(((JObject)container.Payload).ToObject(typeof(CommonChatMsgResponse)) is CommonChatMsgResponse msgRequest)
 			{
-				var mess = new MessageReceivedEventArgs(new TextMsgRequest(msgRequest.From, "CommonChat", msgRequest.Message, "None"));
+				var mess = new MessageReceivedEventArgs(new TextMsgRequest(msgRequest.From, "CommonChat", msgRequest.Message, MsgStatus.None));
 				MessageReceived?.Invoke(this, mess);
 				var mgContainer = new ClientOkMsgResponse(msgRequest.From, "CommonChat", msgRequest.Date);
 				Send(mgContainer);
@@ -216,7 +216,7 @@ namespace Rythm.Common.Network
 		private void OkResponse(MessageContainer container)
 		{
 			MsgType type = container.Identifier;
-			string status;
+			MsgStatus status;
 			DateTime date = DateTime.Now;
 
 			if (type == MsgType.ServerOk)
@@ -226,7 +226,7 @@ namespace Rythm.Common.Network
 					date = messageResponse.Date;
 				}
 
-				status = "ServerOk";
+				status = MsgStatus.ServerOk;
 			}
 			else
 			{
@@ -235,7 +235,7 @@ namespace Rythm.Common.Network
 					date = messageResponse.Date;
 				}
 
-				status = "ClientOk";
+				status = MsgStatus.ClientOk;
 			}
 
 			OkReceive?.Invoke(this, (status, date));

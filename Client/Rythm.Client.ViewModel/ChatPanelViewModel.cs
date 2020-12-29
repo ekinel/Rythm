@@ -18,6 +18,7 @@ namespace Rythm.Client.ViewModel
 	using Prism.Commands;
 	using Prism.Events;
 	using Prism.Mvvm;
+	using Rythm.Common.Network.Enums;
 
 	public class ChatPanelViewModel : BindableBase
 	{
@@ -120,7 +121,7 @@ namespace Rythm.Client.ViewModel
 					if(message.LoginTo == "CommonChat" || message.LoginFrom != _loginFrom)
 					{
 						ReceivedMessagesList.Add(
-							new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time));
+							new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time, MsgStatus.None));
 					}
 					else
 					{
@@ -131,25 +132,20 @@ namespace Rythm.Client.ViewModel
 			}
 		}
 
-		private void HandleOkReceive((string, DateTime) okReceive)
+		private void HandleOkReceive((MsgStatus, DateTime) okReceive)
 		{
 			foreach (SendMessageViewModel message in AllReceivedMessagesList)
 			{
 				if (message.Time == okReceive.Item2 && message.LoginTo != Properties.Resources.CommonChat)
 				{
-					switch (okReceive.Item1)
+					if(okReceive.Item1 == MsgStatus.ServerOk)
 					{
-						case "ServerOk":
-							if (message.OkStatus != "Orange")
-							{
-								message.OkStatus = "Red";
-							}
+						message.OkStatus = "Gray";
+					}
+					else
+					{
+						message.OkStatus = "Green";
 
-							break;
-
-						case "ClientOk":
-							message.OkStatus = "Orange";
-							break;
 					}
 				}
 			}
@@ -159,8 +155,8 @@ namespace Rythm.Client.ViewModel
 
 		private void SendMessageCommand()
 		{
-			var msgRequest = new TextMsgRequest(_loginFrom, _loginTo, OutgoingMessage, "None");
-			AllReceivedMessagesList.Add(new SendMessageViewModel(_loginTo, _loginFrom, OutgoingMessage, msgRequest.Date));
+			var msgRequest = new TextMsgRequest(_loginFrom, _loginTo, OutgoingMessage, MsgStatus.None);
+			AllReceivedMessagesList.Add(new SendMessageViewModel(_loginTo, _loginFrom, OutgoingMessage, msgRequest.Date, MsgStatus.None));
 			_chatPanelController.MessageSend(OutgoingMessage, _loginTo);
 			OutgoingMessage = string.Empty;
 

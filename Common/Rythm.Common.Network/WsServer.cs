@@ -18,7 +18,7 @@ namespace Rythm.Common.Network
 	using Newtonsoft.Json.Linq;
 
 	using Properties;
-
+	using Rythm.Server.Dal.Interfaces;
 	using Server.Dal;
 
 	using WebSocketSharp.Server;
@@ -225,6 +225,16 @@ namespace Rythm.Common.Network
 			var serverOkPayload = new ServerOkMsgResponse(textMsgContainer.From, textMsgContainer.To, textMsgContainer.Date);
 			MessageContainer serverOkContainer = serverOkPayload.GetContainer();
 
+			_msgDataBase.Create(
+					new MessageDTO
+					{
+						Date = textMsgContainer.Date,
+						Message = textMsgContainer.Message,
+						ClientFrom = textMsgContainer.From,
+						ClientTo = textMsgContainer.To,
+						MsgStatus = Resources.ServerOkStatus
+					});
+
 			if (textMsgContainer.To == Resources.CommonChat)
 			{
 				BroadcastSend(container, textMsgContainer.From);
@@ -236,17 +246,6 @@ namespace Rythm.Common.Network
 			}
 
 			UpdateLastClientActivity(textMsgContainer.From);
-
-			_msgDataBase.Create(
-				new MessageDTO
-				{
-					Date = textMsgContainer.Date,
-					Message = textMsgContainer.Message,
-					ClientFrom = textMsgContainer.From,
-					ClientTo = textMsgContainer.To,
-					MsgStatus = Resources.ServerOkStatus
-				}); ; ;
-
 			SendUpdatedDataBaseMsgResponse();
 		}
 

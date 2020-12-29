@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="ApplicationDispatcherHelper.cs" />
     <Compile Include="ClientActivity.cs" />
+    <Compile Include="Enums\MsgStatus.cs" />
     <Compile Include="Messages\ClientOkMsgResponse.cs" />
     <Compile Include="Enums\MsgType.cs" />
     <Compile Include="Enums\ResultCodes.cs" />
