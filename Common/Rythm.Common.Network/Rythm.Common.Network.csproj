@@ -68,6 +68,7 @@
     <Compile Include="Messages\CommonChatMsgResponse.cs" />
     <Compile Include="Messages\DataBaseEvent.cs" />
     <Compile Include="Messages\DataBaseMessage.cs" />
+    <Compile Include="Messages\OkReceiveMsg.cs" />
     <Compile Include="Messages\ServerOkMsgResponse.cs" />
     <Compile Include="Messages\TextMsgRequest.cs" />
     <Compile Include="Messages\UpdatedClientsResponse.cs" />

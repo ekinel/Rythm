@@ -43,7 +43,7 @@ namespace Rythm.Common.Network
 
 		public event EventHandler<MessageContainer> UpdatedUsersList;
 		public event EventHandler<MessageContainer> UpdatedDataBaseData;
-		public event EventHandler<(MsgStatus, DateTime)> OkReceive;
+		public event EventHandler<OkReceiveMsg> OkReceive;
 
 		#endregion
 
@@ -238,7 +238,7 @@ namespace Rythm.Common.Network
 				status = MsgStatus.ClientOk;
 			}
 
-			OkReceive?.Invoke(this, (status, date));
+			OkReceive?.Invoke(this, new OkReceiveMsg(status, date));
 		}
 
 		private void OnClose(object sender, CloseEventArgs e)

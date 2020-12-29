@@ -132,13 +132,13 @@ namespace Rythm.Client.ViewModel
 			}
 		}
 
-		private void HandleOkReceive((MsgStatus, DateTime) okReceive)
+		private void HandleOkReceive(OkReceiveMsg okReceive)
 		{
 			foreach (SendMessageViewModel message in AllReceivedMessagesList)
 			{
-				if (message.Time == okReceive.Item2 && message.LoginTo != Properties.Resources.CommonChat)
+				if (message.Time == okReceive.MsgTime && message.LoginTo != Properties.Resources.CommonChat)
 				{
-					if(okReceive.Item1 == MsgStatus.ServerOk)
+					if(okReceive.MsgStatus == MsgStatus.ServerOk)
 					{
 						message.OkStatus = "Gray";
 					}

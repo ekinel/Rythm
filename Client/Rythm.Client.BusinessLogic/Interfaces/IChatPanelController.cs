@@ -8,7 +8,7 @@ namespace Rythm.Client.BusinessLogic.Interfaces
 	using System.Collections.Generic;
 
 	using Common.Network;
-	using Common.Network.Enums;
+	using Rythm.Common.Network.Messages;
 
 	public interface IChatPanelController
 	{
@@ -16,7 +16,7 @@ namespace Rythm.Client.BusinessLogic.Interfaces
 
 		event Action<MessageReceivedEventArgs> MessageReceivedEvent;
 		event Action<List<string>, List<string>> UpdatedUsersListEvent;
-		event Action<(MsgStatus, DateTime)> OkReceivedEvent;
+		event Action<OkReceiveMsg> OkReceivedEvent;
 
 		#endregion
 
