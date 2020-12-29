@@ -18,33 +18,13 @@
         </Grid.RowDefinitions>
 
 		<ScrollViewer Grid.Row="0" viewModel:ScrollViewerExtensionsViewModel.AlwaysScrollToEnd="True" >
-            <ListBox ItemsSource="{Binding ReceivedMessagesList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" Background="WhiteSmoke" HorizontalContentAlignment="Stretch">
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="IsEnabled" Value="false"/>
-                    </Style>
-                </ListBox.ItemContainerStyle>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Border Grid.Column="1" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="4" Background="White" HorizontalAlignment="Stretch">
-                                <StackPanel Margin="4">
-                                    <TextBlock Text="{Binding LoginFrom}" FontSize="12" FontWeight="Bold" Margin="10,0,0,0"/>
-                                    <TextBlock Text="{Binding Text}" FontSize="14" FontWeight="Normal"  Margin="0 5" TextWrapping="Wrap"/>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="10">
-                                        <TextBlock Text="{Binding Time}" FontSize="10" TextAlignment="Right" Margin="0, -10,0,0"/>
-                                        <Ellipse Fill="{Binding OkStatus}" VerticalAlignment="Center" Width="10" Margin="10, -10,0,0" Height="10"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+			<ListBox ItemContainerStyle="{DynamicResource ListBoxStyle}" ItemsSource="{Binding ReceivedMessagesList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" Background="WhiteSmoke" HorizontalContentAlignment="Stretch">
+				<!--<ListBox.ItemContainerStyle>
+					<Style TargetType="ListBoxItem">
+						<Setter Property="IsEnabled" Value="false"/>
+					</Style>
+				</ListBox.ItemContainerStyle>-->
+			</ListBox>
         </ScrollViewer>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>

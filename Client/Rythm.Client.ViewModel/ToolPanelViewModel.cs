@@ -110,7 +110,7 @@ namespace Rythm.Client.ViewModel
 			switch (IsLightTheme)
 			{
 				case true:
-					_theme = "ButtonStyle";
+					_theme = "ButtonStyleLight";
 					break;
 
 				case false:
