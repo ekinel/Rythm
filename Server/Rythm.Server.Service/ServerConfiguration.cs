@@ -6,11 +6,24 @@ namespace Rythm.Server.Service
 {
 	using System;
 	using System.IO;
-
+	using System.Text.RegularExpressions;
 	using Newtonsoft.Json;
 
 	public class ServerConfiguration
 	{
+		#region Constants
+
+		private const int DEFAULT_PORT = 65000;
+		private const int DEFAULT_TIMEOUT = 20;
+		private const string DEFAULT_ADDRESS = "127.0.0.1";
+		private const string DEFAULT_DATABASE_CONNECTION_STRING = "data source=(localdb)/MSSQLLocalDB;Initial Catalog=MessageDb;Integrated Security=True;";
+
+		private const string ADDRESS_PATTERN = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$";
+		private const int MIN_PORT = 49152;
+		private const int MAX_PORT = 65535;
+
+		#endregion
+
 		#region Fields
 
 		private readonly string _pathToConfigurationFile;
@@ -52,16 +65,48 @@ namespace Rythm.Server.Service
 		{
 			if (!File.Exists(_pathToConfigurationFile))
 			{
-				return new ServerParameters(string.Empty, 0, 0, string.Empty);
+				return new ServerParameters(DEFAULT_ADDRESS, DEFAULT_PORT, DEFAULT_TIMEOUT, DEFAULT_DATABASE_CONNECTION_STRING);
 			}
 
 			string configurationString = File.ReadAllText(_pathToConfigurationFile);
 
 			var container = JsonConvert.DeserializeObject<ServerParameters>(configurationString);
 
-			if(container == null) return new ServerParameters(string.Empty, 0, 0, string.Empty);
+			if(container == null) return new ServerParameters(DEFAULT_ADDRESS, DEFAULT_PORT, DEFAULT_TIMEOUT, DEFAULT_DATABASE_CONNECTION_STRING);
 
-			return container;
+			return CheckingParameters(container);
+		}
+
+		private ServerParameters CheckingParameters(ServerParameters checkingContainer)
+		{
+			var resultContainer = new ServerParameters(checkingContainer.Address, checkingContainer.Port, checkingContainer.TimeOut, checkingContainer.DataBaseConnectionString);
+
+			var regex = new Regex(ADDRESS_PATTERN);
+			Match compare = regex.Match(resultContainer.Address);
+
+			if(!compare.Success)
+			{
+				resultContainer.Address = DEFAULT_ADDRESS;
+			}
+
+			int valuePort = Convert.ToInt32(resultContainer.Port);
+
+			if (!(valuePort > MIN_PORT && valuePort < MAX_PORT))
+			{
+				resultContainer.Port = DEFAULT_PORT;
+			}
+
+			if (resultContainer.TimeOut <= 0)
+			{
+				resultContainer.TimeOut = DEFAULT_TIMEOUT;
+			}
+
+			if(string.IsNullOrEmpty(resultContainer.DataBaseConnectionString))
+			{
+				resultContainer.DataBaseConnectionString = DEFAULT_DATABASE_CONNECTION_STRING;
+			}
+
+			return resultContainer;
 		}
 
 		#endregion
