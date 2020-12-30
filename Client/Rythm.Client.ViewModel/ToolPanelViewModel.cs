@@ -105,30 +105,12 @@ namespace Rythm.Client.ViewModel
 		private void ExecuteChangeThemeCommand()
 		{
 			IsLightTheme = !IsLightTheme;
-			string _toolPanelTheme = string.Empty;
-			string _connectionParametrsTheme = string.Empty;
-			string _chatListBoxItemTheme = string.Empty;
-			string _clientsListBoxItemTheme = string.Empty;
-			string _clientsListBoxTheme = string.Empty;
 
-			switch (IsLightTheme)
-			{
-				case true:
-					_toolPanelTheme = "ButtonStyleLight";
-					_connectionParametrsTheme = "CommonBackgroundStyleLight";
-					_chatListBoxItemTheme = "ChatListBoxItemStyleLight";
-					_clientsListBoxItemTheme = "ClientsListBoxItemStyleLight";
-					_clientsListBoxTheme = "ClientsListBoxBackgroundStyleLight";
-					break;
-
-				case false:
-					_toolPanelTheme = "ButtonStyleDark";
-					_connectionParametrsTheme = "CommonBackgroundStyleDark";
-					_chatListBoxItemTheme = "ChatListBoxItemStyleDark";
-					_clientsListBoxItemTheme = "ClientsListBoxItemStyleDark";
-					_clientsListBoxTheme = "ClientsListBoxBackgroundStyleDark";
-					break;
-			}
+			string _toolPanelTheme = IsLightTheme ? "ButtonStyleLight" : "ButtonStyleDark";
+			string _connectionParametrsTheme = IsLightTheme ? "CommonBackgroundStyleLight" : "CommonBackgroundStyleDark";
+			string _chatListBoxItemTheme = IsLightTheme ? "ChatListBoxItemStyleLight" : "ChatListBoxItemStyleDark";
+			string _clientsListBoxItemTheme = IsLightTheme ? "ClientsListBoxItemStyleLight" : "ClientsListBoxItemStyleDark";
+			string _clientsListBoxTheme = IsLightTheme ? "ClientsListBoxBackgroundStyleLight" : "ClientsListBoxBackgroundStyleDark";
 
 			var uriToolPanel = new Uri(@"../../Resources/" + _toolPanelTheme + ".xaml", UriKind.Relative);
 			var uriConnectionParams = new Uri(@"../../Resources/" + _connectionParametrsTheme + ".xaml", UriKind.Relative);
@@ -141,7 +123,9 @@ namespace Rythm.Client.ViewModel
 			ResourceDictionary resourceDictChatListBoxItem = Application.LoadComponent(uriChatListBoxItem) as ResourceDictionary;
 			ResourceDictionary resourceDictClientsListBoxItem = Application.LoadComponent(uriClientsListBoxItem) as ResourceDictionary;
 			ResourceDictionary resourceDictClientsListBox = Application.LoadComponent(uriClientsListBox) as ResourceDictionary;
+
 			Application.Current.Resources.Clear();
+
 			Application.Current.Resources.MergedDictionaries.Add(resourceDictToolPanel);
 			Application.Current.Resources.MergedDictionaries.Add(resourceDictConnectionParams);
 			Application.Current.Resources.MergedDictionaries.Add(resourceDictChatListBoxItem);
