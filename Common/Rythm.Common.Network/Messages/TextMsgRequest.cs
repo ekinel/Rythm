@@ -9,40 +9,11 @@ namespace Rythm.Common.Network.Messages
 
 	public class TextMsgRequest
     {
-        #region Fields
-
-        private string _from;
-        private string _to;
-        private string _message;
-        private MsgStatus _status;
-
-        #endregion
-
         #region Properties
-
-        public string From
-        {
-            get => _from;
-            private set => _from = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public string To
-        {
-            get => _to;
-            private set => _to = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public string Message
-        {
-            get => _message;
-            private set => _message = value ?? throw new ArgumentNullException(nameof(value));
-        }
-        public MsgStatus Status
-        {
-            get => _status;
-            private set => _status = value;
-        }
-
+        public string From { get; set; }
+		public string To { get; set; }
+        public string Message { get; set; }
+        public MsgStatus Status { get; set; }
         public DateTime Date { get; set; }
 
         #endregion

@@ -20,7 +20,6 @@ namespace Rythm.Common.Network
 	using Properties;
 	using Rythm.Server.Dal.Dto;
 	using Rythm.Server.Dal.Interfaces;
-	using Server.Dal;
 
 	using WebSocketSharp.Server;
 

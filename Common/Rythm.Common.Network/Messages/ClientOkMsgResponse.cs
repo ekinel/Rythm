@@ -10,27 +10,10 @@ namespace Rythm.Common.Network.Messages
 
 	public class ClientOkMsgResponse : BaseContainer
     {
-        #region Fields
-
-        private string _from;
-        private string _to;
-
-        #endregion
-
         #region Properties
 
-        public string From
-        {
-            get => _from;
-            set => _from = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public string To
-        {
-            get => _to;
-            set => _to = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        public string From { get; set; }
+        public string To { get; set; }
         public DateTime Date { get; set; }
 
         #endregion

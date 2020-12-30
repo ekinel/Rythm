@@ -21,6 +21,7 @@ namespace Rythm.Common.Network.Messages
 		public UpdatedDataBaseMessages(List<DataBaseMessage> messagesList)
 		{
 			MessageType = MsgType.UpdatedDataBaseMessages;
+
 			foreach (var element in messagesList)
 			{
 				MessagesList.Add(element);

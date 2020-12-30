@@ -10,40 +10,12 @@ namespace Rythm.Common.Network.Messages
 
     internal class CommonChatMsgResponse : BaseContainer
     {
-        #region Fields
-
-        private DateTime _date;
-        private string _from;
-        private string _to;
-        private string _message;
-
-        #endregion
-
         #region Properties
 
-        public string From
-        {
-            get => _from;
-            set => _from = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public string To
-        {
-            get => _to;
-            set => _to = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public string Message
-        {
-            get => _message;
-            set => _message = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public DateTime Date
-        {
-            get => _date;
-            set => _date = value;
-        }
+        public DateTime Date { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Message { get; set; }
 
         #endregion
 

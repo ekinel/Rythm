@@ -9,23 +9,12 @@ namespace Rythm.Common.Network.Messages
 
 	public class OkReceiveMsg
 	{
-		private MsgStatus _msgStatus { get; set; }
-		private DateTime _msgTime { get; set; }
-
-		public MsgStatus MsgStatus
-		{
-			get => _msgStatus;
-			set => _msgStatus = value;
-		}
-		public DateTime MsgTime
-		{
-			get => _msgTime;
-			set => _msgTime = value;
-		}
+		public MsgStatus MsgStatus { get; set; }
+		public DateTime MsgTime { get; set; }
 
 		public OkReceiveMsg(MsgStatus msgStatus, DateTime msgTime)
 		{
-			MsgStatus = MsgStatus;
+			MsgStatus = msgStatus;
 			MsgTime = msgTime;
 		}
 	}
