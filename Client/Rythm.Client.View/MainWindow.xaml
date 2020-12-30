@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:Rythm.Client.View"
-        mc:Ignorable="d" MinHeight="400" MinWidth="1060" Title="Rythm">
+        mc:Ignorable="d" MinHeight="400" MinWidth="1060" Title="Rythm" Style="{DynamicResource CustomWindowChrome}">
     <Grid>
         <Grid.ColumnDefinitions>
 			<ColumnDefinition  Width="{Binding UsersListVisibility}"/>

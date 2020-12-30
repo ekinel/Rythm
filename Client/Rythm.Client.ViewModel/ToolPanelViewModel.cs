@@ -106,18 +106,21 @@ namespace Rythm.Client.ViewModel
 		{
 			IsLightTheme = !IsLightTheme;
 
+			string _mainWindowTheme = IsLightTheme ? "CustomWindowChromeLight" : "CustomWindowChromeDark";
 			string _toolPanelTheme = IsLightTheme ? "ButtonStyleLight" : "ButtonStyleDark";
 			string _connectionParametrsTheme = IsLightTheme ? "CommonBackgroundStyleLight" : "CommonBackgroundStyleDark";
 			string _chatListBoxItemTheme = IsLightTheme ? "ChatListBoxItemStyleLight" : "ChatListBoxItemStyleDark";
 			string _clientsListBoxItemTheme = IsLightTheme ? "ClientsListBoxItemStyleLight" : "ClientsListBoxItemStyleDark";
 			string _clientsListBoxTheme = IsLightTheme ? "ClientsListBoxBackgroundStyleLight" : "ClientsListBoxBackgroundStyleDark";
 
+			var uriMainWindow = new Uri(@"../../Resources/" + _mainWindowTheme + ".xaml", UriKind.Relative);
 			var uriToolPanel = new Uri(@"../../Resources/" + _toolPanelTheme + ".xaml", UriKind.Relative);
 			var uriConnectionParams = new Uri(@"../../Resources/" + _connectionParametrsTheme + ".xaml", UriKind.Relative);
 			var uriChatListBoxItem = new Uri(@"../../Resources/" + _chatListBoxItemTheme + ".xaml", UriKind.Relative);
 			var uriClientsListBoxItem = new Uri(@"../../Resources/" + _clientsListBoxItemTheme + ".xaml", UriKind.Relative);
 			var uriClientsListBox = new Uri(@"../../Resources/" + _clientsListBoxTheme + ".xaml", UriKind.Relative);
 
+			ResourceDictionary resourceDictMainWindow = Application.LoadComponent(uriMainWindow) as ResourceDictionary;
 			ResourceDictionary resourceDictToolPanel = Application.LoadComponent(uriToolPanel) as ResourceDictionary;
 			ResourceDictionary resourceDictConnectionParams = Application.LoadComponent(uriConnectionParams) as ResourceDictionary;
 			ResourceDictionary resourceDictChatListBoxItem = Application.LoadComponent(uriChatListBoxItem) as ResourceDictionary;
@@ -126,6 +129,7 @@ namespace Rythm.Client.ViewModel
 
 			Application.Current.Resources.Clear();
 
+			Application.Current.Resources.MergedDictionaries.Add(resourceDictMainWindow);
 			Application.Current.Resources.MergedDictionaries.Add(resourceDictToolPanel);
 			Application.Current.Resources.MergedDictionaries.Add(resourceDictConnectionParams);
 			Application.Current.Resources.MergedDictionaries.Add(resourceDictChatListBoxItem);
