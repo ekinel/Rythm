@@ -4,17 +4,18 @@
 
 namespace Rythm.Server.Dal
 {
+	using Rythm.Server.Dal.Dto;
 	using Rythm.Server.Dal.Interfaces;
 	using System.Collections.Generic;
 	using System.Linq;
 
-	public class ClientRepository : IRepository<ClientDTO>
+	public class ClientRepository : IRepository<ClientDto>
 	{
 		#region Methods
 
-		public IEnumerable<ClientDTO> GetList()
+		public IEnumerable<ClientDto> GetList()
 		{
-			List<ClientDTO> clientsList;
+			List<ClientDto> clientsList;
 			using (var context = new DataBaseContext())
 			{
 				clientsList = context.ClientList.ToList();
@@ -23,7 +24,7 @@ namespace Rythm.Server.Dal
 			return clientsList;
 		}
 
-		public ClientDTO GetElement(string id)
+		public ClientDto GetElement(string id)
 		{
 			using (var context = new DataBaseContext())
 			{
@@ -31,7 +32,7 @@ namespace Rythm.Server.Dal
 			}
 		}
 
-		public void Create(ClientDTO item)
+		public void Create(ClientDto item)
 		{
 			using (var context = new DataBaseContext())
 			{
@@ -48,7 +49,7 @@ namespace Rythm.Server.Dal
 			}
 		}
 
-		public void Modify(ClientDTO item)
+		public void Modify(ClientDto item)
 		{
 
 		}

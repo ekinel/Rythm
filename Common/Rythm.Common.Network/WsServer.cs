@@ -18,6 +18,7 @@ namespace Rythm.Common.Network
 	using Newtonsoft.Json.Linq;
 
 	using Properties;
+	using Rythm.Server.Dal.Dto;
 	using Rythm.Server.Dal.Interfaces;
 	using Server.Dal;
 
@@ -44,9 +45,9 @@ namespace Rythm.Common.Network
 		private List<string> _clientsNotActiveList;
 		private readonly Timer _serverTimer;
 
-		private readonly IRepository<ClientDTO> _clientDataBase;
-		private readonly IRepository<MessageDTO> _msgDataBase;
-		private readonly IRepository<EventDTO> _eventDataBase;
+		private readonly IRepository<ClientDto> _clientDataBase;
+		private readonly IRepository<MessageDto> _msgDataBase;
+		private readonly IRepository<EventDto> _eventDataBase;
 
 		#endregion
 
@@ -55,9 +56,9 @@ namespace Rythm.Common.Network
 		public WsServer(
 			IPEndPoint listenAddress,
 			int timeOut,
-			IRepository<ClientDTO> clientDataBase,
-			IRepository<MessageDTO> msgDataBase,
-			IRepository<EventDTO> eventDataBase)
+			IRepository<ClientDto> clientDataBase,
+			IRepository<MessageDto> msgDataBase,
+			IRepository<EventDto> eventDataBase)
 		{
 
 			_listenAddress = listenAddress;
@@ -92,7 +93,7 @@ namespace Rythm.Common.Network
 
 			_server.Start();
 			_eventDataBase.Create(
-				new EventDTO
+				new EventDto
 				{
 					Date = DateTime.Now,
 					Message = Resources.ServerStartedMessage
@@ -114,7 +115,7 @@ namespace Rythm.Common.Network
 
 			_clientsNotActiveList = new List<string>(GetDataBaseClientsListToString());
 			_eventDataBase.Create(
-				new EventDTO
+				new EventDto
 				{
 					Date = DateTime.Now,
 					Message = Resources.ServerStoppedMessage
@@ -150,7 +151,7 @@ namespace Rythm.Common.Network
 				SendUpdatedClientsList(new UpdatedClientsResponse(_connections.Keys, GetNotActiveClientsList()));
 
 				_eventDataBase.Create(
-					new EventDTO
+					new EventDto
 					{
 						Date = DateTime.Now,
 						Message = $"Client {login} disconnected"
@@ -190,7 +191,7 @@ namespace Rythm.Common.Network
 				_clientsActivity.TryAdd(connection.Login, new ClientActivity(connection.Login));
 
 				_eventDataBase.Create(
-					new EventDTO
+					new EventDto
 					{
 						Date = DateTime.Now,
 						Message = $"Client {connection.Login} connected"
@@ -201,7 +202,7 @@ namespace Rythm.Common.Network
 				if (!dataBaseListLoginsString.Contains(connection.Login))
 				{
 					_clientDataBase.Create(
-						new ClientDTO
+						new ClientDto
 						{
 							Login = connection.Login
 						});
@@ -226,7 +227,7 @@ namespace Rythm.Common.Network
 			MessageContainer serverOkContainer = serverOkPayload.GetContainer();
 
 			_msgDataBase.Create(
-					new MessageDTO
+					new MessageDto
 					{
 						Date = textMsgContainer.Date,
 						Message = textMsgContainer.Message,
@@ -262,7 +263,7 @@ namespace Rythm.Common.Network
 			UpdateLastClientActivity(clientOkMsgContainer.From);
 
 			var msgListDataBase = _msgDataBase.GetList();
-			MessageDTO RemovedItem = new MessageDTO();
+			MessageDto RemovedItem = new MessageDto();
 
 			foreach (var element in msgListDataBase)
 			{
@@ -333,10 +334,10 @@ namespace Rythm.Common.Network
 
 		private void SendUpdatedDataBaseMsgResponse()
 		{
-			IEnumerable<MessageDTO> dataBaseMessages = _msgDataBase.GetList();
+			IEnumerable<MessageDto> dataBaseMessages = _msgDataBase.GetList();
 			var dataBaseMessagesList = new List<DataBaseMessage>();
 
-			foreach (MessageDTO element in dataBaseMessages)
+			foreach (MessageDto element in dataBaseMessages)
 			{
 				dataBaseMessagesList.Add(new DataBaseMessage(element.Message, element.Date, element.ClientFrom, element.ClientTo, element.MsgStatus));
 			}
@@ -359,10 +360,10 @@ namespace Rythm.Common.Network
 
 		private void SendUpdatedDataBaseEventsResponse()
 		{
-			IEnumerable<EventDTO> dataBaseEvents = _eventDataBase.GetList();
+			IEnumerable<EventDto> dataBaseEvents = _eventDataBase.GetList();
 			var eventsList = new List<DataBaseEvent>();
 
-			foreach (EventDTO element in dataBaseEvents)
+			foreach (EventDto element in dataBaseEvents)
 			{
 				eventsList.Add(new DataBaseEvent(element.Message, element.Date));
 			}
@@ -416,10 +417,10 @@ namespace Rythm.Common.Network
 
 		private List<string> GetDataBaseClientsListToString()
 		{
-			IEnumerable<ClientDTO> dataBaseClientsList = _clientDataBase.GetList();
+			IEnumerable<ClientDto> dataBaseClientsList = _clientDataBase.GetList();
 			var clientsList = new List<string>();
 
-			foreach (ClientDTO element in dataBaseClientsList)
+			foreach (ClientDto element in dataBaseClientsList)
 			{
 				clientsList.Add(element.Login);
 			}
@@ -441,7 +442,7 @@ namespace Rythm.Common.Network
 
 		public void WriteErrorToDataBase(Exception exception)
 		{
-			_eventDataBase.Create(new EventDTO(){Message = exception.Message, Date = DateTime.Now});
+			_eventDataBase.Create(new EventDto(){Message = exception.Message, Date = DateTime.Now});
 		}
 
 		#endregion

@@ -4,6 +4,7 @@
 
 namespace Rythm.Server.Dal
 {
+	using Rythm.Server.Dal.Dto;
 	using System.Data.Entity;
 	using System.Data.Entity.ModelConfiguration.Conventions;
 
@@ -11,9 +12,9 @@ namespace Rythm.Server.Dal
 	{
 		#region Properties
 
-		public DbSet<ClientDTO> ClientList { get; set; }
-		public DbSet<MessageDTO> MsgList { get; set; }
-		public DbSet<EventDTO> EventList { get; set; }
+		public DbSet<ClientDto> ClientList { get; set; }
+		public DbSet<MessageDto> MsgList { get; set; }
+		public DbSet<EventDto> EventList { get; set; }
 
 		#endregion
 

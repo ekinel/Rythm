@@ -11,6 +11,7 @@ namespace Rythm.Server.Service
 	using Common.Network;
 
 	using Dal;
+	using Rythm.Server.Dal.Dto;
 	using Rythm.Server.Dal.Interfaces;
 
 	public class NetworkManager
@@ -31,9 +32,9 @@ namespace Rythm.Server.Service
 		#region Constructors
 
 		public NetworkManager(
-			IRepository<ClientDTO> clientDataBase,
-			IRepository<MessageDTO> msgDataBase,
-			IRepository<EventDTO> eventDataBase)
+			IRepository<ClientDto> clientDataBase,
+			IRepository<MessageDto> msgDataBase,
+			IRepository<EventDto> eventDataBase)
 		{
 			_wsServer = new WsServer(new IPEndPoint(IPAddress.Any, WS_PORT), TIME_OUT, clientDataBase, msgDataBase, eventDataBase);
 		}
@@ -43,9 +44,9 @@ namespace Rythm.Server.Service
 			int port,
 			int timeOut,
 			string dataBaseConnectionString,
-			IRepository<ClientDTO> clientDataBase,
-			IRepository<MessageDTO> msgDataBase,
-			IRepository<EventDTO> eventDataBase)
+			IRepository<ClientDto> clientDataBase,
+			IRepository<MessageDto> msgDataBase,
+			IRepository<EventDto> eventDataBase)
 		{
 			if (string.IsNullOrEmpty(address))
 			{

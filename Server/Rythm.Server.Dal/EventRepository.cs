@@ -4,17 +4,18 @@
 
 namespace Rythm.Server.Dal
 {
+	using Rythm.Server.Dal.Dto;
 	using Rythm.Server.Dal.Interfaces;
 	using System.Collections.Generic;
 	using System.Linq;
 
-	public class EventRepository : IRepository<EventDTO>
+	public class EventRepository : IRepository<EventDto>
 	{
 		#region Methods
 
-		public IEnumerable<EventDTO> GetList()
+		public IEnumerable<EventDto> GetList()
 		{
-			List<EventDTO> eventList;
+			List<EventDto> eventList;
 			using (var context = new DataBaseContext())
 			{
 				eventList = context.EventList.ToList();
@@ -23,7 +24,7 @@ namespace Rythm.Server.Dal
 			return eventList;
 		}
 
-		public EventDTO GetElement(string id)
+		public EventDto GetElement(string id)
 		{
 			using (var context = new DataBaseContext())
 			{
@@ -31,7 +32,7 @@ namespace Rythm.Server.Dal
 			}
 		}
 
-		public void Create(EventDTO item)
+		public void Create(EventDto item)
 		{
 			using (var context = new DataBaseContext())
 			{
@@ -48,7 +49,7 @@ namespace Rythm.Server.Dal
 			}
 		}
 
-		public void Modify(EventDTO item)
+		public void Modify(EventDto item)
 		{
 
 		}
