@@ -11,9 +11,7 @@ namespace Rythm.Server.Service
 	{
 		#region Fields
 
-		private static ServerConfiguration _serverConfiguration;
 		private static ServerParameters _serverParameters;
-
 		private static NetworkWrapper _networkWrapper;
 
 		#endregion
@@ -22,23 +20,19 @@ namespace Rythm.Server.Service
 
 		private static void Main(string[] args)
 		{
+			ServerConfiguration _serverConfiguration;
+
 			try
 			{
 				_serverConfiguration = new ServerConfiguration();
 
-				if (FillingFields(_serverConfiguration))
-				{
-					_serverParameters = _serverConfiguration.ReadConfigurationFile();
-					_networkWrapper = new NetworkWrapper(
-						_serverParameters.Address,
-						_serverParameters.Port,
-						_serverParameters.TimeOut,
-						_serverParameters.DataBaseConnectionString);
-				}
-				else
-				{
-					_networkWrapper = new NetworkWrapper();
-				}
+				_serverParameters = _serverConfiguration.ReadConfigurationFile();
+				_networkWrapper = new NetworkWrapper(
+				_serverParameters.Address,
+				_serverParameters.Port,
+				_serverParameters.TimeOut,
+				_serverParameters.DataBaseConnectionString);
+
 
 				_networkWrapper.Start();
 
@@ -57,12 +51,6 @@ namespace Rythm.Server.Service
 				Console.WriteLine(exception);
 				Console.ReadLine();
 			}
-		}
-
-		private static bool FillingFields(ServerConfiguration serverConfiguration)
-		{
-			ServerParameters serverParameters = serverConfiguration.ReadConfigurationFile();
-			return !string.IsNullOrEmpty(serverParameters.Address);
 		}
 
 		#endregion

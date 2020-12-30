@@ -13,8 +13,6 @@ namespace Rythm.Server.WindowsService
 		#region Fields
 
 		private readonly NetworkWrapper _networkWrapper;
-		private readonly ServerConfiguration _serverConfiguration;
-		private readonly ServerParameters _serverParameters;
 
 		#endregion
 
@@ -24,22 +22,22 @@ namespace Rythm.Server.WindowsService
 		{
 			InitializeComponent();
 
-			_serverConfiguration = new ServerConfiguration();
-			_serverParameters = _serverConfiguration.ReadConfigurationFile();
+			ServerConfiguration _serverConfiguration = new ServerConfiguration();
+			ServerParameters _serverParameters = _serverConfiguration.ReadConfigurationFile();
 
-			if (FillingFields(_serverConfiguration))
-			{
-				ServerParameters serverParameters = _serverConfiguration.ReadConfigurationFile();
-				_networkWrapper = new NetworkWrapper(
-					serverParameters.Address,
-					serverParameters.Port,
-					serverParameters.TimeOut,
-					serverParameters.DataBaseConnectionString);
-			}
-			else
-			{
-				_networkWrapper = new NetworkWrapper();
-			}
+
+			ServerParameters serverParameters = _serverConfiguration.ReadConfigurationFile();
+			_networkWrapper = new NetworkWrapper(
+				serverParameters.Address,
+				serverParameters.Port,
+				serverParameters.TimeOut,
+				serverParameters.DataBaseConnectionString);
+
+			_serverConfiguration.SaveConfigurationFile(
+				_serverParameters.Address,
+				_serverParameters.Port,
+				_serverParameters.TimeOut,
+				_serverParameters.DataBaseConnectionString);
 		}
 
 		#endregion
@@ -54,17 +52,6 @@ namespace Rythm.Server.WindowsService
 		protected override void OnStop()
 		{
 			_networkWrapper.Stop();
-			_serverConfiguration.SaveConfigurationFile(
-				_serverParameters.Address,
-				_serverParameters.Port,
-				_serverParameters.TimeOut,
-				_serverParameters.DataBaseConnectionString);
-		}
-
-		private static bool FillingFields(ServerConfiguration serverConfiguration)
-		{
-			ServerParameters serverParameters = serverConfiguration.ReadConfigurationFile();
-			return !string.IsNullOrEmpty(serverParameters.Address);
 		}
 
 		#endregion
