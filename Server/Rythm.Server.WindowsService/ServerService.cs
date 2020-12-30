@@ -25,13 +25,11 @@ namespace Rythm.Server.WindowsService
 			ServerConfiguration _serverConfiguration = new ServerConfiguration();
 			ServerParameters _serverParameters = _serverConfiguration.ReadConfigurationFile();
 
-
-			ServerParameters serverParameters = _serverConfiguration.ReadConfigurationFile();
 			_networkWrapper = new NetworkWrapper(
-				serverParameters.Address,
-				serverParameters.Port,
-				serverParameters.TimeOut,
-				serverParameters.DataBaseConnectionString);
+				_serverParameters.Address,
+				_serverParameters.Port,
+				_serverParameters.TimeOut,
+				_serverParameters.DataBaseConnectionString);
 
 			_serverConfiguration.SaveConfigurationFile(
 				_serverParameters.Address,
