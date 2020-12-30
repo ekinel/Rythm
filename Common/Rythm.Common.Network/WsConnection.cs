@@ -28,7 +28,7 @@ namespace Rythm.Common.Network
 
         #region Properties
 
-        public string Login { get; set; } = "";
+        public string Login { get; set; } = string.Empty;
 
         private bool IsConnected => Context.WebSocket?.ReadyState == WebSocketState.Open;
 

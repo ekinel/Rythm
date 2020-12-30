@@ -60,6 +60,7 @@
     <Compile Include="ApplicationDispatcherHelper.cs" />
     <Compile Include="ClientActivity.cs" />
     <Compile Include="Enums\MsgStatus.cs" />
+    <Compile Include="Interfaces\ITransport.cs" />
     <Compile Include="Messages\ClientOkMsgResponse.cs" />
     <Compile Include="Enums\MsgType.cs" />
     <Compile Include="Enums\ResultCodes.cs" />
@@ -83,7 +84,6 @@
     <Compile Include="TransportFactory.cs" />
     <Compile Include="[EventArgs]\ConnectionStateChangedEventArgs.cs" />
     <Compile Include="[EventArgs]\MessageReceivedEventArgs.cs" />
-    <Compile Include="ITransport.cs" />
     <Compile Include="Messages\ConnectionRequest.cs" />
     <Compile Include="Messages\ConnectionResponse.cs" />
     <Compile Include="Messages\MessageContainer.cs" />
@@ -109,6 +109,7 @@
       <Name>Rythm.Server.Dal</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

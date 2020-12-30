@@ -12,7 +12,7 @@ namespace Rythm.Common.Network.Messages
 	{
 		#region Properties
 
-		public List<DataBaseMessage> MessagesList = new List<DataBaseMessage>();
+		public readonly List<DataBaseMessage> MessagesList = new List<DataBaseMessage>();
 
 		#endregion
 

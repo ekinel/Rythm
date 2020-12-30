@@ -7,6 +7,7 @@ namespace Rythm.Client.BusinessLogic.Interfaces
 	using System;
 
 	using Common.Network;
+	using Rythm.Common.Network.Interfaces;
 
 	public interface IConnectionController
 	{

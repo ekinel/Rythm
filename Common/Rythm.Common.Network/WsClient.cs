@@ -14,7 +14,7 @@ namespace Rythm.Common.Network
 
 	using Newtonsoft.Json;
 	using Newtonsoft.Json.Linq;
-
+	using Rythm.Common.Network.Interfaces;
 	using WebSocketSharp;
 
 	public class WsClient : ITransport

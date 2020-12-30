@@ -11,6 +11,7 @@ namespace Rythm.Client.BusinessLogic
 	using Common.Network.Messages;
 
 	using Interfaces;
+	using Rythm.Common.Network.Interfaces;
 
 	public class ConnectionController : IConnectionController
 	{

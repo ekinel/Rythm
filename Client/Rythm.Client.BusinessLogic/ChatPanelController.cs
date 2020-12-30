@@ -14,6 +14,7 @@ namespace Rythm.Client.BusinessLogic
 	using Interfaces;
 
 	using Newtonsoft.Json.Linq;
+	using Rythm.Common.Network.Interfaces;
 
 	public class ChatPanelController : IChatPanelController
 	{

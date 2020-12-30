@@ -2,7 +2,8 @@
 namespace Rythm.Common.Network
 {
     using Enums;
-    using System;
+	using Rythm.Common.Network.Interfaces;
+	using System;
     public static class TransportFactory
     {
         public static ITransport Create(TransportType type)

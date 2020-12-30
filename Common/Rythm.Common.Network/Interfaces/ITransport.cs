@@ -2,12 +2,9 @@
 // Copyright ElcomPlus LLC. All rights reserved.
 // ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace Rythm.Common.Network
+namespace Rythm.Common.Network.Interfaces
 {
     using System;
-
-    using Enums;
-
     using Messages;
 
     public interface ITransport
