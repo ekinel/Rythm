@@ -51,7 +51,8 @@ namespace Rythm.Server.Service
 
 			if (!File.Exists(_pathToConfigurationFile))
 			{
-				return;
+				StreamWriter streamWriter = new StreamWriter(_pathToConfigurationFile);
+				streamWriter.Close();
 			}
 
 			using (StreamWriter file = File.CreateText(_pathToConfigurationFile))

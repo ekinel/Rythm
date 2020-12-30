@@ -105,26 +105,49 @@ namespace Rythm.Client.ViewModel
 		private void ExecuteChangeThemeCommand()
 		{
 			IsLightTheme = !IsLightTheme;
-			string _theme = string.Empty;
+			string _toolPanelTheme = string.Empty;
+			string _connectionParametrsTheme = string.Empty;
+			string _chatListBoxItemTheme = string.Empty;
+			string _clientsListBoxItemTheme = string.Empty;
+			string _clientsListBoxTheme = string.Empty;
 
 			switch (IsLightTheme)
 			{
 				case true:
-					_theme = "ButtonStyleLight";
+					_toolPanelTheme = "ButtonStyleLight";
+					_connectionParametrsTheme = "CommonBackgroundStyleLight";
+					_chatListBoxItemTheme = "ChatListBoxItemStyleLight";
+					_clientsListBoxItemTheme = "ClientsListBoxItemStyleLight";
+					_clientsListBoxTheme = "ClientsListBoxBackgroundStyleLight";
 					break;
 
 				case false:
-					_theme = "ButtonStyleDark";
+					_toolPanelTheme = "ButtonStyleDark";
+					_connectionParametrsTheme = "CommonBackgroundStyleDark";
+					_chatListBoxItemTheme = "ChatListBoxItemStyleDark";
+					_clientsListBoxItemTheme = "ClientsListBoxItemStyleDark";
+					_clientsListBoxTheme = "ClientsListBoxBackgroundStyleDark";
 					break;
 			}
 
-			var uri = new Uri(@"../../Resources/" + _theme + ".xaml", UriKind.Relative);
+			var uriToolPanel = new Uri(@"../../Resources/" + _toolPanelTheme + ".xaml", UriKind.Relative);
+			var uriConnectionParams = new Uri(@"../../Resources/" + _connectionParametrsTheme + ".xaml", UriKind.Relative);
+			var uriChatListBoxItem = new Uri(@"../../Resources/" + _chatListBoxItemTheme + ".xaml", UriKind.Relative);
+			var uriClientsListBoxItem = new Uri(@"../../Resources/" + _clientsListBoxItemTheme + ".xaml", UriKind.Relative);
+			var uriClientsListBox = new Uri(@"../../Resources/" + _clientsListBoxTheme + ".xaml", UriKind.Relative);
 
-			ResourceDictionary resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
+			ResourceDictionary resourceDictToolPanel = Application.LoadComponent(uriToolPanel) as ResourceDictionary;
+			ResourceDictionary resourceDictConnectionParams = Application.LoadComponent(uriConnectionParams) as ResourceDictionary;
+			ResourceDictionary resourceDictChatListBoxItem = Application.LoadComponent(uriChatListBoxItem) as ResourceDictionary;
+			ResourceDictionary resourceDictClientsListBoxItem = Application.LoadComponent(uriClientsListBoxItem) as ResourceDictionary;
+			ResourceDictionary resourceDictClientsListBox = Application.LoadComponent(uriClientsListBox) as ResourceDictionary;
 			Application.Current.Resources.Clear();
-			Application.Current.Resources.MergedDictionaries.Add(resourceDict);
+			Application.Current.Resources.MergedDictionaries.Add(resourceDictToolPanel);
+			Application.Current.Resources.MergedDictionaries.Add(resourceDictConnectionParams);
+			Application.Current.Resources.MergedDictionaries.Add(resourceDictChatListBoxItem);
+			Application.Current.Resources.MergedDictionaries.Add(resourceDictClientsListBoxItem);
+			Application.Current.Resources.MergedDictionaries.Add(resourceDictClientsListBox);
 
-			_eventAggregator.GetEvent<ThemeChanged>().Publish(IsLightTheme);
 		}
 
 		private void ExecuteShowClientsListCommand()

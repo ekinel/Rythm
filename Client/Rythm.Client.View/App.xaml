@@ -6,8 +6,9 @@
         <ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Resources/ButtonStyleLight.xaml"/>
-				<ResourceDictionary Source="Resources/ChatListBoxStyleLight.xaml"/>
-				<ResourceDictionary Source="Resources/ClientsListBoxStyleLight.xaml"/>
+				<ResourceDictionary Source="Resources/ChatListBoxItemStyleLight.xaml"/>
+				<ResourceDictionary Source="Resources/ClientsListBoxItemStyleLight.xaml"/>
+				<ResourceDictionary Source="Resources/ClientsListBoxBackgroundStyleLight.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -9,8 +9,8 @@
              interactivity:ViewModelLocator.AutoWireViewModel="True" 
              d:DataContext="{d:DesignInstance viewModel:UsersListViewModel}">
 
-    <Grid>
-		<ListBox ItemsSource="{Binding UserList}" ItemContainerStyle="{DynamicResource ClientsListBoxStyle}" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" >
+    <Grid >
+		<ListBox Style="{DynamicResource ClientsListBackground}" ItemsSource="{Binding UserList}" ItemContainerStyle="{DynamicResource ClientsListBoxStyle}" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" >
 
         </ListBox>
     </Grid>

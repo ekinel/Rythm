@@ -106,35 +106,12 @@ namespace Rythm.Client.ViewModel
 		{
 			_connectionController = connectionController ?? throw new ArgumentNullException(nameof(connectionController));
 			_eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
-			_eventAggregator.GetEvent<ThemeChanged>().Subscribe(HandleThemeChanged);
 			ConnectCommand = new DelegateCommand(ExecuteConnectCommand, () => !_errorsContainer.HasErrors);
 			_connectionController.ConnectionStateChanged += HandleConnectionStateChanged;
 			ConnectButtonLabel = STATE_CONNECT;
 			CheckLogin();
 			CheckAddress();
 			CheckPort();
-		}
-
-		private void HandleThemeChanged(bool isLightTheme)
-		{
-			string _theme = string.Empty;
-
-			switch (isLightTheme)
-			{
-				case true:
-					_theme = "CommonBackgroundStyleLight";
-					break;
-
-				case false:
-					_theme = "CommonBackgroundStyleDark";
-					break;
-			}
-
-			var uri = new Uri(@"../../Resources/" + _theme + ".xaml", UriKind.Relative);
-
-			ResourceDictionary resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
-			Application.Current.Resources.Clear();
-			Application.Current.Resources.MergedDictionaries.Add(resourceDict);
 		}
 
 		#endregion
