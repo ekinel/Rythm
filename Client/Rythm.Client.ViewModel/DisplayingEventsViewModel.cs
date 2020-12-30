@@ -133,8 +133,8 @@ namespace Rythm.Client.ViewModel
 			eventAggregator.GetEvent<DataBaseButtonMessagesChosen>().Subscribe(HandleDataBaseButtonMessagesChosen);
 			eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleClientLoginFrom);
 
-			SelectCommand = new DelegateCommand(SelectEntriesCommand);
-			ResetCommand = new DelegateCommand(ResetEntriesCommand);
+			SelectCommand = new DelegateCommand(ExecuteSelectEntriesCommand);
+			ResetCommand = new DelegateCommand(ExecuteResetEntriesCommand);
 
 			DataGridClientsVisibility = Visibility.Visible;
 			DataGridMessagesVisibility = Visibility.Hidden;
@@ -152,7 +152,7 @@ namespace Rythm.Client.ViewModel
 
 		#region Methods
 
-		private void ResetEntriesCommand()
+		private void ExecuteResetEntriesCommand()
 		{
 			if (DataGridMessagesVisibility == Visibility.Visible)
 			{
@@ -176,7 +176,7 @@ namespace Rythm.Client.ViewModel
 			}
 		}
 
-		private void SelectEntriesCommand()
+		private void ExecuteSelectEntriesCommand()
 		{
 			int intHourTo = CheckingTimeHours(HourTo);
 			int intHourFrom = CheckingTimeHours(HourFrom);

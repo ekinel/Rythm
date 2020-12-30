@@ -13,7 +13,7 @@ namespace Rythm.Client.ViewModel
     {
         #region Fields
 
-        private string _okStatus;
+        private string _okColorStatus;
 
         #endregion
 
@@ -25,10 +25,10 @@ namespace Rythm.Client.ViewModel
 
         public string LoginFrom { get;}
 
-        public string OkStatus
+        public string OkColorStatus
         {
-            get => _okStatus;
-            set => SetProperty(ref _okStatus, value);
+            get => _okColorStatus;
+            set => SetProperty(ref _okColorStatus, value);
         }
 
         #endregion
@@ -45,15 +45,15 @@ namespace Rythm.Client.ViewModel
 			switch (okStatus)
             {
                 case MsgStatus.ServerOk:
-                    OkStatus = "Gray";
+                    OkColorStatus = "Gray";
                     break;
 
                 case MsgStatus.ClientOk:
-                    OkStatus = "Green";
+                    OkColorStatus = "Green";
                     break;
 
                 default:
-                    OkStatus = "White";
+                    OkColorStatus = "White";
 					break;
 			};
 
@@ -70,16 +70,16 @@ namespace Rythm.Client.ViewModel
             {
                 case "ServerOk":
                 case "Gray":
-                    OkStatus = "Gray";
+                    OkColorStatus = "Gray";
                     break;
 
                 case "ClientOk":
                 case "Green":
-                    OkStatus = "Green";
+                    OkColorStatus = "Green";
                     break;
 
                 default:
-                    OkStatus = "White";
+                    OkColorStatus = "White";
                     break;
             };
         }

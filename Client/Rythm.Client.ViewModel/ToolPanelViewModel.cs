@@ -83,7 +83,7 @@ namespace Rythm.Client.ViewModel
 			ShowEventsListCommand = new DelegateCommand(ExecuteShowEventsListCommand);
 			ShowMessagesListCommand = new DelegateCommand(ExecuteShowMessagesListCommand);
 			DisplayingEventsVisibilityCommand = new DelegateCommand(ExecuteDisplayingEventsVisibilityCommand);
-			ChangeThemeColorCommand = new DelegateCommand(ChangeThemeCommand);
+			ChangeThemeColorCommand = new DelegateCommand(ExecuteChangeThemeCommand);
 
 			SplitterVisibility = Visibility.Collapsed;
 			LoginVisibility = Visibility.Visible;
@@ -102,7 +102,7 @@ namespace Rythm.Client.ViewModel
 			Login = login;
 		}
 
-		private void ChangeThemeCommand()
+		private void ExecuteChangeThemeCommand()
 		{
 			IsLightTheme = !IsLightTheme;
 			string _theme = string.Empty;

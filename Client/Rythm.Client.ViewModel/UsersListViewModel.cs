@@ -30,17 +30,20 @@ namespace Rythm.Client.ViewModel
 
 		public UsersListViewModel(IEventAggregator eventAggregator, IUsersListController usersListController)
 		{
-			_eventAggregator = eventAggregator;
-			usersListController.UpdatedUsersListEvent += HandleUpdatedUsersList;
+			if(eventAggregator != null && usersListController != null)
+			{
+				_eventAggregator = eventAggregator;
+				usersListController.UpdatedUsersListEvent += HandleUpdatedUsersList;
 
-			UserList = new ObservableCollection<UsersLoginsViewModel>();
+				UserList = new ObservableCollection<UsersLoginsViewModel>();
+			}
 		}
 
 		#endregion
 
 		#region Methods
 
-		public void HandleUpdatedUsersList(List<string> activeUsersList, List<string> notActiveUsersList)
+		private void HandleUpdatedUsersList(List<string> activeUsersList, List<string> notActiveUsersList)
 		{
 			UserList.Clear();
 			UserList.Add(new UsersLoginsViewModel(_eventAggregator, Properties.Resources.CommonChat, true));

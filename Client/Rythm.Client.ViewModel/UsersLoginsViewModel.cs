@@ -34,7 +34,7 @@ namespace Rythm.Client.ViewModel
         public UsersLoginsViewModel(IEventAggregator eventAggregator, string login, bool isEnabled)
         {
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
-            ChooseLoginCommand = new DelegateCommand(ChosenLogin);
+            ChooseLoginCommand = new DelegateCommand(ExecuteChosenLogin);
             Login = login;
             IsEnabled = isEnabled;
         }
@@ -43,7 +43,7 @@ namespace Rythm.Client.ViewModel
 
         #region Methods
 
-        private void ChosenLogin()
+        private void ExecuteChosenLogin()
         {
             _eventAggregator.GetEvent<NewClientChosenViewModel>().Publish(Login);
         }

@@ -60,7 +60,7 @@ namespace Rythm.Client.ViewModel
 			IDisplayingEventsController eventsController)
 		{
 			SendCommand = new DelegateCommand(
-				SendMessageCommand,
+				ExecuteSendMessageCommand,
 				() => !string.IsNullOrEmpty(OutgoingMessage) && !string.IsNullOrEmpty(_loginTo) && _connectionState);
 			eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleUserLoginTo);
 			eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleUserLoginFrom);
@@ -126,7 +126,7 @@ namespace Rythm.Client.ViewModel
 					else
 					{
 						ReceivedMessagesList.Add(
-							new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time, message.OkStatus));
+							new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time, message.OkColorStatus));
 					}
 				}
 			}
@@ -140,11 +140,11 @@ namespace Rythm.Client.ViewModel
 				{
 					if(okReceive.MsgStatus == MsgStatus.ServerOk)
 					{
-						message.OkStatus = "Gray";
+						message.OkColorStatus = "Gray";
 					}
 					else
 					{
-						message.OkStatus = "Green";
+						message.OkColorStatus = "Green";
 
 					}
 				}
@@ -153,7 +153,7 @@ namespace Rythm.Client.ViewModel
 			UpdateListByNewLoginTo();
 		}
 
-		private void SendMessageCommand()
+		private void ExecuteSendMessageCommand()
 		{
 			var msgRequest = new TextMsgRequest(_loginFrom, _loginTo, OutgoingMessage, MsgStatus.None);
 			AllReceivedMessagesList.Add(new SendMessageViewModel(_loginTo, _loginFrom, OutgoingMessage, msgRequest.Date, MsgStatus.None));
