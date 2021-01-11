@@ -5,6 +5,7 @@
 namespace Rythm.Client.ViewModel
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Windows;
 	using System.Windows.Input;
 
@@ -106,48 +107,27 @@ namespace Rythm.Client.ViewModel
 		{
 			IsLightTheme = !IsLightTheme;
 
-			string _mainWindowTheme = IsLightTheme ? "CustomWindowChromeLight" : "CustomWindowChromeDark";
-			string _toolPanelTheme = IsLightTheme ? "ButtonStyleLight" : "ButtonStyleDark";
-			string _connectionParametrsTheme = IsLightTheme ? "CommonBackgroundStyleLight" : "CommonBackgroundStyleDark";
-			string _chatListBoxItemTheme = IsLightTheme ? "ChatListBoxItemStyleLight" : "ChatListBoxItemStyleDark";
-			string _clientsListBoxItemTheme = IsLightTheme ? "ClientsListBoxItemStyleLight" : "ClientsListBoxItemStyleDark";
-			string _clientsListBoxTheme = IsLightTheme ? "ClientsListBoxBackgroundStyleLight" : "ClientsListBoxBackgroundStyleDark";
-			string _chatListBoxTheme = IsLightTheme ? "ChatListBoxBackgroundStyleLight" : "ChatListBoxBackgroundStyleDark";
-			string _textBoxTheme = IsLightTheme ? "TextBoxStyleLight" : "TextBoxStyleDark";
-			string _textBlockTheme = IsLightTheme ? "TextBlockStyleLight" : "TextBlockStyleDark";
-
-
-			 var uriMainWindow = new Uri(@"../../Resources/" + _mainWindowTheme + ".xaml", UriKind.Relative);
-			var uriToolPanel = new Uri(@"../../Resources/" + _toolPanelTheme + ".xaml", UriKind.Relative);
-			var uriConnectionParams = new Uri(@"../../Resources/" + _connectionParametrsTheme + ".xaml", UriKind.Relative);
-			var uriChatListBoxItem = new Uri(@"../../Resources/" + _chatListBoxItemTheme + ".xaml", UriKind.Relative);
-			var uriClientsListBoxItem = new Uri(@"../../Resources/" + _clientsListBoxItemTheme + ".xaml", UriKind.Relative);
-			var uriClientsListBox = new Uri(@"../../Resources/" + _clientsListBoxTheme + ".xaml", UriKind.Relative);
-			var uriChatListBox = new Uri(@"../../Resources/" + _chatListBoxTheme + ".xaml", UriKind.Relative);
-			var uriTextBoxBox = new Uri(@"../../Resources/" + _textBoxTheme + ".xaml", UriKind.Relative);
-			var uriTextBlockBox = new Uri(@"../../Resources/" + _textBlockTheme + ".xaml", UriKind.Relative);
-
-			ResourceDictionary resourceDictMainWindow = Application.LoadComponent(uriMainWindow) as ResourceDictionary;
-			ResourceDictionary resourceDictToolPanel = Application.LoadComponent(uriToolPanel) as ResourceDictionary;
-			ResourceDictionary resourceDictConnectionParams = Application.LoadComponent(uriConnectionParams) as ResourceDictionary;
-			ResourceDictionary resourceDictChatListBoxItem = Application.LoadComponent(uriChatListBoxItem) as ResourceDictionary;
-			ResourceDictionary resourceDictClientsListBoxItem = Application.LoadComponent(uriClientsListBoxItem) as ResourceDictionary;
-			ResourceDictionary resourceDictClientsListBox = Application.LoadComponent(uriClientsListBox) as ResourceDictionary;
-			ResourceDictionary resourceDictChatListBox = Application.LoadComponent(uriChatListBox) as ResourceDictionary;
-			ResourceDictionary resourceDictTextBox = Application.LoadComponent(uriTextBoxBox) as ResourceDictionary;
-			ResourceDictionary resourceDictTextBlock = Application.LoadComponent(uriTextBlockBox) as ResourceDictionary;
+			List<string> _styles = new List<string>
+			{
+				IsLightTheme ? "CustomWindowChromeLight" : "CustomWindowChromeDark",
+				IsLightTheme ? "ButtonStyleLight" : "ButtonStyleDark",
+				IsLightTheme ? "CommonBackgroundStyleLight" : "CommonBackgroundStyleDark",
+				IsLightTheme ? "ChatListBoxItemStyleLight" : "ChatListBoxItemStyleDark",
+				IsLightTheme ? "ClientsListBoxItemStyleLight" : "ClientsListBoxItemStyleDark",
+				IsLightTheme ? "ClientsListBoxBackgroundStyleLight" : "ClientsListBoxBackgroundStyleDark",
+				IsLightTheme ? "ChatListBoxBackgroundStyleLight" : "ChatListBoxBackgroundStyleDark",
+				IsLightTheme ? "TextBoxStyleLight" : "TextBoxStyleDark",
+				IsLightTheme ? "TextBlockStyleLight" : "TextBlockStyleDark"
+		};
 
 			Application.Current.Resources.Clear();
 
-			Application.Current.Resources.MergedDictionaries.Add(resourceDictMainWindow);
-			Application.Current.Resources.MergedDictionaries.Add(resourceDictToolPanel);
-			Application.Current.Resources.MergedDictionaries.Add(resourceDictConnectionParams);
-			Application.Current.Resources.MergedDictionaries.Add(resourceDictChatListBoxItem);
-			Application.Current.Resources.MergedDictionaries.Add(resourceDictClientsListBoxItem);
-			Application.Current.Resources.MergedDictionaries.Add(resourceDictClientsListBox);
-			Application.Current.Resources.MergedDictionaries.Add(resourceDictChatListBox);
-			Application.Current.Resources.MergedDictionaries.Add(resourceDictTextBox);
-			Application.Current.Resources.MergedDictionaries.Add(resourceDictTextBlock);
+			foreach (var element in _styles)
+			{
+				var uri = new Uri(@"../../Resources/" + element + ".xaml", UriKind.Relative);
+				ResourceDictionary resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
+				Application.Current.Resources.MergedDictionaries.Add(resourceDict);
+			}
 		}
 
 		private void ExecuteShowClientsListCommand()
