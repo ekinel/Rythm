@@ -14,7 +14,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-		<Grid Grid.Column="1" FlowDirection="RightToLeft"  Margin="5,0,0,0" HorizontalAlignment="Left" Width="250">
+		<Grid Grid.Column="1" FlowDirection="RightToLeft"  Margin="5,0,10,0" HorizontalAlignment="Left" Width="250">
 			<Button Style="{DynamicResource BlackAndWhiteButton}" x:Name="themeButton" Content="Theme"  HorizontalAlignment="Left" Command="{Binding ChangeThemeColorCommand}"/>
 			<Button Style="{DynamicResource BlackAndWhiteButton}" Content="Settings" HorizontalAlignment="Center" Command="{Binding ChangeSettingsVisibilityCommand}"/>
 			<Button Style="{DynamicResource BlackAndWhiteButton}" Content="{Binding ButtonContent}" HorizontalAlignment="Right" Command="{Binding DisplayingEventsVisibilityCommand}"/>
