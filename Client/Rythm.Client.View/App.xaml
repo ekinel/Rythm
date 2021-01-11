@@ -10,6 +10,9 @@
 				<ResourceDictionary Source="Resources/ClientsListBoxItemStyleLight.xaml"/>
 				<ResourceDictionary Source="Resources/ClientsListBoxBackgroundStyleLight.xaml"/>
 				<ResourceDictionary Source="Resources/CustomWindowChromeLight.xaml"/>
+				<ResourceDictionary Source="Resources/ChatListBoxBackgroundStyleLight.xaml"/>
+				<ResourceDictionary Source="Resources/TextBoxStyleLight.xaml"/>
+				<ResourceDictionary Source="Resources/TextBlockStyleLight.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

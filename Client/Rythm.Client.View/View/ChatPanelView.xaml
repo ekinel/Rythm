@@ -17,8 +17,8 @@
             <RowDefinition Height="Auto" ></RowDefinition>
         </Grid.RowDefinitions>
 
-		<ScrollViewer Grid.Row="0" viewModel:ScrollViewerExtensionsViewModel.AlwaysScrollToEnd="True" >
-			<ListBox ItemContainerStyle="{DynamicResource ChatListBoxStyle}" ItemsSource="{Binding ReceivedMessagesList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" Background="WhiteSmoke" HorizontalContentAlignment="Stretch">
+		<ScrollViewer Grid.Row="0" viewModel:ScrollViewerExtensionsViewModel.AlwaysScrollToEnd="True">
+			<ListBox Style="{DynamicResource ChatListBackground}" ItemContainerStyle="{DynamicResource ChatListBoxStyle}" ItemsSource="{Binding ReceivedMessagesList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" HorizontalContentAlignment="Stretch">
 			</ListBox>
         </ScrollViewer>
         <Grid Grid.Row="1">
@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Text="{Binding OutgoingMessage, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,5,5" TextWrapping="Wrap" MaxHeight="100"/>
+			<TextBox Grid.Column="0" Text="{Binding OutgoingMessage, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,5,5" TextWrapping="Wrap" MaxHeight="100" Style="{DynamicResource TextBoxBackground}"/>
             <Button Grid.Column="1" Style="{StaticResource BlackAndWhiteButton}" Command="{Binding SendCommand}" Content="{x:Static properties:Resources.SendButton}" Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxHeight="30"/>
         </Grid>
     </Grid>

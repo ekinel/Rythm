@@ -2,8 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:properties="clr-namespace:Rythm.Client.View.Properties">
 
-	<Style x:Key="CommonBackground" TargetType="{x:Type Grid}">
-		<Setter Property="Background" Value="DarkGray">
-		</Setter>
+	<Style x:Key="TextBoxBackground" TargetType="{x:Type TextBox}">
+		<Setter Property="Background" Value="Gray"/>
+		<Setter Property="Foreground" Value="White"/>
 	</Style>
+	
 </ResourceDictionary>

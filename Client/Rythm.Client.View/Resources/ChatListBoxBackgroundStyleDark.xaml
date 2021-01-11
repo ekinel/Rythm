@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:properties="clr-namespace:Rythm.Client.View.Properties">
 
-	<Style x:Key="CommonBackground" TargetType="{x:Type Grid}">
-		<Setter Property="Background" Value="DarkGray">
+	<Style x:Key="ChatListBackground" TargetType="{x:Type ListBox}">
+		<Setter Property="Background" Value="Gray">
 		</Setter>
 	</Style>
 </ResourceDictionary>

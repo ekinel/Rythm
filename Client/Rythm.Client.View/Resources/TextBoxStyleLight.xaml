@@ -1,9 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:properties="clr-namespace:Rythm.Client.View.Properties">
-
-	<Style x:Key="CommonBackground" TargetType="{x:Type Grid}">
-		<Setter Property="Background" Value="DarkGray">
-		</Setter>
+	
+	<Style x:Key="TextBoxBackground" TargetType="{x:Type TextBox}">
+		<Setter Property="Background" Value="White"/>
+		<Setter Property="Foreground" Value="Black"/>
 	</Style>
+	
 </ResourceDictionary>

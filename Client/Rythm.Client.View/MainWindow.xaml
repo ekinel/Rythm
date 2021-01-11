@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:Rythm.Client.View"
         mc:Ignorable="d" MinHeight="400" MinWidth="1060" Title="Rythm" Style="{DynamicResource CustomWindowChrome}">
-    <Grid>
+	<Grid Style="{DynamicResource CommonBackground}">
         <Grid.ColumnDefinitions>
 			<ColumnDefinition  Width="{Binding UsersListVisibility}"/>
             <ColumnDefinition Width="*"/>
@@ -28,7 +28,6 @@
 		<Grid Grid.Column="1" Grid.Row="1" Visibility="{Binding ChatPanelVisibility}">
 			<view:ChatPanelView Margin="5" />
 		</Grid>
-        <view:ConnectionParametersView  Grid.Column="2" Grid.Row="1" Margin="1"/>
-
-    </Grid>
+		<view:ConnectionParametersView  Grid.Column="2" Grid.Row="1" Margin="1"/>
+	</Grid>
 </Window>

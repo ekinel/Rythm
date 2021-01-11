@@ -8,7 +8,7 @@
              xmlns:interactivity="http://prismlibrary.com/"
              interactivity:ViewModelLocator.AutoWireViewModel="True" 
              d:DataContext="{d:DesignInstance viewModel:ToolPanelViewModel}">
-	<Grid MinWidth="300" Style="{DynamicResource CommonBackground}">
+	<Grid MinWidth="300">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>

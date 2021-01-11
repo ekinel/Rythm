@@ -28,12 +28,12 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Address" Foreground="DimGray" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" IsEnabled="False"/>
-        <TextBox Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2" IsEnabled="{Binding FieldsEnabled}"/>
-        <TextBlock Text="Port" Foreground="DimGray" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" IsEnabled="False"/>
-        <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" IsEnabled="{Binding FieldsEnabled}"/>
-        <TextBlock Text="Login" Foreground="DimGray" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" IsEnabled="False"/>
-        <TextBox Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" IsEnabled="{Binding FieldsEnabled}"/>
+		<TextBlock Text="Address" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" IsEnabled="False" Style="{DynamicResource TextBlockBackground}"/>
+		<TextBox Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2" IsEnabled="{Binding FieldsEnabled}" Style="{DynamicResource TextBoxBackground}"/>
+		<TextBlock Text="Port" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" IsEnabled="False" Style="{DynamicResource TextBlockBackground}"/>
+		<TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" IsEnabled="{Binding FieldsEnabled}" Style="{DynamicResource TextBoxBackground}"/>
+		<TextBlock Text="Login" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" IsEnabled="False" Style="{DynamicResource TextBlockBackground}"/>
+		<TextBox Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7" IsEnabled="{Binding FieldsEnabled}" Style="{DynamicResource TextBoxBackground}"/>
         <Button Grid.Column="1" Grid.Row="9" Style="{DynamicResource BlackAndWhiteButton}" Command="{Binding ConnectCommand}" Content="{Binding ConnectButtonLabel}" HorizontalAlignment="Right" Width="100">
         </Button>
 

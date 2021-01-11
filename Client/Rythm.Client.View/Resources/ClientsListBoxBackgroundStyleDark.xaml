@@ -3,7 +3,6 @@
                     xmlns:properties="clr-namespace:Rythm.Client.View.Properties">
 
 	<Style x:Key="ClientsListBackground" TargetType="{x:Type ListBox}">
-
 		<Setter Property="Background" Value="DarkGray">
 		</Setter>
 	</Style>
