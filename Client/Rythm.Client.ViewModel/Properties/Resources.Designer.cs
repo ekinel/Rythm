@@ -61,7 +61,7 @@ namespace Rythm.Client.ViewModel.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Чат.
+        ///   Looks up a localized string similar to Chat.
         /// </summary>
         internal static string ChatButton {
             get {
@@ -79,7 +79,7 @@ namespace Rythm.Client.ViewModel.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to События.
+        ///   Looks up a localized string similar to Events.
         /// </summary>
         internal static string EventsButton {
             get {

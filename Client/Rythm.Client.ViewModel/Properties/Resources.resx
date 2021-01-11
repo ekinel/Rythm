@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ChatButton" xml:space="preserve">
-    <value>Чат</value>
+    <value>Chat</value>
   </data>
   <data name="CommonChat" xml:space="preserve">
     <value>CommonChat</value>
   </data>
   <data name="EventsButton" xml:space="preserve">
-    <value>События</value>
+    <value>Events</value>
   </data>
 </root>

@@ -61,7 +61,7 @@ namespace Rythm.Client.View.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Отправить.
+        ///   Looks up a localized string similar to Send.
         /// </summary>
         public static string SendButton {
             get {
