@@ -272,6 +272,7 @@ namespace Rythm.Client.ViewModel
 		private void HandleUpdatedDataBaseMessagesEvent(List<DataBaseMessage> messagesList)
 		{
 			DataBaseAllOwnMessagesList.Clear();
+			DataBaseVisibleOwnMessagesList.Clear();
 			foreach (DataBaseMessage message in messagesList)
 			{
 				DataBaseAllOwnMessagesList.Add(new DataBaseMessagesViewModel(message));
@@ -282,6 +283,7 @@ namespace Rythm.Client.ViewModel
 		private void HandleUpdatedDataBaseEventsEvent(List<DataBaseEvent> eventMessage)
 		{
 			DataBaseAllEventsList.Clear();
+			DataBaseVisibleEventsList.Clear();
 			foreach (DataBaseEvent element in eventMessage)
 			{
 				DataBaseAllEventsList.Add(new DataBaseEventsViewModel(element.Message, element.Date));
