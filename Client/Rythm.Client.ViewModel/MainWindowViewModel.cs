@@ -24,7 +24,7 @@ namespace Rythm.Client.ViewModel
 		private GridLength _viewUsersListVisibility;
 
 		private bool _toggleDisplayingEventsVisibility;
-		private Visibility _splitterSplitterDisplayingEventsVisibility;
+		private bool _splitterSplitterDisplayingEventsVisibility;
 
 		private bool _chatPanelVisibility;
 		private bool _eventsPanelVisibility;
@@ -68,7 +68,7 @@ namespace Rythm.Client.ViewModel
 			set => SetProperty(ref _connectIndicatorColor, value);
 		}
 
-		public Visibility SplitterDisplayingEventsVisibility
+		public bool SplitterDisplayingEventsVisibility
 		{
 			get => _splitterSplitterDisplayingEventsVisibility;
 			set => SetProperty(ref _splitterSplitterDisplayingEventsVisibility, value);
@@ -88,7 +88,7 @@ namespace Rythm.Client.ViewModel
 			SplitterVisibility = Visibility.Collapsed;
 			_connectIndicatorColor = Brushes.LightPink;
 
-			SplitterDisplayingEventsVisibility = Visibility.Visible;
+			SplitterDisplayingEventsVisibility = true;
 			UsersListVisibility = new GridLength(0.15, GridUnitType.Star);
 
 			ChatPanelVisibility = true;
@@ -114,7 +114,6 @@ namespace Rythm.Client.ViewModel
 		private void HandleDisplayingEventsViewVisibility()
 		{
 			_toggleDisplayingEventsVisibility = !_toggleDisplayingEventsVisibility;
-			SplitterDisplayingEventsVisibility = _toggleDisplayingEventsVisibility ? Visibility.Collapsed : Visibility.Visible;
 			UsersListVisibility = _toggleDisplayingEventsVisibility ? new GridLength(0.0) : new GridLength(0.15, GridUnitType.Star);
 
 			ChatPanelVisibility = !ChatPanelVisibility;
