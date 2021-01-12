@@ -114,7 +114,8 @@ namespace Rythm.Client.ViewModel
 				IsLightTheme ? "ClientsListBoxBackgroundStyleLight" : "ClientsListBoxBackgroundStyleDark",
 				IsLightTheme ? "ChatListBoxBackgroundStyleLight" : "ChatListBoxBackgroundStyleDark",
 				IsLightTheme ? "TextBoxStyleLight" : "TextBoxStyleDark",
-				IsLightTheme ? "TextBlockStyleLight" : "TextBlockStyleDark"
+				IsLightTheme ? "TextBlockStyleLight" : "TextBlockStyleDark",
+				IsLightTheme ? "ScrollViewerStyleLight" : "ScrollViewerStyleDark",
 		};
 
 			Application.Current.Resources.Clear();

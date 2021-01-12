@@ -17,7 +17,7 @@
             <RowDefinition Height="Auto" ></RowDefinition>
         </Grid.RowDefinitions>
 
-		<ScrollViewer Grid.Row="0" viewModel:ScrollViewerExtensionsViewModel.AlwaysScrollToEnd="True">
+		<ScrollViewer Grid.Row="0" viewModel:ScrollViewerExtensionsViewModel.AlwaysScrollToEnd="True" Style="{DynamicResource ScrollViewerStyle}">
 			<ListBox Style="{DynamicResource ChatListBackground}" ItemContainerStyle="{DynamicResource ChatListBoxStyle}" ItemsSource="{Binding ReceivedMessagesList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" HorizontalContentAlignment="Stretch">
 			</ListBox>
         </ScrollViewer>

@@ -13,6 +13,7 @@
 				<ResourceDictionary Source="Resources/ChatListBoxBackgroundStyleLight.xaml"/>
 				<ResourceDictionary Source="Resources/TextBoxStyleLight.xaml"/>
 				<ResourceDictionary Source="Resources/TextBlockStyleLight.xaml"/>
+				<ResourceDictionary Source="Resources/ScrollViewerStyleLight.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
