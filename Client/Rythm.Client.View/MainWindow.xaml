@@ -22,12 +22,39 @@
 
         <view:UsersListView Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="0,5,0,0"/>
         <view:ToolPanelView Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"/>
-		<Grid Grid.Column="1" Grid.Row="1" Visibility="{Binding DisplayingEventsVisibility}">
+		
+		<Grid Grid.Column="1" Grid.Row="1" >
 			<view:DisplayingEventsView Margin="5"/>
+			<Grid.Style>
+				<Style TargetType="Grid">
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding EventPanelVisibility}" Value="True">
+							<Setter Property="Visibility" Value="Visible"/>
+						</DataTrigger>
+						<DataTrigger Binding="{Binding EventPanelVisibility}" Value="False">
+							<Setter Property="Visibility" Value="Collapsed"/>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Grid.Style>
 		</Grid>
-		<Grid Grid.Column="1" Grid.Row="1" Visibility="{Binding ChatPanelVisibility}">
+		
+		<Grid Grid.Column="1" Grid.Row="1">
 			<view:ChatPanelView Margin="5" />
+			<Grid.Style>
+				<Style TargetType="Grid">
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding ChatPanelVisibility}" Value="True">
+							<Setter Property="Visibility" Value="Visible"/>
+						</DataTrigger>
+						<DataTrigger Binding="{Binding ChatPanelVisibility}" Value="False">
+							<Setter Property="Visibility" Value="Collapsed"/>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Grid.Style>
 		</Grid>
+		
 		<view:ConnectionParametersView  Grid.Column="2" Grid.Row="1" Margin="1"/>
 	</Grid>
 </Window>

@@ -26,14 +26,23 @@ namespace Rythm.Client.ViewModel
 		private bool _toggleDisplayingEventsVisibility;
 		private Visibility _splitterSplitterDisplayingEventsVisibility;
 
-		private Visibility _viewDisplayingEventsVisibility;
-		private bool _stackPanelVisibility;
-
-		private Visibility _viewChatPanelVisibility;
-
+		private bool _chatPanelVisibility;
+		private bool _eventsPanelVisibility;
 		#endregion
 
 		#region Properties
+
+		public bool ChatPanelVisibility
+		{
+			get => _chatPanelVisibility;
+			set => SetProperty(ref _chatPanelVisibility, value);
+		}
+
+		public bool EventPanelVisibility
+		{
+			get => _eventsPanelVisibility;
+			set => SetProperty(ref _eventsPanelVisibility, value);
+		}
 
 		public GridLength SettingsVisibility
 		{
@@ -65,18 +74,6 @@ namespace Rythm.Client.ViewModel
 			set => SetProperty(ref _splitterSplitterDisplayingEventsVisibility, value);
 		}
 
-		public Visibility DisplayingEventsVisibility
-		{
-			get => _viewDisplayingEventsVisibility;
-			set => SetProperty(ref _viewDisplayingEventsVisibility, value);
-		}
-
-		public Visibility ChatPanelVisibility
-		{
-			get => _viewChatPanelVisibility;
-			set => SetProperty(ref _viewChatPanelVisibility, value);
-		}
-
 		#endregion
 
 		#region Constructors
@@ -94,8 +91,8 @@ namespace Rythm.Client.ViewModel
 			SplitterDisplayingEventsVisibility = Visibility.Visible;
 			UsersListVisibility = new GridLength(0.15, GridUnitType.Star);
 
-			DisplayingEventsVisibility = Visibility.Collapsed;
-			ChatPanelVisibility = Visibility.Visible;
+			ChatPanelVisibility = true;
+			EventPanelVisibility = false;
 		}
 
 		#endregion
@@ -120,9 +117,9 @@ namespace Rythm.Client.ViewModel
 			SplitterDisplayingEventsVisibility = _toggleDisplayingEventsVisibility ? Visibility.Collapsed : Visibility.Visible;
 			UsersListVisibility = _toggleDisplayingEventsVisibility ? new GridLength(0.0) : new GridLength(0.15, GridUnitType.Star);
 
-			_stackPanelVisibility = !_stackPanelVisibility;
-			ChatPanelVisibility = _stackPanelVisibility ? Visibility.Collapsed : Visibility.Visible;
-			DisplayingEventsVisibility = _stackPanelVisibility ? Visibility.Visible : Visibility.Collapsed;
+			ChatPanelVisibility = !ChatPanelVisibility;
+			EventPanelVisibility = !EventPanelVisibility;
+		
 		}
 
 		#endregion
