@@ -7,6 +7,7 @@ namespace Rythm.Client.ViewModel
 	using System;
 	using System.Collections.Generic;
 	using System.Windows;
+	using System.Windows.Data;
 	using System.Windows.Input;
 
 	using Events;
@@ -26,7 +27,6 @@ namespace Rythm.Client.ViewModel
 		private readonly IEventAggregator _eventAggregator;
 
 		private bool _buttonsStackPanelVisibility;
-		private Visibility _stackPanelVisibility;
 		private bool _changedLoginVisibility;
 		private Visibility _loginVisibility;
 
@@ -43,16 +43,16 @@ namespace Rythm.Client.ViewModel
 		public ICommand ShowEventsListCommand { get; }
 		public ICommand ChangeThemeColorCommand { get; }
 
+		public bool IsStackPanelVisible
+		{
+			get => _buttonsStackPanelVisibility;
+			set => SetProperty(ref _buttonsStackPanelVisibility, value);
+
+		}
 		public string Login
 		{
 			get => _login;
 			set => SetProperty(ref _login, value);
-		}
-
-		public Visibility SplitterVisibility
-		{
-			get => _stackPanelVisibility;
-			set => SetProperty(ref _stackPanelVisibility, value);
 		}
 
 		public Visibility LoginVisibility
@@ -86,7 +86,7 @@ namespace Rythm.Client.ViewModel
 			DisplayingEventsVisibilityCommand = new DelegateCommand(ExecuteDisplayingEventsVisibilityCommand);
 			ChangeThemeColorCommand = new DelegateCommand(ExecuteChangeThemeCommand);
 
-			SplitterVisibility = Visibility.Collapsed;
+			IsStackPanelVisible = false;
 			LoginVisibility = Visibility.Visible;
 			_changedLoginVisibility = true;
 			IsLightTheme = true;
@@ -157,13 +157,11 @@ namespace Rythm.Client.ViewModel
 
 			_eventAggregator.GetEvent<DisplayingEventsVisibility>().Publish();
 
-			_buttonsStackPanelVisibility = !_buttonsStackPanelVisibility;
-			SplitterVisibility = _buttonsStackPanelVisibility ? Visibility.Visible : Visibility.Collapsed;
+			IsStackPanelVisible = !IsStackPanelVisible;
 
 			_changedLoginVisibility = !_changedLoginVisibility;
 			LoginVisibility = _changedLoginVisibility ? Visibility.Visible : Visibility.Hidden;
 		}
-
 		#endregion
 	}
 }
