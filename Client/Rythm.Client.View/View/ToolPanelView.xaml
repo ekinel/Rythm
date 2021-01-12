@@ -21,25 +21,42 @@
 			<Button Style="{DynamicResource BlackAndWhiteButton}" Content="{Binding ButtonContent}" HorizontalAlignment="Right" Command="{Binding DisplayingEventsVisibilityCommand}"/>
 		</Grid>
 
-		<Grid Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" Visibility="Hidden"  Width="250">
+		<Grid Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0"  Width="250">
 
 			<Grid.Style>
 				<Style TargetType="Grid">
 					<Style.Triggers>
-						<DataTrigger Binding="{Binding IsStackPanelVisible}" Value="true">
+						<DataTrigger Binding="{Binding IsGridWithEventsButtonVisible}" Value="True">
 							<Setter Property="Visibility" Value="Visible"/>
+						</DataTrigger>
+						<DataTrigger Binding="{Binding IsGridWithEventsButtonVisible}" Value="False">
+							<Setter Property="Visibility" Value="Collapsed"/>
 						</DataTrigger>
 					</Style.Triggers>
 				</Style>
 			</Grid.Style>
-			
+
 			<Button  Style="{DynamicResource BlackAndWhiteButton}" Content="Clients" Command="{Binding ShowClientsListCommand}" HorizontalAlignment="Left"/>
 			<Button  Style="{DynamicResource BlackAndWhiteButton}" Content="Messages" Command="{Binding ShowMessagesListCommand}" HorizontalAlignment="Center"/>
 			<Button  Style="{DynamicResource BlackAndWhiteButton}" Content="Events" Command="{Binding ShowEventsListCommand}" HorizontalAlignment="Right"/>
 			
 		</Grid>
 		
-		<TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Login}" Visibility="{Binding LoginVisibility}" Foreground="DimGray" Width="Auto" FontSize="18" Margin="10,0,0,0" ></TextBlock>
+		<TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Login}" Foreground="DimGray" Width="Auto" FontSize="18" Margin="10,0,0,0" >
+			<TextBlock.Style>
+				<Style TargetType="TextBlock">
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding IsLoginVisible}" Value="True">
+							<Setter Property="Visibility" Value="Visible"/>
+						</DataTrigger>
+						<DataTrigger Binding="{Binding IsLoginVisible}" Value="False">
+							<Setter Property="Visibility" Value="Collapsed"/>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</TextBlock.Style>
+		</TextBlock>
+
 	</Grid>
 
 </UserControl>

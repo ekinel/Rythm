@@ -7,7 +7,6 @@ namespace Rythm.Client.ViewModel
 	using System;
 	using System.Collections.Generic;
 	using System.Windows;
-	using System.Windows.Data;
 	using System.Windows.Input;
 
 	using Events;
@@ -26,9 +25,8 @@ namespace Rythm.Client.ViewModel
 		private bool _changeButtonContent;
 		private readonly IEventAggregator _eventAggregator;
 
-		private bool _buttonsStackPanelVisibility;
+		private bool _gridWithEventsButtonVisibility;
 		private bool _changedLoginVisibility;
-		private Visibility _loginVisibility;
 
 		private bool _colorTheme;
 
@@ -43,22 +41,22 @@ namespace Rythm.Client.ViewModel
 		public ICommand ShowEventsListCommand { get; }
 		public ICommand ChangeThemeColorCommand { get; }
 
-		public bool IsStackPanelVisible
+		public bool IsGridWithEventsButtonVisible
 		{
-			get => _buttonsStackPanelVisibility;
-			set => SetProperty(ref _buttonsStackPanelVisibility, value);
+			get => _gridWithEventsButtonVisibility;
+			set => SetProperty(ref _gridWithEventsButtonVisibility, value);
+
+		}
+		public bool IsLoginVisible
+		{
+			get => _changedLoginVisibility;
+			set => SetProperty(ref _changedLoginVisibility, value);
 
 		}
 		public string Login
 		{
 			get => _login;
 			set => SetProperty(ref _login, value);
-		}
-
-		public Visibility LoginVisibility
-		{
-			get => _loginVisibility;
-			set => SetProperty(ref _loginVisibility, value);
 		}
 
 		public bool IsLightTheme
@@ -86,9 +84,8 @@ namespace Rythm.Client.ViewModel
 			DisplayingEventsVisibilityCommand = new DelegateCommand(ExecuteDisplayingEventsVisibilityCommand);
 			ChangeThemeColorCommand = new DelegateCommand(ExecuteChangeThemeCommand);
 
-			IsStackPanelVisible = false;
-			LoginVisibility = Visibility.Visible;
-			_changedLoginVisibility = true;
+			IsGridWithEventsButtonVisible = false;
+			IsLoginVisible = true;
 			IsLightTheme = true;
 			_changeButtonContent = true;
 			ButtonContent = Resources.EventsButton;
@@ -155,12 +152,10 @@ namespace Rythm.Client.ViewModel
 			_changeButtonContent = !_changeButtonContent;
 			ButtonContent = _changeButtonContent ? Resources.EventsButton : Resources.ChatButton;
 
+			IsGridWithEventsButtonVisible = !IsGridWithEventsButtonVisible;
+			IsLoginVisible = !IsLoginVisible;
+
 			_eventAggregator.GetEvent<DisplayingEventsVisibility>().Publish();
-
-			IsStackPanelVisible = !IsStackPanelVisible;
-
-			_changedLoginVisibility = !_changedLoginVisibility;
-			LoginVisibility = _changedLoginVisibility ? Visibility.Visible : Visibility.Hidden;
 		}
 		#endregion
 	}
