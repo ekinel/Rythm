@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:properties="clr-namespace:Rythm.Client.View.Properties">
 
-	<Style x:Key="TextBlockBackground" TargetType="{x:Type TextBlock}">
+	<Style x:Key="TextBlockForeground" TargetType="{x:Type TextBlock}">
 		<Setter Property="Foreground" Value="White"/>
 	</Style>
 	
