@@ -18,6 +18,7 @@ namespace Rythm.Client.ViewModel
 	using Prism.Commands;
 	using Prism.Events;
 	using Prism.Mvvm;
+	using Rythm.Client.ViewModel.Properties;
 	using Rythm.Common.Network.Enums;
 
 	public class ChatPanelViewModel : BindableBase
@@ -118,7 +119,7 @@ namespace Rythm.Client.ViewModel
 				     message.LoginFrom == _loginFrom && message.LoginTo == _loginTo || message.LoginTo == Properties.Resources.CommonChat && _loginTo == Properties.Resources.CommonChat) &&
 				    _loginTo != string.Empty)
 				{
-					if(message.LoginTo == "CommonChat" || message.LoginFrom != _loginFrom)
+					if(message.LoginTo == Resources.CommonChat || message.LoginFrom != _loginFrom)
 					{
 						ReceivedMessagesList.Add(
 							new SendMessageViewModel(message.LoginTo, message.LoginFrom, message.Text, message.Time, MsgStatus.None));
@@ -136,15 +137,15 @@ namespace Rythm.Client.ViewModel
 		{
 			foreach (SendMessageViewModel message in AllReceivedMessagesList)
 			{
-				if (message.Time == okReceive.MsgTime && message.LoginTo != Properties.Resources.CommonChat)
+				if (message.Time == okReceive.MsgTime && message.LoginTo != Resources.CommonChat)
 				{
 					if(okReceive.MsgStatus == MsgStatus.ServerOk)
 					{
-						message.OkColorStatus = "Gray";
+						message.OkColorStatus = Resources.MessageServerOkColor;
 					}
 					else
 					{
-						message.OkColorStatus = "Green";
+						message.OkColorStatus = Resources.MessageClientOkColor;
 
 					}
 				}

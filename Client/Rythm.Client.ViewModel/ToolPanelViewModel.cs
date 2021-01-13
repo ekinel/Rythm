@@ -106,23 +106,23 @@ namespace Rythm.Client.ViewModel
 
 			List<string> _styles = new List<string>
 			{
-				IsLightTheme ? "CustomWindowChromeLight" : "CustomWindowChromeDark",
-				IsLightTheme ? "ButtonStyleLight" : "ButtonStyleDark",
-				IsLightTheme ? "CommonBackgroundStyleLight" : "CommonBackgroundStyleDark",
-				IsLightTheme ? "ChatListBoxItemStyleLight" : "ChatListBoxItemStyleDark",
-				IsLightTheme ? "ClientsListBoxItemStyleLight" : "ClientsListBoxItemStyleDark",
-				IsLightTheme ? "ClientsListBoxBackgroundStyleLight" : "ClientsListBoxBackgroundStyleDark",
-				IsLightTheme ? "ChatListBoxBackgroundStyleLight" : "ChatListBoxBackgroundStyleDark",
-				IsLightTheme ? "TextBoxStyleLight" : "TextBoxStyleDark",
-				IsLightTheme ? "TextBlockStyleLight" : "TextBlockStyleDark",
-				IsLightTheme ? "ScrollViewerStyleLight" : "ScrollViewerStyleDark",
+				IsLightTheme ? Resources.CustomWindowChromeLight : Resources.CustomWindowChromeDark,
+				IsLightTheme ? Resources.ButtonStyleLight : Resources.ButtonStyleDark,
+				IsLightTheme ? Resources.CommonBackgroundStyleLight : Resources.CommonBackgroundStyleDark,
+				IsLightTheme ? Resources.ChatListBoxItemStyleLight : Resources.ChatListBoxItemStyleDark,
+				IsLightTheme ? Resources.ClientsListBoxItemStyleLight : Resources.ClientsListBoxItemStyleDark,
+				IsLightTheme ? Resources.ClientsListBoxBackgroundStyleLight : Resources.ClientsListBoxBackgroundStyleDark,
+				IsLightTheme ? Resources.ChatListBoxBackgroundStyleLight : Resources.ChatListBoxBackgroundStyleDark,
+				IsLightTheme ? Resources.TextBoxStyleLight : Resources.TextBoxStyleDark,
+				IsLightTheme ? Resources.TextBlockStyleLight : Resources.TextBlockStyleDark,
+				IsLightTheme ? Resources.ScrollViewerStyleLight : Resources.ScrollViewerStyleDark,
 		};
 
 			Application.Current.Resources.Clear();
 
 			foreach (var element in _styles)
 			{
-				var uri = new Uri(@"../../Resources/" + element + ".xaml", UriKind.Relative);
+				var uri = new Uri(@"../../Resources/" + element, UriKind.Relative);
 				ResourceDictionary resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
 				Application.Current.Resources.MergedDictionaries.Add(resourceDict);
 			}

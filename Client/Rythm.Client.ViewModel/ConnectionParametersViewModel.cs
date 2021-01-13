@@ -14,6 +14,7 @@ namespace Rythm.Client.ViewModel
 
 	using Prism.Commands;
 	using Prism.Events;
+	using Rythm.Client.ViewModel.Properties;
 
 	public class ConnectionParametersViewModel : ErrorsCheckViewModel
 	{
@@ -124,7 +125,7 @@ namespace Rythm.Client.ViewModel
 
 			if (string.IsNullOrEmpty(Login))
 			{
-				_errorsContainer.SetErrors(() => Login, new[] { "Login cannot be empty" });
+				_errorsContainer.SetErrors(() => Login, new[] { Resources.LoginErrorMessage});
 			}
 
 			ConnectCommand.RaiseCanExecuteChanged();
@@ -150,7 +151,7 @@ namespace Rythm.Client.ViewModel
 
 			if (!compare.Success)
 			{
-				_errorsContainer.SetErrors(() => Address, new[] { "The address must match the pattern of ip addresses" });
+				_errorsContainer.SetErrors(() => Address, new[] { Resources.AddressErrorMessage });
 			}
 
 			ConnectCommand.RaiseCanExecuteChanged();

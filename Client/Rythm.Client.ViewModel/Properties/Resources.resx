@@ -117,13 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddressErrorMessage" xml:space="preserve">
+    <value>The address must match the pattern of ip addresses</value>
+  </data>
+  <data name="ButtonStyleDark" xml:space="preserve">
+    <value>ButtonStyleDark.xaml</value>
+  </data>
+  <data name="ButtonStyleLight" xml:space="preserve">
+    <value>ButtonStyleLight.xaml</value>
+  </data>
   <data name="ChatButton" xml:space="preserve">
     <value>Chat</value>
+  </data>
+  <data name="ChatListBoxBackgroundStyleDark" xml:space="preserve">
+    <value>ChatListBoxBackgroundStyleDark.xaml</value>
+  </data>
+  <data name="ChatListBoxBackgroundStyleLight" xml:space="preserve">
+    <value>ChatListBoxBackgroundStyleLight.xaml</value>
+  </data>
+  <data name="ChatListBoxItemStyleDark" xml:space="preserve">
+    <value>ChatListBoxItemStyleDark.xaml</value>
+  </data>
+  <data name="ChatListBoxItemStyleLight" xml:space="preserve">
+    <value>ChatListBoxItemStyleLight.xaml</value>
+  </data>
+  <data name="ClientsListBoxBackgroundStyleDark" xml:space="preserve">
+    <value>ClientsListBoxBackgroundStyleDark.xaml</value>
+  </data>
+  <data name="ClientsListBoxBackgroundStyleLight" xml:space="preserve">
+    <value>ClientsListBoxBackgroundStyleLight.xaml</value>
+  </data>
+  <data name="ClientsListBoxItemStyleDark" xml:space="preserve">
+    <value>ClientsListBoxItemStyleDark.xaml</value>
+  </data>
+  <data name="ClientsListBoxItemStyleLight" xml:space="preserve">
+    <value>ClientsListBoxItemStyleLight.xaml</value>
+  </data>
+  <data name="CommonBackgroundStyleDark" xml:space="preserve">
+    <value>CommonBackgroundStyleDark.xaml</value>
+  </data>
+  <data name="CommonBackgroundStyleLight" xml:space="preserve">
+    <value>CommonBackgroundStyleLight.xaml</value>
   </data>
   <data name="CommonChat" xml:space="preserve">
     <value>CommonChat</value>
   </data>
+  <data name="CustomWindowChromeDark" xml:space="preserve">
+    <value>CustomWindowChromeDark.xaml</value>
+  </data>
+  <data name="CustomWindowChromeLight" xml:space="preserve">
+    <value>CustomWindowChromeLight.xaml</value>
+  </data>
   <data name="EventsButton" xml:space="preserve">
     <value>Events</value>
+  </data>
+  <data name="LoginErrorMessage" xml:space="preserve">
+    <value>Login cannot be empty</value>
+  </data>
+  <data name="MessageClientOkColor" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="MessageServerOkColor" xml:space="preserve">
+    <value>Gray</value>
+  </data>
+  <data name="ScrollViewerStyleDark" xml:space="preserve">
+    <value>ScrollViewerStyleDark.xaml</value>
+  </data>
+  <data name="ScrollViewerStyleLight" xml:space="preserve">
+    <value>ScrollViewerStyleLight.xaml</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TextBlockStyleDark" xml:space="preserve">
+    <value>TextBlockStyleDark.xaml</value>
+  </data>
+  <data name="TextBlockStyleLight" xml:space="preserve">
+    <value>TextBlockStyleLight.xaml</value>
+  </data>
+  <data name="TextBoxStyleDark" xml:space="preserve">
+    <value>TextBoxStyleDark.xaml</value>
+  </data>
+  <data name="TextBoxStyleLight" xml:space="preserve">
+    <value>TextBoxStyleLight.xaml</value>
   </data>
 </root>
