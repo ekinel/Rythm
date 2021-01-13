@@ -20,8 +20,8 @@
 		<ScrollViewer Grid.Row="0" viewModel:ScrollViewerExtensionsViewModel.AlwaysScrollToEnd="True" Style="{DynamicResource ScrollViewerStyle}">
 			<ListBox Style="{DynamicResource ChatListBackground}" ItemContainerStyle="{DynamicResource ChatListBoxStyle}" ItemsSource="{Binding ReceivedMessagesList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" HorizontalContentAlignment="Stretch">
 			</ListBox>
-        </ScrollViewer>
-        <Grid Grid.Row="1">
+		</ScrollViewer>
+		<Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
