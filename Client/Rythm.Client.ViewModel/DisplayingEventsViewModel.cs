@@ -29,9 +29,9 @@ namespace Rythm.Client.ViewModel
 
 		#region Fields
 
-		private Visibility _dataGridClientsVisibility = Visibility.Visible;
-		private Visibility _dataGridMessagesVisibility = Visibility.Hidden;
-		private Visibility _dataGridEventsVisibility = Visibility.Hidden;
+		private bool _dataGridClientsVisibility;
+		private bool _dataGridMessagesVisibility;
+		private bool _dataGridEventsVisibility;
 
 		private DateTime _dayFrom;
 		private DateTime _dayTo;
@@ -49,19 +49,19 @@ namespace Rythm.Client.ViewModel
 		public DelegateCommand SelectCommand { get; }
 		public DelegateCommand ResetCommand { get; }
 
-		public Visibility DataGridClientsVisibility
+		public bool DataGridClientsVisibility
 		{
 			get => _dataGridClientsVisibility;
 			set => SetProperty(ref _dataGridClientsVisibility, value);
 		}
 
-		public Visibility DataGridMessagesVisibility
+		public bool DataGridMessagesVisibility
 		{
 			get => _dataGridMessagesVisibility;
 			set => SetProperty(ref _dataGridMessagesVisibility, value);
 		}
 
-		public Visibility DataGridEventsVisibility
+		public bool DataGridEventsVisibility
 		{
 			get => _dataGridEventsVisibility;
 			set => SetProperty(ref _dataGridEventsVisibility, value);
@@ -136,9 +136,9 @@ namespace Rythm.Client.ViewModel
 			SelectCommand = new DelegateCommand(ExecuteSelectEntriesCommand);
 			ResetCommand = new DelegateCommand(ExecuteResetEntriesCommand);
 
-			DataGridClientsVisibility = Visibility.Visible;
-			DataGridMessagesVisibility = Visibility.Hidden;
-			DataGridEventsVisibility = Visibility.Hidden;
+			DataGridClientsVisibility = true;
+			DataGridMessagesVisibility = false;
+			DataGridEventsVisibility = false;
 
 			DayFrom = DateTime.Today;
 			DayTo = DateTime.Today;
@@ -154,7 +154,7 @@ namespace Rythm.Client.ViewModel
 
 		private void ExecuteResetEntriesCommand()
 		{
-			if (DataGridMessagesVisibility == Visibility.Visible)
+			if (DataGridMessagesVisibility)
 			{
 				DataBaseVisibleOwnMessagesList.Clear();
 
@@ -165,7 +165,7 @@ namespace Rythm.Client.ViewModel
 				}
 			}
 
-			if (DataGridEventsVisibility == Visibility.Visible)
+			if (DataGridEventsVisibility)
 			{
 				DataBaseVisibleEventsList.Clear();
 
@@ -192,7 +192,7 @@ namespace Rythm.Client.ViewModel
 			var checkingDateFrom = new DateTime(DayFrom.Year, DayFrom.Month, DayFrom.Day, intHourFrom, intMinuteFrom, 0);
 			var checkingDateTo = new DateTime(DayTo.Year, DayTo.Month, DayTo.Day, intHourTo, intMinuteTo, 0);
 
-			if (DataGridMessagesVisibility == Visibility.Visible)
+			if (DataGridMessagesVisibility)
 			{
 				DataBaseVisibleOwnMessagesList.Clear();
 
@@ -206,7 +206,7 @@ namespace Rythm.Client.ViewModel
 				}
 			}
 
-			if (DataGridEventsVisibility == Visibility.Visible)
+			if (DataGridEventsVisibility)
 			{
 				DataBaseVisibleEventsList.Clear();
 
@@ -293,23 +293,23 @@ namespace Rythm.Client.ViewModel
 
 		private void HandleDataBaseButtonClientsChosen()
 		{
-			DataGridClientsVisibility = Visibility.Visible;
-			DataGridEventsVisibility = Visibility.Hidden;
-			DataGridMessagesVisibility = Visibility.Hidden;
+			DataGridClientsVisibility = true;
+			DataGridMessagesVisibility = false;
+			DataGridEventsVisibility = false;
 		}
 
 		private void HandleDataBaseButtonEventsChosen()
 		{
-			DataGridClientsVisibility = Visibility.Hidden;
-			DataGridMessagesVisibility = Visibility.Hidden;
-			DataGridEventsVisibility = Visibility.Visible;
+			DataGridClientsVisibility = false;
+			DataGridMessagesVisibility = false;
+			DataGridEventsVisibility = true;
 		}
 
 		private void HandleDataBaseButtonMessagesChosen()
 		{
-			DataGridClientsVisibility = Visibility.Hidden;
-			DataGridEventsVisibility = Visibility.Hidden;
-			DataGridMessagesVisibility = Visibility.Visible;
+			DataGridClientsVisibility = false;
+			DataGridMessagesVisibility = true;
+			DataGridEventsVisibility = false;
 		}
 
 		#endregion
