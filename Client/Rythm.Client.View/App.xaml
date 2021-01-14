@@ -14,6 +14,7 @@
 				<ResourceDictionary Source="Resources/TextBoxStyleLight.xaml"/>
 				<ResourceDictionary Source="Resources/TextBlockStyleLight.xaml"/>
 				<ResourceDictionary Source="Resources/ScrollViewerStyleLight.xaml"/>
+				<ResourceDictionary Source="Resources/LoginTextBlockStyleLight.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

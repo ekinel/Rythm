@@ -41,21 +41,9 @@
 			<Button  Style="{DynamicResource BlackAndWhiteButton}" Content="Events" Command="{Binding ShowEventsListCommand}" HorizontalAlignment="Right"/>
 			
 		</Grid>
-		
-		<TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Login}" Foreground="DimGray" Width="Auto" FontSize="18" Margin="10,0,0,0" >
-			<TextBlock.Style>
-				<Style TargetType="TextBlock">
-					<Style.Triggers>
-						<DataTrigger Binding="{Binding IsLoginVisible}" Value="True">
-							<Setter Property="Visibility" Value="Visible"/>
-						</DataTrigger>
-						<DataTrigger Binding="{Binding IsLoginVisible}" Value="False">
-							<Setter Property="Visibility" Value="Collapsed"/>
-						</DataTrigger>
-					</Style.Triggers>
-				</Style>
-			</TextBlock.Style>
-		</TextBlock>
+
+		<TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Login}" Width="Auto" FontSize="18" Margin="10,0,0,0" Style="{DynamicResource LoginTextBlockForeground}" />
+
 
 	</Grid>
 

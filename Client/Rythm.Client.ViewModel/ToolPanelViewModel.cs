@@ -116,6 +116,7 @@ namespace Rythm.Client.ViewModel
 				IsLightTheme ? Resources.TextBoxStyleLight : Resources.TextBoxStyleDark,
 				IsLightTheme ? Resources.TextBlockStyleLight : Resources.TextBlockStyleDark,
 				IsLightTheme ? Resources.ScrollViewerStyleLight : Resources.ScrollViewerStyleDark,
+				IsLightTheme ? Resources.LoginTextBlockStyleLight : Resources.LoginTextBlockStyleDark,
 		};
 
 			Application.Current.Resources.Clear();
