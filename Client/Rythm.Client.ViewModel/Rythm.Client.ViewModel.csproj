@@ -84,6 +84,7 @@
     <Compile Include="Events\DisplayingEventsVisibility.cs" />
     <Compile Include="Events\NewClientChosenViewModel.cs" />
     <Compile Include="Events\PassLoginViewModel.cs" />
+    <Compile Include="Events\UpdateActiveClients.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="ChatPanelViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

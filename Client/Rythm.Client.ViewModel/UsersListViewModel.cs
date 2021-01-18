@@ -11,6 +11,7 @@ namespace Rythm.Client.ViewModel
 
 	using Prism.Events;
 	using Prism.Mvvm;
+	using Rythm.Client.ViewModel.Events;
 
 	public class UsersListViewModel : BindableBase
 	{
@@ -56,6 +57,8 @@ namespace Rythm.Client.ViewModel
 			{
 				UserList.Add(new UsersLoginsViewModel(_eventAggregator, user, false));
 			}
+
+			_eventAggregator.GetEvent<UpdateActiveClients>().Publish(activeUsersList);
 		}
 
 		#endregion

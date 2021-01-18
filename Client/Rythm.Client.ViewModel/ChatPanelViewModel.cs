@@ -27,11 +27,13 @@ namespace Rythm.Client.ViewModel
 
 		private readonly IChatPanelController _chatPanelController;
 
+		private List<string> _activeClientsList;
 		private string _outgoingMessage;
-		private string _loginTo = string.Empty;
+		private string _loginTo;
 		private string _loginFrom;
 
 		private bool _connectionState;
+		private bool _isChosenClientsActive;
 
 		#endregion
 
@@ -62,14 +64,18 @@ namespace Rythm.Client.ViewModel
 		{
 			SendCommand = new DelegateCommand(
 				ExecuteSendMessageCommand,
-				() => !string.IsNullOrEmpty(OutgoingMessage) && !string.IsNullOrEmpty(_loginTo) && _connectionState);
+				() => !string.IsNullOrEmpty(OutgoingMessage) && !string.IsNullOrEmpty(_loginTo) && _connectionState && _isChosenClientsActive);
 			eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleUserLoginTo);
 			eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleUserLoginFrom);
 			eventAggregator.GetEvent<ConnectionIndicatorColorChangedEvent>().Subscribe(HandleNewSateEstablished);
+			eventAggregator.GetEvent<UpdateActiveClients>().Subscribe(HandleUpdateActiveClientsList);
 			_chatPanelController = chatPanelController ?? throw new ArgumentNullException(nameof(chatPanelController));
 			_chatPanelController.MessageReceivedEvent += HandleNewMessageReceived;
 			_chatPanelController.OkReceivedEvent += HandleOkReceive;
 			eventsController.UpdatedDataBaseMessagesEvent += HandleDownloadMessagesList;
+
+			_isChosenClientsActive = false;
+			_loginTo = string.Empty;
 		}
 
 		#endregion
@@ -95,11 +101,13 @@ namespace Rythm.Client.ViewModel
 		private void HandleNewSateEstablished(bool connectionState)
 		{
 			_connectionState = connectionState;
+			SendCommand.RaiseCanExecuteChanged();
 		}
 
 		private void HandleUserLoginTo(string loginTo)
 		{
 			_loginTo = loginTo;
+			ActivityCheck();
 			SendCommand.RaiseCanExecuteChanged();
 			UpdateListByNewLoginTo();
 		}
@@ -162,6 +170,32 @@ namespace Rythm.Client.ViewModel
 			OutgoingMessage = string.Empty;
 
 			UpdateListByNewLoginTo();
+		}
+
+		private void HandleUpdateActiveClientsList(List<string> activeClientsList)
+		{
+			_activeClientsList = activeClientsList;
+			_activeClientsList.Add(Resources.CommonChat);
+
+			if (!string.IsNullOrEmpty(_loginTo))
+			{
+				ActivityCheck();
+			}
+		}
+
+		private void ActivityCheck()
+		{
+			_isChosenClientsActive = false;
+
+			foreach (var element in _activeClientsList)
+			{
+				if (element == _loginTo)
+				{
+					_isChosenClientsActive = true;
+				}
+			}
+
+			SendCommand.RaiseCanExecuteChanged();
 		}
 
 		#endregion
