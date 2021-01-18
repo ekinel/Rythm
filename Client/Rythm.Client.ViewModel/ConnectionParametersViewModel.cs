@@ -123,9 +123,9 @@ namespace Rythm.Client.ViewModel
 		{
 			_errorsContainer.ClearErrors(() => Login);
 
-			if (string.IsNullOrEmpty(Login))
+			if (string.IsNullOrEmpty(Login) || (!string.IsNullOrEmpty(Login) && Login.Length > 20))
 			{
-				_errorsContainer.SetErrors(() => Login, new[] { Resources.LoginErrorMessage});
+				_errorsContainer.SetErrors(() => Login, new[] { Resources.LoginErrorMessage });
 			}
 
 			ConnectCommand.RaiseCanExecuteChanged();
