@@ -3,7 +3,7 @@
                     xmlns:properties="clr-namespace:Rythm.Client.View.Properties">
 
 	<Style x:Key="ChatListBackground" TargetType="{x:Type ListBox}">
-		<Setter Property="Background" Value="Gray">
+		<Setter Property="Background" Value="DimGray">
 		</Setter>
 	</Style>
 </ResourceDictionary>
