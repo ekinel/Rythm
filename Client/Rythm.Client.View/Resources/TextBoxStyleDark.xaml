@@ -5,6 +5,7 @@
 	<Style x:Key="TextBoxBackground" TargetType="{x:Type TextBox}">
 		<Setter Property="Background" Value="Gray"/>
 		<Setter Property="Foreground" Value="White"/>
+		<Setter Property="CaretBrush" Value="White"/>
 	</Style>
 	
 </ResourceDictionary>
