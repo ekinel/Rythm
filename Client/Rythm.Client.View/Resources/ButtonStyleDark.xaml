@@ -25,7 +25,7 @@
 							<Setter TargetName="Label" Property="Foreground" Value="Dimgray"></Setter>
 						</Trigger>
 						<Trigger Property="IsEnabled" Value="False">
-							<Setter TargetName="Label" Property="Foreground" Value="darkgray"></Setter>
+							<Setter TargetName="Label" Property="Foreground" Value="LightGray"></Setter>
 						</Trigger>
 					</ControlTemplate.Triggers>
 				</ControlTemplate>
