@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 			<TextBox Grid.Column="0" Text="{Binding OutgoingMessage, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,5,5" TextWrapping="Wrap" MaxHeight="100" Style="{DynamicResource TextBoxBackground}"/>
-            <Button Grid.Column="1" Style="{StaticResource BlackAndWhiteButton}" Command="{Binding SendCommand}" Content="{x:Static properties:Resources.SendButton}" Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxHeight="30"/>
+            <Button Grid.Column="1" Style="{DynamicResource BlackAndWhiteButton}" Command="{Binding SendCommand}" Content="{x:Static properties:Resources.SendButton}" Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxHeight="30"/>
         </Grid>
     </Grid>
 </UserControl>

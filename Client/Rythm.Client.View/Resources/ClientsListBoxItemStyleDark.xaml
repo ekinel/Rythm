@@ -6,12 +6,25 @@
 		<Setter Property="Margin" Value="3"/>
 		<Setter Property="Padding" Value="0"/>
 		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="OverridesDefaultStyle" Value="True"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type ListBoxItem}">
-					<Border Height="30" CornerRadius="5" HorizontalAlignment="Stretch" Padding="0" Margin="0">
-						<Button BorderThickness="1" BorderBrush="LightGray" Foreground="DarkGray" Background="Gray" IsEnabled="{Binding IsEnabled}" Content="{Binding Login}" Command="{Binding ChooseLoginCommand}" />
+					<Border Height="30" CornerRadius="5" HorizontalAlignment="Stretch" Padding="0" Margin="0" >
+						<Grid>
+							<Button x:Name="ItemButton" BorderThickness="1" BorderBrush="LightGray" Foreground="White"  Content="{Binding Login}" Command="{Binding ChooseLoginCommand}" />
+						</Grid>
 					</Border>
+					<ControlTemplate.Triggers>
+						<DataTrigger Binding ="{Binding IsEnabled}" Value="False">
+							<Setter Property="Background" Value="Gray" TargetName="ItemButton"/>
+							<Setter Property="IsHitTestVisible" Value="False" TargetName="ItemButton"/>
+						</DataTrigger>
+						<DataTrigger Binding ="{Binding IsEnabled}" Value="True">
+							<Setter Property="Background" Value="Silver" TargetName="ItemButton"/>
+						</DataTrigger>
+
+					</ControlTemplate.Triggers>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
