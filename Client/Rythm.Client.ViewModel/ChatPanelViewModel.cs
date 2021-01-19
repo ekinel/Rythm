@@ -149,7 +149,7 @@ namespace Rythm.Client.ViewModel
 				{
 					if(okReceive.MsgStatus == MsgStatus.ServerOk)
 					{
-						message.OkColorStatus = Resources.MessageServerOkColor;
+						message.OkColorStatus = Resources.MessageClientOkColor;
 					}
 					else
 					{
@@ -165,7 +165,7 @@ namespace Rythm.Client.ViewModel
 		private void ExecuteSendMessageCommand()
 		{
 			var msgRequest = new TextMsgRequest(_loginFrom, _loginTo, OutgoingMessage, MsgStatus.None);
-			AllReceivedMessagesList.Add(new SendMessageViewModel(_loginTo, _loginFrom, OutgoingMessage, msgRequest.Date, MsgStatus.None));
+			AllReceivedMessagesList.Add(new SendMessageViewModel(_loginTo, _loginFrom, OutgoingMessage, msgRequest.Date, MsgStatus.ClientOk));
 			_chatPanelController.MessageSend(OutgoingMessage, _loginTo);
 			OutgoingMessage = string.Empty;
 
