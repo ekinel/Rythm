@@ -176,7 +176,7 @@
 			this.MinimumSize = new System.Drawing.Size(500, 250);
 			this.Name = "RythmServerUI";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "Rhythm";
+			this.Text = "Rythm";
 			this.GroupBox.ResumeLayout(false);
 			this.GroupBox.PerformLayout();
 			this.ResumeLayout(false);
