@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:properties="clr-namespace:Rythm.Client.View.Properties">
 
-    <Style x:Key="ChatListBoxStyle" TargetType="{x:Type ListBoxItem}">
+	<Style x:Key="ChatListBoxStyle" TargetType="{x:Type ListBoxItem}">
 		<Setter Property="IsEnabled" Value="False"/>
 		<Setter Property="Margin" Value="8 5"/>
 		<Setter Property="Template">
@@ -19,7 +19,8 @@
 								<TextBlock Text="{Binding Text}" Foreground="White" FontSize="14" FontWeight="Normal"  Margin="0 5" TextWrapping="Wrap"/>
 								<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="10">
 									<TextBlock Text="{Binding Time}" Foreground="White" FontSize="10" TextAlignment="Right" Margin="0, -10,0,0"/>
-									<Ellipse Fill="{Binding OkStatus}" VerticalAlignment="Center" Width="10" Margin="10, -10,0,0" Height="10"/>
+									<Ellipse Fill="{Binding OkColorStatus}" VerticalAlignment="Center" Width="10" Margin="10, -10,0,0" Height="10" Opacity="{Binding OkColorStatusOpacity}">
+									</Ellipse>
 								</StackPanel>
 							</StackPanel>
 						</Border>

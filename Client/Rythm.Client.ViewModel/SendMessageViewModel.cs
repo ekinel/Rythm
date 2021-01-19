@@ -14,6 +14,7 @@ namespace Rythm.Client.ViewModel
         #region Fields
 
         private string _okColorStatus;
+        private int _opacity;
 
         #endregion
 
@@ -31,6 +32,12 @@ namespace Rythm.Client.ViewModel
             set => SetProperty(ref _okColorStatus, value);
         }
 
+        public int OkColorStatusOpacity
+        {
+            get => _opacity;
+            set => SetProperty(ref _opacity, value);
+        }
+
         #endregion
 
         #region Constructors
@@ -46,14 +53,17 @@ namespace Rythm.Client.ViewModel
             {
                 case MsgStatus.ServerOk:
                     OkColorStatus = "Gray";
+                    OkColorStatusOpacity = 1;
                     break;
 
                 case MsgStatus.ClientOk:
                     OkColorStatus = "Green";
+                    OkColorStatusOpacity = 1;
                     break;
 
                 default:
                     OkColorStatus = "White";
+                    OkColorStatusOpacity = 0;
 					break;
 			};
 
@@ -71,15 +81,18 @@ namespace Rythm.Client.ViewModel
                 case "ServerOk":
                 case "Gray":
                     OkColorStatus = "Gray";
+                    OkColorStatusOpacity = 1;
                     break;
 
                 case "ClientOk":
                 case "Green":
                     OkColorStatus = "Green";
+                    OkColorStatusOpacity = 1;
                     break;
 
                 default:
                     OkColorStatus = "White";
+                    OkColorStatusOpacity = 0;
                     break;
             };
         }
