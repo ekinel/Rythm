@@ -29,7 +29,6 @@ namespace Rythm.Client.ViewModel
 
 		#region Fields
 
-		private bool _dataGridClientsVisibility;
 		private bool _dataGridMessagesVisibility;
 		private bool _dataGridEventsVisibility;
 
@@ -48,12 +47,6 @@ namespace Rythm.Client.ViewModel
 
 		public DelegateCommand SelectCommand { get; }
 		public DelegateCommand ResetCommand { get; }
-
-		public bool DataGridClientsVisibility
-		{
-			get => _dataGridClientsVisibility;
-			set => SetProperty(ref _dataGridClientsVisibility, value);
-		}
 
 		public bool DataGridMessagesVisibility
 		{
@@ -103,9 +96,6 @@ namespace Rythm.Client.ViewModel
 			set => SetProperty(ref _minuteFrom, value);
 		}
 
-		public ObservableCollection<DataBaseClientsViewModel> DataBaseClientsList { get; set; } =
-			new ObservableCollection<DataBaseClientsViewModel>();
-
 		public ObservableCollection<DataBaseMessagesViewModel> DataBaseAllOwnMessagesList { get; set; } =
 			new ObservableCollection<DataBaseMessagesViewModel>();
 
@@ -125,10 +115,8 @@ namespace Rythm.Client.ViewModel
 		public DisplayingEventsViewModel(IDisplayingEventsController displayingEventsController, IEventAggregator eventAggregator)
 		{
 			_displayingEventsController = displayingEventsController;
-			_displayingEventsController.UpdatedDataBaseClientsEvent += HandleUpdatedDataBaseClientsEvent;
 			_displayingEventsController.UpdatedDataBaseMessagesEvent += HandleUpdatedDataBaseMessagesEvent;
 			_displayingEventsController.UpdatedDataBaseEventsEvent += HandleUpdatedDataBaseEventsEvent;
-			eventAggregator.GetEvent<DataBaseButtonClientsChosen>().Subscribe(HandleDataBaseButtonClientsChosen);
 			eventAggregator.GetEvent<DataBaseButtonEventsChosen>().Subscribe(HandleDataBaseButtonEventsChosen);
 			eventAggregator.GetEvent<DataBaseButtonMessagesChosen>().Subscribe(HandleDataBaseButtonMessagesChosen);
 			eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleClientLoginFrom);
@@ -136,8 +124,7 @@ namespace Rythm.Client.ViewModel
 			SelectCommand = new DelegateCommand(ExecuteSelectEntriesCommand);
 			ResetCommand = new DelegateCommand(ExecuteResetEntriesCommand);
 
-			DataGridClientsVisibility = true;
-			DataGridMessagesVisibility = false;
+			DataGridMessagesVisibility = true;
 			DataGridEventsVisibility = false;
 
 			DayFrom = DateTime.Today;
@@ -260,15 +247,6 @@ namespace Rythm.Client.ViewModel
 			_displayingEventsController.Login = login;
 		}
 
-		private void HandleUpdatedDataBaseClientsEvent(List<string> dataBaseClientsList)
-		{
-			DataBaseClientsList.Clear();
-			foreach (string client in dataBaseClientsList)
-			{
-				DataBaseClientsList.Add(new DataBaseClientsViewModel(client));
-			}
-		}
-
 		private void HandleUpdatedDataBaseMessagesEvent(List<DataBaseMessage> messagesList)
 		{
 			DataBaseAllOwnMessagesList.Clear();
@@ -291,23 +269,14 @@ namespace Rythm.Client.ViewModel
 			}
 		}
 
-		private void HandleDataBaseButtonClientsChosen()
-		{
-			DataGridClientsVisibility = true;
-			DataGridMessagesVisibility = false;
-			DataGridEventsVisibility = false;
-		}
-
 		private void HandleDataBaseButtonEventsChosen()
 		{
-			DataGridClientsVisibility = false;
 			DataGridMessagesVisibility = false;
 			DataGridEventsVisibility = true;
 		}
 
 		private void HandleDataBaseButtonMessagesChosen()
 		{
-			DataGridClientsVisibility = false;
 			DataGridMessagesVisibility = true;
 			DataGridEventsVisibility = false;
 		}

@@ -23,6 +23,9 @@
 
 		<Grid Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0"  Width="250">
 
+			<Button  Style="{DynamicResource BlackAndWhiteButton}" Content="Messages" Command="{Binding ShowMessagesListCommand}" HorizontalAlignment="Left"/>
+			<Button  Style="{DynamicResource BlackAndWhiteButton}" Content="Events" Command="{Binding ShowEventsListCommand}" HorizontalAlignment="Center"/>
+
 			<Grid.Style>
 				<Style TargetType="Grid">
 					<Style.Triggers>
@@ -36,10 +39,6 @@
 				</Style>
 			</Grid.Style>
 
-			<Button  Style="{DynamicResource BlackAndWhiteButton}" Content="Clients" Command="{Binding ShowClientsListCommand}" HorizontalAlignment="Left"/>
-			<Button  Style="{DynamicResource BlackAndWhiteButton}" Content="Messages" Command="{Binding ShowMessagesListCommand}" HorizontalAlignment="Center"/>
-			<Button  Style="{DynamicResource BlackAndWhiteButton}" Content="Events" Command="{Binding ShowEventsListCommand}" HorizontalAlignment="Right"/>
-			
 		</Grid>
 
 		<TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Login}" Width="Auto" FontSize="18" Margin="10,0,0,0" Style="{DynamicResource LoginTextBlockForeground}" />

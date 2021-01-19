@@ -36,7 +36,6 @@ namespace Rythm.Client.ViewModel
 
 		public ICommand ChangeSettingsVisibilityCommand { get; }
 		public ICommand DisplayingEventsVisibilityCommand { get; }
-		public ICommand ShowClientsListCommand { get; }
 		public ICommand ShowMessagesListCommand { get; }
 		public ICommand ShowEventsListCommand { get; }
 		public ICommand ChangeThemeColorCommand { get; }
@@ -78,7 +77,6 @@ namespace Rythm.Client.ViewModel
 			_eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
 			_eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleNewLoginSelected);
 			ChangeSettingsVisibilityCommand = new DelegateCommand(ExecuteChangeSettingsVisibilityCommand);
-			ShowClientsListCommand = new DelegateCommand(ExecuteShowClientsListCommand);
 			ShowEventsListCommand = new DelegateCommand(ExecuteShowEventsListCommand);
 			ShowMessagesListCommand = new DelegateCommand(ExecuteShowMessagesListCommand);
 			DisplayingEventsVisibilityCommand = new DelegateCommand(ExecuteDisplayingEventsVisibilityCommand);
@@ -127,11 +125,6 @@ namespace Rythm.Client.ViewModel
 				ResourceDictionary resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
 				Application.Current.Resources.MergedDictionaries.Add(resourceDict);
 			}
-		}
-
-		private void ExecuteShowClientsListCommand()
-		{
-			_eventAggregator.GetEvent<DataBaseButtonClientsChosen>().Publish();
 		}
 
 		private void ExecuteShowMessagesListCommand()
