@@ -14,10 +14,10 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type local:MainWindow}">
 					<Grid >
-						<Image Source="Images/Comet.png" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+						<Image Source="Images/Comet.png" Width="15" Height="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12"/>
 						<!-- Window Title -->
-						<TextBlock VerticalAlignment="Top" TextAlignment="Left"
-                                   Padding="5,5,0,8" Margin="14 0 0 0" FontFamily="Verdana"
+						<TextBlock VerticalAlignment="Top" TextAlignment="Left" FontSize="13"
+                                   Padding="5,5,0,8" Margin="22 7 0 0" FontFamily="Verdana"
                                    Text="{Binding RelativeSource=
                                      {RelativeSource TemplatedParent}, Path=Title}" />
 						<!-- This is the ContentPresenter that displays the window content. -->
