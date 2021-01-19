@@ -69,6 +69,7 @@ namespace Rythm.Client.ViewModel
 			eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleUserLoginFrom);
 			eventAggregator.GetEvent<ConnectionIndicatorColorChangedEvent>().Subscribe(HandleNewSateEstablished);
 			eventAggregator.GetEvent<UpdateActiveClients>().Subscribe(HandleUpdateActiveClientsList);
+			eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleNewClientConnected);
 			_chatPanelController = chatPanelController ?? throw new ArgumentNullException(nameof(chatPanelController));
 			_chatPanelController.MessageReceivedEvent += HandleNewMessageReceived;
 			_chatPanelController.OkReceivedEvent += HandleOkReceive;
@@ -81,6 +82,12 @@ namespace Rythm.Client.ViewModel
 		#endregion
 
 		#region Methods
+
+		private void HandleNewClientConnected(string login)
+		{
+			ReceivedMessagesList.Clear();
+			AllReceivedMessagesList.Clear();
+		}
 
 		private void HandleDownloadMessagesList(List<DataBaseMessage> messagesList)
 		{

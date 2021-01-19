@@ -76,6 +76,7 @@ namespace Rythm.Client.ViewModel
 		{
 			_eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
 			_eventAggregator.GetEvent<NewClientChosenViewModel>().Subscribe(HandleNewLoginSelected);
+			_eventAggregator.GetEvent<PassLoginViewModel>().Subscribe(HandleNewClientConnected);
 			ChangeSettingsVisibilityCommand = new DelegateCommand(ExecuteChangeSettingsVisibilityCommand);
 			ShowEventsListCommand = new DelegateCommand(ExecuteShowEventsListCommand);
 			ShowMessagesListCommand = new DelegateCommand(ExecuteShowMessagesListCommand);
@@ -96,6 +97,11 @@ namespace Rythm.Client.ViewModel
 		public void HandleNewLoginSelected(string login)
 		{
 			Login = login;
+		}
+
+		private void HandleNewClientConnected(string login)
+		{
+			Login = string.Empty;
 		}
 
 		private void ExecuteChangeThemeCommand()
