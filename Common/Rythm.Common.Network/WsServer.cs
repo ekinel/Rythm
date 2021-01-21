@@ -308,6 +308,7 @@ namespace Rythm.Common.Network
 				if (deltaTimeSeconds < 0)
 				{
 					deltaTimeSeconds = 60 - clientTimeSeconds + serverTimeSeconds;
+					deltaTimeMinute--;
 				}
 
 				if (deltaTimeMinute > 0)
