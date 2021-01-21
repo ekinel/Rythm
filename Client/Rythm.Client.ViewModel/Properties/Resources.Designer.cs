@@ -259,7 +259,7 @@ namespace Rythm.Client.ViewModel.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gray.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
         internal static string MessageServerOkColor {
             get {
@@ -282,15 +282,6 @@ namespace Rythm.Client.ViewModel.Properties {
         internal static string ScrollViewerStyleLight {
             get {
                 return ResourceManager.GetString("ScrollViewerStyleLight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        internal static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         

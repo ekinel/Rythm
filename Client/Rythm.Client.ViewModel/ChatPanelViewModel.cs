@@ -156,7 +156,7 @@ namespace Rythm.Client.ViewModel
 				{
 					if(okReceive.MsgStatus == MsgStatus.ServerOk)
 					{
-						message.OkColorStatus = Resources.MessageClientOkColor;
+						message.OkColorStatus = Resources.MessageServerOkColor;
 					}
 					else
 					{
