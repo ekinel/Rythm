@@ -184,7 +184,7 @@
     <value>Green</value>
   </data>
   <data name="MessageServerOkColor" xml:space="preserve">
-    <value>Green</value>
+    <value>Gray</value>
   </data>
   <data name="ScrollViewerStyleDark" xml:space="preserve">
     <value>ScrollViewerStyleDark.xaml</value>

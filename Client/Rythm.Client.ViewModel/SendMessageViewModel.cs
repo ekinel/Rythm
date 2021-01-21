@@ -52,7 +52,7 @@ namespace Rythm.Client.ViewModel
 			switch (okStatus)
             {
                 case MsgStatus.ServerOk:
-                    OkColorStatus = "Gray";
+                    OkColorStatus = "Green";
                     OkColorStatusOpacity = 1;
                     break;
 
@@ -80,7 +80,7 @@ namespace Rythm.Client.ViewModel
             {
                 case "ServerOk":
                 case "Gray":
-                    OkColorStatus = "Gray";
+                    OkColorStatus = "Green";
                     OkColorStatusOpacity = 1;
                     break;
 

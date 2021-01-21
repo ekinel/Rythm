@@ -259,7 +259,7 @@ namespace Rythm.Client.ViewModel.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green.
+        ///   Looks up a localized string similar to Gray.
         /// </summary>
         internal static string MessageServerOkColor {
             get {
