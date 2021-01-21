@@ -5,14 +5,15 @@
 namespace Rythm.Server.WindowsService
 {
 	using System.ServiceProcess;
-
+	using System.Threading.Tasks;
 	using Service;
 
 	public partial class ServerService : ServiceBase
 	{
 		#region Fields
 
-		private readonly NetworkWrapper _networkWrapper;
+		private NetworkWrapper _networkWrapper; 
+		private ServerParameters _serverParameters;
 
 		#endregion
 
@@ -23,33 +24,27 @@ namespace Rythm.Server.WindowsService
 			InitializeComponent();
 
 			ServerConfiguration _serverConfiguration = new ServerConfiguration();
-			ServerParameters _serverParameters = _serverConfiguration.ReadConfigurationFile();
-
-			_networkWrapper = new NetworkWrapper(
-				_serverParameters.Address,
-				_serverParameters.Port,
-				_serverParameters.TimeOut,
-				_serverParameters.DataBaseConnectionString);
-
-			_serverConfiguration.SaveConfigurationFile(
-				_serverParameters.Address,
-				_serverParameters.Port,
-				_serverParameters.TimeOut,
-				_serverParameters.DataBaseConnectionString);
+			_serverParameters = _serverConfiguration.ReadConfigurationFile();
 		}
 
 		#endregion
 
 		#region Methods
 
-		protected override void OnStart(string[] args)
+		protected async override void OnStart(string[] args)
 		{
-			_networkWrapper.Start();
+			await Task.Run(() => InitializationServer(_serverParameters.Address, _serverParameters.Port, _serverParameters.TimeOut, _serverParameters.DataBaseConnectionString));
 		}
 
 		protected override void OnStop()
 		{
 			_networkWrapper.Stop();
+		}
+
+		private void InitializationServer(string wsAddress, int wsPort, int wsTimeOut, string wsDataBase)
+		{
+			_networkWrapper = new NetworkWrapper(wsAddress, wsPort, wsTimeOut, wsDataBase);
+			_networkWrapper.Start();
 		}
 
 		#endregion
