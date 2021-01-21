@@ -214,6 +214,42 @@ namespace Rythm.Client.ViewModel.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DataGridEventsStyleDark.xaml.
+        /// </summary>
+        internal static string DataGridEventsStyleDark {
+            get {
+                return ResourceManager.GetString("DataGridEventsStyleDark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DataGridEventsStyleLight.xaml.
+        /// </summary>
+        internal static string DataGridEventsStyleLight {
+            get {
+                return ResourceManager.GetString("DataGridEventsStyleLight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DataGridMessagesStyleDark.xaml.
+        /// </summary>
+        internal static string DataGridMessagesStyleDark {
+            get {
+                return ResourceManager.GetString("DataGridMessagesStyleDark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DataGridMessagesStyleLight.xaml.
+        /// </summary>
+        internal static string DataGridMessagesStyleLight {
+            get {
+                return ResourceManager.GetString("DataGridMessagesStyleLight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Events.
         /// </summary>
         internal static string EventsButton {

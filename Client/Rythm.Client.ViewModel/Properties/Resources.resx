@@ -168,6 +168,18 @@
   <data name="CustomWindowChromeLight" xml:space="preserve">
     <value>CustomWindowChromeLight.xaml</value>
   </data>
+  <data name="DataGridEventsStyleDark" xml:space="preserve">
+    <value>DataGridEventsStyleDark.xaml</value>
+  </data>
+  <data name="DataGridEventsStyleLight" xml:space="preserve">
+    <value>DataGridEventsStyleLight.xaml</value>
+  </data>
+  <data name="DataGridMessagesStyleDark" xml:space="preserve">
+    <value>DataGridMessagesStyleDark.xaml</value>
+  </data>
+  <data name="DataGridMessagesStyleLight" xml:space="preserve">
+    <value>DataGridMessagesStyleLight.xaml</value>
+  </data>
   <data name="EventsButton" xml:space="preserve">
     <value>Events</value>
   </data>

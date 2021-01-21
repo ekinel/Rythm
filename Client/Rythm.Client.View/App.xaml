@@ -16,6 +16,8 @@
 				<ResourceDictionary Source="Resources/ScrollViewerStyleLight.xaml"/>
 				<ResourceDictionary Source="Resources/LoginTextBlockStyleLight.xaml"/>
 				<ResourceDictionary Source="Resources/GridStyleLight.xaml"/>
+				<ResourceDictionary Source="Resources/DataGridMessagesStyleLight.xaml"/>
+				<ResourceDictionary Source="Resources/DataGridEventsStyleLight.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
