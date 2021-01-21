@@ -171,6 +171,12 @@
   <data name="EventsButton" xml:space="preserve">
     <value>Events</value>
   </data>
+  <data name="GridStyleDark" xml:space="preserve">
+    <value>GridStyleDark.xaml</value>
+  </data>
+  <data name="GridStyleLight" xml:space="preserve">
+    <value>GridStyleLight.xaml</value>
+  </data>
   <data name="LoginErrorMessage" xml:space="preserve">
     <value>Login cannot be empty</value>
   </data>

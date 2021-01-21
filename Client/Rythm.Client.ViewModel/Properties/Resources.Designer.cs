@@ -223,6 +223,24 @@ namespace Rythm.Client.ViewModel.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GridStyleDark.xaml.
+        /// </summary>
+        internal static string GridStyleDark {
+            get {
+                return ResourceManager.GetString("GridStyleDark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GridStyleLight.xaml.
+        /// </summary>
+        internal static string GridStyleLight {
+            get {
+                return ResourceManager.GetString("GridStyleLight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login cannot be empty.
         /// </summary>
         internal static string LoginErrorMessage {
